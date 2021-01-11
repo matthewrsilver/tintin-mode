@@ -49,10 +49,6 @@
     `((t (:foreground ,purple)))
     "*Face for #Ifs, #Loops."
     :group 'tintin-faces :group 'faces)
-  (defface tintin-comment-face
-    `((t (:foreground ,green)))
-    "*Face for comments."
-    :group 'tintin-faces :group 'faces)
   (defface tintin-function-face
     `((t (:foreground ,cyan)))
     "*Face for user functions."
@@ -75,8 +71,6 @@
 
 (defconst tintin-font-lock-keywords
   (list
-   ;; Comments.
-   '("\\(#\\(?:N[Oo]\\|no\\)\\).*" . 'tintin-comment-face)
    ;; Vars.
    '("\\(\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)" . 'tintin-var-face)
    ;; More Vars
@@ -102,7 +96,12 @@
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))
 
-    (modify-syntax-entry ?_ "w" st) ; sets underscore to be counted as one_word
+    (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as one_word
+
+    (modify-syntax-entry ?# ". 1" st) ; sets comments to start with:
+    (modify-syntax-entry ?n ". 2" st) ;  `#n` or
+    (modify-syntax-entry ?N ". 2" st) ;  `#N`
+    (modify-syntax-entry ?\; ">" st)  ; and run until terminated by a semicolon!
 
     st)
   "Syntax table for tintin-mode")

@@ -33,21 +33,9 @@
     `((t (:foreground ,red)))
     "*Face for ansi color codes."
     :group 'tintin-faces :group 'faces)
-  (defface tintin-symbol-face
-    `((t (:foreground ,white)))
-    "*Face for symbols."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-var-face
+  (defface tintin-matcher-face
     `((t (:foreground ,yellow)))
     "*Face for variables."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-var-def-face
-    `((t (:foreground ,off-yellow)))
-    "*Face for variable definitions."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-conditional-face
-    `((t (:foreground ,purple)))
-    "*Face for #Ifs, #Loops."
     :group 'tintin-faces :group 'faces)
   (defface tintin-function-face
     `((t (:foreground ,cyan)))
@@ -69,29 +57,37 @@
 "#v" "#V"
 ) t)
 
-(defconst tintin-font-lock-keywords
-  (list
-   ;; Vars.
-   '("\\(\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)" . 'tintin-var-face)
-   ;; More Vars
-   '("\\($[a-zA-Z_][][a-zA-Z0-9_]*\\)" . 'tintin-var-face)
-   ;; and more, the #VAR now
-   '("\\(#\\(?:V\\(?:AR\\(?:I\\(?:A\\(?:B\\(?:LE?\\)?\\)?\\)?\\)?\\|ar\\(?:i\\(?:a\\(?:b\\(?:le?\\)?\\)?\\)?\\)?\\)\\|var\\(?:i\\(?:a\\(?:b\\(?:le?\\)?\\)?\\)?\\)?\\)\\) *\\([a-zA-Z_][][a-zA-Z0-9_-]*\\|{ *[a-zA-Z_][][ a-zA-Z0-9_-]*}\\)\\([ \t\n]\\| .?\\)" . 'tintin-var-def-face)
-   ;; User functions. If the function args have quotes it fails... WTF is with the quotes anyway???
-   '("\\(@[a-zA-Z_][][a-zA-Z0-9_]*\\) *{[^}]*}" . 'tintin-function-face)
-   ;; User functions, definitions.
-   '("\\(#\\(?:F\\(?:UN\\(?:C\\(?:T\\(?:I\\(?:ON?\\)?\\)?\\)?\\)?\\|un\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\|fun\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\) *\\([a-zA-Z_][][a-zA-Z0-9_-]*\\|{ *[a-zA-Z_][][ a-zA-Z0-9_-]*}\\)\\([ \t\n]\\| .?\\)" . 'tintin-function-def-face)
-   ;; #IF #IFELSE #ELSE and #LOOP.
-   '("\\(#\\(?:E\\(?:LSE\\(?:IF\\)?\\|lse\\(?:[Ii]f\\)?\\)\\|I[Ff]\\|L\\(?:OOP\\|oop\\)\\|else\\(?:if\\)?\\|if\\|loop\\)\\)[ \t\n]" . 'tintin-conditional-face)
-   ;; Colours.
-   '("\\(\<[0-9]*\>\\)" . 'tintin-ansi-face)
-   ;; Curly brackets etc.
-   '("\\([][(){};\+\*\-\/]\\)" . 'tintin-symbol-face)
-   ;; All possible '#' commands, even '#EOUOEU'. Yes, I'm lazy.
-   ;; '("\\(#[a-zA-Z0-9]*\\)[ \t\n]" . 'tintin-hash-face)
-   '("\\(#[a-zA-Z0-9]*\\)" . 'tintin-hash-face)
-  )
-  "Default highlighting for tintin mode")
+(setq tintin-font-lock-keywords
+  `(
+    ;; Handle matchers
+    (,"\\(\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)" . 'tintin-matcher-face)
+    ;; Handle the #variable command
+    (,"\\(#[vV]\\(?:[aA]\\(?:[rR]\\(?:[iI]\\(?:[aA]\\(?:[bB]\\(?:[lL]\\(?:[eE]\\)?\\)?\\)?\\)?\\)?\\)?\\)?\\)\\b"
+      (0 'font-lock-keyword-face)
+      ;; Capture only the first argument (with or without braces) as a variable name
+      ("\\([a-zA-Z_][a-zA-Z0-9_-]*\\)[ \t\n\[].*" nil nil (1 'font-lock-variable-name-face))
+      ("{\\([a-zA-Z_][a-zA-Z0-9_-]*\\)}[ \t\n\[].*" nil nil (1 'font-lock-variable-name-face)))
+    ;; Handle variables as they're used
+    (,"\\($\\([a-zA-Z_][a-zA-Z0-9_]*\\)\\)" 2 'font-lock-variable-name-face)
+    (,"\\(${\\([a-zA-Z_][a-zA-Z0-9_]*\\)}\\)" 2 'font-lock-variable-name-face)
+
+    ;; User the #function command
+    (,"\\(#\\(?:F\\(?:UN\\(?:C\\(?:T\\(?:I\\(?:ON?\\)?\\)?\\)?\\)?\\|un\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\|fun\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\)"
+      (0 'font-lock-keyword-face)
+      ;; Capture the first value after a function definition as the function name
+      ("\\([a-zA-Z_][a-zA-Z0-9_-]*\\)[ \t\n].*" nil nil (1 'font-lock-function-name-face))
+      ("{\\(\\([a-zA-Z_][a-zA-Z0-9_-]*\\)}[ \t\n].*" nil nil (1 'font-lock-function-name-face)))
+    ;; Handle functions as they're used
+    (,"\\(@[a-zA-Z_][][a-zA-Z0-9_]*\\)\{.*}" 1 'tintin-function-face)
+
+    ;; Handle classic flow control: #if, #else, #loop, etc.
+    (,"\\(#\\(?:E\\(?:LSE\\(?:IF\\)?\\|lse\\(?:[Ii]f\\)?\\)\\|I[Ff]\\|L\\(?:OOP\\|oop\\)\\|else\\(?:if\\)?\\|if\\|loop\\)\\)[ \t\n]" . 'font-lock-keyword-face)
+    ;; Handle colors.
+    (,"\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)" . 'tintin-ansi-face)
+    (,"\\(\<[gG][0-9]\\{2\\}\>\\)" . 'tintin-ansi-face)
+    ;; All possible '#' commands, even '#EOUOEU'. Yes, I'm lazy.
+    (,"\\(#[a-zA-Z0-9]*\\)" . 'tintin-hash-face)
+    ))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))

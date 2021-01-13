@@ -11,7 +11,7 @@ Function to generate the prefix-accepting regex that handles #var #vari #varia..
 
 ### Variable definitions
 
-Many keywords define variables that should be hughlighted
+Many keywords define variables that should be highlighted
  - list
  - local
  - math
@@ -22,3 +22,6 @@ Many keywords define variables that should be hughlighted
 ### Misc
  * only "real" keywords, not everything that starts with #
  * enable configuration of # symbol, as tintin does
+ * tintin %2 matchers and variables highlighted inside strings but not comments
+ * highlight variables after & (i.e. when testing for existence)
+ * variable definitions different color than usages

@@ -57,12 +57,59 @@
 "#v" "#V"
 ) t)
 
+(setq tintin-command-char "#")
+
+(defun upcase-at-index (str i)
+  (concat
+   (substring str 0 i)
+   (upcase (substring str i (+ i 1)))
+   (substring str (+ i 1))))
+
+(defun case-permute (str &optional i)
+  (unless i (setq i 0))
+  (cond
+   ((< i (length str))
+    (append
+     (case-permute (upcase-at-index str i) (+ i 1))
+     (case-permute str (+ i 1))))
+   (t (list str))
+   ))
+
+(defun initial-substrings (word &optional start)
+  (setq word (downcase word))
+  (unless start (setq start 0))
+  (cond
+   ((> (length word) start) (cons word (initial-substrings (substring word 0 -1) start)))
+   (t '())
+   ))
+
+(defun case-permutations-on-list (word-list)
+  (setq cur-word (car (last word-list)))
+  (cond
+   ((> (length word-list) 0)
+    (append
+     (case-permute cur-word)
+     (case-permutations-on-list (butlast word-list)))
+    )
+   (t '())))
+
+(defun case-permuted-initial-substrings (word &optional start)
+  (unless start (setq start 0))
+  (case-permutations-on-list (initial-substrings word start)))
+
+(defun generate-command-regexp (word &optional start)
+  (unless start (setq start 1))
+  (concat "\\(" tintin-command-char
+          (regexp-opt (case-permuted-initial-substrings word start))
+          "\\)\\b"
+          ))
+
 (setq tintin-font-lock-keywords
   `(
     ;; Handle matchers
     (,"\\(\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)" . 'tintin-matcher-face)
     ;; Handle the #variable command
-    (,"\\(#[vV]\\(?:[aA]\\(?:[rR]\\(?:[iI]\\(?:[aA]\\(?:[bB]\\(?:[lL]\\(?:[eE]\\)?\\)?\\)?\\)?\\)?\\)?\\)?\\)\\b"
+    (,(generate-command-regexp "variable" 3)
       (0 'font-lock-keyword-face)
       ;; Capture only the first argument (with or without braces) as a variable name
       ("\\([a-zA-Z_][a-zA-Z0-9_-]*\\)[ \t\n\[].*" nil nil (1 'font-lock-variable-name-face))

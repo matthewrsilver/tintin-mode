@@ -33,107 +33,76 @@
     `((t (:foreground ,red)))
     "*Face for ansi color codes."
     :group 'tintin-faces :group 'faces)
-  (defface tintin-matcher-face
+  (defface tintin-capture-face
     `((t (:foreground ,yellow)))
-    "*Face for variables."
+    "*Face for capture variables."
     :group 'tintin-faces :group 'faces)
   (defface tintin-function-face
     `((t (:foreground ,cyan)))
     "*Face for user functions."
     :group 'tintin-faces :group 'faces)
-  (defface tintin-function-def-face
-    `((t (:foreground ,off-cyan)))
-    "*Face for user function definitions."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-hash-face
+  (defface tintin-command-face
     `((t (:foreground ,blue)))
     "*Face for user hash commands."
     :group 'tintin-faces :group 'faces)
 
 )
 
-; helps make the messy optimized regexps
-(regexp-opt '(
-"#v" "#V"
-) t)
 
-(setq tintin-command-char "#")
-
-(defun upcase-at-index (str i)
-  (concat
-   (substring str 0 i)
-   (upcase (substring str i (+ i 1)))
-   (substring str (+ i 1))))
-
-(defun case-permute (str &optional i)
-  (unless i (setq i 0))
-  (cond
-   ((< i (length str))
-    (append
-     (case-permute (upcase-at-index str i) (+ i 1))
-     (case-permute str (+ i 1))))
-   (t (list str))
-   ))
+(defvar tintin-captures "\\(\\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)")
+(defvar tintin-token "\\([a-zA-Z_]\\w*\\)[\s\[].*")
+(defvar tintin-variable "\\([$\&]{?\\([a-zA-Z_]\\w*\\)}?\\)")
+(defvar tintin-function "\\(@[a-zA-Z_]\\w*\\){.*")
+(defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
+(defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
+(defvar tintin-cmd-prior "\\(?:\s\\|^\\|{\\)")
 
 (defun initial-substrings (word &optional start)
-  (setq word (downcase word))
   (unless start (setq start 0))
   (cond
    ((> (length word) start) (cons word (initial-substrings (substring word 0 -1) start)))
    (t '())
    ))
 
-(defun case-permutations-on-list (word-list)
-  (setq cur-word (car (last word-list)))
-  (cond
-   ((> (length word-list) 0)
-    (append
-     (case-permute cur-word)
-     (case-permutations-on-list (butlast word-list)))
-    )
-   (t '())))
+(defun command-matcher (word &optional start)
+  (setq command-regex (regexp-opt (initial-substrings word start)))
+  (let ((case-fold-search t))
+    (re-search-forward (concat tintin-cmd-prior command-regex "\\(?:\s\\)")
+                       limit t)))
 
-(defun case-permuted-initial-substrings (word &optional start)
-  (unless start (setq start 0))
-  (case-permutations-on-list (initial-substrings word start)))
-
-(defun generate-command-regexp (word &optional start)
-  (unless start (setq start 1))
-  (concat "\\(" tintin-command-char
-          (regexp-opt (case-permuted-initial-substrings word start))
-          "\\)\\b"
-          ))
+(defun variable-command-matcher (limit) (command-matcher "#variable" 3))
+(defun function-command-matcher (limit) (command-matcher "#function" 3))
 
 (setq tintin-font-lock-keywords
   `(
-    ;; Handle matchers
-    (,"\\(\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)" . 'tintin-matcher-face)
+    ;; Handle captures in actions, aliases, etc.
+    (,tintin-captures . 'tintin-capture-face)
+
     ;; Handle the #variable command
-    (,(generate-command-regexp "variable" 3)
-      (0 'font-lock-keyword-face)
-      ;; Capture only the first argument (with or without braces) as a variable name
-      ("\\([a-zA-Z_][a-zA-Z0-9_-]*\\)[ \t\n\[].*" nil nil (1 'font-lock-variable-name-face))
-      ("{\\([a-zA-Z_][a-zA-Z0-9_-]*\\)}[ \t\n\[].*" nil nil (1 'font-lock-variable-name-face)))
+    (,'variable-command-matcher
+     (0 'font-lock-keyword-face)
+     ;; Capture only the first argument (with or without braces) as a variable name
+     (,tintin-token nil nil (1 'font-lock-variable-name-face)))
+
     ;; Handle variables as they're used
-    (,"\\($\\([a-zA-Z_][a-zA-Z0-9_]*\\)\\)" 2 'font-lock-variable-name-face)
-    (,"\\(${\\([a-zA-Z_][a-zA-Z0-9_]*\\)}\\)" 2 'font-lock-variable-name-face)
+    (,tintin-variable 2 'font-lock-variable-name-face)
 
     ;; User the #function command
-    (,"\\(#\\(?:F\\(?:UN\\(?:C\\(?:T\\(?:I\\(?:ON?\\)?\\)?\\)?\\)?\\|un\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\|fun\\(?:c\\(?:t\\(?:i\\(?:on?\\)?\\)?\\)?\\)?\\)\\)"
+    (,'function-command-matcher
       (0 'font-lock-keyword-face)
       ;; Capture the first value after a function definition as the function name
-      ("\\([a-zA-Z_][a-zA-Z0-9_-]*\\)[ \t\n].*" nil nil (1 'font-lock-function-name-face))
-      ("{\\(\\([a-zA-Z_][a-zA-Z0-9_-]*\\)}[ \t\n].*" nil nil (1 'font-lock-function-name-face)))
+      (,tintin-token nil nil (1 'font-lock-function-name-face)))
+
     ;; Handle functions as they're used
-    (,"\\(@[a-zA-Z_][][a-zA-Z0-9_]*\\)\{.*}" 1 'tintin-function-face)
+    (,tintin-function 1 'tintin-function-face)
 
     ;; Handle classic flow control: #if, #else, #loop, etc.
-    (,"\\(#\\(?:E\\(?:LSE\\(?:IF\\)?\\|lse\\(?:[Ii]f\\)?\\)\\|I[Ff]\\|L\\(?:OOP\\|oop\\)\\|else\\(?:if\\)?\\|if\\|loop\\)\\)[ \t\n]" . 'font-lock-keyword-face)
+    (,"\\(#\\(?:E\\(?:LSE\\(?:IF\\)?\\|lse\\(?:[Ii]f\\)?\\)\\|I[Ff]\\|L\\(?:OOP\\|oop\\)\\|else\\(?:if\\)?\\|if\\|loop\\)\\)\b" . 'font-lock-keyword-face)
     ;; Handle colors.
-    (,"\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)" . 'tintin-ansi-face)
-    (,"\\(\<[gG][0-9]\\{2\\}\>\\)" . 'tintin-ansi-face)
+    (,ansi-color-code . 'tintin-ansi-face)
+    (,ansi-gray-code . 'tintin-ansi-face)
     ;; All possible '#' commands, even '#EOUOEU'. Yes, I'm lazy.
-    (,"\\(#[a-zA-Z0-9]*\\)" . 'tintin-hash-face)
+    (,(concat tintin-cmd-prior "\\(#[a-zA-Z0-9]*\\)") . 'tintin-command-face)
     ))
 
 (defvar tintin-mode-syntax-table

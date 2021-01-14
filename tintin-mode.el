@@ -16,6 +16,8 @@
     map)
   "Keymap for tintin major mode")
 
+(add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
+
 (let (
       (red "#c95d5d") ;
       (green "#359440") ;
@@ -188,3 +190,4 @@
         (indent-line-to 0)))))
 
 (provide 'tintin-mode)
+

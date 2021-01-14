@@ -18,7 +18,6 @@ To use tintin-mode, add tintin-mode.el alone or in a directory inside `.emacs.d`
 ```lisp
 (add-to-list 'load-path "~/.emacs.d/tintin-mode")
 (require 'tintin-mode)
-(add-to-list 'auto-mode-alist '("\\.tt\\'" . tintin-mode))
 ```
 
 # Intentions

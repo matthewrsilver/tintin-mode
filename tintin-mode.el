@@ -20,13 +20,8 @@
       (red "#c95d5d") ;
       (green "#359440") ;
       (yellow "#c3c95d") ;
-      (off-yellow "#c3b95d") ;
-      (orange "#ef6d22")
       (blue "#5d74c9") ;
       (cyan "#5dc9c9") ;
-      (off-cyan "#5db9c9") ;
-      (white "#ffffff") ;
-      (purple "#a95dc9") ;
      )
 
   (defface tintin-ansi-face
@@ -60,18 +55,36 @@
 (defun initial-substrings (word &optional start)
   (unless start (setq start 0))
   (cond
-   ((> (length word) start) (cons word (initial-substrings (substring word 0 -1) start)))
+   ((> (length word) start)
+    (cons word (initial-substrings (substring word 0 -1) start)))
    (t '())
    ))
 
-(defun command-matcher (word &optional start)
-  (setq command-regex (regexp-opt (initial-substrings word start)))
+(defun initial-substrings-list (word-data)
+  (cond
+   ((> (length word-data) 0)
+    (append
+     (apply 'initial-substrings (last word-data 2))
+     (initial-substrings-list (butlast word-data 2))))
+   (t '())
+   ))
+
+(defun build-command-matcher (word-data)
+  (setq command-regex (regexp-opt (initial-substrings-list word-data)))
   (let ((case-fold-search t))
-    (re-search-forward (concat tintin-cmd-prior command-regex "\\(?:\s\\)")
+    (re-search-forward (concat tintin-cmd-prior command-regex "\\(?:\s\\|$\\)")
                        limit t)))
 
-(defun variable-command-matcher (limit) (command-matcher "#variable" 3))
-(defun function-command-matcher (limit) (command-matcher "#function" 3))
+;; Define custom matchers
+(defun variable-command-matcher (limit) (build-command-matcher '("#variable" 3)))
+(defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
+(defun statement-command-matcher (limit)
+  (build-command-matcher
+   '( "#if" 0         "#else" 0       "#elseif" 0
+      "#foreach" 0    "#loop" 0       "#while" 0      "#parse" 0
+      "#break" 0      "#continue" 4   "#return" 3
+      "#switch" 0     "#case" 0       "#default" 3
+      )))
 
 (setq tintin-font-lock-keywords
   `(
@@ -96,11 +109,13 @@
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)
 
-    ;; Handle classic flow control: #if, #else, #loop, etc.
-    (,"\\(#\\(?:E\\(?:LSE\\(?:IF\\)?\\|lse\\(?:[Ii]f\\)?\\)\\|I[Ff]\\|L\\(?:OOP\\|oop\\)\\|else\\(?:if\\)?\\|if\\|loop\\)\\)\b" . 'font-lock-keyword-face)
+    ;; Handle flow control, called statelents in tintin:  #if, #while, etc.
+    (,'statement-command-matcher . 'font-lock-keyword-face)
+
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)
     (,ansi-gray-code . 'tintin-ansi-face)
+
     ;; All possible '#' commands, even '#EOUOEU'. Yes, I'm lazy.
     (,(concat tintin-cmd-prior "\\(#[a-zA-Z0-9]*\\)") . 'tintin-command-face)
     ))
@@ -173,4 +188,3 @@
         (indent-line-to 0)))))
 
 (provide 'tintin-mode)
-;;; tintin-mode.el ends here

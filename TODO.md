@@ -16,7 +16,8 @@ The issue arises, I think, because n is one of two options for the second charac
 
 ### Misc
  * only "real" keywords, not everything that starts with #
- * matcher function for multiple commands
  * enable configuration of # symbol, as tintin does
  * variable definitions different color than usages?
- * do better on % vars i.e. in format like %-20s
+ * do better on % vars i.e. in format like %-20s and also with %%
+ * highlight other important "literals" like dice rolls: 3d5
+ * clean up regular expressions, figure out word boundaries and #. Maybe this is syntax table?

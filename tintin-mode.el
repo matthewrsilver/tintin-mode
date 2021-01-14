@@ -47,9 +47,9 @@
 
 
 (defvar tintin-captures "\\(\\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)")
-(defvar tintin-token "\\([a-zA-Z_]\\w*\\)[\s\[].*")
-(defvar tintin-variable "\\([$\&]{?\\([a-zA-Z_]\\w*\\)}?\\)")
-(defvar tintin-function "\\(@[a-zA-Z_]\\w*\\){.*")
+(defvar tintin-token "\\([a-zA-Z_][a-zA-Z0-9_]*\\)[\s\[].*")
+(defvar tintin-variable "\\([$\&]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){.*")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
 (defvar tintin-cmd-prior "\\(?:\s\\|^\\|{\\)")
@@ -126,6 +126,7 @@
   (let ((st (make-syntax-table)))
 
     (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as one_word
+    (modify-syntax-entry ?# "w" st)   ; sets underscore to be counted as one_word
 
     (modify-syntax-entry ?# ". 1" st) ; sets comments to start with:
     (modify-syntax-entry ?n ". 2" st) ;  `#n` or

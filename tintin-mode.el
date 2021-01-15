@@ -31,7 +31,7 @@
     "*Face for ansi color codes."
     :group 'tintin-faces :group 'faces)
   (defface tintin-capture-face
-    `((t (:foreground ,yellow)))
+    `((t (:foreground ,"#8dd110")))
     "*Face for capture variables."
     :group 'tintin-faces :group 'faces)
   (defface tintin-function-face
@@ -42,14 +42,17 @@
     `((t (:foreground ,blue)))
     "*Face for user hash commands."
     :group 'tintin-faces :group 'faces)
+  (defface tintin-variable-usage-face
+    `((t (:foreground ,"#e09d02")))
+    "*Face for user hash commands."
+    :group 'tintin-faces :group 'faces)
 
 )
-
 
 (defvar tintin-captures "\\(\\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)")
 (defvar tintin-token "\\([a-zA-Z_][a-zA-Z0-9_]*\\)[\s\[].*")
 (defvar tintin-variable "\\([$\&]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
-(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){.*")
+(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
 (defvar tintin-cmd-prior "\\(?:\s\\|^\\|{\\)")
@@ -78,8 +81,14 @@
                        limit t)))
 
 ;; Define custom matchers
-(defun variable-command-matcher (limit) (build-command-matcher '("#variable" 3)))
 (defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
+(defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
+(defun variable-command-matcher (limit)
+  (build-command-matcher
+   '( "#variable" 3   "#local" 3
+      "#cat" 0        "#format" 4     "#math" 0       "#replace" 3
+      "#class" 0
+      )))
 (defun statement-command-matcher (limit)
   (build-command-matcher
    '( "#if" 0         "#else" 0       "#elseif" 0
@@ -87,20 +96,54 @@
       "#break" 0      "#continue" 4   "#return" 3
       "#switch" 0     "#case" 0       "#default" 3
       )))
+(defun scripting-command-matcher (limit)
+  (build-command-matcher
+   '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
+      "#highlight" 4  "#substitute" 3 "#ticker" 4
+      "#delay" 3      "#gag" 0
+      "#cr" 0         "#tab" 0
+      )))
+(defun deep-script-command-matcher (limit)
+  (build-command-matcher
+   '( "#event" 0      "#line" 0       "#send" 0
+     )))
+(defun builtin-command-matcher (limit)
+  (build-command-matcher
+   '( "#all" 0        "#bell" 0       "#buffer" 4     "#chat" 0
+      "#commands" 4   "#config" 4     "#cursor" 3     "#daemon" 3
+      "#debug" 0      "#draw" 0       "#edit" 0       "#end" 0
+      "#grep" 0       "#help" 0       "#history" 4    "#run" 0
+      "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
+      "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
+      "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
+      "#read" 0       "#scan" 0       "#screen" 0     "#script" 5
+      "#sesssion" 3   "#snoop" 0      "#split" 3      "#ssl" 0
+      "#detatch" 0    "#textin" 4     "#write" 0      "#zap" 0
+      )))
 
 (setq tintin-font-lock-keywords
   `(
     ;; Handle captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
 
-    ;; Handle the #variable command
+    ;; Handle tintin builtins for working with tintin or setting up sessions
+    (,'builtin-command-matcher . 'font-lock-builtin-face)
+
+    ;; Handle the variable-defining commands
+    (,'list-command-matcher
+     (0 'font-lock-keyword-face)
+     ;; Capture only the first argument (with or without braces) as a variable name
+     (,tintin-token nil nil (1 'font-lock-variable-name-face))
+     ;; TODO handle named actions of the list command
+     )
+
     (,'variable-command-matcher
      (0 'font-lock-keyword-face)
      ;; Capture only the first argument (with or without braces) as a variable name
      (,tintin-token nil nil (1 'font-lock-variable-name-face)))
 
     ;; Handle variables as they're used
-    (,tintin-variable 2 'font-lock-variable-name-face)
+    (,tintin-variable 2 'tintin-variable-usage-face)
 
     ;; User the #function command
     (,'function-command-matcher
@@ -114,19 +157,24 @@
     ;; Handle flow control, called statelents in tintin:  #if, #while, etc.
     (,'statement-command-matcher . 'font-lock-keyword-face)
 
+    ;; Scripting commands for interacting with MUD
+    (,'scripting-command-matcher . 'tintin-command-face)
+    (,'deep-script-command-matcher . 'tintin-command-face)
+
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)
     (,ansi-gray-code . 'tintin-ansi-face)
 
-    ;; All possible '#' commands, even '#EOUOEU'. Yes, I'm lazy.
-    (,(concat tintin-cmd-prior "\\(#[a-zA-Z0-9]*\\)") . 'tintin-command-face)
     ))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))
 
-    (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as one_word
-    (modify-syntax-entry ?# "w" st)   ; sets underscore to be counted as one_word
+    (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as word
+    (modify-syntax-entry ?# "w" st)   ; sets hash to be counted as word
+
+    (modify-syntax-entry ?\' "w" st)
+    (modify-syntax-entry ?\" "w" st)
 
     (modify-syntax-entry ?# ". 1" st) ; sets comments to start with:
     (modify-syntax-entry ?n ". 2" st) ;  `#n` or

@@ -8,7 +8,6 @@ Many keywords define variables that should be highlighted
  - loop
  - ...i.e. anything that creates/updates a variable provided as first (nth) arg
 
-What about variables that use dot notation?
 What about the oddities with associative arrays/tables?
 
 ### Special characters
@@ -27,5 +26,4 @@ How did I only just discover you can comment with /* */
  * do better on % vars i.e. in format like %-20s and also with %% and %*
  * highlight other important "literals" like dice rolls (3d5) and speewalks (2s3w etc.)
  * clean up regular expressions, figure out word boundaries and #.
- * what about #un* which have that?
- * I think the start character default for initial-substrings is broken
+ * seems somewhat slow to load

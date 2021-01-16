@@ -50,20 +50,22 @@
 )
 
 (defvar tintin-captures "\\(\\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)")
-(defvar tintin-token "\\([a-zA-Z_][a-zA-Z0-9_]*\\)[\s\[].*")
-(defvar tintin-variable "\\([$\&]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[].*")
+(defvar tintin-endable-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[]?.*\;?")
+(defvar tintin-variable "\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
-(defvar tintin-cmd-prior "\\(?:\s\\|^\\|{\\)")
 
-(defun initial-substrings (word &optional start)
-  (unless start (setq start 0))
+(defun initial-substrings-helper (word start)
   (cond
    ((> (length word) start)
-    (cons word (initial-substrings (substring word 0 -1) start)))
-   (t '())
-   ))
+    (cons word (initial-substrings-helper (substring word 0 -1) start)))
+   (t '())))
+
+(defun initial-substrings (word &optional start)
+  (unless (> start 1) (setq start (- (length word) 1)))
+  (initial-substrings-helper word start))
 
 (defun initial-substrings-list (word-data)
   (cond
@@ -71,18 +73,24 @@
     (append
      (apply 'initial-substrings (last word-data 2))
      (initial-substrings-list (butlast word-data 2))))
-   (t '())
-   ))
+   (t '())))
 
 (defun build-command-matcher (word-data)
   (setq command-regex (regexp-opt (initial-substrings-list word-data)))
   (let ((case-fold-search t))
-    (re-search-forward (concat tintin-cmd-prior command-regex "\\(?:\s\\|$\\)")
-                       limit t)))
+    (re-search-forward (concat command-regex "\\(?:\s\\|$\\|;\\)") limit t)))
 
 ;; Define custom matchers
 (defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
 (defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
+(defun unvariable-command-matcher (limit) (build-command-matcher '("#unvariable" 5)))
+(defun unfunction-command-matcher (limit) (build-command-matcher '("#unfunction" 5)))
+
+(defun unscripting-command-matcher (limit)
+  (build-command-matcher
+   '( "#unaction" 5   "#unalias" 0    "#unticker" 6
+      "#ungag" 0      "#untab" 0      "#unevent" 0
+      )))
 (defun variable-command-matcher (limit)
   (build-command-matcher
    '( "#variable" 3   "#local" 3
@@ -99,13 +107,9 @@
 (defun scripting-command-matcher (limit)
   (build-command-matcher
    '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
-      "#highlight" 4  "#substitute" 3 "#ticker" 4
-      "#delay" 3      "#gag" 0
-      "#cr" 0         "#tab" 0
-      )))
-(defun deep-script-command-matcher (limit)
-  (build-command-matcher
-   '( "#event" 0      "#line" 0       "#send" 0
+      "#highlight" 4  "#substitute" 3 "#ticker" 4     "#gag" 0
+      "#delay" 3      "#line" 0       "#cr" 0
+      "#tab" 0        "#event" 0      "#send" 0
      )))
 (defun builtin-command-matcher (limit)
   (build-command-matcher
@@ -116,8 +120,8 @@
       "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
       "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
       "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
-      "#read" 0       "#scan" 0       "#screen" 0     "#script" 5
-      "#sesssion" 3   "#snoop" 0      "#split" 3      "#ssl" 0
+      "#read" 0       "#scan" 1       "#screen" 3     "#script" 5
+      "#session" 3    "#snoop" 0      "#split" 3      "#ssl" 0
       "#detatch" 0    "#textin" 4     "#write" 0      "#zap" 0
       )))
 
@@ -125,9 +129,6 @@
   `(
     ;; Handle captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
-
-    ;; Handle tintin builtins for working with tintin or setting up sessions
-    (,'builtin-command-matcher . 'font-lock-builtin-face)
 
     ;; Handle the variable-defining commands
     (,'list-command-matcher
@@ -142,6 +143,11 @@
      ;; Capture only the first argument (with or without braces) as a variable name
      (,tintin-token nil nil (1 'font-lock-variable-name-face)))
 
+    (,'unvariable-command-matcher
+     (0 'font-lock-keyword-face)
+     ;; Capture only the first argument (with or without braces) as a variable name
+     (,tintin-endable-token nil nil (1 'tintin-variable-usage-face)))
+
     ;; Handle variables as they're used
     (,tintin-variable 2 'tintin-variable-usage-face)
 
@@ -151,6 +157,11 @@
       ;; Capture the first value after a function definition as the function name
       (,tintin-token nil nil (1 'font-lock-function-name-face)))
 
+    (,'unfunction-command-matcher
+     (0 'font-lock-keyword-face)
+     ;; Capture only the first argument (with or without braces) as a variable name
+     (,tintin-endable-token nil nil (1 'tintin-variable-usage-face)))
+
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)
 
@@ -159,7 +170,10 @@
 
     ;; Scripting commands for interacting with MUD
     (,'scripting-command-matcher . 'tintin-command-face)
-    (,'deep-script-command-matcher . 'tintin-command-face)
+    (,'unscripting-command-matcher . 'tintin-command-face)
+
+    ;; Handle tintin builtins for working with tintin or setting up sessions
+    (,'builtin-command-matcher . 'font-lock-builtin-face)
 
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)
@@ -173,8 +187,8 @@
     (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as word
     (modify-syntax-entry ?# "w" st)   ; sets hash to be counted as word
 
-    (modify-syntax-entry ?\' "w" st)
-    (modify-syntax-entry ?\" "w" st)
+    (modify-syntax-entry ?\' "w" st)  ; quotes are super weird in tintin, and are
+    (modify-syntax-entry ?\" "w" st)  ;   kind of just normal word characters
 
     (modify-syntax-entry ?# ". 1" st) ; sets comments to start with:
     (modify-syntax-entry ?n ". 2" st) ;  `#n` or

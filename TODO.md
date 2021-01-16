@@ -1,12 +1,10 @@
 ### Variable definitions
 
-Many keywords define variables that should be highlighted
- - list
- - local
- - math
- - format
+Some keywords have atypical ways of defining new variables (e.e. pare and loop)
  - loop
- - ...i.e. anything that creates/updates a variable provided as first (nth) arg
+ - parse
+Other keywords utilize existing variables
+ - list
 
 What about the oddities with associative arrays/tables?
 
@@ -24,6 +22,6 @@ How did I only just discover you can comment with /* */
 ### Misc
  * enable configuration of # symbol, as tintin does
  * do better on % vars i.e. in format like %-20s and also with %% and %*
- * highlight other important "literals" like dice rolls (3d5) and speewalks (2s3w etc.)
+ * highlight other important "literals" like dice rolls (3d5) and speedwalks (2s3w etc.)
  * clean up regular expressions, figure out word boundaries and #.
  * seems somewhat slow to load

@@ -48,17 +48,25 @@
     :group 'tintin-faces :group 'faces)
 
 )
-
-(defvar tintin-captures "\\(\\%\\([a-zA-Z][a-zA-Z0-9]*\\|[0-9]*\\)\\)")
+(defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
+(defvar tintin-format-numeric "[-+\.][0-9]+s")
+(defvar tintin-captures
+  (concat "\\(\\%[\\%\\\\]?"
+   "\\("
+     tintin-format-basic   "\\|"
+     tintin-format-numeric "\\|"
+     "[0-9]+"              "\\|"
+   "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[].*")
 (defvar tintin-endable-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[]?.*\;?")
-(defvar tintin-variable "\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-variable "[^\\%]\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
 (defvar tintin-repeat-cmd "\\(#[0-9]*\\)[\s\;]")
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
-(defvar tintin-escape-codes "\\(\\\\[acefnrtuUv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
+(defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
+(defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -186,6 +194,7 @@
     ;; TinTin special symbols
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,tintin-escape-codes 1 'font-lock-warning-face)
+    (,tintin-unicode-escape-codes 1 'font-lock-warning-face)
 
     ))
 

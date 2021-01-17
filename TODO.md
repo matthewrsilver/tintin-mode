@@ -19,6 +19,15 @@ What about the oddities with associative arrays/tables?
 
 How did I only just discover you can comment with /* */
 
+unfortunately this standard method conflicts with the #no.*; style comment:
+
+```
+(modify-syntax-entry ?\/ ". 14" st)
+(modify-syntax-entry ?* ". 23" st)
+```
+
+so I need to either find way of getting the syntax entries to play nice, or I need to take one of these comments into the font-lock-keywords portion
+
 ### Misc
  * enable configuration of # symbol, as tintin does
  * do better on % vars i.e. in format like %-20s and also with %% and %*

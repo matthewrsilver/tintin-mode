@@ -56,6 +56,9 @@
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
+(defvar tintin-repeat-cmd "\\(#[0-9]*\\)[\s\;]")
+(defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
+(defvar tintin-escape-codes "\\(\\\\[acefnrtuUv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -171,6 +174,7 @@
     ;; Scripting commands for interacting with MUD
     (,'scripting-command-matcher . 'tintin-command-face)
     (,'unscripting-command-matcher . 'tintin-command-face)
+    (,tintin-repeat-cmd 1 'tintin-command-face)
 
     ;; Handle tintin builtins for working with tintin or setting up sessions
     (,'builtin-command-matcher . 'font-lock-builtin-face)
@@ -178,6 +182,10 @@
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)
     (,ansi-gray-code . 'tintin-ansi-face)
+
+    ;; TinTin special symbols
+    (,tintin-special-symbols 1 'font-lock-warning-face)
+    (,tintin-escape-codes 1 'font-lock-warning-face)
 
     ))
 

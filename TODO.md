@@ -8,18 +8,11 @@ Other keywords utilize existing variables
 
 What about the oddities with associative arrays/tables?
 
-### Special characters
-!   - is for repeating commands
-#\d - is for executing something \d times
-^\  - is send verbatim if you are connected
-~   - captures action text raw with color codes
-\.. - escape codes (https://tintin.mudhalla.net/manual/escape_codes.php)
-
 ### Comments!
 
 How did I only just discover you can comment with /* */
 
-unfortunately this standard method conflicts with the #no.*; style comment:
+...unfortunately this standard method conflicts with the #no.*; style comment:
 
 ```
 (modify-syntax-entry ?\/ ". 14" st)

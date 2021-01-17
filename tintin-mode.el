@@ -67,6 +67,7 @@
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
+(defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)[\;\}\s\n]")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -191,10 +192,11 @@
     (,ansi-color-code . 'tintin-ansi-face)
     (,ansi-gray-code . 'tintin-ansi-face)
 
-    ;; TinTin special symbols
+    ;; Handle special symbols, speedwalk, and dice rolls
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,tintin-escape-codes 1 'font-lock-warning-face)
     (,tintin-unicode-escape-codes 1 'font-lock-warning-face)
+    (,tintin-speedwalk-dice 1 'font-lock-warning-face)
 
     ))
 

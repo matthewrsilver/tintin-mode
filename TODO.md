@@ -23,6 +23,5 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
 
 ### Misc
  * enable configuration of # symbol, as tintin does
- * highlight other important "literals" like dice rolls (3d5) and speedwalks (2s3w etc.)
  * clean up regular expressions, figure out word boundaries and #.
  * seems somewhat slow to load

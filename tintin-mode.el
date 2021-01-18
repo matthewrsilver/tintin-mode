@@ -56,8 +56,9 @@
      tintin-format-basic   "\\|"
      tintin-format-numeric "\\|"
      "[0-9]+"              "\\|"
-   "\*\\)\\|\\%\\%\\)"))
-(defvar tintin-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[].*")
+     "\*\\)\\|\\%\\%\\)"))
+
+(defvar tintin-token (concat "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?" "[\s\[].*"))
 (defvar tintin-endable-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[]?.*\;?")
 (defvar tintin-variable "[^\\%]\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
@@ -67,7 +68,7 @@
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
-(defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)[\;\}\s\n]")
+(defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -90,13 +91,33 @@
 (defun build-command-matcher (word-data)
   (setq command-regex (regexp-opt (initial-substrings-list word-data)))
   (let ((case-fold-search t))
-    (re-search-forward (concat command-regex "\\(?:\s\\|$\\|;\\)") limit t)))
+    (re-search-forward command-regex limit t)))
 
 ;; Define custom matchers
 (defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
 (defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
 (defun unvariable-command-matcher (limit) (build-command-matcher '("#unvariable" 5)))
 (defun unfunction-command-matcher (limit) (build-command-matcher '("#unfunction" 5)))
+
+;; Special handling for #list
+(defvar tintin-arg "\$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
+(defvar list-standard-mode-keywords
+  '("add"       "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
+    "order"     "shuffle"   "set"       "simplify"  "sort"       "tokenize"))
+(defvar list-standard-mode
+  (concat tintin-arg "\s+"
+          "{?" (regexp-opt list-standard-mode-keywords t) "}?"))
+(defvar list-create-mode
+  (concat tintin-arg "\s+"
+          "{?\\(create\\)}?"))
+(defvar list-size-mode
+  (concat tintin-arg "\s+"
+          "{?\\(size\\)}?" "\s+" tintin-arg))
+(defvar list-setvar4-mode
+  (concat tintin-arg "\s+"
+          "{?" (regexp-opt '("find" "get") t) "}?" "\s+"
+          "{?" tintin-arg "}?" "\s+"
+          "{?" tintin-arg "}?"))
 
 (defun unscripting-command-matcher (limit)
   (build-command-matcher
@@ -142,14 +163,25 @@
     ;; Handle captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
 
-    ;; Handle the variable-defining commands
+    ;; Handle all #list command modes
     (,'list-command-matcher
      (0 'font-lock-keyword-face)
-     ;; Capture only the first argument (with or without braces) as a variable name
-     (,tintin-token nil nil (1 'font-lock-variable-name-face))
-     ;; TODO handle named actions of the list command
-     )
+     (,list-create-mode nil nil
+            (1 'font-lock-variable-name-face)
+            (2 'font-lock-type-face))
+     (,list-size-mode nil nil
+            (1 'tintin-variable-usage-face)
+            (2 'font-lock-type-face)
+            (3 'font-lock-variable-name-face))
+     (,list-setvar4-mode nil nil
+            (1 'tintin-variable-usage-face)
+            (2 'font-lock-type-face)
+            (4 'font-lock-variable-name-face))
+     (,list-standard-mode nil nil
+            (1 'tintin-variable-usage-face)
+            (2 'font-lock-type-face)))
 
+    ;; Handle the variable-defining commands
     (,'variable-command-matcher
      (0 'font-lock-keyword-face)
      ;; Capture only the first argument (with or without braces) as a variable name

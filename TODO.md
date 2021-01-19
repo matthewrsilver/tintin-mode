@@ -33,8 +33,11 @@ How did I only just discover you can comment with /* */
 so I need to either find way of getting the syntax entries to play nice, or I need to take one of these comments into the font-lock-keywords portion
 
 ### Misc
- * variables in e.g. #replace with &0
+ * two variables together without a space (${first}$second) second doesn't highlight
+ * function name wrapped in braces fails to highlight without a space after {fname}{
  * limit %99
+ * @ symbol breaks tintin args in matching
+ * can still highlight 1d${something}
  * enable configuration of # symbol, as tintin does
  * clean up regular expressions, figure out word boundaries and special characters {, }, and #.
  * seems somewhat slow to load

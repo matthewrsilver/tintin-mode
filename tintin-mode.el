@@ -56,7 +56,8 @@
      tintin-format-basic   "\\|"
      tintin-format-numeric "\\|"
      "[0-9]+"              "\\|"
-     "\*\\)\\|\\%\\%\\)"))
+   "\*\\)\\|\\%\\%\\)"))
+(defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
 
 (defvar tintin-token (concat "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?" "[\s\[].*"))
 (defvar tintin-endable-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[]?.*\;?")
@@ -69,7 +70,7 @@
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
-(defvar tintin-arg "\$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
+(defvar tintin-arg "\@?$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
 (defvar tintin-uncaptured-arg "\$?{?[\$&*%]*\\(?:[a-zA-Z0-9_]*\\)}?")
 
 (defun initial-substrings-helper (word start)
@@ -170,6 +171,7 @@
   `(
     ;; Handle captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
+    (,tintin-regex-matches . 'tintin-capture-face)
 
     ;; Handle all #list command modes
     (,'list-command-matcher

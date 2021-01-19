@@ -69,6 +69,8 @@
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
+(defvar tintin-arg "\$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
+(defvar tintin-uncaptured-arg "\$?{?[\$&*%]*\\(?:[a-zA-Z0-9_]*\\)}?")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -91,16 +93,15 @@
 (defun build-command-matcher (word-data)
   (setq command-regex (regexp-opt (initial-substrings-list word-data)))
   (let ((case-fold-search t))
-    (re-search-forward command-regex limit t)))
+    (re-search-forward (concat command-regex "\\(?:\s\\|$\\|;\\)") limit t)))
 
 ;; Define custom matchers
 (defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
-(defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
-(defun unvariable-command-matcher (limit) (build-command-matcher '("#unvariable" 5)))
 (defun unfunction-command-matcher (limit) (build-command-matcher '("#unfunction" 5)))
+(defun unvariable-command-matcher (limit) (build-command-matcher '("#unvariable" 5)))
 
 ;; Special handling for #list
-(defvar tintin-arg "\$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
+(defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
 (defvar list-standard-mode-keywords
   '("add"       "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
     "order"     "shuffle"   "set"       "simplify"  "sort"       "tokenize"))
@@ -116,8 +117,15 @@
 (defvar list-setvar4-mode
   (concat tintin-arg "\s+"
           "{?" (regexp-opt '("find" "get") t) "}?" "\s+"
-          "{?" tintin-arg "}?" "\s+"
-          "{?" tintin-arg "}?"))
+          tintin-uncaptured-arg "\s+"
+          tintin-arg))
+
+;; Special handling for #loop
+(defun loop-command-matcher (limit) (build-command-matcher '("#loop" 0)))
+(defvar loop-standard-args
+  (concat tintin-uncaptured-arg "\s+"
+          tintin-uncaptured-arg "\s+"
+          tintin-arg))
 
 (defun unscripting-command-matcher (limit)
   (build-command-matcher
@@ -133,7 +141,7 @@
 (defun statement-command-matcher (limit)
   (build-command-matcher
    '( "#if" 0         "#else" 0       "#elseif" 0
-      "#foreach" 0    "#loop" 0       "#while" 0      "#parse" 0
+      "#foreach" 0    "#while" 0      "#parse" 0
       "#break" 0      "#continue" 4   "#return" 3
       "#switch" 0     "#case" 0       "#default" 3
       )))
@@ -176,7 +184,7 @@
      (,list-setvar4-mode nil nil
             (1 'tintin-variable-usage-face)
             (2 'font-lock-type-face)
-            (4 'font-lock-variable-name-face))
+            (3 'font-lock-variable-name-face))
      (,list-standard-mode nil nil
             (1 'tintin-variable-usage-face)
             (2 'font-lock-type-face)))
@@ -212,7 +220,14 @@
     ;; Handle flow control, called statelents in tintin:  #if, #while, etc.
     (,'statement-command-matcher . 'font-lock-keyword-face)
 
+    ;;
     ;; Scripting commands for interacting with MUD
+    ;;
+    (,'loop-command-matcher
+     (0 'tintin-command-face)
+     (,loop-standard-args nil nil (1 'font-lock-variable-name-face)))
+
+    ;; Generic scripting commands
     (,'scripting-command-matcher . 'tintin-command-face)
     (,'unscripting-command-matcher . 'tintin-command-face)
     (,tintin-repeat-cmd 1 'tintin-command-face)

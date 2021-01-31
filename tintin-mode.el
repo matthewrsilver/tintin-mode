@@ -70,8 +70,11 @@
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
-(defvar tintin-arg "\@?$?{?[\$&*%]*\\([a-zA-Z0-9_]*\\)}?")
-(defvar tintin-uncaptured-arg "\$?{?[\$&*%]*\\(?:[a-zA-Z0-9_]*\\)}?")
+(defvar tintin-arg "{?[@\$\$&*%]*{?\\([a-zA-Z0-9_]*}?{?\\)")
+(defvar tintin-uncaptured-arg "\$?{?[@\$\$&*%]*\\(?:[@\$a-zA-Z0-9_{}]*\\)}?")
+
+(defvar tintin-arg-new "{?\\([a-zA-Z0-9_]*\\)[}\s]")
+(defvar tintin-uncaptured-arg-new "[@\$\$&*%]*\\(?:[a-zA-Z0-9_]*\\|{[a-zA-Z0-9_]*}\\)")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -91,10 +94,11 @@
      (initial-substrings-list (butlast word-data 2))))
    (t '())))
 
-(defun build-command-matcher (word-data)
+(defun build-command-matcher (word-data &optional extension)
+  (unless extension (setq extension ""))
   (setq command-regex (regexp-opt (initial-substrings-list word-data)))
   (let ((case-fold-search t))
-    (re-search-forward (concat command-regex "\\(?:\s\\|$\\|;\\)") limit t)))
+    (re-search-forward (concat "\\(" command-regex "\\)" extension) limit t)))
 
 ;; Define custom matchers
 (defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
@@ -133,12 +137,24 @@
    '( "#unaction" 5   "#unalias" 0    "#unticker" 6
       "#ungag" 0      "#untab" 0      "#unevent" 0
       )))
+
+
+(defun bare-variable-command-matcher (limit)
+  (build-command-matcher
+   '( "#variable" 3   "#local" 3
+      "#cat" 0        "#format" 4     "#math" 0       "#replace" 3
+      "#class" 0
+      )
+   ))
 (defun variable-command-matcher (limit)
   (build-command-matcher
    '( "#variable" 3   "#local" 3
       "#cat" 0        "#format" 4     "#math" 0       "#replace" 3
       "#class" 0
-      )))
+      )
+   (concat "\s+" tintin-arg-new)
+   ))
+
 (defun statement-command-matcher (limit)
   (build-command-matcher
    '( "#if" 0         "#else" 0       "#elseif" 0
@@ -192,10 +208,11 @@
             (2 'font-lock-type-face)))
 
     ;; Handle the variable-defining commands
+    (,'bare-variable-command-matcher (1 'font-lock-keyword-face))
     (,'variable-command-matcher
-     (0 'font-lock-keyword-face)
-     ;; Capture only the first argument (with or without braces) as a variable name
-     (,tintin-token nil nil (1 'font-lock-variable-name-face)))
+     (1 'font-lock-keyword-face)
+     (2 'font-lock-variable-name-face)
+     )
 
     (,'unvariable-command-matcher
      (0 'font-lock-keyword-face)
@@ -262,6 +279,9 @@
     (modify-syntax-entry ?n ". 2" st) ;  `#n` or
     (modify-syntax-entry ?N ". 2" st) ;  `#N`
     (modify-syntax-entry ?\; ">" st)  ; and run until terminated by a semicolon!
+
+    (modify-syntax-entry ?{ "(}" st)
+    (modify-syntax-entry ?} "){" st)
 
     st)
   "Syntax table for tintin-mode")

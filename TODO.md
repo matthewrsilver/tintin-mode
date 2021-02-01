@@ -54,7 +54,6 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
 
 ### Misc
  * two variables together without a space (${first}$second) second doesn't highlight
- * function name wrapped in braces fails to highlight without a space after {fname}{
  * limit %99
  * @ symbol breaks tintin args in matching
  * can still highlight 1d${something}

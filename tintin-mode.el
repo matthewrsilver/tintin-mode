@@ -59,8 +59,6 @@
    "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
 
-(defvar tintin-token (concat "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?" "[\s\[].*"))
-(defvar tintin-endable-token "{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?[\s\[]?.*\;?")
 (defvar tintin-variable "[^\\%]\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
@@ -70,10 +68,11 @@
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
+
+
 (defvar tintin-arg "{?[@\$\$&*%]*{?\\([a-zA-Z0-9_]*}?{?\\)")
 (defvar tintin-uncaptured-arg "\$?{?[@\$\$&*%]*\\(?:[@\$a-zA-Z0-9_{}]*\\)}?")
-
-(defvar tintin-arg-new "{?\\([a-zA-Z0-9_]*\\)[}\s]")
+(defvar tintin-arg-new "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
 (defvar tintin-uncaptured-arg-new "[@\$\$&*%]*\\(?:[a-zA-Z0-9_]*\\|{[a-zA-Z0-9_]*}\\)")
 
 (defun initial-substrings-helper (word start)
@@ -100,10 +99,19 @@
   (let ((case-fold-search t))
     (re-search-forward (concat "\\(" command-regex "\\)" extension) limit t)))
 
-;; Define custom matchers
-(defun function-command-matcher (limit) (build-command-matcher '("#function" 3)))
-(defun unfunction-command-matcher (limit) (build-command-matcher '("#unfunction" 5)))
-(defun unvariable-command-matcher (limit) (build-command-matcher '("#unvariable" 5)))
+(defun build-tintin-command-regex (word-data)
+  (regexp-opt (initial-substrings-list word-data)))
+
+(defun tintin-command-font-lock-matcher (command &optional args)
+  (let ((args (or args "\\(?:\s+\\|;\\)"))
+        (case-fold-search t))
+    (re-search-forward (concat "\\(" command "\\)" args) limit t)))
+
+;;
+;;
+;;
+;;
+;;
 
 ;; Special handling for #list
 (defun list-command-matcher (limit) (build-command-matcher '("#list" 3)))
@@ -138,22 +146,47 @@
       "#ungag" 0      "#untab" 0      "#unevent" 0
       )))
 
-
+;;
+;; Tools for highlighting #variable-like commands, where the first
+;; argument after the command defines a new variable
+(defvar variable-command-regex
+  (build-tintin-command-regex
+   '( "#variable" 3   "#local" 3      "#cat" 0        "#class" 0
+      "#format" 4     "#math" 0       "#replace" 3
+      )))
 (defun bare-variable-command-matcher (limit)
-  (build-command-matcher
-   '( "#variable" 3   "#local" 3
-      "#cat" 0        "#format" 4     "#math" 0       "#replace" 3
-      "#class" 0
-      )
-   ))
+  (tintin-command-font-lock-matcher variable-command-regex))
 (defun variable-command-matcher (limit)
-  (build-command-matcher
-   '( "#variable" 3   "#local" 3
-      "#cat" 0        "#format" 4     "#math" 0       "#replace" 3
-      "#class" 0
-      )
-   (concat "\s+" tintin-arg-new)
-   ))
+  (let ((args-regex (concat "\s+" tintin-arg-new)))
+    (tintin-command-font-lock-matcher variable-command-regex args-regex)))
+(defvar unvariable-command-regex
+  (build-tintin-command-regex '("#unvariable" 5)))
+(defun bare-unvariable-command-matcher (limit)
+  (tintin-command-font-lock-matcher unvariable-command-regex))
+(defun unvariable-command-matcher (limit)
+  (let ((args-regex (concat "\s+" tintin-arg-new)))
+    (tintin-command-font-lock-matcher unvariable-command-regex args-regex)))
+
+;;
+;; Tools for highlighting the #function command, where the first
+;; argument after the command defines a new function
+(defvar function-command-regex
+  (build-tintin-command-regex '("#function" 3)))
+(defun bare-function-command-matcher (limit)
+  (tintin-command-font-lock-matcher function-command-regex))
+(defun function-command-matcher (limit)
+  (let ((args-regex (concat "\s+" tintin-arg-new)))
+    (tintin-command-font-lock-matcher function-command-regex args-regex)))
+(defvar unfunction-command-regex
+  (build-tintin-command-regex '("#unfunction" 5)))
+(defun bare-unfunction-command-matcher (limit)
+  (tintin-command-font-lock-matcher unfunction-command-regex))
+(defun unfunction-command-matcher (limit)
+  (let ((args-regex (concat "\s+" tintin-arg-new)))
+    (tintin-command-font-lock-matcher unfunction-command-regex args-regex)))
+
+
+
 
 (defun statement-command-matcher (limit)
   (build-command-matcher
@@ -211,27 +244,24 @@
     (,'bare-variable-command-matcher (1 'font-lock-keyword-face))
     (,'variable-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face)
-     )
-
+     (2 'font-lock-variable-name-face))
+    (,'bare-unvariable-command-matcher (1 'font-lock-keyword-face))
     (,'unvariable-command-matcher
-     (0 'font-lock-keyword-face)
-     ;; Capture only the first argument (with or without braces) as a variable name
-     (,tintin-endable-token nil nil (1 'tintin-variable-usage-face)))
+     (1 'font-lock-keyword-face)
+     (2 'tintin-variable-usage-face))
 
     ;; Handle variables as they're used
     (,tintin-variable 2 'tintin-variable-usage-face)
 
     ;; User the #function command
+    (,'bare-function-command-matcher (1 'font-lock-keyword-face))
     (,'function-command-matcher
-      (0 'font-lock-keyword-face)
-      ;; Capture the first value after a function definition as the function name
-      (,tintin-token nil nil (1 'font-lock-function-name-face)))
-
+     (1 'font-lock-keyword-face)
+     (2 'font-lock-function-name-face))
+    (,'bare-unfunction-command-matcher (1 'font-lock-keyword-face))
     (,'unfunction-command-matcher
-     (0 'font-lock-keyword-face)
-     ;; Capture only the first argument (with or without braces) as a variable name
-     (,tintin-endable-token nil nil (1 'tintin-variable-usage-face)))
+     (1 'font-lock-keyword-face)
+     (2 'tintin-variable-usage-face))
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)

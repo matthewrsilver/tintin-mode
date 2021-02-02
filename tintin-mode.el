@@ -59,7 +59,7 @@
    "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
 
-(defvar tintin-variable "\\([^\\%][$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-variable "\\(\\([$\&\*]\\){?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
@@ -69,13 +69,12 @@
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
 
-
-
-(defvar tintin-arg "{?\\([a-zA-Z0-9_]*\\)[}\s]")
+(defvar tintin-arg "{?\\([a-zA-Z0-9_$]*\\)[}\s]")
 (defvar tintin-final-arg "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
 (defvar tintin-uncaptured-arg "{?[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
+(defvar tintin-space "\\(?:\s+\\)")
 (defvar tintin-delimiter "\\(?:\s*\\)")
-(defvar tintin-endable "\\(?:\s*;?\\)")
+(defvar tintin-endable "\\(?:\s+;?\\|;\\|$\\)")
 
 (defun initial-substrings-helper (word start)
   (cond
@@ -115,21 +114,30 @@
 ;; argument after the command defines a new variable
 (defvar variable-command-regex
   (build-tintin-command-regex
-   '( "#variable" 3   "#local" 3      "#cat" 0        "#class" 0
+   '( "#variable" 3   "#local" 3      "#class" 0
       "#format" 4     "#math" 0       "#replace" 3
       )))
 (defun bare-variable-command-matcher (limit)
   (tintin-command-font-lock-matcher variable-command-regex tintin-endable))
 (defun variable-command-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter tintin-arg)))
+  (let ((args-regex (concat tintin-space tintin-arg)))
     (tintin-command-font-lock-matcher variable-command-regex args-regex)))
 (defvar unvariable-command-regex
   (build-tintin-command-regex '("#unvariable" 5)))
 (defun bare-unvariable-command-matcher (limit)
   (tintin-command-font-lock-matcher unvariable-command-regex tintin-endable))
 (defun unvariable-command-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter tintin-final-arg)))
+  (let ((args-regex (concat tintin-space tintin-final-arg)))
     (tintin-command-font-lock-matcher unvariable-command-regex args-regex)))
+
+;;
+;; Tools for highlighting #cat which operates on an existing variable
+(defvar cat-command-regex (build-tintin-command-regex '("#cat" 0)))
+(defun bare-cat-command-matcher (limit)
+  (tintin-command-font-lock-matcher cat-command-regex tintin-endable))
+(defun cat-command-matcher (limit)
+  (let ((args-regex (concat tintin-space tintin-arg)))
+    (tintin-command-font-lock-matcher cat-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting the #function command, where the first
@@ -139,14 +147,14 @@
 (defun bare-function-command-matcher (limit)
   (tintin-command-font-lock-matcher function-command-regex tintin-endable))
 (defun function-command-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter tintin-arg)))
+  (let ((args-regex (concat tintin-space tintin-arg)))
     (tintin-command-font-lock-matcher function-command-regex args-regex)))
 (defvar unfunction-command-regex
   (build-tintin-command-regex '("#unfunction" 5)))
 (defun bare-unfunction-command-matcher (limit)
   (tintin-command-font-lock-matcher unfunction-command-regex tintin-endable))
 (defun unfunction-command-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter tintin-final-arg)))
+  (let ((args-regex (concat tintin-space tintin-final-arg)))
     (tintin-command-font-lock-matcher unfunction-command-regex args-regex)))
 
 ;;
@@ -164,19 +172,19 @@
 (defun list-standard-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-arg
+          tintin-space tintin-arg
           tintin-delimiter list-standard-regex)))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
 (defun list-create-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-arg
+          tintin-space tintin-arg
           tintin-delimiter "{?\\(create\\)}?")))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
 (defun list-size-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-arg
+          tintin-space tintin-arg
           tintin-delimiter "{?\\(size\\)}?"
           tintin-delimiter tintin-final-arg)))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
@@ -184,7 +192,7 @@
 (defun list-setvar4-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-arg
+          tintin-space tintin-arg
           tintin-delimiter list-setvar4-regex
           tintin-delimiter tintin-uncaptured-arg
           tintin-delimiter tintin-final-arg)))
@@ -200,7 +208,7 @@
 (defun loop-command-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-uncaptured-arg
+          tintin-space tintin-uncaptured-arg
           tintin-delimiter tintin-uncaptured-arg
           tintin-delimiter tintin-arg)))
     (tintin-command-font-lock-matcher loop-command-regex args-regex)))
@@ -215,7 +223,7 @@
 (defun parse-foreach-command-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter tintin-uncaptured-arg
+          tintin-space tintin-uncaptured-arg
           tintin-delimiter tintin-arg)))
     (tintin-command-font-lock-matcher parse-foreach-command-regex args-regex)))
 
@@ -242,15 +250,15 @@
      "quiet"     "verbatim"   "verbose")
    t) "}?" ))
 (defun line-standard-mode-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter line-standard-regex)))
+  (let ((args-regex (concat tintin-space line-standard-regex)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
 (defun line-gag-mode-matcher (limit)
-  (let ((args-regex (concat tintin-delimiter "{?\\(gag\\)}?" tintin-endable)))
+  (let ((args-regex (concat tintin-space "{?\\(gag\\)}?" tintin-endable)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
 (defun line-capture-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-delimiter "{?\\(capture\\)}?"
+          tintin-space "{?\\(capture\\)}?"
           tintin-delimiter tintin-arg)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
 
@@ -322,6 +330,12 @@
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face))
 
+    ;; Handle the #cat command
+    (,'bare-cat-command-matcher (1 'font-lock-keyword-face))
+    (,'cat-command-matcher
+     (1 'font-lock-keyword-face)
+     (2 'tintin-variable-usage-face))
+
     ;; Handle the #function command
     (,'bare-function-command-matcher (1 'font-lock-keyword-face))
     (,'function-command-matcher
@@ -378,7 +392,9 @@
     (,tintin-speedwalk-dice 1 'font-lock-warning-face)
 
     ;; Handle variables as they're used
-    (,tintin-variable 2 'tintin-variable-usage-face)
+    (,tintin-variable
+     (2 'default-face t)
+     (3 'tintin-variable-usage-face t))
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)

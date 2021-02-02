@@ -28,8 +28,6 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  - Want to continue to expand the test.tt file to check various cases.
 
 ### Misc
- * two variables together without a space (${first}$second) second doesn't highlight
- * variable at the start of a line doesn't highlight (though it does on load, initially!?)
  * limit %99
  * @ symbol breaks tintin args in matching
  * can still highlight 1d${something}
@@ -37,3 +35,4 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  * clean up regular expressions, figure out word boundaries and special characters {, }, and #.
  * seems somewhat slow to load
  * switch to macros to reduce the number of functions etc necessary? is this even possible?
+ * removed an exclusion on % at the beginning of variable... why was that there?

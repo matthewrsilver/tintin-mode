@@ -6,6 +6,7 @@ not a comment;
 
 #var                                #no || unterminated bare command;
 #vaRiaBle                           #no || unterminated bare command, cases folded;
+#variablezzzz;                      #no XX TODO;
 #var;                               #no || terminated but incomplete command;
 #var x;                             #no || variable without value not highlighted;
 #var x data;                        #no || unbraced value;
@@ -52,4 +53,26 @@ not a comment;
 #lOoP;
 #loop {1} {10} var {};
 
+#parse
+#PaRsE;
+#parse $string i {};
+#parse {%0} elem {};
+
+#foreach $seq elem {};
+#foreach {%1} elem {};
+
 #alias something;
+
+#line
+#linez
+#line;
+#line gag;
+#line strip something something;
+#line capture result something;
+
+
+$first
+#show $first$second
+#show ${first}$second
+#show ${first}${second}
+

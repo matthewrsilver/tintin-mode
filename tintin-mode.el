@@ -59,7 +59,7 @@
    "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
 
-(defvar tintin-variable "[^\\%]\\([$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-variable "\\([^\\%][$\&\*]{?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
@@ -73,7 +73,7 @@
 
 (defvar tintin-arg "{?\\([a-zA-Z0-9_]*\\)[}\s]")
 (defvar tintin-final-arg "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
-(defvar tintin-uncaptured-arg "[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
+(defvar tintin-uncaptured-arg "{?[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
 (defvar tintin-delimiter "\\(?:\s*\\)")
 (defvar tintin-endable "\\(?:\s*;?\\)")
 
@@ -206,22 +206,61 @@
     (tintin-command-font-lock-matcher loop-command-regex args-regex)))
 
 ;;
+;; Tools for highlighting the #parse and #foreach commands, which are
+;; special flow control commands that define a variable for use in the loop
+(defvar parse-foreach-command-regex
+  (build-tintin-command-regex '("#parse" 0 "#foreach" 0)))
+(defun bare-parse-foreach-command-matcher (limit)
+  (tintin-command-font-lock-matcher parse-foreach-command-regex tintin-endable))
+(defun parse-foreach-command-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-delimiter tintin-uncaptured-arg
+          tintin-delimiter tintin-arg)))
+    (tintin-command-font-lock-matcher parse-foreach-command-regex args-regex)))
+
+;;
 ;; Tools for highlighting remaining flow control commands
 (defun flow-control-command-matcher (limit)
   (build-command-matcher
-   '( "#if" 0         "#else" 0       "#elseif" 0
-      "#foreach" 0    "#while" 0      "#parse" 0
-      "#break" 0      "#continue" 4   "#return" 3
+   '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 3
+      "#while" 0      "#break" 0      "#continue" 4
       "#switch" 0     "#case" 0       "#default" 3
       )))
+
+;;
+;; Tools for highlighting the #line command, which has a number of
+;; modes and can, in some cases, define variables
+(defvar line-command-regex
+  (build-tintin-command-regex '("#line" 0)))
+(defun bare-line-command-matcher (limit)
+  (tintin-command-font-lock-matcher line-command-regex tintin-endable))
+(defvar line-standard-regex
+  (concat "{?" (regexp-opt
+   '("strip"     "substitute" "background" "convert" "debug"      "ignore"
+     "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
+     "quiet"     "verbatim"   "verbose")
+   t) "}?" ))
+(defun line-standard-mode-matcher (limit)
+  (let ((args-regex (concat tintin-delimiter line-standard-regex)))
+    (tintin-command-font-lock-matcher line-command-regex args-regex)))
+(defun line-gag-mode-matcher (limit)
+  (let ((args-regex (concat tintin-delimiter "{?\\(gag\\)}?" tintin-endable)))
+    (tintin-command-font-lock-matcher line-command-regex args-regex)))
+(defun line-capture-mode-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-delimiter "{?\\(capture\\)}?"
+          tintin-delimiter tintin-arg)))
+    (tintin-command-font-lock-matcher line-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting scripting commands
 (defun scripting-command-matcher (limit)
   (build-command-matcher
    '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
-      "#highlight" 4  "#substitute" 3 "#ticker" 4     "#gag" 0
-      "#delay" 3      "#line" 0       "#cr" 0
+      "#highlight" 4  "#substitute" 3 "#ticker" 4
+      "#delay" 3      "#cr" 0         "#gag" 0
       "#tab" 0        "#event" 0      "#send" 0
      )))
 (defun unscripting-command-matcher (limit)
@@ -299,8 +338,26 @@
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face))
 
+    ;; Handle the #parse and #foreach commands
+    (,'bare-parse-foreach-command-matcher (1 'font-lock-keyword-face))
+    (,'parse-foreach-command-matcher
+     (1 'font-lock-keyword-face)
+     (2 'font-lock-variable-name-face))
+
     ;; Handle flow control commands:  #if, #while, etc.
     (,'flow-control-command-matcher . 'font-lock-keyword-face)
+
+    (,'bare-line-command-matcher (1 'tintin-command-face))
+    (,'line-standard-mode-matcher
+     (1 'tintin-command-face)
+     (2 'font-lock-type-face))
+    (,'line-gag-mode-matcher
+     (1 'tintin-command-face)
+     (2 'font-lock-type-face))
+    (,'line-capture-mode-matcher
+     (1 'tintin-command-face)
+     (2 'font-lock-type-face)
+     (3 'font-lock-variable-name-face))
 
     ;; Generic scripting commands
     (,'scripting-command-matcher . 'tintin-command-face)

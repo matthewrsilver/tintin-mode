@@ -9,7 +9,6 @@
 
 
 (defvar tintin-mode-hook nil)
-
 (defvar tintin-mode-map
   (let ((map (make-keymap)))
     (define-key map "\C-j" 'newline-and-indent) ;placeholder
@@ -18,48 +17,26 @@
 
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
-(let (
-      (red "#c95d5d") ;
-      (green "#359440") ;
-      (yellow "#c3c95d") ;
-      (blue "#5d74c9") ;
-      (cyan "#5dc9c9") ;
-     )
-
-  (defface tintin-ansi-face
-    `((t (:foreground ,red)))
-    "*Face for ansi color codes."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-capture-face
-    `((t (:foreground ,"#8dd110")))
-    "*Face for capture variables."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-function-face
-    `((t (:foreground ,cyan)))
-    "*Face for user functions."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-command-face
-    `((t (:foreground ,blue)))
-    "*Face for user hash commands."
-    :group 'tintin-faces :group 'faces)
-  (defface tintin-variable-usage-face
-    `((t (:foreground ,"#e09d02")))
-    "*Face for user hash commands."
-    :group 'tintin-faces :group 'faces)
-
-)
+;;
+;; Handle regular expressions, captures, formatters, etc.
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
+(defvar tintin-numeric-capture "[0-9]\\{1,2\\}")
 (defvar tintin-format-numeric "[-+\.][0-9]+s")
+(defvar tintin-regex-classes "\\(+[0-9]*\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
+(defvar tintin-regex-ops (concat "\\(" tintin-regex-classes "\\|[+?.*]\\|[iI]\\)"))
+(defvar tintin-regex-ops-wrapped (concat "!?\\(" tintin-regex-ops "\\|{" tintin-regex-ops "}\\)"))
 (defvar tintin-captures
-  (concat "\\(\\%[\\%\\\\]?"
-   "\\("
-     tintin-format-basic   "\\|"
-     tintin-format-numeric "\\|"
-     "[0-9]+"              "\\|"
-   "\*\\)\\|\\%\\%\\)"))
+  (concat "\\(\\%[\\%\\\\]?\\("
+          tintin-format-basic      "\\|"
+          tintin-format-numeric    "\\|"
+          tintin-regex-ops-wrapped "\\|"
+          tintin-numeric-capture   "\\|"
+          "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
 
-(defvar tintin-variable "\\(\\([$\&\*]\\){?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+;;
+;; Handle various simple font faces
+(defvar tintin-variable "\\(\\([$&*]\\){?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
@@ -69,6 +46,8 @@
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
 
+;;
+;; Provide compact regexes for handling arguments in commands
 (defvar tintin-arg "{?\\([a-zA-Z0-9_$]*\\)\\(?:[}\s]\\|$\\)")
 (defvar tintin-final-arg "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
 (defvar tintin-uncaptured-arg "{?[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
@@ -76,6 +55,8 @@
 (defvar tintin-delimiter "\\(?:\s*\\)")
 (defvar tintin-endable "\\(?:\s+;?\\|;\\|$\\)")
 
+;;
+;; Functions to build up seach-based fontificators
 (defun initial-substrings-helper (word start)
   (cond
    ((> (length word) start)
@@ -94,12 +75,6 @@
      (initial-substrings-list (butlast word-data 2))))
    (t '())))
 
-(defun build-command-matcher (word-data &optional extension)
-  (unless extension (setq extension ""))
-  (setq command-regex (regexp-opt (initial-substrings-list word-data)))
-  (let ((case-fold-search t))
-    (re-search-forward (concat "\\(" command-regex "\\)" extension) limit t)))
-
 (defun build-tintin-command-regex (word-data)
   (regexp-opt (initial-substrings-list word-data)))
 
@@ -107,7 +82,6 @@
   (let ((args (or args tintin-delimiter))
         (case-fold-search t))
     (re-search-forward (concat "\\(" command "\\)" args) limit t)))
-
 
 ;;
 ;; Tools for highlighting #variable-like commands, where the first
@@ -220,12 +194,14 @@
 
 ;;
 ;; Tools for highlighting remaining flow control commands
-(defun flow-control-command-matcher (limit)
-  (build-command-matcher
+(defvar flow-control-command-regex
+  (build-tintin-command-regex
    '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 3
       "#while" 0      "#break" 0      "#continue" 4
       "#switch" 0     "#case" 0       "#default" 3
       )))
+(defun flow-control-command-matcher (limit)
+  (tintin-command-font-lock-matcher flow-control-command-regex tintin-endable))
 
 ;;
 ;; Tools for highlighting the #line command, which has a number of
@@ -255,23 +231,27 @@
 
 ;;
 ;; Tools for highlighting scripting commands
-(defun scripting-command-matcher (limit)
-  (build-command-matcher
+(defvar scripting-command-regex
+  (build-tintin-command-regex
    '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
       "#highlight" 4  "#substitute" 3 "#ticker" 4
       "#delay" 3      "#cr" 0         "#gag" 0
       "#tab" 0        "#event" 0      "#send" 0
-     )))
-(defun unscripting-command-matcher (limit)
-  (build-command-matcher
+      )))
+(defun scripting-command-matcher (limit)
+  (tintin-command-font-lock-matcher scripting-command-regex tintin-endable))
+(defvar unscripting-command-regex
+  (build-tintin-command-regex
    '( "#unaction" 5   "#unalias" 0    "#unticker" 6
       "#ungag" 0      "#untab" 0      "#unevent" 0
       )))
+(defun unscripting-command-matcher (limit)
+  (tintin-command-font-lock-matcher unscripting-command-regex tintin-endable))
 
 ;;
 ;; Tools for highlighting builtin commands
-(defun builtin-command-matcher (limit)
-  (build-command-matcher
+(defvar builtin-command-regex
+  (build-tintin-command-regex
    '( "#all" 0        "#bell" 0       "#buffer" 4     "#chat" 0
       "#commands" 4   "#config" 4     "#cursor" 3     "#daemon" 3
       "#debug" 0      "#draw" 0       "#edit" 0       "#end" 0
@@ -283,6 +263,17 @@
       "#session" 3    "#snoop" 0      "#split" 3      "#ssl" 0
       "#detatch" 0    "#textin" 4     "#write" 0      "#zap" 0
       )))
+(defun builtin-command-matcher (limit)
+  (tintin-command-font-lock-matcher builtin-command-regex tintin-endable))
+
+;;
+;; Set a tintin-specific font-lock-keywords variable that can be
+;; provided to the major mode at the end
+(defface tintin-ansi-face `((t (:foreground ,"#c95d5d"))) "*Face for ansi color codes.")
+(defface tintin-capture-face `((t (:foreground ,"#8dd110"))) "*Face for capture variables.")
+(defface tintin-function-face `((t (:foreground ,"#5dc9c9"))) "*Face for user functions.")
+(defface tintin-command-face `((t (:foreground ,"#5d74c9"))) "*Face for user hash commands.")
+(defface tintin-variable-usage-face `((t (:foreground ,"#e09d02"))) "*Face for variable usages.")
 
 (setq tintin-font-lock-keywords
   `(

@@ -28,13 +28,12 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  - Want to continue to expand the test.tt file to check various cases.
 
 ### Misc
- * limit %99
  * @ symbol breaks tintin args in matching
  * can still highlight 1d${something}
+ * issues with variables inside matchers/formatters e.g. %.${value}s in #format
  * enable configuration of # symbol, as tintin does
  * clean up regular expressions, figure out word boundaries and special characters {, }, and #.
  * seems somewhat slow to load
  * switch to macros to reduce the number of functions etc necessary? is this even possible?
- * removed an exclusion on % at the beginning of variable... why was that there?
  * variables inside other contexts are highlighted, but braces break things
  * variables that use arrays are not correctly highlighted.

@@ -36,6 +36,7 @@ not a comment;
 
 #foreach $seq elem {};
 #foreach {%1} elem {};
+#foreach {$items[%*]} {elem} {};
 
 #alias something;
 
@@ -46,7 +47,34 @@ not a comment;
 #line strip something something;
 #line capture result something;
 
+#var things *hello;
 $first
 #show $first$second
 #show ${first}$second
 #show ${first}${second}
+
+\something
+!something
+#action {~great}
+
+%0
+%1
+%99
+%100
+%%
+%+1s
+%?
+%a
+%!{+2..5w}
+%+
+%?
+%.
+%*
+%I
+%i
+%S
+%+3U
+%.5s
+
+%.${val}s
+1d${something}

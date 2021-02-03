@@ -69,7 +69,7 @@
 (defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
 
-(defvar tintin-arg "{?\\([a-zA-Z0-9_$]*\\)[}\s]")
+(defvar tintin-arg "{?\\([a-zA-Z0-9_$]*\\)\\(?:[}\s]\\|$\\)")
 (defvar tintin-final-arg "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
 (defvar tintin-uncaptured-arg "{?[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
 (defvar tintin-space "\\(?:\s+\\)")
@@ -114,7 +114,7 @@
 ;; argument after the command defines a new variable
 (defvar variable-command-regex
   (build-tintin-command-regex
-   '( "#variable" 3   "#local" 3      "#class" 0
+   '( "#variable" 3   "#local" 3      "#class" 0      "#cat" 0
       "#format" 4     "#math" 0       "#replace" 3
       )))
 (defun bare-variable-command-matcher (limit)
@@ -129,15 +129,6 @@
 (defun unvariable-command-matcher (limit)
   (let ((args-regex (concat tintin-space tintin-final-arg)))
     (tintin-command-font-lock-matcher unvariable-command-regex args-regex)))
-
-;;
-;; Tools for highlighting #cat which operates on an existing variable
-(defvar cat-command-regex (build-tintin-command-regex '("#cat" 0)))
-(defun bare-cat-command-matcher (limit)
-  (tintin-command-font-lock-matcher cat-command-regex tintin-endable))
-(defun cat-command-matcher (limit)
-  (let ((args-regex (concat tintin-space tintin-arg)))
-    (tintin-command-font-lock-matcher cat-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting the #function command, where the first
@@ -327,12 +318,6 @@
      (2 'font-lock-variable-name-face))
     (,'bare-unvariable-command-matcher (1 'font-lock-keyword-face))
     (,'unvariable-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face))
-
-    ;; Handle the #cat command
-    (,'bare-cat-command-matcher (1 'font-lock-keyword-face))
-    (,'cat-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face))
 

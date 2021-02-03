@@ -16,6 +16,9 @@
 #var {} data;                       #no || good that the value isn't highlighted;
 #var x $result;                     #no || variable usage in value is correctly highlighted;
 #var {x$y} data;                    #no || variable usage in variable definition;
+#var {x${y}} data;                  #no XX TODO;
+#var x[something] data;             #no XX TODO;
+#var x[some thing] data;            #no XX TODO;
 #if {$a} {#var x t}{#var x f};      #no || multiple definitions on same line;
 #var x a; #var x b;                 #no || multiple definitions on same line;
 #var x; data;                       #no || prematurely terminated command not highlighted;

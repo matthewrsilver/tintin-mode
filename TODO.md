@@ -36,3 +36,5 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  * seems somewhat slow to load
  * switch to macros to reduce the number of functions etc necessary? is this even possible?
  * removed an exclusion on % at the beginning of variable... why was that there?
+ * variables inside other contexts are highlighted, but braces break things
+ * variables that use arrays are not correctly highlighted.

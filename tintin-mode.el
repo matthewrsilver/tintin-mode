@@ -290,58 +290,77 @@
     (,tintin-captures . 'tintin-capture-face)
     (,tintin-regex-matches . 'tintin-capture-face)
 
+    ;; Handle variables as they're used. This is done up top and we're explicit
+    ;; about the default face of the initial symbol [&$*] so subsequent elements
+    ;; in font-lock-keywords can use the `keep` override mode, filling in the
+    ;; unhighighted adjacent characters as veriable definitions as necessary, for
+    ;; example in this case:
+    ;;
+    ;;   #var var_name thing;
+    ;;   #var {the_$var_name} data;
+    ;;
+    ;; a variable called `the_thing` is created with value `data` and we'd want
+    ;; `the_` to be highlighted as font-lock-variable-name-face but then the
+    ;; remaining portion to be highlighted as a variable usage.
+    (,tintin-variable
+     (2 'default-face)
+     (3 'tintin-variable-usage-face))
+
+    ;; Handle functions as they're used
+    (,tintin-function 1 'tintin-function-face)
+
     ;; Handle the #list command
     (,'bare-list-command-matcher (1 'font-lock-keyword-face))
     (,'list-create-mode-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face)
+     (2 'font-lock-variable-name-face keep)
      (3 'font-lock-type-face))
     (,'list-standard-mode-matcher
      (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face)
+     (2 'tintin-variable-usage-face keep)
      (3 'font-lock-type-face))
     (,'list-size-mode-matcher
      (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face)
+     (2 'tintin-variable-usage-face keep)
      (3 'font-lock-type-face)
-     (4 'font-lock-variable-name-face))
+     (4 'font-lock-variable-name-face keep))
     (,'list-setvar4-mode-matcher
      (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face)
+     (2 'tintin-variable-usage-face keep)
      (3 'font-lock-type-face)
-     (4 'font-lock-variable-name-face))
+     (4 'font-lock-variable-name-face keep))
 
     ;; Handle the variable-defining commands
     (,'bare-variable-command-matcher (1 'font-lock-keyword-face))
     (,'variable-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face))
+     (2 'font-lock-variable-name-face keep))
     (,'bare-unvariable-command-matcher (1 'font-lock-keyword-face))
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face))
+     (2 'tintin-variable-usage-face keep))
 
     ;; Handle the #function command
     (,'bare-function-command-matcher (1 'font-lock-keyword-face))
     (,'function-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-function-name-face))
+     (2 'font-lock-function-name-face keep))
     (,'bare-unfunction-command-matcher (1 'font-lock-keyword-face))
     (,'unfunction-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face))
+     (2 'tintin-variable-usage-face keep))
 
     ;; Handle the #loop command
     (,'bare-loop-command-matcher (1 'font-lock-keyword-face))
     (,'loop-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face))
+     (2 'font-lock-variable-name-face keep))
 
     ;; Handle the #parse and #foreach commands
     (,'bare-parse-foreach-command-matcher (1 'font-lock-keyword-face))
     (,'parse-foreach-command-matcher
      (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face))
+     (2 'font-lock-variable-name-face keep))
 
     ;; Handle flow control commands:  #if, #while, etc.
     (,'flow-control-command-matcher . 'font-lock-keyword-face)
@@ -356,7 +375,7 @@
     (,'line-capture-mode-matcher
      (1 'tintin-command-face)
      (2 'font-lock-type-face)
-     (3 'font-lock-variable-name-face))
+     (3 'font-lock-variable-name-face keep))
 
     ;; Generic scripting commands
     (,'scripting-command-matcher . 'tintin-command-face)
@@ -375,14 +394,6 @@
     (,tintin-escape-codes 1 'font-lock-warning-face)
     (,tintin-unicode-escape-codes 1 'font-lock-warning-face)
     (,tintin-speedwalk-dice 1 'font-lock-warning-face)
-
-    ;; Handle variables as they're used
-    (,tintin-variable
-     (2 'default-face t)
-     (3 'tintin-variable-usage-face t))
-
-    ;; Handle functions as they're used
-    (,tintin-function 1 'tintin-function-face)
 
     ))
 

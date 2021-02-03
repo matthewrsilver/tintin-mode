@@ -1,5 +1,5 @@
-#no comment
-that runs onto next line;
+#no comment and unhighlighted $thing
+that runs onto next line with an unhighlighted $thing too;
 
 #nop comment terminated;
 not a comment;
@@ -46,10 +46,7 @@ not a comment;
 #line strip something something;
 #line capture result something;
 
-
-
 $first
 #show $first$second
 #show ${first}$second
 #show ${first}${second}
-

@@ -20,11 +20,11 @@
 ;;
 ;; Handle regular expressions, captures, formatters, etc.
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
-(defvar tintin-numeric-capture "[0-9]\\{1,2\\}")
-(defvar tintin-format-numeric "[-+\.][0-9]+s")
-(defvar tintin-regex-classes "\\(+[0-9]*\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
+(defvar tintin-format-numeric "[-+.][0-9]+s")
+(defvar tintin-regex-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
 (defvar tintin-regex-ops (concat "\\(" tintin-regex-classes "\\|[+?.*]\\|[iI]\\)"))
 (defvar tintin-regex-ops-wrapped (concat "!?\\(" tintin-regex-ops "\\|{" tintin-regex-ops "}\\)"))
+(defvar tintin-numeric-capture "[1-9]?[0-9]")
 (defvar tintin-captures
   (concat "\\(\\%[\\%\\\\]?\\("
           tintin-format-basic      "\\|"
@@ -32,7 +32,7 @@
           tintin-regex-ops-wrapped "\\|"
           tintin-numeric-capture   "\\|"
           "\*\\)\\|\\%\\%\\)"))
-(defvar tintin-regex-matches "\\(&[0-9]\\{1,2\\}\\)")
+(defvar tintin-regex-matches "\\(&[1-9]?[0-9]\\)")
 
 ;;
 ;; Handle various simple font faces

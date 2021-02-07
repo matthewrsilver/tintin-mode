@@ -37,6 +37,10 @@ not a comment;
 #foreach $seq elem {};
 #foreach {%1} elem {};
 #foreach {$items[%*]} {elem} {};
+#foreach {${items[%*]}} {elem} {};
+#foreach {test_$items[%*]} {elem} {};
+#foreach {test_$items[%*]_info} {elem} {};
+#foreach {test_${items[%*]}_info} {elem} {};
 
 #alias something;
 

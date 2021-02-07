@@ -17,13 +17,24 @@
 
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
+(defun optional-braces (rgx &optional capture)
+  (let ((capture (or capture t)))
+    (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
+
+;; Basic regex components
+(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
+(defvar var-table "\\(?:\\[.*]\\)?")
+(defvar var-prefix "\\([$&*]\\)")
+(defvar hex-chars "[a-fA-F0-9]")
+(defvar brace-chars "\\(\\]\\|\\[\\)\\|[{}]")
+
 ;;
 ;; Handle regular expressions, captures, formatters, etc.
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
 (defvar tintin-format-numeric "[-+.][0-9]+s")
 (defvar tintin-regex-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
 (defvar tintin-regex-ops (concat "\\(" tintin-regex-classes "\\|[+?.*]\\|[iI]\\)"))
-(defvar tintin-regex-ops-wrapped (concat "!?\\(" tintin-regex-ops "\\|{" tintin-regex-ops "}\\)"))
+(defvar tintin-regex-ops-wrapped (concat "!?" (optional-braces tintin-regex-ops) ))
 (defvar tintin-numeric-capture "[1-9]?[0-9]")
 (defvar tintin-captures
   (concat "\\(\\%[\\%\\\\]?\\("
@@ -36,24 +47,31 @@
 
 ;;
 ;; Handle various simple font faces
-(defvar tintin-variable "\\(\\([$&*]\\){?\\([a-zA-Z_][a-zA-Z0-9_]*\\)}?\\)")
+(defvar tintin-variable (concat "\\(" var-prefix (optional-braces (concat var-chars var-table)) "\\)"))
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
-(defvar ansi-color-code "\\(\<[FB]?[0-9a-fA-F]\\{3\\}\>\\)")
+(defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
-(defvar tintin-repeat-cmd "\\(#[0-9]*\\)[\s\;]")
+(defvar tintin-repeat-cmd "\\(#[0-9]*\\)\\(?:[\s\;]\\|$\\)")
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 (defvar tintin-escape-codes "\\(\\\\[acefnrtv]\\|\\\\x\\(7[BD]\\)?\\|\\\\$\\)")
-(defvar tintin-unicode-escape-codes "\\(\\\\u[a-fA-F0-9]\\{4\\}\\|\\\\U[a-fA-F0-9]\\{6\\}\\)[\s\;]")
+(defvar tintin-unicode-escape-codes
+  (concat
+   "\\("
+     "\\\\u" hex-chars "\\{4\\}" "\\|"
+     "\\\\U" hex-chars "\\{6\\}"
+   "\\)[\s\;]"))
 (defvar tintin-speedwalk-dice "\\([0-9]+d[0-9]+\\|\\([0-9]+[nsewud]\\)+\\)\\([\;\}\s]\\|$\\)")
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
-(defvar tintin-arg "{?\\([a-zA-Z0-9_$]*\\)\\(?:[}\s]\\|$\\)")
-(defvar tintin-final-arg "{?\\([a-zA-Z0-9_]*\\)[}\s;]")
-(defvar tintin-uncaptured-arg "{?[@\$\$&*%]*\\(?:{?[a-zA-Z0-9_\"]*}?\\)")
+(defvar capture-chars "[@$&*%a-zA-Z0-9_\"]*")
+(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
+(defvar tintin-uncaptured-arg (concat "{?\\(?:" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
+(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s;]\\|$\\)"))
 (defvar tintin-space "\\(?:\s+\\)")
 (defvar tintin-delimiter "\\(?:\s*\\)")
 (defvar tintin-endable "\\(?:\s+;?\\|;\\|$\\)")
+
 
 ;;
 ;; Functions to build up seach-based fontificators
@@ -277,10 +295,6 @@
 
 (setq tintin-font-lock-keywords
   `(
-    ;; Handle captures in actions, aliases, etc.
-    (,tintin-captures . 'tintin-capture-face)
-    (,tintin-regex-matches . 'tintin-capture-face)
-
     ;; Handle variables as they're used. This is done up top and we're explicit
     ;; about the default face of the initial symbol [&$*] so subsequent elements
     ;; in font-lock-keywords can use the `keep` override mode, filling in the
@@ -295,7 +309,7 @@
     ;; remaining portion to be highlighted as a variable usage.
     (,tintin-variable
      (2 'default-face)
-     (3 'tintin-variable-usage-face))
+     (3 'tintin-variable-usage-face keep))
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)
@@ -385,6 +399,14 @@
     (,tintin-escape-codes 1 'font-lock-warning-face)
     (,tintin-unicode-escape-codes 1 'font-lock-warning-face)
     (,tintin-speedwalk-dice 1 'font-lock-warning-face)
+
+    ;; Handle all braces, overriding all previous and setting to default
+    (,brace-chars (0 'default t))
+
+    ;; Handle captures in actions, aliases, etc.
+    (,tintin-captures (0 'tintin-capture-face t))
+    (,tintin-regex-matches (0 'tintin-capture-face t))
+
 
     ))
 

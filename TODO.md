@@ -23,6 +23,9 @@ How did I only just discover you can comment with /* */
 
 so I need to either find way of getting the syntax entries to play nice, or I need to take one of these comments into the font-lock-keywords portion
 
+... also technically a space is required after the o or the p :O
+ * Oh! I could highlight #nop?[^ ] to indicate a comment is broken
+
 ### Testing
 
  - Want to continue to expand the test.tt file to check various cases.
@@ -34,6 +37,8 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  * enable configuration of # symbol, as tintin does
  * clean up regular expressions, figure out word boundaries and special characters {, }, and #.
  * seems somewhat slow to load
- * switch to macros to reduce the number of functions etc necessary? is this even possible?
  * variables inside other contexts are highlighted, but braces break things
  * variables that use arrays are not correctly highlighted.
+ * spaces, not tabs, are required after table/square braces???
+ * use slightly different color for contents of square braces??
+ * highlight ;; as it is an error, though ignored sfely when reading script files

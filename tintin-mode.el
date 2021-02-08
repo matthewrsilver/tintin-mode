@@ -257,6 +257,7 @@
 
 ;;
 ;; Tools for highlighting scripting commands
+;; TODO come up with a better name because it's confusing with #script command
 (defvar scripting-command-regex
   (build-tintin-command-regex
    '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
@@ -275,6 +276,19 @@
   (tintin-command-font-lock-matcher unscripting-command-regex tintin-endable))
 
 ;;
+;; Tools for highlighting the #script command, which can define a variable sometimes
+(defvar script-command-regex (build-tintin-command-regex '("#script" 4)))
+(defun bare-script-command-matcher (limit)
+  (tintin-command-font-lock-matcher script-command-regex tintin-endable))
+(defun script-variable-command-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-space tintin-arg
+          tintin-delimiter tintin-uncaptured-arg)))
+    (tintin-command-font-lock-matcher script-command-regex args-regex)))
+
+
+;;
 ;; Tools for highlighting builtin commands
 (defvar builtin-command-regex
   (build-tintin-command-regex
@@ -285,7 +299,7 @@
       "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
       "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
       "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
-      "#read" 0       "#scan" 1       "#screen" 3     "#script" 5
+      "#read" 0       "#scan" 1       "#screen" 3
       "#session" 3    "#snoop" 0      "#split" 3      "#ssl" 0
       "#detatch" 0    "#textin" 4     "#write" 0      "#zap" 0
       )))
@@ -408,6 +422,10 @@
 
     ;; Handle tintin builtins for working with tintin or setting up sessions
     (,'builtin-command-matcher . 'font-lock-builtin-face)
+    (,'bare-script-command-matcher (1 'font-lock-builtin-face))
+    (,'script-variable-command-matcher
+     (1 'tintin-command-face)
+     (2 'font-lock-variable-name-face))
 
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)

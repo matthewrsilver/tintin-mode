@@ -1,0 +1,39 @@
+#no Tests for special escapes and character sequences, highlighted as warnings;
+
+#no escape codes;
+\a           #no || escape: beep the terminal;
+\c           #no || escape: send a control character (should char be required?);;
+\ca          #no XX escape: highlight the character after control??;
+\e           #no || escape: start an escape sequence;
+\f           #no || escape: send a form feed;
+\n           #no || escape: send a line feed;
+\r           #no || escape: send a carriage return;
+\t           #no || escape: send a horizontal tab;
+\v           #no || escape: send a vertical;
+\x           #no || escape: should not highlight without chars;
+\xFF         #no XX escape: print an 8-bit character using hex;
+\x7B         #no || escape: send the '{' character;
+\x7D         #no || escape: send the '}' character;
+\x7Z         #no || escape: specific characters required after the 7;
+\x7          #no || escape: character after the 7 isn't optional;
+\u0000       #no || escape: print a 16-bit unicode character using hex;
+\uffff       #no || escape: print a 16-bit unicode character using hex;
+\udeadff     #no || escape: don't highlight additional bits;
+\uffq0       #no || escape: only hex works;
+\U000000     #no || escape: print a 21-bit unicode character using hex;
+\U0000       #no || escape: need all of the bits;
+
+#no Speedwalks and dice rolls;
+3d4          #no || dice: standard roll;
+12d250       #no || dice: extra digits;
+03d4         #no XX dice: zero padding works;
+3d04         #no XX dice: zero padding works;
+0d0          #no XX dice: zeros work;
+1s2e3w1u5d3n #no || speedwalk: standard speedwalk;
+3s0w         #no XX speedwalk: 0s should break I think?;
+3d4e         #no || speedwalk: highlighted in spite of dice roll inside;
+3d           #no || speedwalk: short works, and can end with d;
+3d4d         #no || speedwalk: long can end with d too;
+5w2          #no || speedwalk: missing direction breaks highlighting;
+5w2d2        #no XX speedwalk: dice can sit at the end and highlight counterintuitively;
+

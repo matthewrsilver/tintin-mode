@@ -1,5 +1,8 @@
 #no Tests for regex and pattern matching;
 
+#no Important failing tests;
+%.${val}s                           #no XX this should highlight at least the s, maybe more;
+
 #no Format basic matchers;
 %a                                  #no || format: print corresponding charset character;
 %c                                  #no || format: use a highlight color name;

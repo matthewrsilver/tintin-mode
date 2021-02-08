@@ -57,28 +57,5 @@ $first
 #show ${first}$second
 #show ${first}${second}
 
-\something
-!something
-#action {~great}
 
-%0
-%1
-%99
-%100
-%%
-%+1s
-%?
-%a
-%!{+2..5w}
-%+
-%?
-%.
-%*
-%I
-%i
-%S
-%+3U
-%.5s
 
-%.${val}s
-1d${something}

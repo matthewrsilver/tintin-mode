@@ -1,6 +1,5 @@
 ### Odd commands that need special handling
 
- - The #script command can create a variable optionally
  - The #class command behaves differently than most others
  - The #delay command can sometimes create a named delay, should consider handling it as a variable
  - The #ignore, #info, #kill, and #message commands highlight a _type_ i.e. actions or aliases

@@ -299,9 +299,9 @@
       "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
       "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
       "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
-      "#read" 0       "#scan" 1       "#screen" 3
-      "#session" 3    "#snoop" 0      "#split" 3      "#ssl" 0
-      "#detatch" 0    "#textin" 4     "#write" 0      "#zap" 0
+      "#read" 0       "#scan" 1       "#screen" 3     "#session" 3
+      "#snoop" 0      "#split" 3      "#ssl" 0        "#detatch" 0
+      "#textin" 4     "#write" 0      "#zap" 0
       )))
 (defun builtin-command-matcher (limit)
   (tintin-command-font-lock-matcher builtin-command-regex tintin-endable))

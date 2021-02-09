@@ -16,12 +16,14 @@ not a comment;
 #list seqcreate; create
 #list seq create;
 #list seq {create};
+#list seq{create};
 #list {seq} create;
 #list {seq}create;
 #list {seq} {create};
 #list {seq}{create};
 #list seq add "test";
 #list seq {size} result;
+#list seq size{result};    #no TODO;
 #list {seq}{find}{"test"}{result};
 
 #loop

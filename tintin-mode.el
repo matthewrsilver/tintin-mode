@@ -27,6 +27,7 @@
 (defvar var-prefix "\\([$&*]\\)")
 (defvar hex-chars "[a-fA-F0-9]")
 (defvar default-chars "\\(\\]\\|\\[\\)\\|[{}$]")
+(defvar brace-or-space "\\(?:[}\s;]\\|$\\)")
 
 ;;
 ;; Handle regular expressions, captures, formatters, etc.
@@ -109,12 +110,15 @@
         (case-fold-search t))
     (re-search-forward (concat "\\(" command "\\)" args) limit t)))
 
+(defun build-command-arg-regex (command)
+  (concat "{?" command brace-or-space))
+
 ;;
 ;; Tools for highlighting #variable-like commands, where the first
 ;; argument after the command defines a new variable
 (defvar variable-command-regex
   (build-tintin-command-regex
-   '( "#variable" 3   "#local" 3      "#class" 0      "#cat" 0
+   '( "#variable" 3   "#local" 3      "#cat" 0
       "#format" 4     "#math" 0       "#replace" 3
       )))
 (defun bare-variable-command-matcher (limit)
@@ -129,6 +133,43 @@
 (defun unvariable-command-matcher (limit)
   (let ((args-regex (concat tintin-space tintin-final-arg)))
     (tintin-command-font-lock-matcher unvariable-command-regex args-regex)))
+
+;;
+;; Tools for highlighting the #class command;
+(defvar class-command-regex (build-tintin-command-regex '("#class" 2)))
+(defun bare-class-command-matcher (limit)
+  (tintin-command-font-lock-matcher class-command-regex tintin-endable))
+(defvar class-use-regex
+  (build-command-arg-regex
+   (regexp-opt '("assign" "list" "save" "write" "clear" "close" "kill") t)))
+(defun class-use-command-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-space tintin-arg
+          tintin-delimiter class-use-regex
+          )))
+    (tintin-command-font-lock-matcher class-command-regex args-regex)))
+(defvar class-create-regex
+  (build-command-arg-regex
+   (regexp-opt '("load" "open" "read") t)))
+(defun class-create-command-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-space tintin-arg
+          tintin-delimiter class-create-regex
+          )))
+    (tintin-command-font-lock-matcher class-command-regex args-regex)))
+(defvar class-size-regex
+  (build-command-arg-regex
+   (regexp-opt '("size") t)))
+(defun class-size-command-matcher (limit)
+  (let ((args-regex
+         (concat
+          tintin-space tintin-arg
+          tintin-delimiter class-size-regex
+          tintin-delimiter tintin-final-arg
+          )))
+    (tintin-command-font-lock-matcher class-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting the #function command, where the first
@@ -377,6 +418,22 @@
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face keep))
+
+    ;; Handle the #class command
+    (,'bare-class-command-matcher (1 'font-lock-keyword-face))
+    (,'class-use-command-matcher
+     (1 'font-lock-keyword-face)
+     (2 'tintin-variable-usage-face keep)
+     (3 'font-lock-type-face))
+    (,'class-create-command-matcher
+     (1 'font-lock-keyword-face)
+     (2 'font-lock-variable-name-face keep)
+     (3 'font-lock-type-face))
+    (,'class-size-command-matcher
+     (1 'font-lock-keyword-face)
+     (2 'tintin-variable-usage-face keep)
+     (3 'font-lock-type-face)
+     (4 'font-lock-variable-name-face keep))
 
     ;; Handle the #function command
     (,'bare-function-command-matcher (1 'font-lock-keyword-face))

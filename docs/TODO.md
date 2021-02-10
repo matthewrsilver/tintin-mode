@@ -1,6 +1,13 @@
+### General
+ - Add tests with faceup
+ - Add docstring to .el file and use el2markup to make readme
+   - Update general structure
+   - Update author information
+ - Add example and associated screenshot
+
+
 ### Odd commands that need special handling
 
- - The #class command behaves differently than most others
  - The #delay command can sometimes create a named delay, should consider handling it as a variable
  - The #ignore, #info, #kill, and #message commands highlight a _type_ i.e. actions or aliases
  - The #session command creates a named session
@@ -24,10 +31,6 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
 
 ... also technically a space is required after the o or the p :O
  * Oh! I could highlight #nop?[^ ] to indicate a comment is broken
-
-### Testing
-
- - Want to continue to expand the test.tt file to check various cases.
 
 ### Misc
  * @ symbol breaks tintin args in matching

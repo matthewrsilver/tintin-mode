@@ -168,7 +168,7 @@
   (let ((args-regex (concat tintin-space tintin-arg)))
     (tintin-command-font-lock-matcher variable-command-regex args-regex)))
 (defvar unvariable-command-regex
-  (build-tintin-command-regex '("#unvariable" 5)))
+  (build-tintin-command-regex '("#unvariable" 5 "#unlocal" 5)))
 (defun bare-unvariable-command-matcher (limit)
   (tintin-command-font-lock-matcher unvariable-command-regex tintin-endable))
 (defun unvariable-command-matcher (limit)

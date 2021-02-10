@@ -20,10 +20,8 @@
   (should (tintin-font-lock-test-file "commands/class_command.tt"))
   (should (tintin-font-lock-test-file "commands/list_command.tt"))
   (should (tintin-font-lock-test-file "commands/script_command.tt"))
-
+  (should (tintin-font-lock-test-file "commands/variable_definition_commands.tt"))
   (should (tintin-font-lock-test-file "misc/pattern_matching.tt"))
-  (should (tintin-font-lock-test-file "misc/variable_definitions.tt"))
   (should (tintin-font-lock-test-file "misc/warning_fonts.tt"))
-
   )
 

@@ -1,7 +1,7 @@
 «x:#no Tests for regex and pattern matching;»
 
 «x:#no Important failing tests;»
-«:tintin-capture-face:%.»«D:${»«:tintin-variable-usage-face:val»«D:}»s                           «x:#no XX this should highlight at least the s, maybe more;»
+«x:#no %.${val}s                           #no XX this should highlight at least the s, maybe more;»
 
 «x:#no Format basic matchers;»
 «:tintin-capture-face:%a»                                  «x:#no || format: print corresponding charset character;»

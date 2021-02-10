@@ -16,13 +16,15 @@
 «k:#var» «D:{}» data;                       «x:#no || good that the value isn't highlighted;»
 «k:#var» «v:x» «D:$»«:tintin-variable-usage-face:result»;                     «x:#no || variable usage in value is correctly highlighted;»
 «k:#var» «D:{»«v:x»«D:$»«:tintin-variable-usage-face:y»«D:}» data;                    «x:#no || variable usage in variable definition;»
-«k:#var» «D:{»x«D:${»«:tintin-variable-usage-face:y»«D:}}» data;                  «x:#no XX TODO;»
-«k:#var» «v:x»«D:[»«v:something»«D:]» data;             «x:#no XX TODO;»
-«k:#var» «v:x»«D:[»«v:some thing»«D:]» data;            «x:#no XX TODO;»
+«x:#no #var {x${y}} data;»              «x:#no XX TODO;»
+«k:#var» «v:x»«D:[»«v:something»«D:]» data;             «x:#no || array/table highlighted just like variable;»
+«k:#var» «v:x»«D:[»«v:some thing»«D:]» data;            «x:#no || array/table highlighted just like variable, even with spaces;»
+«k:#var» «v:x»«D:[»«v:some »«D:$»«:tintin-variable-usage-face:thing»«D:]» data;           «x:#no || array/table highlighted with variable usage;»
+«k:#var» «v:x»«D:[»«v:some »«D:${»«:tintin-variable-usage-face:thing»«D:}]» data;         «x:#no || array/table highlighted with braced variable usage;»
 «k:#if »«D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#var» «v:x» t«D:}{»«k:#var» «v:x» f«D:}»;      «x:#no || multiple definitions on same line;»
 «k:#var» «v:x» a; «k:#var» «v:x» b;                 «x:#no || multiple definitions on same line;»
 «k:#var» x; data;                       «x:#no || prematurely terminated command not highlighted;»
-«k:#unvar»;                             «x:#no || unterminated bare command;»
+«k:#unvar»;                             «x:#no || bare unvariable command;»
 «k:#unvar» «:tintin-variable-usage-face:x»;                           «x:#no || unbraced variable;»
 «k:#unvar» «D:{»«:tintin-variable-usage-face:x»«D:}»;                         «x:#no || braced variable;»
 
@@ -45,10 +47,9 @@
 «k:#if »«D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#local» «v:x» t«D:}{»«k:#local» «v:x» f«D:}»;  «x:#no || multiple definitions on same line;»
 «k:#local» «v:x» a; «k:#local» «v:x» b;             «x:#no || multiple definitions on same line;»
 «k:#local» x; data;                     «x:#no || prematurely terminated command not highlighted;»
-#unlocal;                           «x:#no XX not implemented in current tintin version;»
-#unlocal x;                         «x:#no XX not implemented in current tintin version;»
-#unlocal «D:{»x«D:}»;                       «x:#no XX not implemented in current tintin version;»
-
+«k:#unlocal»;                           «x:#no || bare unlocal command;»
+«k:#unlocal» «:tintin-variable-usage-face:x»;                         «x:#no || unlocal with unbraced variable;»
+«k:#unlocal» «D:{»«:tintin-variable-usage-face:x»«D:}»;                       «x:#no || unlocal with braced variable;»
 
 «k:#cat»                                «x:#no || unterminated bare command;»
 «k:#caT»                                «x:#no || unterminated bare command, cases folded;»

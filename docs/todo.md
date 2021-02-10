@@ -1,10 +1,9 @@
 ### General
- - Add tests with faceup
- - Add docstring to .el file and use el2markup to make readme
-   - Update general structure
-   - Update author information
  - Add example and associated screenshot
-
+ - Expand documentation to cover the basic competencies
+ - Add a list of known problems
+ - Work through issues exposed in warning fonts test
+ - Need to go back through the tests now and clean up
 
 ### Odd commands that need special handling
 
@@ -15,22 +14,6 @@
 
 Work out a generic tintin token regexp
  - oddities with associative arrays/tables which can include spaces
-
-### Comments!
-
-How did I only just discover you can comment with /* */
-
-...unfortunately this standard method conflicts with the #no.*; style comment:
-
-```
-(modify-syntax-entry ?\/ ". 14" st)
-(modify-syntax-entry ?* ". 23" st)
-```
-
-so I need to either find way of getting the syntax entries to play nice, or I need to take one of these comments into the font-lock-keywords portion
-
-... also technically a space is required after the o or the p :O
- * Oh! I could highlight #nop?[^ ] to indicate a comment is broken
 
 ### Misc
  * @ symbol breaks tintin args in matching
@@ -43,4 +26,5 @@ so I need to either find way of getting the syntax entries to play nice, or I ne
  * variables that use arrays are not correctly highlighted.
  * spaces, not tabs, are required after table/square braces???
  * use slightly different color for contents of square braces??
- * highlight ;; as it is an error, though ignored sfely when reading script files
+ * highlight ;; as it is an error, though ignored safely when reading script files
+ * highlight #nop?[^ ] to indicate a comment is broken

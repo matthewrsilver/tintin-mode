@@ -73,7 +73,7 @@
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
-(defvar capture-chars "[@$&*%a-zA-Z0-9_\"]*")
+(defvar capture-chars "[@$&*%a-zA-Z0-9_\"]+")
 (defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
 (defvar tintin-uncaptured-arg (concat "{?\\(?:" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
 (defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s;]\\|$\\)"))
@@ -197,30 +197,36 @@
 (defun bare-list-command-matcher (limit)
   (tintin-command-font-lock-matcher list-command-regex tintin-endable))
 (defvar list-standard-regex
-  (concat "{?" (regexp-opt
-   '("add"       "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
-     "order"     "shuffle"   "set"       "simplify"  "sort"       "tokenize")
-   t) "}?" ))
+  (build-command-arg-regex
+   (regexp-opt
+    '("add"      "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
+     "order"     "shuffle"   "set"       "simplify"  "sort")
+   t)))
 (defun list-standard-mode-matcher (limit)
   (let ((args-regex
          (concat
           tintin-space tintin-arg
           tintin-delimiter list-standard-regex)))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
+(defvar list-create-regex
+  (build-command-arg-regex (regexp-opt '("create" "tokenize") t)))
 (defun list-create-mode-matcher (limit)
   (let ((args-regex
          (concat
           tintin-space tintin-arg
-          tintin-delimiter "{?\\(create\\)}?")))
+          tintin-delimiter list-create-regex)))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
+(defvar list-size-regex
+  (build-command-arg-regex (regexp-opt '("size") t)))
 (defun list-size-mode-matcher (limit)
   (let ((args-regex
          (concat
           tintin-space tintin-arg
-          tintin-delimiter "{?\\(size\\)}?"
+          tintin-delimiter list-size-regex
           tintin-delimiter tintin-final-arg)))
     (tintin-command-font-lock-matcher list-command-regex args-regex)))
-(defvar list-setvar4-regex (concat "{?" (regexp-opt '("find" "get") t) "}?" ))
+(defvar list-setvar4-regex
+  (build-command-arg-regex (regexp-opt '("find" "get") t)))
 (defun list-setvar4-mode-matcher (limit)
   (let ((args-regex
          (concat
@@ -278,43 +284,47 @@
 (defun bare-line-command-matcher (limit)
   (tintin-command-font-lock-matcher line-command-regex tintin-endable))
 (defvar line-standard-regex
-  (concat "{?" (regexp-opt
-   '("strip"     "substitute" "background" "convert" "debug"      "ignore"
-     "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
-     "quiet"     "verbatim"   "verbose")
-   t) "}?" ))
+  (build-command-arg-regex
+   (regexp-opt
+    '("strip"     "substitute" "background" "convert" "debug"      "ignore"
+      "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
+      "quiet"     "verbatim"   "verbose")
+    t)))
 (defun line-standard-mode-matcher (limit)
   (let ((args-regex (concat tintin-space line-standard-regex)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
+(defvar line-gag-regex
+    (build-command-arg-regex (regexp-opt '("gag") t)))
 (defun line-gag-mode-matcher (limit)
-  (let ((args-regex (concat tintin-space "{?\\(gag\\)}?" tintin-endable)))
+  (let ((args-regex (concat tintin-space line-gag-regex tintin-endable)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
+(defvar line-capture-regex
+    (build-command-arg-regex (regexp-opt '("capture") t)))
 (defun line-capture-mode-matcher (limit)
   (let ((args-regex
          (concat
-          tintin-space "{?\\(capture\\)}?"
+          tintin-space line-capture-regex
           tintin-delimiter tintin-arg)))
     (tintin-command-font-lock-matcher line-command-regex args-regex)))
 
 ;;
-;; Tools for highlighting scripting commands
-;; TODO come up with a better name because it's confusing with #script command
-(defvar scripting-command-regex
+;; Tools for highlighting mud scripting commands
+(defvar mud-command-regex
   (build-tintin-command-regex
    '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
       "#highlight" 4  "#substitute" 3 "#ticker" 4
       "#delay" 3      "#cr" 0         "#gag" 0
       "#tab" 0        "#event" 0      "#send" 0
       )))
-(defun scripting-command-matcher (limit)
-  (tintin-command-font-lock-matcher scripting-command-regex tintin-endable))
-(defvar unscripting-command-regex
+(defun mud-command-matcher (limit)
+  (tintin-command-font-lock-matcher mud-command-regex tintin-endable))
+(defvar unmud-command-regex
   (build-tintin-command-regex
    '( "#unaction" 5   "#unalias" 0    "#unticker" 6
       "#ungag" 0      "#untab" 0      "#unevent" 0
       )))
-(defun unscripting-command-matcher (limit)
-  (tintin-command-font-lock-matcher unscripting-command-regex tintin-endable))
+(defun unmud-command-matcher (limit)
+  (tintin-command-font-lock-matcher unmud-command-regex tintin-endable))
 
 ;;
 ;; Tools for highlighting the #script command, which can define a variable sometimes
@@ -472,9 +482,9 @@
      (2 'font-lock-type-face)
      (3 'font-lock-variable-name-face keep))
 
-    ;; Generic scripting commands
-    (,'scripting-command-matcher . 'tintin-command-face)
-    (,'unscripting-command-matcher . 'tintin-command-face)
+    ;; Generic mud scripting commands
+    (,'mud-command-matcher . 'tintin-command-face)
+    (,'unmud-command-matcher . 'tintin-command-face)
     (,tintin-repeat-cmd 1 'tintin-command-face)
 
     ;; Handle tintin builtins for working with tintin or setting up sessions

@@ -19,7 +19,7 @@ Work out a generic tintin token regexp
  * @ symbol breaks tintin args in matching
  * can still highlight 1d${something}
  * issues with variables inside matchers/formatters e.g. %.${value}s in #format
- * enable configuration of # symbol, as tintin does
+ * enable configuration of # symbol and ~ symbol, as tintin does
  * clean up regular expressions, figure out word boundaries and special characters {, }, and #.
  * seems somewhat slow to load
  * variables inside other contexts are highlighted, but braces break things

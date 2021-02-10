@@ -12,6 +12,12 @@ $ make test
 
 When modifying the `.tt` files that are used in these tests, it's important to regenerate the associated `.tt.faceup` files that pick up the highlighting and generate the appropriate faceup markup. To do this, open the file that is to be tested and use <kbd>M-x faceup-write-file RET</kbd> to generate the faceup file.
 
+To discover problematic tests that are "passing" but highlighting incorrectly, grep through test files for indicative text:
+
+```bash
+$ grep -rnIi -v "^#no" tests/*/*.tt | grep -i "XX\|TODO"
+```
+
 ## Generating README.md
 
 The README is converted from `tintin-mode.el` by [el2markdown](https://github.com/Lindydancer/el2markdown). Additional documentation is available there, but with `el2markdown` cloned inside `.emacs.d`, the following command does the trick:

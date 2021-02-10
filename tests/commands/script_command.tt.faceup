@@ -1,0 +1,7 @@
+«x:#no Tests for the #script command;»
+
+«b:#script» «D:{»ruby -e 'print "«:tintin-command-face:#show »hello world"'«D:}»;
+«b:#script» «D:{»python -c 'print "«:tintin-command-face:#show »hello world"'«D:}»;
+«b:#script» «D:{»php -r 'echo "«:tintin-command-face:#show »hello world"'«D:}»;
+«b:#script» «D:{»«v:path»«D:}» «D:{»pwd«D:}»;
+

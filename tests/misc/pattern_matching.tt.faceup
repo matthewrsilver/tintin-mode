@@ -1,0 +1,98 @@
+«x:#no Tests for regex and pattern matching;»
+
+«x:#no Important failing tests;»
+«:tintin-capture-face:%.»«D:${»«:tintin-variable-usage-face:val»«D:}»s                           «x:#no XX this should highlight at least the s, maybe more;»
+
+«x:#no Format basic matchers;»
+«:tintin-capture-face:%a»                                  «x:#no || format: print corresponding charset character;»
+«:tintin-capture-face:%c»                                  «x:#no || format: use a highlight color name;»
+«:tintin-capture-face:%d»                                  «x:#no || format: print a number with integer formatting;»
+«:tintin-capture-face:%f»                                  «x:#no || format: perform floating point math;»
+«:tintin-capture-face:%g»                                  «x:#no || format: perform thousand grouping;»
+«:tintin-capture-face:%h»                                  «x:#no || format: turn text into a header line;»
+«:tintin-capture-face:%l»                                  «x:#no || format: lowercase text;»
+«:tintin-capture-face:%m»                                  «x:#no || format: perform mathematical calculation;»
+«:tintin-capture-face:%n»                                  «x:#no || format: capitalize the first letter;»
+«:tintin-capture-face:%p»                                  «x:#no || format: strip leading and trailing spaces;»
+«:tintin-capture-face:%r»                                  «x:#no || format: reverse text;»
+«:tintin-capture-face:%s»                                  «x:#no || format: print given string;»
+«:tintin-capture-face:%t»                                  «x:#no || format: display time with strftime format;»
+«:tintin-capture-face:%u»                                  «x:#no || format: uppercase text;»
+«:tintin-capture-face:%w»                                  «x:#no || format: store word weapped text in list;»
+«:tintin-capture-face:%x»                                  «x:#no || format: hex, print corresponding charset character;»
+«:tintin-capture-face:%A»                                  «x:#no || format: store corresponding character value;»
+«:tintin-capture-face:%C»                                  «x:#no || format: store number on chronilogical notation;»
+«:tintin-capture-face:%D»                                  «x:#no || format: convert hex to decimal;»
+«:tintin-capture-face:%H»                                  «x:#no || format: store a 64 bit string hash;»
+«:tintin-capture-face:%L»                                  «x:#no || format: store the string length;»
+«:tintin-capture-face:%M»                                  «x:#no || format: convert number to metric;»
+«:tintin-capture-face:%S»                                  «x:#no || format: store the number of spelling errors;»
+«:tintin-capture-face:%T»                                  «x:#no || format: store the epoch time;»
+«:tintin-capture-face:%U»                                  «x:#no || format: store the micro epoch time;»
+«:tintin-capture-face:%X»                                  «x:#no || format: convert dec to hexadecimal;»
+«:tintin-capture-face:%%»                                  «x:#no || format: literal "%" character;»
+%!X                                 «x:#no || format: raw matching is not supported;»
+%«D:{»X«D:}»                                «x:#no || format: braces not supported;»
+
+«x:#no Format numeric matchers;»
+«:tintin-capture-face:%+9s»                                «x:#no || format: pad string with up to 9 spaces;»
+«:tintin-capture-face:%-9s»                                «x:#no || format: post pad string with up to 9 spaces;»
+«:tintin-capture-face:%.8s»                                «x:#no || format: copy at most 8 characters;»
+
+«x:#no Regex capture classes;»
+«:tintin-capture-face:%P»                                  «x:#no || regexp: match 0 to any number of non printable characters;»
+«:tintin-capture-face:%W»                                  «x:#no || regexp: match 0 to any number of non word characters;»
+«:tintin-capture-face:%!W»                                 «x:#no || regexp: raw matching is ok for these matches;»
+«:tintin-capture-face:%{W}»                                «x:#no || regexp: braces are ok for these matches;»
+«:tintin-capture-face:%!{W}»                               «x:#no || regexp: raw matching and braces are ok together;»
+«:tintin-capture-face:%+1a»                                «x:#no || regexp: match one character including newlines;»
+«:tintin-capture-face:%+1A»                                «x:#no || regexp: match one newline;»
+«:tintin-capture-face:%+1d»                                «x:#no || regexp: match one digit;»
+«:tintin-capture-face:%+1D»                                «x:#no || regexp: match one non digit;»
+«:tintin-capture-face:%+1p»                                «x:#no || regexp: match one printable character;»
+«:tintin-capture-face:%+1P»                                «x:#no || regexp: match one non printable character;»
+«:tintin-capture-face:%+1s»                                «x:#no || regexp: match one space;»
+«:tintin-capture-face:%+1S»                                «x:#no || regexp: match one non space;»
+«:tintin-capture-face:%+1u»                                «x:#no || regexp: match one unicode character;»
+«:tintin-capture-face:%+1U»                                «x:#no || regexp: match one non unicode character;»
+«:tintin-capture-face:%+1w»                                «x:#no || regexp: match one word character;»
+«:tintin-capture-face:%+1W»                                «x:#no || regexp: match one non word character;»
+«:tintin-capture-face:%+3..5s»                             «x:#no || regexp: match between three and five space;»
+«:tintin-capture-face:%+0..w»                              «x:#no || regexp: match zero or more word characters;»
+«:tintin-capture-face:%!+0..w»                             «x:#no || regexp: raw matching is ok for these matches;»
+«:tintin-capture-face:%{+0..w}»                            «x:#no || regexp: braces are ok for these mtches;»
+«:tintin-capture-face:%+»                                  «x:#no || regexp: match one to any number of characters;»
+«:tintin-capture-face:%?»                                  «x:#no || regexp: match zero or one character;»
+«:tintin-capture-face:%.»                                  «x:#no || regexp: match one character;»
+«:tintin-capture-face:%!.»                                 «x:#no || regexp: raw matching is ok for these matches;»
+«:tintin-capture-face:%{.}»                                «x:#no || regexp: braces are ok for these matches;»
+«:tintin-capture-face:%*»                                  «x:#no || regexp: match zero to anny number of characters;»
+«:tintin-capture-face:%i»                                  «x:#no || regexp: matching becomes case insensitive;»
+«:tintin-capture-face:%I»                                  «x:#no || regexp: matching becomes case sensitive;»
+«:tintin-capture-face:%{I}»                                «x:#no || regexp: braces are ok for these matches;»
+«:tintin-capture-face:%+»..w                               «x:#no || regexp: there needs to be a first digit;»
+«:tintin-capture-face:%+»1c                                «x:#no || regexp: c is a format matcher but not regexp;»
+
+«x:#no Numeric captures from actions, aliases, etc.;»
+«:tintin-capture-face:%0»                                  «x:#no || the entire matching string;»
+«:tintin-capture-face:%1»                                  «x:#no || match 1;»
+«:tintin-capture-face:%10»                                 «x:#no || match 10;»
+«:tintin-capture-face:%99»                                 «x:#no || match 99 -- the last match;»
+«:tintin-capture-face:%%1»                                 «x:#no || nested match 1;»
+«:tintin-capture-face:%%10»                                «x:#no || nested match 10;»
+«:tintin-capture-face:%%99»                                «x:#no || nested match 99 -- the last match;»
+«:tintin-capture-face:%10»0                                «x:#no || exceeding 99 -- 3rd digit not highlighted;»
+«:tintin-capture-face:%0»0                                 «x:#no || zero pad technically ok but not highlighted;»
+«:tintin-capture-face:%0»1                                 «x:#no || zero pad technically ok but not highlighted;»
+«:tintin-capture-face:%%10»0                               «x:#no || nested exceeding 99 -- 3rd digit not highlighted;»
+«:tintin-capture-face:%%0»0                                «x:#no || nested zero pad technically ok but not highlighted;»
+«:tintin-capture-face:%%0»1                                «x:#no || nested zero pad technically ok but not highlighted;»
+
+«x:#no Regex matches;»
+«:tintin-capture-face:&0»                                  «x:#no || the entire matching string;»
+«:tintin-capture-face:&1»                                  «x:#no || match 1;»
+«:tintin-capture-face:&10»                                 «x:#no || match 10;»
+«:tintin-capture-face:&99»                                 «x:#no || match 99 -- the last match;»
+«:tintin-capture-face:&10»0                                «x:#no || exceeding 99 -- 3rd digit not highlighted;»
+«:tintin-capture-face:&0»0                                 «x:#no || zero pad technically ok but not highlighted;»
+«:tintin-capture-face:&0»1                                 «x:#no || zero pad technically ok but not highlighted;»

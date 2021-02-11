@@ -97,20 +97,30 @@
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 
 ;; There are a number of different escape codes, all beginning with a `\`
-(rx-define basic-escape (any "acefnrtv"))
-(rx-define brace-hex-escape (: "x" (optional (: "7" (any "BD") ))))
+(rx-define basic-escape (any "aefnrtv"))
+(rx-define control-char (: "c" (any alphanumeric)))
+(rx-define brace-hex-escape (: "x" (or (: "7" (any "BD") ) (= 2 hex))))
 (rx-define no-line-feed (: line-end))
 (rx-define unicode-16-bit (: "u" (= 4 hex)))
 (rx-define unicode-21-bit (: "U" (= 6 hex)))
 (defvar tintin-escape-codes (rx (group (: (syntax escape) (or
-    no-line-feed basic-escape brace-hex-escape unicode-16-bit unicode-21-bit)))))
+    no-line-feed basic-escape control-char brace-hex-escape unicode-16-bit unicode-21-bit)))))
 
 ;; Regular expressions for speedwalks and dice rolls, which are syntactically similar
 ;; and collide often, so need to be handled together
+(rx-define start-marker (or (any "{\s") line-start))
+(rx-define end-marker (or (any "}\s;") line-end))
 (rx-define move-direction (any "nsewud"))
 (rx-define no-pad-int (or "0" (: (any "1-9") (* (any "0-9")))))
-(defvar dice-roll (rx (: (+ no-pad-int) "d" (+ no-pad-int) (not move-direction))))
-(defvar speedwalk (rx (+ (: (+ (any "0-9")) move-direction))))
+(defvar dice-roll
+  (rx (: start-marker
+         (group (+ no-pad-int) "d" (+ no-pad-int))
+         (not move-direction)
+         end-marker)))
+(defvar speedwalk
+  (rx (: start-marker
+         (group (+ (: (+ (any "0-9")) move-direction)))
+         end-marker)))
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
@@ -542,8 +552,8 @@
     ;; Handle special symbols, speedwalk, and dice rolls
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,tintin-escape-codes 1 'font-lock-warning-face keep)
-    (,speedwalk . 'font-lock-warning-face)
-    (,dice-roll (0 'font-lock-warning-face keep))
+    (,speedwalk (1 'font-lock-warning-face))
+    (,dice-roll (1 'font-lock-warning-face keep))
 
     ))
 

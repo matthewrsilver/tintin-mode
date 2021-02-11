@@ -2,20 +2,20 @@
 
 «x:#no Escape codes;»
 «w:\a»                                      «x:#no || escape: beep the terminal;»
-«w:\c»                                      «x:#no XX escape: control character required;»
-«w:\c»a                                     «x:#no XX escape: highlight the character after control;»
+«w:\»c                                      «x:#no || escape: control character required;»
+«w:\ca»                                     «x:#no || escape: highlight the character after control;»
 «w:\e»                                      «x:#no || escape: start an escape sequence;»
 «w:\f»                                      «x:#no || escape: send a form feed;»
 «w:\n»                                      «x:#no || escape: send a line feed;»
 «w:\r»                                      «x:#no || escape: send a carriage return;»
 «w:\t»                                      «x:#no || escape: send a horizontal tab;»
 «w:\v»                                      «x:#no || escape: send a vertical;»
-«w:\x»                                      «x:#no || escape: should not highlight without chars;»
-«w:\x»FF                                    «x:#no XX escape: print an 8-bit character using hex;»
+«w:\xFF»                                    «x:#no || escape: print an 8-bit character using hex;»
 «w:\x7B»                                    «x:#no || escape: send the '{' character;»
 «w:\x7D»                                    «x:#no || escape: send the '}' character;»
-«w:\x»7Z                                    «x:#no || escape: specific characters required after the 7;»
-«w:\x»7                                     «x:#no || escape: character after the 7 isn't optional;»
+«w:\»x7Z                                    «x:#no || escape: specific characters required after the 7;»
+«w:\»x7                                     «x:#no || escape: character after the 7 isn't optional;»
+«w:\»x                                      «x:#no || escape: should not highlight without chars;»
 «w:\u0000»                                  «x:#no || escape: print a 16-bit unicode char using hex;»
 «w:\uffff»                                  «x:#no || escape: print a 16-bit unicode char using hex;»
 «w:\udead»ff                                «x:#no || escape: don't highlight additional chars;»
@@ -25,20 +25,20 @@
 «w:\U000000»0                               «x:#no || escape: don't highlight additional chars;»
 
 «x:#no Speedwalks and dice rolls;»
-«w:3d4 »                                    «x:#no || dice: standard roll;»
-«w:12d250 »                                 «x:#no || dice: extra digits;»
-«w:03d4 »                                   «x:#no || dice: zero padding works;»
-«w:3d04 »                                   «x:#no || dice: zero padding works;»
-«w:0d0 »                                    «x:#no || dice: zeros work;»
-«w:1d»«D:${»«:tintin-variable-usage-face:something»«D:}»                          «x:#no || dice: correctly highlighted (but wrong reason);»
+«w:3d4»                                     «x:#no || dice: standard roll;»
+«w:12d250»                                  «x:#no || dice: extra digits;»
+«w:03d4»                                    «x:#no || dice: zero padding works;»
+«w:3d04»                                    «x:#no || dice: zero padding works;»
+«w:0d0»                                     «x:#no || dice: zeros work;»
+1d«D:${»«:tintin-variable-usage-face:something»«D:}»                          «x:#no XX dice: variable blocking rest of dice roll;»
 «D:${»«:tintin-variable-usage-face:something»«D:}»d3                          «x:#no XX dice: variable blocking rest of dice roll;»
 «w:1s2e3w1u5d3n»                            «x:#no || speedwalk: standard speedwalk;»
 «w:3s0w»                                    «x:#no || speedwalk: zeros work;»
 «w:3d4e»                                    «x:#no || speedwalk: work in spite of dice roll inside;»
 «w:3d»                                      «x:#no || speedwalk: short works, and can end with d;»
 «w:3d4d»                                    «x:#no || speedwalk: long can end with d too;»
-«w:5w»2                                     «x:#no || speedwalk: missing direction breaks highlighting;»
-«w:5w2d2 »                                  «x:#no XX speedwalk: no space b/w walk and roll is bad;»
+5w2                                     «x:#no || speedwalk: missing direction breaks highlighting;»
+5w2d2                                   «x:#no || speedwalk: no space b/w walk and roll is bad;»
 
 «x:#no Miscellaneous special characters;»
 «:tintin-command-face:#action »«D:{»«w:~»Text with «:tintin-capture-face:%1» codes.«D:}»;         «x:#no || ~ means color codes must be matched;»

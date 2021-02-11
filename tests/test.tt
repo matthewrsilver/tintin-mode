@@ -15,11 +15,13 @@ not a comment;
 #loop;
 #lOoP;
 #loop {1} {10} var {};
+#loop {1} {@max{}} var {};
 
 #parse
 #PaRsE;
 #parse $string i {};
 #parse {%0} elem {};
+#parse {@stuff{}} elem {};
 
 #foreach $seq elem {};
 #foreach {%1} elem {};

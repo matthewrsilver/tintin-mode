@@ -2,20 +2,20 @@
 
 #no Escape codes;
 \a                                      #no || escape: beep the terminal;
-\c                                      #no XX escape: control character required;
-\ca                                     #no XX escape: highlight the character after control;
+\c                                      #no || escape: control character required;
+\ca                                     #no || escape: highlight the character after control;
 \e                                      #no || escape: start an escape sequence;
 \f                                      #no || escape: send a form feed;
 \n                                      #no || escape: send a line feed;
 \r                                      #no || escape: send a carriage return;
 \t                                      #no || escape: send a horizontal tab;
 \v                                      #no || escape: send a vertical;
-\x                                      #no || escape: should not highlight without chars;
-\xFF                                    #no XX escape: print an 8-bit character using hex;
+\xFF                                    #no || escape: print an 8-bit character using hex;
 \x7B                                    #no || escape: send the '{' character;
 \x7D                                    #no || escape: send the '}' character;
 \x7Z                                    #no || escape: specific characters required after the 7;
 \x7                                     #no || escape: character after the 7 isn't optional;
+\x                                      #no || escape: should not highlight without chars;
 \u0000                                  #no || escape: print a 16-bit unicode char using hex;
 \uffff                                  #no || escape: print a 16-bit unicode char using hex;
 \udeadff                                #no || escape: don't highlight additional chars;
@@ -30,7 +30,7 @@
 03d4                                    #no || dice: zero padding works;
 3d04                                    #no || dice: zero padding works;
 0d0                                     #no || dice: zeros work;
-1d${something}                          #no || dice: correctly highlighted (but wrong reason);
+1d${something}                          #no XX dice: variable blocking rest of dice roll;
 ${something}d3                          #no XX dice: variable blocking rest of dice roll;
 1s2e3w1u5d3n                            #no || speedwalk: standard speedwalk;
 3s0w                                    #no || speedwalk: zeros work;
@@ -38,7 +38,7 @@ ${something}d3                          #no XX dice: variable blocking rest of d
 3d                                      #no || speedwalk: short works, and can end with d;
 3d4d                                    #no || speedwalk: long can end with d too;
 5w2                                     #no || speedwalk: missing direction breaks highlighting;
-5w2d2                                   #no XX speedwalk: no space b/w walk and roll is bad;
+5w2d2                                   #no || speedwalk: no space b/w walk and roll is bad;
 
 #no Miscellaneous special characters;
 #action {~Text with %1 codes.};         #no || ~ means color codes must be matched;

@@ -10,7 +10,7 @@ This major mode focuses on highlighting as many aspects of the TinTin++ scriptin
 possible, grouping commands into functional groups and highlighting specific modes that many
 commands use to accomplish different tasks. An example highlighted tintin script:
 
-![Example TinTin++ script](doc/sample_tintin_script.png)
+![Example TinTin++ script](docs/sample_tintin_script.png)
 
 ## Usage
 

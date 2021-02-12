@@ -1,0 +1,21 @@
+#no tests for variable definition commands;
+
+#all;                                   #no || terminated bare command;
+#all                                    #no || unterminated bare command;
+#al                                     #no || command is too short;
+#allz                                   #no || command is too long;
+#all string;                            #no || command with unbraced argument;
+#all {string};                          #no || command with braced argument;
+
+#bell;                                  #no || terminated bare command;
+#bell                                   #no || unterminated bare command;
+#bel                                    #no || command is too short;
+#bellz                                  #no || command is too long;
+#bell focus on;                         #no XX bell focus set to "on";
+#bell focus {on};                       #no XX bell focus set to "on";
+#bell focus{on};                        #no || spaces are needed after args without braces;
+#bell focuson;                          #no || spaces are needed after args without braces;
+#bell {focus} on;                       #no XX bell focus set to "on";
+#bell {focus} {on};                     #no XX bell focus set to "on";
+#bell {focus}{on};                      #no XX bell focus set to "on";
+#bell {focus}on;                        #no XX bell focus set to "on";

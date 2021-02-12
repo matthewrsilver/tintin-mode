@@ -4,4 +4,3 @@
 #script {python -c 'print "#show hello world"'};
 #script {php -r 'echo "#show hello world"'};
 #script {path} {pwd};
-

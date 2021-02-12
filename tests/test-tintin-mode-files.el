@@ -17,6 +17,7 @@
 (faceup-defexplainer tintin-font-lock-test-file)
 
 (ert-deftest tintin-font-lock-file-test ()
+  (should (tintin-font-lock-test-file "commands/builtin_commands.tt"))
   (should (tintin-font-lock-test-file "commands/class_command.tt"))
   (should (tintin-font-lock-test-file "commands/list_command.tt"))
   (should (tintin-font-lock-test-file "commands/script_command.tt"))

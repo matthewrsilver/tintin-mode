@@ -68,7 +68,7 @@
 (defvar var-prefix "\\([$&*]\\)")
 (defvar hex-chars "[a-fA-F0-9]")
 (defvar default-chars "\\(\\]\\|\\[\\)\\|[{}$]")
-(defvar brace-or-space "\\(?:[}\s;]\\|$\\)")
+(defvar brace-or-space "\\(?:[}\s\t;]\\|$\\)")
 
 ;;
 ;; Handle regular expressions, captures, formatters, etc.
@@ -93,7 +93,7 @@
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
-(defvar tintin-repeat-cmd "\\(#[0-9]+\\)\\(?:[\s\;]\\|$\\)")
+(defvar tintin-repeat-cmd "\\(#[0-9]+\\)\\(?:[\s\t;]\\|$\\)")
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 
 ;; There are a number of different escape codes, all beginning with a `\`
@@ -108,8 +108,8 @@
 
 ;; Regular expressions for speedwalks and dice rolls, which are syntactically similar
 ;; and collide often, so need to be handled together
-(rx-define start-marker (or (any "{\s") line-start))
-(rx-define end-marker (or (any "}\s;") line-end))
+(rx-define start-marker (or (any "{\s\t") line-start))
+(rx-define end-marker (or (any "}\s\t;") line-end))
 (rx-define move-direction (any "nsewud"))
 (rx-define no-pad-int (or "0" (: (any "1-9") (* (any "0-9")))))
 (defvar dice-roll
@@ -125,12 +125,12 @@
 ;;
 ;; Provide compact regexes for handling arguments in commands
 (defvar capture-chars "[@$&*%a-zA-Z0-9_\"]+")
-(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
-(defvar tintin-uncaptured-arg (concat "{?\\(?:" capture-chars var-table "\\)\\(?:[}\s]\\|$\\)"))
-(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s;]\\|$\\)"))
-(defvar tintin-space "\\(?:\s+\\)")
-(defvar tintin-delimiter "\\(?:\s*\\)")
-(defvar tintin-endable "\\(?:\s+;?\\|;\\|$\\)")
+(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
+(defvar tintin-uncaptured-arg (concat "{?\\(?:" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
+(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t;]\\|$\\)"))
+(defvar tintin-space "\\(?:[\s\t]+\\)")
+(defvar tintin-delimiter "\\(?:[\s\t]*\\)")
+(defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
 
 
 ;;
@@ -450,7 +450,7 @@
     (,tintin-function 1 'tintin-function-face)
 
     ;; Handle the #list command
-    (,'bare-list-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-list-command-matcher 1 'font-lock-keyword-face)
     (,'list-create-mode-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep)
@@ -471,17 +471,17 @@
      (4 'font-lock-variable-name-face keep))
 
     ;; Handle the variable-defining commands
-    (,'bare-variable-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-variable-command-matcher 1 'font-lock-keyword-face)
     (,'variable-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep))
-    (,'bare-unvariable-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face keep))
 
     ;; Handle the #class command
-    (,'bare-class-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-class-command-matcher 1 'font-lock-keyword-face)
     (,'class-use-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face keep)
@@ -497,31 +497,31 @@
      (4 'font-lock-variable-name-face keep))
 
     ;; Handle the #function command
-    (,'bare-function-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-function-command-matcher 1 'font-lock-keyword-face)
     (,'function-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-function-name-face keep))
-    (,'bare-unfunction-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-unfunction-command-matcher 1 'font-lock-keyword-face)
     (,'unfunction-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face keep))
 
     ;; Handle the #loop command
-    (,'bare-loop-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-loop-command-matcher 1 'font-lock-keyword-face)
     (,'loop-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep))
 
     ;; Handle the #parse and #foreach commands
-    (,'bare-parse-foreach-command-matcher (1 'font-lock-keyword-face))
+    (,'bare-parse-foreach-command-matcher 1 'font-lock-keyword-face)
     (,'parse-foreach-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep))
 
     ;; Handle flow control commands:  #if, #while, etc.
-    (,'flow-control-command-matcher . 'font-lock-keyword-face)
+    (,'flow-control-command-matcher 1 'font-lock-keyword-face)
 
-    (,'bare-line-command-matcher (1 'tintin-command-face))
+    (,'bare-line-command-matcher 1 'tintin-command-face)
     (,'line-standard-mode-matcher
      (1 'tintin-command-face)
      (2 'font-lock-type-face))
@@ -534,13 +534,13 @@
      (3 'font-lock-variable-name-face keep))
 
     ;; Generic mud scripting commands
-    (,'mud-command-matcher . 'tintin-command-face)
-    (,'unmud-command-matcher . 'tintin-command-face)
+    (,'mud-command-matcher 1 'tintin-command-face)
+    (,'unmud-command-matcher 1 'tintin-command-face)
     (,tintin-repeat-cmd 1 'tintin-command-face)
 
     ;; Handle tintin builtins for working with tintin or setting up sessions
-    (,'builtin-command-matcher . 'font-lock-builtin-face)
-    (,'bare-script-command-matcher (1 'font-lock-builtin-face))
+    (,'builtin-command-matcher 1 'font-lock-builtin-face)
+    (,'bare-script-command-matcher 1 'font-lock-builtin-face)
     (,'script-variable-command-matcher
      (1 'tintin-command-face)
      (2 'font-lock-variable-name-face))
@@ -552,8 +552,8 @@
     ;; Handle special symbols, speedwalk, and dice rolls
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,tintin-escape-codes 1 'font-lock-warning-face keep)
-    (,speedwalk (1 'font-lock-warning-face))
-    (,dice-roll (1 'font-lock-warning-face keep))
+    (,speedwalk 1 'font-lock-warning-face)
+    (,dice-roll 1 'font-lock-warning-face keep)
 
     ))
 
@@ -570,9 +570,6 @@
     (modify-syntax-entry ?n ". 2" st) ;  `#n` or
     (modify-syntax-entry ?N ". 2" st) ;  `#N`
     (modify-syntax-entry ?\; ">" st)  ; and run until terminated by a semicolon!
-
-    (modify-syntax-entry ?{ "(}" st)
-    (modify-syntax-entry ?} "){" st)
 
     st)
   "Syntax table for tintin-mode")

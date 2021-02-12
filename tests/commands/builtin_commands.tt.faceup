@@ -1,0 +1,21 @@
+«x:#no tests for variable definition commands;»
+
+«b:#all»;                                   «x:#no || terminated bare command;»
+«b:#all»                                    «x:#no || unterminated bare command;»
+#al                                     «x:#no || command is too short;»
+#allz                                   «x:#no || command is too long;»
+«b:#all» string;                            «x:#no || command with unbraced argument;»
+«b:#all» «D:{»string«D:}»;                          «x:#no || command with braced argument;»
+
+«b:#bell»;                                  «x:#no || terminated bare command;»
+«b:#bell»                                   «x:#no || unterminated bare command;»
+#bel                                    «x:#no || command is too short;»
+#bellz                                  «x:#no || command is too long;»
+«b:#bell» focus on;                         «x:#no XX bell focus set to "on";»
+«b:#bell» focus «D:{»on«D:}»;                       «x:#no XX bell focus set to "on";»
+«b:#bell» focus«D:{»on«D:}»;                        «x:#no || spaces are needed after args without braces;»
+«b:#bell» focuson;                          «x:#no || spaces are needed after args without braces;»
+«b:#bell» «D:{»focus«D:}» on;                       «x:#no XX bell focus set to "on";»
+«b:#bell» «D:{»focus«D:}» «D:{»on«D:}»;                     «x:#no XX bell focus set to "on";»
+«b:#bell» «D:{»focus«D:}{»on«D:}»;                      «x:#no XX bell focus set to "on";»
+«b:#bell» «D:{»focus«D:}»on;                        «x:#no XX bell focus set to "on";»

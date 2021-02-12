@@ -17,11 +17,12 @@
 «k:#var» «v:x» «D:$»«:tintin-variable-usage-face:result»;                     «x:#no || variable usage in value is correctly highlighted;»
 «k:#var» «D:{»«v:x»«D:$»«:tintin-variable-usage-face:y»«D:}» data;                    «x:#no || variable usage in variable definition;»
 «x:#no #var {x${y}} data;»              «x:#no XX TODO;»
-«k:#var» «v:x»«D:[»«v:something»«D:]» data;             «x:#no || array/table highlighted just like variable;»
-«k:#var» «v:x»«D:[»«v:some thing»«D:]» data;            «x:#no || array/table highlighted just like variable, even with spaces;»
+«k:#var» «v:x»«D:[»«v:something»«D:]» data;             «x:#no || array/table highlighted as variable;»
+«k:#var» «v:x»«D:[»«v:some thing»«D:]» data;            «x:#no || array/table highlighted as variable, even with spaces;»
+«k:#var» «v:test»«D:[»«v:abc»«D:]»	data;               «x:#no || highlighting works with tab delimiters too;»;
 «k:#var» «v:x»«D:[»«v:some »«D:$»«:tintin-variable-usage-face:thing»«D:]» data;           «x:#no || array/table highlighted with variable usage;»
 «k:#var» «v:x»«D:[»«v:some »«D:${»«:tintin-variable-usage-face:thing»«D:}]» data;         «x:#no || array/table highlighted with braced variable usage;»
-«k:#if »«D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#var» «v:x» t«D:}{»«k:#var» «v:x» f«D:}»;      «x:#no || multiple definitions on same line;»
+«k:#if» «D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#var» «v:x» t«D:}{»«k:#var» «v:x» f«D:}»;      «x:#no || multiple definitions on same line;»
 «k:#var» «v:x» a; «k:#var» «v:x» b;                 «x:#no || multiple definitions on same line;»
 «k:#var» x; data;                       «x:#no || prematurely terminated command not highlighted;»
 «k:#unvar»;                             «x:#no || bare unvariable command;»
@@ -44,7 +45,7 @@
 «k:#local» «D:{}» data;                     «x:#no || good that the value isn't highlighted;»
 «k:#local» «v:x» «D:$»«:tintin-variable-usage-face:result»;                   «x:#no || variable usage in value is correctly highlighted;»
 «k:#local» «D:{»«v:x»«D:$»«:tintin-variable-usage-face:y»«D:}» data;                  «x:#no || variable usage in variable definition;»
-«k:#if »«D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#local» «v:x» t«D:}{»«k:#local» «v:x» f«D:}»;  «x:#no || multiple definitions on same line;»
+«k:#if» «D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#local» «v:x» t«D:}{»«k:#local» «v:x» f«D:}»;  «x:#no || multiple definitions on same line;»
 «k:#local» «v:x» a; «k:#local» «v:x» b;             «x:#no || multiple definitions on same line;»
 «k:#local» x; data;                     «x:#no || prematurely terminated command not highlighted;»
 «k:#unlocal»;                           «x:#no || bare unlocal command;»
@@ -67,6 +68,6 @@
 «k:#cat» «D:{}» data;                       «x:#no || good that the value isn't highlighted;»
 «k:#cat» «v:x» «D:$»«:tintin-variable-usage-face:result»;                     «x:#no || variable usage in value is correctly highlighted;»
 «k:#cat» «D:{»«v:x»«D:$»«:tintin-variable-usage-face:y»«D:}» data;                    «x:#no || variable usage in variable;»
-«k:#if »«D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#cat» «v:x» t«D:}{»«k:#cat» «v:x» f«D:}»;      «x:#no || multiple definitions on same line;»
+«k:#if» «D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#cat» «v:x» t«D:}{»«k:#cat» «v:x» f«D:}»;      «x:#no || multiple definitions on same line;»
 «k:#cat» «v:x» a; «k:#cat» «v:x» b;                 «x:#no || multiple definitions on same line;»
 «k:#cat» x; data;                       «x:#no || prematurely terminated command not highlighted;»

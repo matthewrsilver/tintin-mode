@@ -13,7 +13,7 @@
 ;; possible, grouping commands into functional groups and highlighting specific modes that many
 ;; commands use to accomplish different tasks. An example highlighted tintin script:
 ;;
-;; ![Example TinTin++ script](docs/sample_tintin_script.png){:height="50%" width="50%"}
+;; ![Example TinTin++ script](docs/sample_tintin_script.png)
 
 ;; Usage:
 ;;

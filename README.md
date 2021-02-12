@@ -6,6 +6,12 @@
 
 An emacs major mode for editing [TinTin++][1] scripts.
 
+This major mode focuses on highlighting as many aspects of the TinTin++ scripting language as
+possible, grouping commands into functional groups and highlighting specific modes that many
+commands use to accomplish different tasks. An example highlighted tintin script:
+
+![Example TinTin++ script](doc/sample_tintin_script.png)
+
 ## Usage
 
 To use tintin-mode, add tintin-mode.el alone or in a directory inside `.emacs.d` and then update

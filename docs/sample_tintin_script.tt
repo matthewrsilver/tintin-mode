@@ -1,0 +1,39 @@
+#no Sample TinTin++ script demonstrating tintin-major mode syntax highlighting;
+
+#var char_name {Hero};
+#list salutations create {Hi} {Hello} {Hey there};
+
+#no function to choose a response;
+#function response {
+    #list salutations size num_responses;
+    #math index {1d$num_responses};
+    #list salutations get $index result;
+};
+
+#no respond to people saying hi;
+#action {%1 says, 'hi %2'.} {
+    #local target {friend};
+
+    #no referred to me by name? a real friend!;
+    #if {"%2" == "$char_name"} {
+        #local target %1;
+        #bell;
+        #if {&friends[$target]} {
+            #math new_count {$friends[$target] + 1};
+            #var friends[$target] $new_count;
+        };
+        #else {
+            #var friends[$target] 1;
+        };
+    };
+    say @response{}, ${target}!!;
+};
+
+#no list the friends who have said hi to me;
+#alias show_friends {
+    #show {<fca>My Friends:<099>};
+    #foreach {*friends[]} friend_name {
+        #local count $friends[$friend_name];
+        #show + $friend_name ($count);
+    };
+};

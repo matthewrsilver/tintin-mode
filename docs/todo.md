@@ -1,7 +1,5 @@
 ### General
- * Add example and associated screenshot
  * Expand documentation to cover the basic competencies
- * Add a list of known problems
  * Work through issues exposed in warning fonts test
  * Need to go back through the tests now and clean up
 

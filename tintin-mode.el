@@ -15,6 +15,31 @@
 ;;
 ;; ![Example TinTin++ script](docs/sample_tintin_script.png)
 
+;; Known Issues:
+;;
+;; * Variables with braces `${x}` can disrupt highlighting of command arguments. For example, when
+;;   definig a new variable whose name incorporates the value of that variable
+;;
+;;   ```
+;;   #var {my_${x}} {data};
+;;   ```
+;;
+;;   the non-variable text `my_` should be highlighted as a variable definition but is not. This
+;;   issue will in some cases obliterate highlighting of all arguments associated with the command.
+;;
+;;   A similar issue affects pattern matchers and dice rolls when variables are used within.
+;;
+;; * Comments are highlighted whenever `#no` is found until the next semicolon, as TinTin++ comment
+;;   behavior demands. Currently, this mode does not require a space after `#no` or `#nop`, but if
+;;   no space is present TinTin++ attempts to evaluate subsequent text as part of the command. This
+;;   issue is due to a limit on the number of characters that can be used in syntax table comments,
+;;   but the multi-line requirements make it difficult to use font-locking.
+;;
+;; * A number of commands, for example `#bell` and `#buffer` have special modes that should be
+;;   highlighted as in commands like `#list`.
+;;
+;;
+
 ;; Usage:
 ;;
 ;; To use tintin-mode, add tintin-mode.el alone or in a directory inside `.emacs.d` and then update

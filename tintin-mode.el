@@ -87,7 +87,11 @@
     map)
   "Keymap for tintin major mode")
 
+
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
+
+(defun join (sep lst)
+   (mapconcat 'identity lst sep))
 
 (defun optional-braces (rgx &optional capture)
   (let ((capture (or capture t)))
@@ -137,6 +141,10 @@
 (defvar tintin-escape-codes (rx (group (: (syntax escape) (or
     no-line-feed basic-escape control-char brace-hex-escape unicode-16-bit unicode-21-bit)))))
 
+(defun escape-code-matcher-func (limit)
+  (let ((case-fold-search nil))
+    (re-search-forward tintin-escape-codes limit t)))
+
 ;; Regular expressions for speedwalks and dice rolls, which are syntactically similar
 ;; and collide often, so need to be handled together
 (rx-define start-marker (or (any "{\s\t") line-start))
@@ -185,29 +193,54 @@
    (t '())))
 
 (defun build-tintin-command-regex (word-data)
-  (regexp-opt (initial-substrings-list word-data)))
+  (concat "\\(" (regexp-opt (initial-substrings-list word-data)) "\\)"))
 
 (defun tintin-command-font-lock-matcher (command &optional args)
-  (let ((args (or args tintin-delimiter))
-        (case-fold-search t))
-    (re-search-forward (concat "\\(" command "\\)" args) limit t)))
+  (let ((args (or args tintin-delimiter)))
+    (re-search-forward (concat command args) limit t)))
 
 (defun build-command-arg-regex (command)
   (concat "{?" command brace-or-space))
 
+;;;; generate regex from command and args
+;;(defun tintin-command-matchers (command &optional args)
+;;  (let ((args (or args tintin-delimiter)))
+;;    (concat "\\(" command "\\)" args)))
+
+(defun tintin-command-fontifier (command-list &rest args)
+  (let ((command-regexp (build-tintin-command-regex command-list)))
+        (concat command-regexp tintin-space (join tintin-delimiter args))))
+
+
+
+
+
 ;;
 ;; Tools for highlighting #variable-like commands, where the first
 ;; argument after the command defines a new variable
-(defvar variable-command-regex
-  (build-tintin-command-regex
-   '( "#variable" 3   "#local" 3      "#cat" 0
-      "#format" 4     "#math" 0       "#replace" 3
-      )))
+(defvar variable-commands-list
+  '( "#variable" 3   "#local" 3      "#cat" 0
+     "#format" 4     "#math" 0       "#replace" 3
+     ))
+(defvar variable-command-regex (build-tintin-command-regex variable-commands-list))
 (defun bare-variable-command-matcher (limit)
   (tintin-command-font-lock-matcher variable-command-regex tintin-endable))
-(defun variable-command-matcher (limit)
-  (let ((args-regex (concat tintin-space tintin-arg)))
-    (tintin-command-font-lock-matcher variable-command-regex args-regex)))
+;;(defvar variable-command-matcher
+;;  (let ((args-regex (concat tintin-space tintin-arg)))
+;;    (tintin-command-matchers variable-command-regex args-regex)))
+(defvar variable-command-matcher
+  (tintin-command-fontifier variable-commands-list tintin-arg))
+;;(defun variable-command-matcher (limit)
+;;  (let ((args-regex (concat tintin-space tintin-arg)))
+;;    (tintin-command-font-lock-matcher variable-command-regex args-regex)))
+
+
+
+
+
+
+
+
 (defvar unvariable-command-regex
   (build-tintin-command-regex '("#unvariable" 5 "#unlocal" 5)))
 (defun bare-unvariable-command-matcher (limit)
@@ -503,7 +536,7 @@
 
     ;; Handle the variable-defining commands
     (,'bare-variable-command-matcher 1 'font-lock-keyword-face)
-    (,'variable-command-matcher
+    (,variable-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep))
     (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
@@ -582,7 +615,7 @@
 
     ;; Handle special symbols, speedwalk, and dice rolls
     (,tintin-special-symbols 1 'font-lock-warning-face)
-    (,tintin-escape-codes 1 'font-lock-warning-face keep)
+    (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
     (,speedwalk 1 'font-lock-warning-face)
     (,dice-roll 1 'font-lock-warning-face keep)
 
@@ -615,7 +648,7 @@
   (set (make-local-variable 'tab-width) 4)
   (set (make-local-variable 'comment-start) "#nop")
   (set (make-local-variable 'comment-start-skip) "#nop")
-  (set (make-local-variable 'font-lock-defaults) '(tintin-font-lock-keywords))
+  (set (make-local-variable 'font-lock-defaults) '(tintin-font-lock-keywords nil t))
   (set (make-local-variable 'indent-line-function) 'tintin-indent-line)
   (set (make-local-variable 'defun-prompt-regexp) "^#.*")
   (setq major-mode 'tintin-mode)

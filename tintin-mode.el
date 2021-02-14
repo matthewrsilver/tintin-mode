@@ -207,12 +207,28 @@
 ;;  (let ((args (or args tintin-delimiter)))
 ;;    (concat "\\(" command "\\)" args)))
 
-(defun tintin-command-fontifier (command-list &rest args)
-  (let ((command-regexp (build-tintin-command-regex command-list)))
-        (concat command-regexp tintin-space (join tintin-delimiter args))))
+(make-symbol "tintin-argument")
+(make-symbol "generic-argument")
+(make-symbol "var-assignment")
+(make-symbol "var-usage")
+(make-symbol "command-mode")
 
+(defun arg-info-to-arg (arg-info)
+  (let ((arg-spec (car arg-info)))
+    (cond
+     ((eq arg-spec 'tintin-argument) tintin-arg)
+     (t arg-spec)
+     )))
 
+(defun build-tintin-arg-regexp (args-info)
+  (let ((args (mapcar 'arg-info-to-arg args-info)))
+    (join tintin-delimiter args)))
 
+(defun tintin-command-fontifier (command-list &optional args-info)
+  (let ((command-regexp (build-tintin-command-regex command-list))
+        (args-regexp (build-tintin-arg-regexp args-info))
+        )
+    (concat command-regexp tintin-space args-regexp)))
 
 
 ;;
@@ -229,7 +245,9 @@
 ;;  (let ((args-regex (concat tintin-space tintin-arg)))
 ;;    (tintin-command-matchers variable-command-regex args-regex)))
 (defvar variable-command-matcher
-  (tintin-command-fontifier variable-commands-list tintin-arg))
+  (tintin-command-fontifier variable-commands-list
+                            `((,'tintin-argument 'font-lock-variable-name-face keep))))
+;;                            `((,tintin-arg 'font-lock-variable-name-face keep))))
 ;;(defun variable-command-matcher (limit)
 ;;  (let ((args-regex (concat tintin-space tintin-arg)))
 ;;    (tintin-command-font-lock-matcher variable-command-regex args-regex)))
@@ -251,19 +269,26 @@
 
 ;;
 ;; Tools for highlighting the #class command;
-(defvar class-command-regex (build-tintin-command-regex '("#class" 2)))
+(defvar class-command-list '("#class" 2))
+(defvar class-command-regex (build-tintin-command-regex class-command-list))
 (defun bare-class-command-matcher (limit)
   (tintin-command-font-lock-matcher class-command-regex tintin-endable))
 (defvar class-use-regex
   (build-command-arg-regex
    (regexp-opt '("assign" "list" "save" "write" "clear" "close" "kill") t)))
-(defun class-use-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter class-use-regex
-          )))
-    (tintin-command-font-lock-matcher class-command-regex args-regex)))
+;;(defun class-use-command-matcher (limit)
+;;  (let ((args-regex
+;;         (concat
+;;          tintin-space tintin-arg
+;;          tintin-delimiter class-use-regex
+;;          )))
+;;    (tintin-command-font-lock-matcher class-command-regex args-regex)))
+(defvar class-use-command-matcher
+  (tintin-command-fontifier class-command-list
+                            `((,tintin-arg 'tintin-variable-usage-face keep)
+;;                              (,class-use-regex 'font-lock-type-face))))
+;;                            `((,'tintin-argument 'tintin-variable-usage-face keep)
+                              (,class-use-regex 'font-lock-type-face))))
 (defvar class-create-regex
   (build-command-arg-regex
    (regexp-opt '("load" "open" "read") t)))
@@ -546,7 +571,7 @@
 
     ;; Handle the #class command
     (,'bare-class-command-matcher 1 'font-lock-keyword-face)
-    (,'class-use-command-matcher
+    (,class-use-command-matcher
      (1 'font-lock-keyword-face)
      (2 'tintin-variable-usage-face keep)
      (3 'font-lock-type-face))

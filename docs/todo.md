@@ -12,6 +12,11 @@ Work out a generic tintin token regexp
  * The #bell command has modes that should be highlighted
  * The #buffer command has modes that should be highlighted
 
+### Comments
+ * Switch to using font-lock-multiline?
+   * https://www.gnu.org/software/emacs/manual/html_node/elisp/Multiline-Font-Lock.html#Multiline-Font-Lock
+ * highlight #nop?[^ ] to indicate a comment is broken
+
 ### Misc
  * @ symbol breaks tintin args in matching
  * issues with variables inside matchers/formatters e.g. %.${value}s in #format
@@ -21,4 +26,4 @@ Work out a generic tintin token regexp
  * variables inside other contexts are highlighted, but braces break things
  * use slightly different color for contents of square braces??
  * highlight ;; as it is an error, though ignored safely when reading script files
- * highlight #nop?[^ ] to indicate a comment is broken
+

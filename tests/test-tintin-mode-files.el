@@ -16,13 +16,24 @@
                               (concat tintin-font-lock-test-dir file)))
 (faceup-defexplainer tintin-font-lock-test-file)
 
-(ert-deftest tintin-font-lock-file-test ()
-  (should (tintin-font-lock-test-file "commands/builtin_commands.tt"))
-  (should (tintin-font-lock-test-file "commands/class_command.tt"))
-  (should (tintin-font-lock-test-file "commands/list_command.tt"))
-  (should (tintin-font-lock-test-file "commands/script_command.tt"))
-  (should (tintin-font-lock-test-file "commands/variable_definition_commands.tt"))
-  (should (tintin-font-lock-test-file "misc/pattern_matching.tt"))
-  (should (tintin-font-lock-test-file "misc/warning_fonts.tt"))
-  )
+(ert-deftest tintin-font-lock-builtin-commands-test ()
+  (should (tintin-font-lock-test-file "commands/builtin_commands.tt")))
+
+(ert-deftest tintin-font-lock-class-command-test ()
+  (should (tintin-font-lock-test-file "commands/class_command.tt")))
+
+(ert-deftest tintin-font-lock-list-command-test ()
+  (should (tintin-font-lock-test-file "commands/list_command.tt")))
+
+(ert-deftest tintin-font-lock-script-command-test ()
+  (should (tintin-font-lock-test-file "commands/script_command.tt")))
+
+(ert-deftest tintin-font-lock-veriable-definition-commands-test ()
+  (should (tintin-font-lock-test-file "commands/variable_definition_commands.tt")))
+
+(ert-deftest tintin-font-lock-pattern-matching-test ()
+  (should (tintin-font-lock-test-file "misc/pattern_matching.tt")))
+
+(ert-deftest tintin-font-lock-warning-test ()
+  (should (tintin-font-lock-test-file "misc/warning_fonts.tt")))
 

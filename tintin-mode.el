@@ -207,28 +207,111 @@
 ;;  (let ((args (or args tintin-delimiter)))
 ;;    (concat "\\(" command "\\)" args)))
 
-(make-symbol "tintin-argument")
-(make-symbol "generic-argument")
+;;(make-symbol "tintin-argument") ;; todo kill this
+
+(make-symbol "arg")
+(make-symbol "arg*")
 (make-symbol "var-assignment")
 (make-symbol "var-usage")
-(make-symbol "command-mode")
+(make-symbol "command-type")
 
-(defun arg-info-to-arg (arg-info)
-  (let ((arg-spec (car arg-info)))
-    (cond
-     ((eq arg-spec 'tintin-argument) tintin-arg)
-     (t arg-spec)
-     )))
 
-(defun build-tintin-arg-regexp (args-info)
-  (let ((args (mapcar 'arg-info-to-arg args-info)))
-    (join tintin-delimiter args)))
 
-(defun tintin-command-fontifier (command-list &optional args-info)
-  (let ((command-regexp (build-tintin-command-regex command-list))
-        (args-regexp (build-tintin-arg-regexp args-info))
-        )
+;;(defun arg-spec-to-arg (arg-spec)
+;;  (cond
+;;   ((eq arg-spec 'tintin-argument) tintin-arg)   ;; todo kill this
+;;   ((eq arg-spec 'var-assignment) tintin-arg)    ;; todo check set membership for several
+;;   ((eq arg-spec 'var-usage) tintin-arg)
+;;   ((eq arg-spec 'command-type) (car (cdr arg-info)))
+;;   ((eq arg-spec 'arg) tintin-arg)
+;;   ((eq arg-spec 'arg*) "")
+;;   (t arg-spec)
+;;   ))
+;;
+;;(defun arg-info-to-arg (arg-info)
+;;  (let ((arg-spec (car arg-info)))
+;;    (arg-spec-to-arg arg-spec)))
+
+;;(defun build-tintin-arg-regexp-old (args-info)
+;;  (let ((args (mapcar 'arg-info-to-arg args-info)))
+;;    (join tintin-delimiter args)))
+;;
+;;(defun tintin-command-fontifier-old (command-list &optional args-info)
+;;  (let ((command-regexp (build-tintin-command-regex command-list))
+;;        (args-regexp (build-tintin-arg-regexp args-info))
+;;        )
+;;    (concat command-regexp tintin-space args-regexp)))
+
+;;(defun build-tintin-arg-regexp (subcommand-spec)
+;;  ""
+;;  (cond
+;;   ;;((stringp subcommand-spec) subcommand-spec)
+;;   ((symbolp subcommand-spec) (arg-spec-to-arg subcommand-spec))
+;;   ((consp subcommand-spec)
+;;    ;; need to handle the case where it's a list of lists or just one
+;;    (let ((args (mapcar 'arg-info-to-arg subcommand-spec)))
+;;      (join tintin-delimiter args)))
+;;   (t (error "Argument specs must be right type"))))
+;;
+;;(defun tintin-command-fontifier (command-list &rest command-subtypes-args)
+;;  (let* ((args-info (car command-subtypes-args))
+;;         (command-regexp (build-tintin-command-regex command-list))
+;;         (args-regexp (build-tintin-arg-regexp args-info))
+;;        )
+;;    (concat command-regexp tintin-space args-regexp)))
+
+
+
+
+(defun arg-symbol-to-regexp (symbol &optional params)
+  (cond
+   ((eq symbol 'command-type)
+    ;; command-type is special; first argument can override
+    (if params (car params) tintin-arg))
+   ((member symbol `(,'var-assignment ,'var-usage ,'arg))
+    tintin-arg)
+   ((eq symbol 'arg*) "")
+   (t (error "Unknown symbol"))
+   ))
+
+(defun argspec-to-fontifier (argspec)
+  (error "argspec-to-fontifier not implemented"))
+
+(defun argspec-to-regexp (argspec)
+  (cond
+   ((consp argspec)
+    (arg-symbol-to-regexp (car argspec)))
+   ((symbolp argspec)
+    (arg-symbol-to-regexp argspec))
+   (t argspec)))
+
+(defun make-tintin-command-group (command-list &rest subtypes)
+  (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
+         (command-regexp (build-tintin-command-regex command-list))
+         (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
+         (args-regexp (join tintin-delimiter args-regexp-list)))
     (concat command-regexp tintin-space args-regexp)))
+
+;;(defun process-subcommand (current-regexp subcommand)
+;;  (let* ((args-regexp-list (mapcar 'argspec-to-regexp subcommand))
+;;         (args-regexp (join tintin-delimiter args-regexp-list)))
+;;    (concat command-regexp tintin-space args-regexp)))
+
+;;(defun generate-subcommand-matches (current-regexp subcommand-matchers remaining-subcommands)
+;;  (cond ((> (length remaining-subcommands) 0)
+;;         (let ((current-subcommand (car remaining-subcommands)))
+;;           (process-subcommand current-regexp current-subcommand)))
+
+
+;;(defun match-tintin-command-group (command-list &rest subtypes)
+;;  (let ((command-regexp (build-tintin-command-regex command-list))))
+
+
+
+
+
+
+
 
 
 ;;
@@ -241,18 +324,21 @@
 (defvar variable-command-regex (build-tintin-command-regex variable-commands-list))
 (defun bare-variable-command-matcher (limit)
   (tintin-command-font-lock-matcher variable-command-regex tintin-endable))
-;;(defvar variable-command-matcher
-;;  (let ((args-regex (concat tintin-space tintin-arg)))
-;;    (tintin-command-matchers variable-command-regex args-regex)))
 (defvar variable-command-matcher
-  (tintin-command-fontifier variable-commands-list
-                            `((,'tintin-argument 'font-lock-variable-name-face keep))))
-;;                            `((,tintin-arg 'font-lock-variable-name-face keep))))
-;;(defun variable-command-matcher (limit)
-;;  (let ((args-regex (concat tintin-space tintin-arg)))
-;;    (tintin-command-font-lock-matcher variable-command-regex args-regex)))
+  (make-tintin-command-group variable-commands-list `(,'var-assignment)))
+;;                            `((,'var-assignment 'font-lock-variable-name-face keep))))
+;;                            `((,'var-assignment))))
 
-
+;; How do I want this to look?
+;;
+;;    (tintin-command variable-keywords variable-assignment arg*)
+;;    (make-cmd-type-arg class-use-arg class-use-strs)
+;;    (make-cmd-type-arg class-create-arg class-use-strs)
+;;    (make-cmd-type-arg class-size-arg class-use-strs)
+;;    (tintin-command class-keywords
+;;                    `((variable-usage class-use-arg arg*)
+;;                      (variable-assignment class-create-arg arg*)
+;;                      (variable-usage class-size-arg variable-assignment))
 
 
 
@@ -283,12 +369,12 @@
 ;;          tintin-delimiter class-use-regex
 ;;          )))
 ;;    (tintin-command-font-lock-matcher class-command-regex args-regex)))
-(defvar class-use-command-matcher
-  (tintin-command-fontifier class-command-list
-                            `((,tintin-arg 'tintin-variable-usage-face keep)
+
+;;  (tintin-command-fontifier class-command-list ;;(list 'var-usage 'class-use-regex) `()))
+;;                            `((,'var-usage 'tintin-variable-usage-face keep)
 ;;                              (,class-use-regex 'font-lock-type-face))))
 ;;                            `((,'tintin-argument 'tintin-variable-usage-face keep)
-                              (,class-use-regex 'font-lock-type-face))))
+;;                              ,class-use-regex)))
 (defvar class-create-regex
   (build-command-arg-regex
    (regexp-opt '("load" "open" "read") t)))
@@ -310,6 +396,13 @@
           tintin-delimiter tintin-final-arg
           )))
     (tintin-command-font-lock-matcher class-command-regex args-regex)))
+(defvar class-use-command-matcher
+  (make-tintin-command-group class-command-list
+                             `(,'var-usage ,class-use-regex)
+                             `(,'var-assignment ,class-create-regex)
+                             `(,'var-usage ,class-size-regex ,'var-assignment)))
+
+
 
 ;;
 ;; Tools for highlighting the #function command, where the first

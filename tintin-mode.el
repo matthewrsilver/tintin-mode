@@ -602,32 +602,34 @@
 
 
 
-;;(defun arg-symbol-to-regexp (symbol idx)
-;;  (cond
-;;   ((eq symbol 'command-type)
-;;    '(idx 'font-lock-type-face))
-;;   ((eq symbol 'var-assignment)
-;;    '(idx 'font-lock-variable-name-face))
-;;   ((eq symbol 'var-usage)
-;;    '(idx 'tintin-variable-usage-face))
-;;   ((member symbol `(,'arg ,'arg*))
-;;    '())
-;;   (t (error "Unknown symbol"))
-;;   ))
-;;
-;;(defun argspec-to-fontifier (argspec idx)
-;;  (cond
-;;   ((consp argspec)
-;;    (arg-symbol-to-fontifier (car argspec) idx))
-;;   ((symbolp argspec)
-;;    (arg-symbol-to-fontifier argspec idx))
-;;   (t nil)))
-;;
-;;(defun make-highlighters (highlighter-list)
-;;
-;;  )
+(defun arg-symbol-to-fontifier (symbol idx)
+  (cond
+   ((eq symbol 'command-type)
+    `(list ,idx 'font-lock-type-face))
+   ((eq symbol 'var-assignment)
+    `(list ,idx 'font-lock-variable-name-face 'keep))
+   ((eq symbol 'var-usage)
+    `(list ,idx 'tintin-variable-usage-face 'keep))
+   ((member symbol `(,'arg ,'arg*))
+    nil)
+   (t (error "Unknown symbol"))
+   ))
 
+(defun argspec-to-fontifier (argspec idx)
+  (cond
+   ((consp argspec)
+    (arg-symbol-to-fontifier (car argspec) idx))
+   ((symbolp argspec)
+    (arg-symbol-to-fontifier argspec idx))
+   (t nil)))
 
+(defun make-highlighters (highlighter-list)
+  (let* ((n (- (length highlighter-list) 1))
+        (indices (number-sequence 0 n))
+        )
+    (mapcan (lambda (i)
+              (argspec-to-fontifier (nth i highlighter-list) (+ i 2)))
+            indices)))
 
 (defmacro tintin-command-fontificator (command-list &rest subtypes)
   (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
@@ -635,9 +637,9 @@
          (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (cmd-subtype-regexp (concat command-regexp tintin-space args-regexp))
-         ;;(highlighters (make-highlighters first-subtype))
+         (highlighters (make-highlighters first-subtype))
          )
-    `(list ,cmd-subtype-regexp '(2 'font-lock-variable-name-face keep))))
+    `(list ,cmd-subtype-regexp ,highlighters)))
 
 
 
@@ -704,8 +706,6 @@
     ;; Handle the variable-defining commands
     (,'bare-variable-command-matcher 1 'font-lock-keyword-face)
     ,(tintin-command-fontificator variable-commands-list (var-assignment))
-    ;; (1 'font-lock-keyword-face)
-    ;; (2 'font-lock-variable-name-face keep))
     (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)

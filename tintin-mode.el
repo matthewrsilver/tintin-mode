@@ -242,6 +242,37 @@
 ;;        )
 ;;    (concat command-regexp tintin-space args-regexp)))
 
+
+
+(defun arg-symbol-to-regexp (symbol &optional params)
+  (cond
+   ((eq symbol 'command-type)
+    ;; command-type is special; first argument can override
+    (if params (car params) tintin-arg))
+   ((member symbol `(,'var-assignment ,'var-usage ,'arg))
+    tintin-arg)
+   ((eq symbol 'arg*) "")
+   (t (error "Unknown symbol"))
+   ))
+
+(defun argspec-to-regexp (argspec)
+  (cond
+   ((consp argspec)
+    (arg-symbol-to-regexp (car argspec)))
+   ((symbolp argspec)
+    (arg-symbol-to-regexp argspec))
+   (t argspec)))
+
+(defun make-tintin-command-group (command-list &rest subtypes)
+  (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
+         (command-regexp (build-tintin-command-regex command-list))
+         (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
+         (args-regexp (join tintin-delimiter args-regexp-list)))
+    (concat command-regexp tintin-space args-regexp)))
+
+
+
+
 ;;(defun build-tintin-arg-regexp (subcommand-spec)
 ;;  ""
 ;;  (cond
@@ -259,38 +290,6 @@
 ;;         (args-regexp (build-tintin-arg-regexp args-info))
 ;;        )
 ;;    (concat command-regexp tintin-space args-regexp)))
-
-
-
-
-(defun arg-symbol-to-regexp (symbol &optional params)
-  (cond
-   ((eq symbol 'command-type)
-    ;; command-type is special; first argument can override
-    (if params (car params) tintin-arg))
-   ((member symbol `(,'var-assignment ,'var-usage ,'arg))
-    tintin-arg)
-   ((eq symbol 'arg*) "")
-   (t (error "Unknown symbol"))
-   ))
-
-(defun argspec-to-fontifier (argspec)
-  (error "argspec-to-fontifier not implemented"))
-
-(defun argspec-to-regexp (argspec)
-  (cond
-   ((consp argspec)
-    (arg-symbol-to-regexp (car argspec)))
-   ((symbolp argspec)
-    (arg-symbol-to-regexp argspec))
-   (t argspec)))
-
-(defun make-tintin-command-group (command-list &rest subtypes)
-  (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
-         (command-regexp (build-tintin-command-regex command-list))
-         (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
-         (args-regexp (join tintin-delimiter args-regexp-list)))
-    (concat command-regexp tintin-space args-regexp)))
 
 ;;(defun process-subcommand (current-regexp subcommand)
 ;;  (let* ((args-regexp-list (mapcar 'argspec-to-regexp subcommand))
@@ -324,8 +323,8 @@
 (defvar variable-command-regex (build-tintin-command-regex variable-commands-list))
 (defun bare-variable-command-matcher (limit)
   (tintin-command-font-lock-matcher variable-command-regex tintin-endable))
-(defvar variable-command-matcher
-  (make-tintin-command-group variable-commands-list `(,'var-assignment)))
+;;(defvar variable-command-matcher
+;;  (make-tintin-command-group variable-commands-list `(,'var-assignment)))
 ;;                            `((,'var-assignment 'font-lock-variable-name-face keep))))
 ;;                            `((,'var-assignment))))
 
@@ -599,6 +598,56 @@
 (defface tintin-command-face `((t (:foreground ,"#5d74c9"))) "*Face for user hash commands.")
 (defface tintin-variable-usage-face `((t (:foreground ,"#e09d02"))) "*Face for variable usages.")
 
+
+
+
+
+;;(defun arg-symbol-to-regexp (symbol idx)
+;;  (cond
+;;   ((eq symbol 'command-type)
+;;    '(idx 'font-lock-type-face))
+;;   ((eq symbol 'var-assignment)
+;;    '(idx 'font-lock-variable-name-face))
+;;   ((eq symbol 'var-usage)
+;;    '(idx 'tintin-variable-usage-face))
+;;   ((member symbol `(,'arg ,'arg*))
+;;    '())
+;;   (t (error "Unknown symbol"))
+;;   ))
+;;
+;;(defun argspec-to-fontifier (argspec idx)
+;;  (cond
+;;   ((consp argspec)
+;;    (arg-symbol-to-fontifier (car argspec) idx))
+;;   ((symbolp argspec)
+;;    (arg-symbol-to-fontifier argspec idx))
+;;   (t nil)))
+;;
+;;(defun make-highlighters (highlighter-list)
+;;
+;;  )
+
+
+
+(defmacro tintin-command-fontificator (command-list &rest subtypes)
+  (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
+         (command-regexp (build-tintin-command-regex (eval command-list)))
+         (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
+         (args-regexp (join tintin-delimiter args-regexp-list))
+         (cmd-subtype-regexp (concat command-regexp tintin-space args-regexp))
+         ;;(highlighters (make-highlighters first-subtype))
+         )
+    `(list ,cmd-subtype-regexp '(2 'font-lock-variable-name-face keep))))
+
+
+
+
+
+
+
+
+
+
 (setq tintin-font-lock-keywords
   `(
 
@@ -654,9 +703,9 @@
 
     ;; Handle the variable-defining commands
     (,'bare-variable-command-matcher 1 'font-lock-keyword-face)
-    (,variable-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator variable-commands-list (var-assignment))
+    ;; (1 'font-lock-keyword-face)
+    ;; (2 'font-lock-variable-name-face keep))
     (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)

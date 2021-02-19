@@ -16,12 +16,12 @@
 «:tintin-command-face:#line» «t:log» «D:{»filename«D:}» text;             «x:#no || log with various braces/spacings;»
 «:tintin-command-face:#line» log«D:{»filename«D:}» text;              «x:#no || log with various braces/spacings;»
 
-«:tintin-command-face:#line» logverbatim filename text;       «x:#no || logverbatim with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»logverbatim«D:}» filename text;     «x:#no || logverbatim with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»logverbatim«D:}»filename text;      «x:#no || logverbatim with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»logverbatim«D:}{»filename«D:}» text;    «x:#no || logverbatim with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»logverbatim«D:}» «D:{»filename«D:}» text;   «x:#no || logverbatim with various braces/spacings;»
-«:tintin-command-face:#line» logverbatim «D:{»filename«D:}» text;     «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «t:logverbatim» filename text;       «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:logverbatim»«D:}» filename text;     «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:logverbatim»«D:}»filename text;      «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:logverbatim»«D:}{»filename«D:}» text;    «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:logverbatim»«D:}» «D:{»filename«D:}» text;   «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «t:logverbatim» «D:{»filename«D:}» text;     «x:#no || logverbatim with various braces/spacings;»
 «:tintin-command-face:#line» logverbatim«D:{»filename«D:}» text;      «x:#no || logverbatim with various braces/spacings;»
 
 «:tintin-command-face:#line» «t:strip» text;                      «x:#no || strip with various braces/spacings;»

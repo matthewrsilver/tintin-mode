@@ -200,7 +200,7 @@
     (re-search-forward (concat command args) limit t)))
 
 (defun build-command-arg-regex (command)
-  (concat "{?" command brace-or-space))
+  (concat "{?" command brace-or-space))!
 
 ;;;; generate regex from command and args
 ;;(defun tintin-command-matchers (command &optional args)
@@ -247,18 +247,17 @@
 (defun arg-symbol-to-regexp (symbol &optional params)
   (cond
    ((eq symbol 'command-type)
-    ;; command-type is special; first argument can override
-    (if params (car params) tintin-arg))
+    (or params tintin-arg))
    ((member symbol `(,'var-assignment ,'var-usage ,'arg))
     tintin-arg)
    ((eq symbol 'arg*) "")
-   (t (error "Unknown symbol"))
+   (t (error (concat "Unknown symbol: " (symbol-name symbol))))
    ))
 
 (defun argspec-to-regexp (argspec)
   (cond
    ((consp argspec)
-    (arg-symbol-to-regexp (car argspec)))
+    (arg-symbol-to-regexp (car argspec) (symbol-value (cdr argspec))))
    ((symbolp argspec)
     (arg-symbol-to-regexp argspec))
    (t argspec)))
@@ -602,44 +601,43 @@
 
 
 
-(defun arg-symbol-to-fontifier (symbol idx)
+(defun arg-symbol-to-highlighter (symbol idx)
   (cond
    ((eq symbol 'command-type)
-    `(list ,idx 'font-lock-type-face))
+    `(,idx 'font-lock-type-face))
    ((eq symbol 'var-assignment)
-    `(list ,idx 'font-lock-variable-name-face 'keep))
+    `(,idx 'font-lock-variable-name-face keep))
    ((eq symbol 'var-usage)
-    `(list ,idx 'tintin-variable-usage-face 'keep))
+    `(,idx 'tintin-variable-usage-face keep))
    ((member symbol `(,'arg ,'arg*))
     nil)
    (t (error "Unknown symbol"))
    ))
 
-(defun argspec-to-fontifier (argspec idx)
+(defun argspec-to-highlighter (argspec idx)
   (cond
    ((consp argspec)
-    (arg-symbol-to-fontifier (car argspec) idx))
+    `,(arg-symbol-to-highlighter (car argspec) idx))
    ((symbolp argspec)
-    (arg-symbol-to-fontifier argspec idx))
+    `,(arg-symbol-to-highlighter argspec idx))
    (t nil)))
 
 (defun make-highlighters (highlighter-list)
   (let* ((n (- (length highlighter-list) 1))
         (indices (number-sequence 0 n))
         )
-    (mapcan (lambda (i)
-              (argspec-to-fontifier (nth i highlighter-list) (+ i 2)))
-            indices)))
+    `(mapcar (lambda (i)
+             (argspec-to-highlighter (nth i ',highlighter-list) (+ i 2)))
+             ',indices)))
 
 (defmacro tintin-command-fontificator (command-list &rest subtypes)
-  (let* ((first-subtype (car subtypes)) ;; TODO do this for all subtypes....
-         (command-regexp (build-tintin-command-regex (eval command-list)))
-         (args-regexp-list (mapcar 'argspec-to-regexp first-subtype))
+  (let* ((command-regexp (build-tintin-command-regex (eval command-list)))
+         (args-regexp-list (mapcar 'argspec-to-regexp subtypes))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (cmd-subtype-regexp (concat command-regexp tintin-space args-regexp))
-         (highlighters (make-highlighters first-subtype))
+         (highlighters (make-highlighters subtypes))
          )
-    `(list ,cmd-subtype-regexp ,highlighters)))
+    `(append (list ,cmd-subtype-regexp '(1 'font-lock-keyword-face)) ,highlighters)))
 
 
 
@@ -705,7 +703,7 @@
 
     ;; Handle the variable-defining commands
     (,'bare-variable-command-matcher 1 'font-lock-keyword-face)
-    ,(tintin-command-fontificator variable-commands-list (var-assignment))
+    ,(tintin-command-fontificator variable-commands-list var-assignment)
     (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
     (,'unvariable-command-matcher
      (1 'font-lock-keyword-face)
@@ -713,10 +711,19 @@
 
     ;; Handle the #class command
     (,'bare-class-command-matcher 1 'font-lock-keyword-face)
-    (,class-use-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep)
-     (3 'font-lock-type-face))
+    ,(tintin-command-fontificator class-command-list var-usage (command-type . class-use-regex))
+;;(defvar class-use-command-matcher
+;;  (make-tintin-command-group class-command-list
+;;                             `(,'var-usage ,class-use-regex)
+;;                             `(,'var-assignment ,class-create-regex)
+;;                             `(,'var-usage ,class-size-regex ,'var-assignment)))
+;;
+;;
+;;
+;;    (,class-use-command-matcher
+;;     (1 'font-lock-keyword-face)
+;;     (2 'tintin-variable-usage-face keep)
+;;     (3 'font-lock-type-face))
     (,'class-create-command-matcher
      (1 'font-lock-keyword-face)
      (2 'font-lock-variable-name-face keep)

@@ -43,12 +43,12 @@
 «:tintin-command-face:#line» «t:gag»                              «x:#no || gag without a semicolon ok for highlighting;»
 «:tintin-command-face:#line» «t:gag»;                             «x:#no || gag standard in all ways;»
 «:tintin-command-face:#line» «D:{»«t:gag»«D:}»;                           «x:#no || gag with braces;»
-«:tintin-command-face:#line» gag text;                        «x:#no || gag with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»«t:gag»«D:}» text;                      «x:#no XX this should not highlight;»
-«:tintin-command-face:#line» «D:{»gag«D:}»text;                       «x:#no || gag with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»gag«D:}{»text«D:}»;                     «x:#no || gag with various braces/spacings;»
-«:tintin-command-face:#line» «D:{»«t:gag»«D:}» «D:{»text«D:}»;                    «x:#no XX this should not highlight;»
-«:tintin-command-face:#line» gag «D:{»text«D:}»;                      «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «t:gag» text;                        «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}» text;                      «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}»text;                       «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}{»text«D:}»;                     «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}» «D:{»text«D:}»;                    «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «t:gag» «D:{»text«D:}»;                      «x:#no || gag with various braces/spacings;»
 «:tintin-command-face:#line» gag«D:{»text«D:}»;                       «x:#no || substitute with various braces/spacings;»
 
 «:tintin-command-face:#line» capture                          «x:#no || capture without semicolon or var doesn't highlight;»

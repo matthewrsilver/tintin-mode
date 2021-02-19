@@ -44,10 +44,10 @@
 #line gag;                             #no || gag standard in all ways;
 #line {gag};                           #no || gag with braces;
 #line gag text;                        #no || gag with various braces/spacings;
-#line {gag} text;                      #no XX this should not highlight;
+#line {gag} text;                      #no || gag with various braces/spacings;
 #line {gag}text;                       #no || gag with various braces/spacings;
 #line {gag}{text};                     #no || gag with various braces/spacings;
-#line {gag} {text};                    #no XX this should not highlight;
+#line {gag} {text};                    #no || gag with various braces/spacings;
 #line gag {text};                      #no || gag with various braces/spacings;
 #line gag{text};                       #no || substitute with various braces/spacings;
 

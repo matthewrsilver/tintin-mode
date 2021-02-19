@@ -267,10 +267,7 @@
 ;;
 ;; Tools for highlighting the #line command, which has a number of
 ;; modes and can, in some cases, define variables
-(defvar line-command-regex
-  (build-tintin-command-regex '("#line" 1)))
-(defun bare-line-command-matcher (limit)
-  (tintin-command-font-lock-matcher line-command-regex tintin-endable))
+(defvar line-command-list '("#line" 1))
 (defvar line-standard-regex
   (build-command-arg-regex
    (regexp-opt
@@ -278,22 +275,10 @@
       "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
       "quiet"     "verbatim"   "verbose"    "logverbatim")
     t)))
-(defun line-standard-mode-matcher (limit)
-  (let ((args-regex (concat tintin-space line-standard-regex)))
-    (tintin-command-font-lock-matcher line-command-regex args-regex)))
 (defvar line-gag-regex
     (build-command-arg-regex (regexp-opt '("gag") t)))
-(defun line-gag-mode-matcher (limit)
-  (let ((args-regex (concat tintin-space line-gag-regex tintin-endable)))
-    (tintin-command-font-lock-matcher line-command-regex args-regex)))
 (defvar line-capture-regex
     (build-command-arg-regex (regexp-opt '("capture") t)))
-(defun line-capture-mode-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space line-capture-regex
-          tintin-delimiter tintin-arg)))
-    (tintin-command-font-lock-matcher line-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting mud scripting commands
@@ -416,15 +401,17 @@
                 (argspec-to-highlighter (nth i ',highlighter-list) (+ i 2)))
               ',indices))))
 
-(defmacro tintin-command-fontificator (command-list &rest arguments)
-  (let* ((command-regexp (build-tintin-command-regex (eval command-list)))
+(defmacro tintin-command-fontificator (command-spec &rest arguments)
+  (let* ((command-list (if (consp command-spec) (car command-spec) command-spec))
+         (command-face (if (consp command-spec) (cdr command-spec) 'font-lock-keyword-face))
+         (command-regexp (build-tintin-command-regex (eval command-list)))
          (args-regexp-list (mapcar 'argspec-to-regexp arguments))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (post-cmd-regexp (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
          (cmd-subtype-regexp (concat command-regexp post-cmd-regexp))
          (highlighters (make-highlighters arguments))
          )
-    `(append (list ,cmd-subtype-regexp '(1 'font-lock-keyword-face)) ,highlighters)))
+    `(append (list ,cmd-subtype-regexp '(1 ,command-face)) ,highlighters)))
 
 
 (setq tintin-font-lock-keywords
@@ -523,17 +510,14 @@
     ,(tintin-command-fontificator flow-control-command-list)
 
     ;; Handle the #line command
-    (,'bare-line-command-matcher 1 'tintin-command-face)
-    (,'line-standard-mode-matcher
-     (1 'tintin-command-face)
-     (2 'font-lock-type-face))
-    (,'line-gag-mode-matcher
-     (1 'tintin-command-face)
-     (2 'font-lock-type-face))
-    (,'line-capture-mode-matcher
-     (1 'tintin-command-face)
-     (2 'font-lock-type-face)
-     (3 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face))
+    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
+                                  (command-type . line-standard-regex))
+    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
+                                  (command-type . line-gag-regex))
+    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
+                                  (command-type . line-capture-regex)
+                                  var-assignment)
 
     ;; Generic mud scripting commands
     (,'mud-command-matcher 1 'tintin-command-face)

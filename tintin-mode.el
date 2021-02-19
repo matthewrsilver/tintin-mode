@@ -207,159 +207,62 @@
 ;; argument after the command defines a new variable
 (defvar variable-commands-list
   '( "#variable" 3   "#local" 3      "#cat" 0
-     "#format" 4     "#math" 0       "#replace" 3
-     ))
-(defvar variable-command-regex (build-tintin-command-regex variable-commands-list))
-(defun bare-variable-command-matcher (limit)
-  (tintin-command-font-lock-matcher variable-command-regex tintin-endable))
-
-
-
-
-(defvar unvariable-command-regex
-  (build-tintin-command-regex '("#unvariable" 5 "#unlocal" 5)))
-(defun bare-unvariable-command-matcher (limit)
-  (tintin-command-font-lock-matcher unvariable-command-regex tintin-endable))
-(defun unvariable-command-matcher (limit)
-  (let ((args-regex (concat tintin-space tintin-final-arg)))
-    (tintin-command-font-lock-matcher unvariable-command-regex args-regex)))
+     "#format" 4     "#math" 0       "#replace" 3))
+(defvar unvariable-commands-list
+  '( "#unvariable" 5 "#unlocal" 5))
 
 ;;
 ;; Tools for highlighting the #class command;
 (defvar class-command-list '("#class" 2))
-(defvar class-command-regex (build-tintin-command-regex class-command-list))
-(defun bare-class-command-matcher (limit)
-  (tintin-command-font-lock-matcher class-command-regex tintin-endable))
 (defvar class-use-regex
   (build-command-arg-regex
    (regexp-opt '("assign" "list" "save" "write" "clear" "close" "kill") t)))
 (defvar class-create-regex
   (build-command-arg-regex
    (regexp-opt '("load" "open" "read") t)))
-(defun class-create-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter class-create-regex
-          )))
-    (tintin-command-font-lock-matcher class-command-regex args-regex)))
 (defvar class-size-regex
   (build-command-arg-regex
    (regexp-opt '("size") t)))
-(defun class-size-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter class-size-regex
-          tintin-delimiter tintin-final-arg
-          )))
-    (tintin-command-font-lock-matcher class-command-regex args-regex)))
-
 
 ;;
 ;; Tools for highlighting the #function command, where the first
 ;; argument after the command defines a new function
-(defvar function-command-regex
-  (build-tintin-command-regex '("#function" 3)))
-(defun bare-function-command-matcher (limit)
-  (tintin-command-font-lock-matcher function-command-regex tintin-endable))
-(defun function-command-matcher (limit)
-  (let ((args-regex (concat tintin-space tintin-arg)))
-    (tintin-command-font-lock-matcher function-command-regex args-regex)))
-(defvar unfunction-command-regex
-  (build-tintin-command-regex '("#unfunction" 5)))
-(defun bare-unfunction-command-matcher (limit)
-  (tintin-command-font-lock-matcher unfunction-command-regex tintin-endable))
-(defun unfunction-command-matcher (limit)
-  (let ((args-regex (concat tintin-space tintin-final-arg)))
-    (tintin-command-font-lock-matcher unfunction-command-regex args-regex)))
+(defvar function-command-list '("#function" 3))
+(defvar unfunction-command-list '("#unfunction" 5))
 
 ;;
 ;; Tools for highlighting the #list command and the arguments
 ;; associated with its various modes
-(defvar list-command-regex
-  (build-tintin-command-regex '("#list" 3)))
-(defun bare-list-command-matcher (limit)
-  (tintin-command-font-lock-matcher list-command-regex tintin-endable))
+(defvar list-command-list '("#list" 3))
 (defvar list-standard-regex
   (build-command-arg-regex
    (regexp-opt
     '("add"      "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
      "order"     "shuffle"   "set"       "simplify"  "sort")
    t)))
-(defun list-standard-mode-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter list-standard-regex)))
-    (tintin-command-font-lock-matcher list-command-regex args-regex)))
 (defvar list-create-regex
   (build-command-arg-regex (regexp-opt '("create" "tokenize") t)))
-(defun list-create-mode-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter list-create-regex)))
-    (tintin-command-font-lock-matcher list-command-regex args-regex)))
 (defvar list-size-regex
   (build-command-arg-regex (regexp-opt '("size") t)))
-(defun list-size-mode-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter list-size-regex
-          tintin-delimiter tintin-final-arg)))
-    (tintin-command-font-lock-matcher list-command-regex args-regex)))
 (defvar list-setvar4-regex
   (build-command-arg-regex (regexp-opt '("find" "get") t)))
-(defun list-setvar4-mode-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter list-setvar4-regex
-          tintin-delimiter tintin-uncaptured-arg
-          tintin-delimiter tintin-final-arg)))
-    (tintin-command-font-lock-matcher list-command-regex args-regex)))
 
 ;;
 ;; Tools for highlighting the #loop command, a special flow control
 ;; command that defines a variable for use in the loop
-(defvar loop-command-regex
-  (build-tintin-command-regex '("#loop" 0)))
-(defun bare-loop-command-matcher (limit)
-  (tintin-command-font-lock-matcher loop-command-regex tintin-endable))
-(defun loop-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-uncaptured-arg
-          tintin-delimiter tintin-uncaptured-arg
-          tintin-delimiter tintin-arg)))
-    (tintin-command-font-lock-matcher loop-command-regex args-regex)))
+(defvar loop-command-list '("#loop" 0))
 
 ;;
 ;; Tools for highlighting the #parse and #foreach commands, which are
 ;; special flow control commands that define a variable for use in the loop
-(defvar parse-foreach-command-regex
-  (build-tintin-command-regex '("#parse" 0 "#foreach" 0)))
-(defun bare-parse-foreach-command-matcher (limit)
-  (tintin-command-font-lock-matcher parse-foreach-command-regex tintin-endable))
-(defun parse-foreach-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-uncaptured-arg
-          tintin-delimiter tintin-arg)))
-    (tintin-command-font-lock-matcher parse-foreach-command-regex args-regex)))
+(defvar parse-foreach-command-list '("#parse" 0 "#foreach" 0))
 
 ;;
 ;; Tools for highlighting remaining flow control commands
-(defvar flow-control-command-regex
-  (build-tintin-command-regex
-   '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 3
-      "#while" 0      "#break" 0      "#continue" 4
-      "#switch" 0     "#case" 0       "#default" 3
-      )))
-(defun flow-control-command-matcher (limit)
-  (tintin-command-font-lock-matcher flow-control-command-regex tintin-endable))
+(defvar flow-control-command-list
+  '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 3
+     "#while" 0      "#break" 0      "#continue" 4
+     "#switch" 0     "#case" 0       "#default" 3))
 
 ;;
 ;; Tools for highlighting the #line command, which has a number of
@@ -458,14 +361,15 @@
 (make-symbol "var-assignment")
 (make-symbol "var-usage")
 (make-symbol "command-type")
+(make-symbol "function-name")
 
 
 (defun arg-symbol-to-regexp (symbol &optional params)
   (cond
    ((eq symbol 'command-type)
     (or params tintin-arg))
-   ((member symbol `(,'var-assignment ,'var-usage ,'arg))
-    tintin-arg)
+   ((member symbol `(,'var-assignment ,'var-usage ,'arg ,'function-name))
+    (or params tintin-arg))
    ((eq symbol 'arg*) "")
    (t (error (concat "Unknown symbol: " (symbol-name symbol))))
    ))
@@ -487,7 +391,9 @@
     `(,idx 'font-lock-variable-name-face keep))
    ((eq symbol 'var-usage)
     `(,idx 'tintin-variable-usage-face keep))
-   ((member symbol `(,'arg ,'arg*))
+   ((eq symbol 'function-name)
+    `(,idx 'font-lock-function-name-face keep))
+   ((eq symbol 'arg)
     nil)
    (t (error "Unknown symbol"))
    ))
@@ -498,24 +404,25 @@
     `,(arg-symbol-to-highlighter (car argspec) idx))
    ((symbolp argspec)
     `,(arg-symbol-to-highlighter argspec idx))
-   (t nil)))
+   (t '())))
 
 (defun make-highlighters (highlighter-list)
   (let* ((n (- (length highlighter-list) 1))
         (indices (number-sequence 0 n))
         )
-    `(mapcar (lambda (i)
-             (argspec-to-highlighter (nth i ',highlighter-list) (+ i 2)))
-             ',indices)))
+    `(remove nil
+             (mapcar
+              (lambda (i)
+                (argspec-to-highlighter (nth i ',highlighter-list) (+ i 2)))
+              ',indices))))
 
-;; TODO: support "final" args
-(defmacro tintin-command-fontificator (command-list &rest subtypes)
+(defmacro tintin-command-fontificator (command-list &rest arguments)
   (let* ((command-regexp (build-tintin-command-regex (eval command-list)))
-         (args-regexp-list (mapcar 'argspec-to-regexp subtypes))
+         (args-regexp-list (mapcar 'argspec-to-regexp arguments))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (post-cmd-regexp (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
          (cmd-subtype-regexp (concat command-regexp post-cmd-regexp))
-         (highlighters (make-highlighters subtypes))
+         (highlighters (make-highlighters arguments))
          )
     `(append (list ,cmd-subtype-regexp '(1 'font-lock-keyword-face)) ,highlighters)))
 
@@ -553,72 +460,69 @@
     (,tintin-function 1 'tintin-function-face)
 
     ;; Handle the #list command
-    (,'bare-list-command-matcher 1 'font-lock-keyword-face)
-    (,'list-create-mode-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face keep)
-     (3 'font-lock-type-face))
-    (,'list-standard-mode-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep)
-     (3 'font-lock-type-face))
-    (,'list-size-mode-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep)
-     (3 'font-lock-type-face)
-     (4 'font-lock-variable-name-face keep))
-    (,'list-setvar4-mode-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep)
-     (3 'font-lock-type-face)
-     (4 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator list-command-list)
+    ,(tintin-command-fontificator list-command-list
+                                  var-assignment
+                                  (command-type . list-create-regex))
+    ,(tintin-command-fontificator list-command-list
+                                  var-usage
+                                  (command-type . list-standard-regex))
+    ,(tintin-command-fontificator list-command-list
+                                  var-usage
+                                  (command-type . list-size-regex)
+                                  (var-assignment . tintin-final-arg))
+    ,(tintin-command-fontificator list-command-list
+                                  var-usage
+                                  (command-type . list-setvar4-regex)
+                                  arg
+                                  (var-assignment . tintin-final-arg))
 
     ;; Handle the variable-defining commands
     ,(tintin-command-fontificator variable-commands-list)
-    ,(tintin-command-fontificator variable-commands-list var-assignment)
-    (,'bare-unvariable-command-matcher 1 'font-lock-keyword-face)
-    (,'unvariable-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep))
+    ,(tintin-command-fontificator variable-commands-list
+                                  var-assignment)
+    ,(tintin-command-fontificator unvariable-commands-list)
+    ,(tintin-command-fontificator unvariable-commands-list
+                                  (var-usage . tintin-final-arg))
 
     ;; Handle the #class command
-    (,'bare-class-command-matcher 1 'font-lock-keyword-face)
-    ,(tintin-command-fontificator class-command-list var-usage (command-type . class-use-regex))
-    (,'class-create-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face keep)
-     (3 'font-lock-type-face))
-    (,'class-size-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep)
-     (3 'font-lock-type-face)
-     (4 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator class-command-list)
+    ,(tintin-command-fontificator class-command-list
+                                  var-usage
+                                  (command-type . class-use-regex))
+    ,(tintin-command-fontificator class-command-list
+                                  var-assignment
+                                  (command-type . class-create-regex))
+    ,(tintin-command-fontificator class-command-list
+                                  var-usage
+                                  (command-type . class-size-regex)
+                                  (var-assignment . tintin-final-arg))
 
     ;; Handle the #function command
-    (,'bare-function-command-matcher 1 'font-lock-keyword-face)
-    (,'function-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-function-name-face keep))
-    (,'bare-unfunction-command-matcher 1 'font-lock-keyword-face)
-    (,'unfunction-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'tintin-variable-usage-face keep))
+    ,(tintin-command-fontificator function-command-list)
+    ,(tintin-command-fontificator function-command-list
+                                  function-name)
+    ,(tintin-command-fontificator unfunction-command-list)
+    ,(tintin-command-fontificator unfunction-command-list
+                                  (var-usage . tintin-final-arg))
 
     ;; Handle the #loop command
-    (,'bare-loop-command-matcher 1 'font-lock-keyword-face)
-    (,'loop-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator loop-command-list)
+    ,(tintin-command-fontificator loop-command-list
+                                  arg
+                                  arg
+                                  var-assignment)
 
     ;; Handle the #parse and #foreach commands
-    (,'bare-parse-foreach-command-matcher 1 'font-lock-keyword-face)
-    (,'parse-foreach-command-matcher
-     (1 'font-lock-keyword-face)
-     (2 'font-lock-variable-name-face keep))
+    ,(tintin-command-fontificator parse-foreach-command-list)
+    ,(tintin-command-fontificator parse-foreach-command-list
+                                  arg
+                                  var-assignment)
 
     ;; Handle flow control commands:  #if, #while, etc.
-    (,'flow-control-command-matcher 1 'font-lock-keyword-face)
+    ,(tintin-command-fontificator flow-control-command-list)
 
+    ;; Handle the #line command
     (,'bare-line-command-matcher 1 'tintin-command-face)
     (,'line-standard-mode-matcher
      (1 'tintin-command-face)

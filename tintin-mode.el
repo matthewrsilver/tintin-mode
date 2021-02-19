@@ -180,7 +180,7 @@
    (t '())))
 
 (defun initial-substrings (word &optional start)
-  (unless (> start 1) (setq start (- (length word) 1)))
+  (unless (> start 0) (setq start (- (length word) 1)))
   (initial-substrings-helper word start))
 
 (defun initial-substrings-list (word-data)
@@ -268,7 +268,7 @@
 ;; Tools for highlighting the #line command, which has a number of
 ;; modes and can, in some cases, define variables
 (defvar line-command-regex
-  (build-tintin-command-regex '("#line" 0)))
+  (build-tintin-command-regex '("#line" 1)))
 (defun bare-line-command-matcher (limit)
   (tintin-command-font-lock-matcher line-command-regex tintin-endable))
 (defvar line-standard-regex
@@ -276,7 +276,7 @@
    (regexp-opt
     '("strip"     "substitute" "background" "convert" "debug"      "ignore"
       "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
-      "quiet"     "verbatim"   "verbose")
+      "quiet"     "verbatim"   "verbose"    "logverbatim")
     t)))
 (defun line-standard-mode-matcher (limit)
   (let ((args-regex (concat tintin-space line-standard-regex)))

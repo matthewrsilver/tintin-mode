@@ -3,8 +3,8 @@
 #list;                                  #no || bare list with semicolon;
 #list                                   #no || bare list without semicolon;
 #lis                                    #no || three character #list;
-#li                                     #no || two characters don't match;
-#lists                                  #no || too many characters don't mantch;
+#li                                     #no || two characters match #line instead;
+#lists                                  #no || too many characters don't match;
 #list seq                               #no || arg not highlighted until disambiguated;
 #class seq nonsense;                    #no || unknown modes not highlighted;
 

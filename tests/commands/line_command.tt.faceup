@@ -1,0 +1,91 @@
+«x:#no Tests for the #line command;»
+
+«:tintin-command-face:#line»;                                 «x:#no || bare line with semicolon;»
+«:tintin-command-face:#line»                                  «x:#no || bare line without semicolon;»
+«:tintin-command-face:#lin»                                   «x:#no || three character #line;»
+«:tintin-command-face:#li»                                    «x:#no || two character #line;»
+«:tintin-command-face:#l»                                     «x:#no || one character #line;»
+#lines                                 «x:#no || too many characters don't match;»
+«:tintin-command-face:#line» nonsense;                        «x:#no || unknown modes not highlighted;»
+
+«:tintin-command-face:#line» «t:log» filename text;               «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:log»«D:}» filename text;             «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:log»«D:}»filename text;              «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:log»«D:}{»filename«D:}» text;            «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:log»«D:}» «D:{»filename«D:}» text;           «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» «t:log» «D:{»filename«D:}» text;             «x:#no || log with various braces/spacings;»
+«:tintin-command-face:#line» log«D:{»filename«D:}» text;              «x:#no || log with various braces/spacings;»
+
+«:tintin-command-face:#line» logverbatim filename text;       «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»logverbatim«D:}» filename text;     «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»logverbatim«D:}»filename text;      «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»logverbatim«D:}{»filename«D:}» text;    «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»logverbatim«D:}» «D:{»filename«D:}» text;   «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» logverbatim «D:{»filename«D:}» text;     «x:#no || logverbatim with various braces/spacings;»
+«:tintin-command-face:#line» logverbatim«D:{»filename«D:}» text;      «x:#no || logverbatim with various braces/spacings;»
+
+«:tintin-command-face:#line» «t:strip» text;                      «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:strip»«D:}» text;                    «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:strip»«D:}»text;                     «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:strip»«D:}{»text«D:}»;                   «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:strip»«D:}» «D:{»text«D:}»;                  «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «t:strip» «D:{»text«D:}»;                    «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» strip«D:{»text«D:}»;                     «x:#no || strip with various braces/spacings;»
+
+«:tintin-command-face:#line» «t:substitute» text;                 «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:substitute»«D:}» text;               «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:substitute»«D:}»text;                «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:substitute»«D:}{»text«D:}»;              «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:substitute»«D:}» «D:{»text«D:}»;             «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» «t:substitute» «D:{»text«D:}»;               «x:#no || substitute with various braces/spacings;»
+«:tintin-command-face:#line» substitute«D:{»text«D:}»;                «x:#no || substitute with various braces/spacings;»
+
+«:tintin-command-face:#line» «t:gag»                              «x:#no || gag without a semicolon ok for highlighting;»
+«:tintin-command-face:#line» «t:gag»;                             «x:#no || gag standard in all ways;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}»;                           «x:#no || gag with braces;»
+«:tintin-command-face:#line» gag text;                        «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}» text;                      «x:#no XX this should not highlight;»
+«:tintin-command-face:#line» «D:{»gag«D:}»text;                       «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»gag«D:}{»text«D:}»;                     «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:gag»«D:}» «D:{»text«D:}»;                    «x:#no XX this should not highlight;»
+«:tintin-command-face:#line» gag «D:{»text«D:}»;                      «x:#no || gag with various braces/spacings;»
+«:tintin-command-face:#line» gag«D:{»text«D:}»;                       «x:#no || substitute with various braces/spacings;»
+
+«:tintin-command-face:#line» capture                          «x:#no || capture without semicolon or var doesn't highlight;»
+«:tintin-command-face:#line» capture;                         «x:#no || capture without var doesn't highlight;»
+«:tintin-command-face:#line» «D:{»capture«D:}»                        «x:#no || capture without semicolon or var doesn't highlight;»
+«:tintin-command-face:#line» «D:{»capture«D:}»;                       «x:#no || capture without var doesn't highlight;»
+«:tintin-command-face:#line» capture result;                  «x:#no || capture without additional arg  doesn't highlight;»
+«:tintin-command-face:#line» «t:capture» «v:result» text              «x:#no || capture works without a semicolon;»
+«:tintin-command-face:#line» «t:capture» «v:result» text;             «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «t:capture» «v:result» «D:{»text«D:}»;           «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» capture result«D:{»text«D:}»;            «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» capture resulttext;              «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «v:result» text;           «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «v:result» «D:{»text«D:}»;         «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»capture«D:}» result«D:{»text«D:}»;          «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» «D:{»capture«D:}» resulttext;            «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}»«v:result» text;            «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}»«v:result» «D:{»text«D:}»;          «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»capture«D:}»result«D:{»text«D:}»;           «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» «D:{»capture«D:}»resulttext;             «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}{»«v:result»«D:}» text;          «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}{»«v:result»«D:}» «D:{»text«D:}»;        «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}{»«v:result»«D:}{»text«D:}»;         «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}{»«v:result»«D:}»text;           «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «D:{»«v:result»«D:}» text;         «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «D:{»«v:result»«D:}» «D:{»text«D:}»;       «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «D:{»«v:result»«D:}{»text«D:}»;        «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «D:{»«t:capture»«D:}» «D:{»«v:result»«D:}»text;          «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «t:capture» «D:{»«v:result»«D:}» text;           «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «t:capture» «D:{»«v:result»«D:}» «D:{»text«D:}»;         «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «t:capture» «D:{»«v:result»«D:}{»text«D:}»;          «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» «t:capture» «D:{»«v:result»«D:}»text;            «x:#no || capture with various braces/spacings;»
+«:tintin-command-face:#line» capture«D:{»result«D:}» text;            «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» capture«D:{»result«D:}» «D:{»text«D:}»;          «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» capture«D:{»result«D:}{»text«D:}»;           «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» capture«D:{»result«D:}»text;             «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» captureresult text;              «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» captureresult «D:{»text«D:}»;            «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» captureresult«D:{»text«D:}»;             «x:#no || spaces are needed after args without braces;»
+«:tintin-command-face:#line» captureresulttext;               «x:#no || spaces are needed after args without braces;»

@@ -25,10 +25,13 @@
 (ert-deftest tintin-font-lock-list-command-test ()
   (should (tintin-font-lock-test-file "commands/list_command.tt")))
 
+(ert-deftest tintin-font-lock-line-command-test ()
+  (should (tintin-font-lock-test-file "commands/line_command.tt")))
+
 (ert-deftest tintin-font-lock-script-command-test ()
   (should (tintin-font-lock-test-file "commands/script_command.tt")))
 
-(ert-deftest tintin-font-lock-veriable-definition-commands-test ()
+(ert-deftest tintin-font-lock-variable-definition-commands-test ()
   (should (tintin-font-lock-test-file "commands/variable_definition_commands.tt")))
 
 (ert-deftest tintin-font-lock-pattern-matching-test ()

@@ -4,11 +4,14 @@
  * Need to go back through the tests now and clean up
 
  * Complete migration to simplified class-based approach
-   * separate file?
    * all functions to methods?
    * which vars can go there, which need to stay
    * clarify approach to quoted symbols
    * maybe add a few more instances to cover common cases
+   * don't specify regexes for subcommands, just lists
+   * switch the basic elements (e.g. `tintin-argument`) to functions that return the needed info
+     and also allow for inheritance and extension in a clean way. Then update the main fontificator
+     function so that if it gets a function it just calls it, otherwise it accepts the return?
 
  * Work out a generic tintin token regexp
    * oddities with associative arrays/tables which can include spaces

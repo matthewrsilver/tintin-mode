@@ -12,6 +12,16 @@ commands use to accomplish different tasks. An example highlighted tintin script
 
 ![Example TinTin++ script](docs/sample_tintin_script.png)
 
+## Usage
+
+To use tintin-mode add this repo, or the tintin-mode directory, inside `.emacs.d` (or wherever
+else you prefer) and then update your `.emacs` file to add the mode, e.g.:
+
+```lisp
+(add-to-list 'load-path "~/.emacs.d/tintin-mode")
+(require 'tintin-mode)
+```
+
 ## Known Issues
 
 * Variables with braces `${x}` can disrupt highlighting of command arguments. For example, when
@@ -33,17 +43,6 @@ commands use to accomplish different tasks. An example highlighted tintin script
   but the multi-line requirements make it difficult to use font-locking.
 * A number of commands, for example `#bell` and `#buffer` have special modes that should be
   highlighted as in commands like `#list`.
-
-
-## Usage
-
-To use tintin-mode, add tintin-mode.el alone or in a directory inside `.emacs.d` and then update
-your `.emacs` file to add the mode:
-
-```lisp
-(add-to-list 'load-path "~/.emacs.d/tintin-mode")
-(require 'tintin-mode)
-```
 
 ## Origin
 

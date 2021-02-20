@@ -80,6 +80,8 @@
 
 ;;; Code:
 
+(require 'eieio)
+
 (defvar tintin-mode-hook nil)
 (defvar tintin-mode-map
   (let ((map (make-keymap)))
@@ -162,16 +164,6 @@
          end-marker)))
 
 ;;
-;; Provide compact regexes for handling arguments in commands
-(defvar capture-chars "[@$&*%a-zA-Z0-9_\"]+")
-(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
-(defvar tintin-uncaptured-arg (concat "{?\\(?:" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
-(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t;]\\|$\\)"))
-(defvar tintin-space "\\(?:[\s\t]+\\)")
-(defvar tintin-delimiter "\\(?:[\s\t]*\\)")
-(defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
-
-;;
 ;; Functions to build up seach-based fontificators
 (defun initial-substrings-helper (word start)
   (cond
@@ -194,9 +186,9 @@
 (defun build-tintin-command-regex (word-data)
   (concat "\\(" (regexp-opt (initial-substrings-list word-data)) "\\)"))
 
-(defun tintin-command-font-lock-matcher (command &optional args)
-  (let ((args (or args tintin-delimiter)))
-    (re-search-forward (concat command args) limit t)))
+;;(defun tintin-command-font-lock-matcher (command &optional args)
+;;  (let ((args (or args tintin-delimiter)))
+;;    (re-search-forward (concat command args) limit t)))
 
 (defun build-command-arg-regex (command)
   (concat "{?" command brace-or-space))
@@ -282,57 +274,42 @@
 
 ;;
 ;; Tools for highlighting mud scripting commands
-(defvar mud-command-regex
-  (build-tintin-command-regex
-   '( "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
+(defvar mud-command-list
+  '(  "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
       "#highlight" 4  "#substitute" 3 "#ticker" 4
       "#delay" 3      "#cr" 0         "#gag" 0
-      "#tab" 0        "#event" 0      "#send" 0
-      )))
-(defun mud-command-matcher (limit)
-  (tintin-command-font-lock-matcher mud-command-regex tintin-endable))
-(defvar unmud-command-regex
-  (build-tintin-command-regex
-   '( "#unaction" 5   "#unalias" 0    "#unticker" 6
-      "#ungag" 0      "#untab" 0      "#unevent" 0
-      )))
-(defun unmud-command-matcher (limit)
-  (tintin-command-font-lock-matcher unmud-command-regex tintin-endable))
+      "#tab" 0        "#event" 0      "#send" 0))
+(defvar unmud-command-list
+  '( "#unaction" 5   "#unalias" 0    "#unticker" 6
+     "#ungag" 0      "#untab" 0      "#unevent" 0))
 
 ;;
 ;; Tools for highlighting the #script command, which can define a variable sometimes
-(defvar script-command-regex (build-tintin-command-regex '("#script" 4)))
-(defun bare-script-command-matcher (limit)
-  (tintin-command-font-lock-matcher script-command-regex tintin-endable))
-(defun script-variable-command-matcher (limit)
-  (let ((args-regex
-         (concat
-          tintin-space tintin-arg
-          tintin-delimiter tintin-uncaptured-arg)))
-    (tintin-command-font-lock-matcher script-command-regex args-regex)))
-
+(defvar script-command-list '("#script" 4))
 
 ;;
 ;; Tools for highlighting builtin commands
-(defvar builtin-command-regex
-  (build-tintin-command-regex
-   '( "#all" 0        "#bell" 0       "#buffer" 4     "#chat" 0
-      "#commands" 4   "#config" 4     "#cursor" 3     "#daemon" 3
-      "#debug" 0      "#draw" 0       "#edit" 0       "#end" 0
-      "#grep" 0       "#help" 0       "#history" 4    "#run" 0
-      "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
-      "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
-      "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
-      "#read" 0       "#scan" 1       "#screen" 3     "#session" 3
-      "#snoop" 0      "#split" 3      "#ssl" 0        "#detatch" 0
-      "#textin" 4     "#write" 0      "#zap" 0
-      )))
-(defun builtin-command-matcher (limit)
-  (tintin-command-font-lock-matcher builtin-command-regex tintin-endable))
+(defvar builtin-command-list
+  '( "#all" 0        "#bell" 0       "#buffer" 4     "#chat" 0
+     "#commands" 4   "#config" 4     "#cursor" 3     "#daemon" 3
+     "#debug" 0      "#draw" 0       "#edit" 0       "#end" 0
+     "#grep" 0       "#help" 0       "#history" 4    "#run" 0
+     "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
+     "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
+     "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
+     "#read" 0       "#scan" 1       "#screen" 3     "#session" 3
+     "#snoop" 0      "#split" 3      "#ssl" 0        "#detatch" 0
+     "#textin" 4     "#write" 0      "#zap" 0))
 
 ;;
-;; Set a tintin-specific font-lock-keywords variable that can be
-;; provided to the major mode at the end
+;; Provide compact regexes for handling arguments in commands
+(defvar capture-chars "[@$&*%a-zA-Z0-9_\"]+")
+(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
+(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t;]\\|$\\)"))
+(defvar tintin-space "\\(?:[\s\t]+\\)")
+(defvar tintin-delimiter "\\(?:[\s\t]*\\)")
+(defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
+
 (defface tintin-ansi-face `((t (:foreground ,"#c95d5d"))) "*Face for ansi color codes.")
 (defface tintin-capture-face `((t (:foreground ,"#8dd110"))) "*Face for capture variables.")
 (defface tintin-function-face `((t (:foreground ,"#5dc9c9"))) "*Face for user functions.")
@@ -340,78 +317,58 @@
 (defface tintin-variable-usage-face `((t (:foreground ,"#e09d02"))) "*Face for variable usages.")
 
 
+(defclass tintin-command ()
+  ((cmds :initarg :cmds)
+   (face :initarg :face :initform 'font-lock-keyword-face))
+  "Base class for standard keyword faces")
 
-(make-symbol "arg")
-(make-symbol "arg*")
-(make-symbol "var-assignment")
-(make-symbol "var-usage")
-(make-symbol "command-type")
-(make-symbol "function-name")
+(defclass tintin-argument ()
+  ((regexp :initarg :regexp :initform tintin-arg)
+   (face :initarg :face :initform nil)
+   (override :initarg :override :initform nil))
+  "Base class that represents an unhighlighted, generic TinTin++ argument.")
 
+(defclass tintin-subcommand (tintin-argument)
+  ((face :initform 'font-lock-type-face))
+  "Command subtype argument class, that represents a subtype controlling a TinTin++ command.")
 
-(defun arg-symbol-to-regexp (symbol &optional params)
-  (cond
-   ((eq symbol 'command-type)
-    (or params tintin-arg))
-   ((member symbol `(,'var-assignment ,'var-usage ,'arg ,'function-name))
-    (or params tintin-arg))
-   ((eq symbol 'arg*) "")
-   (t (error (concat "Unknown symbol: " (symbol-name symbol))))
-   ))
+(setq arg (tintin-argument))
+(setq var-usage (tintin-argument :face 'tintin-variable-usage-face :override 'keep))
+(setq var-assignment (tintin-argument :face 'font-lock-variable-name-face :override 'keep))
+(setq function-name (tintin-argument :face 'font-lock-function-name-face :override 'keep))
+(setq command-type (tintin-argument :face 'font-lock-type-face))
 
 (defun argspec-to-regexp (argspec)
-  (cond
-   ((consp argspec)
-    (arg-symbol-to-regexp (car argspec) (symbol-value (cdr argspec))))
-   ((symbolp argspec)
-    (arg-symbol-to-regexp argspec))
-   (t argspec)))
-
-
-(defun arg-symbol-to-highlighter (symbol idx)
-  (cond
-   ((eq symbol 'command-type)
-    `(,idx 'font-lock-type-face))
-   ((eq symbol 'var-assignment)
-    `(,idx 'font-lock-variable-name-face keep))
-   ((eq symbol 'var-usage)
-    `(,idx 'tintin-variable-usage-face keep))
-   ((eq symbol 'function-name)
-    `(,idx 'font-lock-function-name-face keep))
-   ((eq symbol 'arg)
-    nil)
-   (t (error "Unknown symbol"))
-   ))
+  (symbol-value (slot-value argspec :regexp)))
 
 (defun argspec-to-highlighter (argspec idx)
-  (cond
-   ((consp argspec)
-    `,(arg-symbol-to-highlighter (car argspec) idx))
-   ((symbolp argspec)
-    `,(arg-symbol-to-highlighter argspec idx))
-   (t '())))
+  (let ((face (slot-value argspec :face))
+        (override (slot-value argspec :override)))
+    (cond
+     ((eq nil face) nil)
+     (t `(,idx ',face ,override)))))
 
 (defun make-highlighters (highlighter-list)
   (let* ((n (- (length highlighter-list) 1))
         (indices (number-sequence 0 n))
         )
-    `(remove nil
-             (mapcar
-              (lambda (i)
-                (argspec-to-highlighter (nth i ',highlighter-list) (+ i 2)))
-              ',indices))))
+    (remove nil
+            (mapcar
+             (lambda (i)
+               (argspec-to-highlighter (nth i highlighter-list) (+ i 2)))
+             indices))))
 
-(defmacro tintin-command-fontificator (command-spec &rest arguments)
-  (let* ((command-list (if (consp command-spec) (car command-spec) command-spec))
-         (command-face (if (consp command-spec) (cdr command-spec) 'font-lock-keyword-face))
-         (command-regexp (build-tintin-command-regex (eval command-list)))
+(defun tintin-command-fontificator (command-spec &rest arguments)
+  (let* ((command-list (symbol-value (slot-value command-spec :cmds)))
+         (command-face (slot-value command-spec :face))
+         (command-regexp (build-tintin-command-regex command-list)) ;; TODO: this becomes a method
          (args-regexp-list (mapcar 'argspec-to-regexp arguments))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (post-cmd-regexp (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
          (cmd-subtype-regexp (concat command-regexp post-cmd-regexp))
          (highlighters (make-highlighters arguments))
          )
-    `(append (list ,cmd-subtype-regexp '(1 ,command-face)) ,highlighters)))
+    (append (list cmd-subtype-regexp `(1 ,command-face)) highlighters)))
 
 
 (setq tintin-font-lock-keywords
@@ -447,89 +404,113 @@
     (,tintin-function 1 'tintin-function-face)
 
     ;; Handle the #list command
-    ,(tintin-command-fontificator list-command-list)
-    ,(tintin-command-fontificator list-command-list
-                                  var-assignment
-                                  (command-type . list-create-regex))
-    ,(tintin-command-fontificator list-command-list
-                                  var-usage
-                                  (command-type . list-standard-regex))
-    ,(tintin-command-fontificator list-command-list
-                                  var-usage
-                                  (command-type . list-size-regex)
-                                  (var-assignment . tintin-final-arg))
-    ,(tintin-command-fontificator list-command-list
-                                  var-usage
-                                  (command-type . list-setvar4-regex)
-                                  arg
-                                  (var-assignment . tintin-final-arg))
+    ,(tintin-command-fontificator (tintin-command :cmds 'list-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'list-command-list)
+      var-assignment
+      (tintin-subcommand :regexp 'list-create-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'list-command-list)
+      var-usage
+      (tintin-subcommand :regexp 'list-standard-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'list-command-list)
+      var-usage
+      (tintin-subcommand :regexp 'list-size-regex)
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'list-command-list)
+      var-usage
+      (tintin-subcommand :regexp 'list-setvar4-regex)
+      arg
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
 
     ;; Handle the variable-defining commands
-    ,(tintin-command-fontificator variable-commands-list)
-    ,(tintin-command-fontificator variable-commands-list
-                                  var-assignment)
-    ,(tintin-command-fontificator unvariable-commands-list)
-    ,(tintin-command-fontificator unvariable-commands-list
-                                  (var-usage . tintin-final-arg))
+    ,(tintin-command-fontificator (tintin-command :cmds 'variable-commands-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'variable-commands-list)
+      var-assignment)
+    ,(tintin-command-fontificator (tintin-command :cmds 'unvariable-commands-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'unvariable-commands-list)
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'tintin-variable-usage-face))
 
     ;; Handle the #class command
-    ,(tintin-command-fontificator class-command-list)
-    ,(tintin-command-fontificator class-command-list
-                                  var-usage
-                                  (command-type . class-use-regex))
-    ,(tintin-command-fontificator class-command-list
-                                  var-assignment
-                                  (command-type . class-create-regex))
-    ,(tintin-command-fontificator class-command-list
-                                  var-usage
-                                  (command-type . class-size-regex)
-                                  (var-assignment . tintin-final-arg))
+    ,(tintin-command-fontificator (tintin-command :cmds 'class-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'class-command-list)
+      var-usage
+      (tintin-subcommand :regexp 'class-use-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'class-command-list)
+      var-assignment
+      (tintin-subcommand :regexp 'class-create-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'class-command-list)
+      var-usage
+      (tintin-subcommand :regexp 'class-size-regex)
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
 
     ;; Handle the #function command
-    ,(tintin-command-fontificator function-command-list)
-    ,(tintin-command-fontificator function-command-list
-                                  function-name)
-    ,(tintin-command-fontificator unfunction-command-list)
-    ,(tintin-command-fontificator unfunction-command-list
-                                  (var-usage . tintin-final-arg))
+    ,(tintin-command-fontificator (tintin-command :cmds 'function-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'function-command-list)
+      function-name)
+    ,(tintin-command-fontificator (tintin-command :cmds 'unfunction-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'unfunction-command-list)
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'tintin-variable-usage-face))
 
     ;; Handle the #loop command
-    ,(tintin-command-fontificator loop-command-list)
-    ,(tintin-command-fontificator loop-command-list
-                                  arg
-                                  arg
-                                  var-assignment)
+    ,(tintin-command-fontificator (tintin-command :cmds 'loop-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'loop-command-list)
+      arg
+      arg
+      var-assignment)
 
     ;; Handle the #parse and #foreach commands
-    ,(tintin-command-fontificator parse-foreach-command-list)
-    ,(tintin-command-fontificator parse-foreach-command-list
-                                  arg
-                                  var-assignment)
+    ,(tintin-command-fontificator (tintin-command :cmds 'parse-foreach-command-list))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'parse-foreach-command-list)
+      arg
+      var-assignment)
 
     ;; Handle flow control commands:  #if, #while, etc.
-    ,(tintin-command-fontificator flow-control-command-list)
+    ,(tintin-command-fontificator (tintin-command :cmds 'flow-control-command-list))
 
     ;; Handle the #line command
-    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face))
-    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
-                                  (command-type . line-standard-regex))
-    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
-                                  (command-type . line-gag-regex))
-    ,(tintin-command-fontificator (line-command-list . 'tintin-command-face)
-                                  (command-type . line-capture-regex)
-                                  var-assignment)
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'line-command-list :face ''tintin-command-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
+      (tintin-subcommand :regexp 'line-standard-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
+      (tintin-subcommand :regexp 'line-gag-regex))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
+      (tintin-subcommand :regexp 'line-capture-regex)
+      var-assignment)
 
     ;; Generic mud scripting commands
-    (,'mud-command-matcher 1 'tintin-command-face)
-    (,'unmud-command-matcher 1 'tintin-command-face)
-    (,tintin-repeat-cmd 1 'tintin-command-face)
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'mud-command-list :face ''tintin-command-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'unmud-command-list :face ''tintin-command-face))
 
     ;; Handle tintin builtins for working with tintin or setting up sessions
-    (,'builtin-command-matcher 1 'font-lock-builtin-face)
-    (,'bare-script-command-matcher 1 'font-lock-builtin-face)
-    (,'script-variable-command-matcher
-     (1 'tintin-command-face)
-     (2 'font-lock-variable-name-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'builtin-command-list :face ''font-lock-builtin-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face))
+    ,(tintin-command-fontificator
+      (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face)
+      var-assignment
+      arg)
+
+    ;; Handle repeat command
+    (,tintin-repeat-cmd 1 'tintin-command-face)
 
     ;; Handle colors.
     (,ansi-color-code . 'tintin-ansi-face)

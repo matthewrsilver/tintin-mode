@@ -3,10 +3,15 @@
  * Work through issues exposed in warning fonts test
  * Need to go back through the tests now and clean up
 
- * set font-lock-multiline globally, then use simpler regexps throughout
+ * Complete migration to simplified class-based approach
+   * separate file?
+   * all functions to methods?
+   * which vars can go there, which need to stay
+   * clarify approach to quoted symbols
+   * maybe add a few more instances to cover common cases
 
-Work out a generic tintin token regexp
- * oddities with associative arrays/tables which can include spaces
+ * Work out a generic tintin token regexp
+   * oddities with associative arrays/tables which can include spaces
 
 ### Commands that need work
  * The #bell command has modes that should be highlighted

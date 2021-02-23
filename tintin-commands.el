@@ -81,16 +81,24 @@
                (argspec-to-highlighter (nth i highlighter-list) (+ i 2)))
              indices))))
 
-(defun tintin-command-fontificator (command-spec &rest arguments)
-  (let* ((command-list (symbol-value (slot-value command-spec :cmds)))
-         (command-face (slot-value command-spec :face))
-         (command-regexp (build-tintin-command-regex command-list)) ;; TODO: this becomes a method
-         (args-regexp-list (mapcar 'argspec-to-regexp arguments))
+(defun fontify-tintin-subcommand (command-regexp command-face &optional arguments)
+  (let* ((arg-values (if arguments (mapcar 'eval arguments) '()))
+         (args-regexp-list (mapcar 'argspec-to-regexp arg-values))
          (args-regexp (join tintin-delimiter args-regexp-list))
          (post-cmd-regexp (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
          (cmd-subtype-regexp (concat command-regexp post-cmd-regexp))
-         (highlighters (make-highlighters arguments))
-         )
+         (highlighters (make-highlighters arg-values)))
     (append (list cmd-subtype-regexp `(1 ,command-face)) highlighters)))
+
+
+(defun fontify-tintin-cmd (command-spec &rest subcommands)
+  (let* ((command-list (symbol-value (slot-value command-spec :cmds)))
+         (command-face (slot-value command-spec :face))
+         (command-regexp (build-tintin-command-regex command-list)))
+    (append
+      `(,(fontify-tintin-subcommand command-regexp command-face))
+      (mapcar (lambda (arguments)
+                (fontify-tintin-subcommand command-regexp command-face arguments))
+              subcommands))))
 
 (provide 'tintin-commands)

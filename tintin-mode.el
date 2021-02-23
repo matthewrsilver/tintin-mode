@@ -87,17 +87,10 @@
     map)
   "Keymap for tintin major mode")
 
-
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
-;; Basic regex components
-(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
-(defvar var-table "\\(?:\\[.*]\\)?")
-(defvar var-prefix "\\([$&*]\\)")
-(defvar hex-chars "[a-fA-F0-9]")
-
 ;;
-;; Handle regular expressions, captures, formatters, etc.
+;; Handle pattern matchers, formatters, regular expressions
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
 (defvar tintin-format-numeric "[-+.][0-9]+s")
 (defvar tintin-regex-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
@@ -115,6 +108,10 @@
 
 ;;
 ;; Handle various simple highlighted faces
+(defvar var-prefix "\\([$&*]\\)")
+(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
+(defvar var-table "\\(?:\\[.*]\\)?")
+(defvar hex-chars "[a-fA-F0-9]")
 (defvar tintin-variable (concat "\\(" var-prefix (optional-braces (concat var-chars var-table)) "\\)"))
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
@@ -239,34 +236,39 @@
 ;; Now set up the font faces and stand up a few tintin-argument instances that
 ;; enable us to concisely define many commands using tintin-command.el.
 
-(defface tintin-ansi-face `((t (:foreground ,"#c95d5d"))) "*Face for ansi color codes.")
-(defface tintin-capture-face `((t (:foreground ,"#8dd110"))) "*Face for capture variables.")
-(defface tintin-function-face `((t (:foreground ,"#5dc9c9"))) "*Face for user functions.")
-(defface tintin-command-face `((t (:foreground ,"#5d74c9"))) "*Face for user hash commands.")
-(defface tintin-variable-usage-face `((t (:foreground ,"#e09d02"))) "*Face for variable usages.")
+(defface tintin-ansi-face '((t (:foreground "#c95d5d"))) "*Face for ansi color codes.")
+(defface tintin-capture-face '((t (:foreground "#8dd110"))) "*Face for capture variables.")
+(defface tintin-function-face '((t (:foreground "#5dc9c9"))) "*Face for user functions.")
+(defface tintin-command-face '((t (:foreground "#5d74c9"))) "*Face for user hash commands.")
+(defface tintin-variable-usage-face '((t (:foreground "#e09d02"))) "*Face for variable usages.")
 
 (setq arg (tintin-argument))
-(setq var-usage (tintin-argument :face 'tintin-variable-usage-face :override 'keep))
-(setq final-var-usage (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'tintin-variable-usage-face))
-(setq var-assignment (tintin-argument :face 'font-lock-variable-name-face :override 'keep))
-(setq final-var-assignment (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
-(setq function-name (tintin-argument :face 'font-lock-function-name-face :override 'keep))
-(setq command-type (tintin-argument :face 'font-lock-type-face))
+(setq var-usage
+      (tintin-argument :face 'tintin-variable-usage-face :override 'keep))
+(setq final-var-usage
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'tintin-variable-usage-face))
+(setq var-assignment
+      (tintin-argument :face 'font-lock-variable-name-face :override 'keep))
+(setq final-var-assignment
+      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
+(setq function-name
+      (tintin-argument :face 'font-lock-function-name-face :override 'keep))
+(setq command-type
+      (tintin-argument :face 'font-lock-type-face))
 
-(setq tintin-font-lock-keywords
+(setq tintin-font-lock-keywords (append
   `(
-
-    ;; Handle captures in actions, aliases, etc.
+    ;; Highlight captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
     (,tintin-regex-matches . 'tintin-capture-face)
 
-    ;; Handle all braces and $, setting to default before anything else can get to them
+    ;; Highlight all braces and $, setting to default before anything else can get to them
     ;; This is made necessary by two items below:
     ;;   1. Variables that occur inside a table lookup: $foo[$bar]
     ;;   2. Braces after the variable prefix: ${foo}
     (,default-chars (0 'default keep))
 
-    ;; Handle variables as they're used. This is done up top and we're explicit
+    ;; Highlight variables as they're used. This is done up top and we're explicit
     ;; about the default face of the initial symbol [&$*] so subsequent elements
     ;; in font-lock-keywords can use the `keep` override mode, filling in the
     ;; unhighighted adjacent characters as veriable definitions as necessary, for
@@ -283,113 +285,84 @@
      (3 'tintin-variable-usage-face keep))
 
     ;; Handle functions as they're used
-    (,tintin-function 1 'tintin-function-face)
+    (,tintin-function 1 'tintin-function-face))
 
-    ;; Handle the #list command
-    ,(tintin-command-fontificator (tintin-command :cmds 'list-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'list-command-list)
-      var-assignment
-      (tintin-subcommand :regexp 'list-create-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'list-command-list)
-      var-usage
-      (tintin-subcommand :regexp 'list-standard-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'list-command-list)
-      var-usage
-      (tintin-subcommand :regexp 'list-size-regex)
-      final-var-assignment)
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'list-command-list)
-      var-usage
-      (tintin-subcommand :regexp 'list-setvar4-regex)
-      arg
-      final-var-assignment)
+  ;; Highlight the #list command and its various modes
+  (let ((list-command (tintin-command :cmds 'list-command-list))
+        (list-create-keyword (tintin-subcommand :regexp 'list-create-regex))
+        (list-standard-keyword (tintin-subcommand :regexp 'list-standard-regex))
+        (list-size-keyword (tintin-subcommand :regexp 'list-size-regex))
+        (list-setvar4-keyword (tintin-subcommand :regexp 'list-setvar4-regex)))
+    (fontify-tintin-cmd list-command
+                        '(var-assignment list-create-keyword)
+                        '(var-usage list-standard-keyword)
+                        '(var-usage list-size-keyword final-var-assignment)
+                        '(var-usage list-setvar4-keyword arg final-var-assignment)))
 
-    ;; Handle the variable-defining commands
-    ,(tintin-command-fontificator (tintin-command :cmds 'variable-commands-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'variable-commands-list)
-      var-assignment)
-    ,(tintin-command-fontificator (tintin-command :cmds 'unvariable-commands-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'unvariable-commands-list)
-      final-var-usage)
+  ;; Highlight variable defining and deleting commands like #var and #unvar
+  (let ((variable-command (tintin-command :cmds 'variable-commands-list)))
+    (fontify-tintin-cmd variable-command
+                        '(var-assignment)))
+  (let ((unvariable-command (tintin-command :cmds 'unvariable-commands-list)))
+    (fontify-tintin-cmd unvariable-command
+                        '(final-var-usage)))
 
-    ;; Handle the #class command
-    ,(tintin-command-fontificator (tintin-command :cmds 'class-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'class-command-list)
-      var-usage
-      (tintin-subcommand :regexp 'class-use-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'class-command-list)
-      var-assignment
-      (tintin-subcommand :regexp 'class-create-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'class-command-list)
-      var-usage
-      (tintin-subcommand :regexp 'class-size-regex)
-      final-var-assignment)
+  ;; Highlight the #class command and its various modes
+  (let ((class-command (tintin-command :cmds 'class-command-list))
+        (class-use-keyword (tintin-subcommand :regexp 'class-use-regex))
+        (class-create-keyword (tintin-subcommand :regexp 'class-create-regex))
+        (class-size-keyword (tintin-subcommand :regexp 'class-size-regex)))
+    (fontify-tintin-cmd class-command
+                        '(var-usage class-use-keyword)
+                        '(var-assignment class-create-keyword)
+                        '(var-usage class-size-keyword final-var-assignment)))
 
-    ;; Handle the #function command
-    ,(tintin-command-fontificator (tintin-command :cmds 'function-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'function-command-list)
-      function-name)
-    ,(tintin-command-fontificator (tintin-command :cmds 'unfunction-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'unfunction-command-list)
-      final-var-usage)
+  ;; Highlight the #function and #unfunction commands
+  (let ((function-command (tintin-command :cmds 'function-command-list)))
+    (fontify-tintin-cmd function-command
+                        '(function-name)))
+  (let ((unfunction-command (tintin-command :cmds 'unfunction-command-list)))
+    (fontify-tintin-cmd unfunction-command
+                        '(final-var-usage)))
 
-    ;; Handle the #loop command
-    ,(tintin-command-fontificator (tintin-command :cmds 'loop-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'loop-command-list)
-      arg
-      arg
-      var-assignment)
+  ;; Highlight the #loop command
+  (let ((loop-command (tintin-command :cmds 'loop-command-list)))
+    (fontify-tintin-cmd loop-command
+                        '(arg arg var-assignment)))
 
-    ;; Handle the #parse and #foreach commands
-    ,(tintin-command-fontificator (tintin-command :cmds 'parse-foreach-command-list))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'parse-foreach-command-list)
-      arg
-      var-assignment)
+  ;; Highlight the #parse and #foreach commands
+  (let ((parse-foreach-command (tintin-command :cmds 'parse-foreach-command-list)))
+    (fontify-tintin-cmd parse-foreach-command
+                        '(arg var-assignment)))
 
-    ;; Handle flow control commands:  #if, #while, etc.
-    ,(tintin-command-fontificator (tintin-command :cmds 'flow-control-command-list))
+  ;; Highlight flow control commands such as #if and #else
+  (let ((flow-control-command (tintin-command :cmds 'flow-control-command-list)))
+    (fontify-tintin-cmd flow-control-command))
 
-    ;; Handle the #line command
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'line-command-list :face ''tintin-command-face))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
-      (tintin-subcommand :regexp 'line-standard-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
-      (tintin-subcommand :regexp 'line-gag-regex))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'line-command-list :face ''tintin-command-face)
-      (tintin-subcommand :regexp 'line-capture-regex)
-      var-assignment)
+  ;; Highlight the #line command
+  (let ((line-command (tintin-command :cmds 'line-command-list :face ''tintin-command-face))
+        (line-standard-keyword (tintin-subcommand :regexp 'line-standard-regex))
+        (line-gag-keyword (tintin-subcommand :regexp 'line-gag-regex))
+        (line-capture-keyword (tintin-subcommand :regexp 'line-capture-regex)))
+    (fontify-tintin-cmd line-command
+                        '(line-standard-keyword)
+                        '(line-gag-keyword)
+                        '(line-capture-keyword var-assignment)))
 
-    ;; Generic mud scripting commands
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'mud-command-list :face ''tintin-command-face))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'unmud-command-list :face ''tintin-command-face))
+  ;; Highlight mud scripting commands
+  (let ((mud-command (tintin-command :cmds 'mud-command-list :face ''tintin-command-face)))
+    (fontify-tintin-cmd mud-command))
+  (let ((unmud-command (tintin-command :cmds 'unmud-command-list :face ''tintin-command-face)))
+    (fontify-tintin-cmd unmud-command))
 
-    ;; Handle tintin builtins for working with tintin or setting up sessions
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'builtin-command-list :face ''font-lock-builtin-face))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face))
-    ,(tintin-command-fontificator
-      (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face)
-      var-assignment
-      arg)
+  ;; Highlight tintin builtins for working with tintin or setting up sessions
+  (let ((built-command (tintin-command :cmds 'builtin-command-list :face ''font-lock-builtin-face)))
+    (fontify-tintin-cmd built-command))
+  (let ((script-command (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face)))
+    (fontify-tintin-cmd script-command
+                        '(var-assignment arg)))
+
+  `(
 
     ;; Handle repeat command
     (,tintin-repeat-cmd 1 'tintin-command-face)
@@ -404,7 +377,7 @@
     (,speedwalk 1 'font-lock-warning-face)
     (,dice-roll 1 'font-lock-warning-face keep)
 
-    ))
+    )))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))
@@ -431,8 +404,8 @@
   (set-syntax-table tintin-mode-syntax-table)
   (use-local-map tintin-mode-map)
   (set (make-local-variable 'tab-width) 4)
-  (set (make-local-variable 'comment-start) "#nop")
-  (set (make-local-variable 'comment-start-skip) "#nop")
+  (set (make-local-variable 'comment-start) "#nop ")
+  (set (make-local-variable 'comment-end) ";")
   (set (make-local-variable 'font-lock-defaults) '(tintin-font-lock-keywords nil t))
   (set (make-local-variable 'indent-line-function) 'tintin-indent-line)
   (set (make-local-variable 'defun-prompt-regexp) "^#.*")

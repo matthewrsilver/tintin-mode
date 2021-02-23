@@ -5,8 +5,6 @@
 
  * Complete migration to simplified class-based approach
    * all functions to methods?
-   * which vars can go there, which need to stay
-   * clarify approach to quoted symbols
    * maybe add a few more instances to cover common cases
    * don't specify regexes for subcommands, just lists
    * switch the basic elements (e.g. `tintin-argument`) to functions that return the needed info
@@ -24,6 +22,8 @@
  * Switch to using font-lock-multiline?
    * https://www.gnu.org/software/emacs/manual/html_node/elisp/Multiline-Font-Lock.html#Multiline-Font-Lock
  * highlight #nop?[^ ] to indicate a comment is broken
+ * Comment command stuff doesn't quite work per
+   * http://ergoemacs.org/emacs/elisp_comment_command.html
 
 ### Misc
  * @ symbol breaks tintin args in matching

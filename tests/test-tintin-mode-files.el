@@ -4,7 +4,7 @@
 ;; Keywords: faces languages
 
 ;; TODO: why do I have to add this to the load path??
-(add-to-list 'load-path "~/.emacs.d/tintin-mode")
+(add-to-list 'load-path "~/.emacs.d/tintin-mode/")
 (require 'tintin-mode)
 (require 'faceup)
 
@@ -22,11 +22,11 @@
 (ert-deftest tintin-font-lock-class-command-test ()
   (should (tintin-font-lock-test-file "commands/class_command.tt")))
 
-(ert-deftest tintin-font-lock-list-command-test ()
-  (should (tintin-font-lock-test-file "commands/list_command.tt")))
-
 (ert-deftest tintin-font-lock-line-command-test ()
   (should (tintin-font-lock-test-file "commands/line_command.tt")))
+
+(ert-deftest tintin-font-lock-list-command-test ()
+  (should (tintin-font-lock-test-file "commands/list_command.tt")))
 
 (ert-deftest tintin-font-lock-script-command-test ()
   (should (tintin-font-lock-test-file "commands/script_command.tt")))

@@ -89,6 +89,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
+(defun optional-braces (rgx &optional capture)
+  (let ((capture (or capture t)))
+    (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
+
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
@@ -257,7 +261,8 @@
       (tintin-argument :face 'font-lock-type-face))
 
 (setq tintin-font-lock-keywords (append
-  `(
+
+  `(;; Begin building tintin-font-lock-keywords with a list of simple matchers
     ;; Highlight captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
     (,tintin-regex-matches . 'tintin-capture-face)
@@ -362,7 +367,7 @@
     (fontify-tintin-cmd script-command
                         '(var-assignment arg)))
 
-  `(
+  `(;; Continue building tintin-font-lock-keywords with a ist of simpler matchers
 
     ;; Handle repeat command
     (,tintin-repeat-cmd 1 'tintin-command-face)
@@ -375,9 +380,7 @@
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
     (,speedwalk 1 'font-lock-warning-face)
-    (,dice-roll 1 'font-lock-warning-face keep)
-
-    )))
+    (,dice-roll 1 'font-lock-warning-face keep))))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))

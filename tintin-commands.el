@@ -1,3 +1,4 @@
+(require 'cl-lib)
 (require 'eieio)
 
 ;;
@@ -14,10 +15,6 @@
 ;; A few generic useful functions
 (defun join (sep lst)
   (mapconcat 'identity lst sep))
-
-(defun optional-braces (rgx &optional capture)
-  (let ((capture (or capture t)))
-    (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
 
 (defun build-command-arg-regex (command)
   (let ((brace-or-space "\\(?:[}\s\t;]\\|$\\)"))
@@ -41,22 +38,18 @@
 ;;
 ;; Functions to build up seach-based fontificators
 (defun initial-substrings-helper (word start)
-  (cond
-   ((> (length word) start)
-    (cons word (initial-substrings-helper (substring word 0 -1) start)))
-   (t '())))
+  (if (> (length word) start)
+      (cons word (initial-substrings-helper (substring word 0 -1) start))))
 
 (defun initial-substrings (word &optional start)
-  (unless (> start 0) (setq start (- (length word) 1)))
-  (initial-substrings-helper word start))
+  (let ((start (if (> start 0) start (- (length word) 1))))
+    (initial-substrings-helper word start)))
 
 (defun initial-substrings-list (word-data)
-  (cond
-   ((> (length word-data) 0)
+  (if (> (length word-data) 0)
     (append
      (apply 'initial-substrings (last word-data 2))
-     (initial-substrings-list (butlast word-data 2))))
-   (t '())))
+     (initial-substrings-list (butlast word-data 2)))))
 
 (defun build-tintin-command-regex (word-data)
   (concat "\\(" (regexp-opt (initial-substrings-list word-data)) "\\)"))
@@ -67,38 +60,29 @@
 (defun argspec-to-highlighter (argspec idx)
   (let ((face (slot-value argspec :face))
         (override (slot-value argspec :override)))
-    (cond
-     ((eq nil face) nil)
-     (t `(,idx ',face ,override)))))
+    (if face `(,idx ',face ,override))))
 
 (defun make-highlighters (highlighter-list)
   (let* ((n (- (length highlighter-list) 1))
-        (indices (number-sequence 0 n))
-        )
-    (remove nil
-            (mapcar
-             (lambda (i)
-               (argspec-to-highlighter (nth i highlighter-list) (+ i 2)))
-             indices))))
+         (indices (number-sequence 2 (+ n 2))))
+    (remove nil (cl-mapcar #'argspec-to-highlighter highlighter-list indices))))
 
-(defun fontify-tintin-subcommand (command-regexp command-face &optional arguments)
-  (let* ((arg-values (if arguments (mapcar 'eval arguments) '()))
-         (args-regexp-list (mapcar 'argspec-to-regexp arg-values))
+(defun post-command-regexp (args-regexp)
+  (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
+
+(defun fontify-tintin-subcommand (&optional arguments)
+  (let* ((arg-values (if arguments (mapcar #'eval arguments) '()))
+         (args-regexp-list (mapcar #'argspec-to-regexp arg-values))
          (args-regexp (join tintin-delimiter args-regexp-list))
-         (post-cmd-regexp (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
-         (cmd-subtype-regexp (concat command-regexp post-cmd-regexp))
+         (cmd-subtype-regexp (concat command-regexp (post-command-regexp args-regexp)))
          (highlighters (make-highlighters arg-values)))
     (append (list cmd-subtype-regexp `(1 ,command-face)) highlighters)))
 
-
 (defun fontify-tintin-cmd (command-spec &rest subcommands)
-  (let* ((command-list (symbol-value (slot-value command-spec :cmds)))
-         (command-face (slot-value command-spec :face))
-         (command-regexp (build-tintin-command-regex command-list)))
-    (append
-      `(,(fontify-tintin-subcommand command-regexp command-face))
-      (mapcar (lambda (arguments)
-                (fontify-tintin-subcommand command-regexp command-face arguments))
-              subcommands))))
+  (let* ((command-face (slot-value command-spec :face))
+         (command-list (symbol-value (slot-value command-spec :cmds)))
+         (command-regexp (build-tintin-command-regex command-list))
+         (base-and-subcommands (append '(nil) subcommands)))
+    (mapcar #'fontify-tintin-subcommand base-and-subcommands)))
 
 (provide 'tintin-commands)

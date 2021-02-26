@@ -93,6 +93,11 @@
   (let ((capture (or capture t)))
     (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
 
+(defun build-command-arg-regex (command)
+  (let ((brace-or-space "\\(?:[}\s\t;]\\|$\\)"))
+    (concat "{?" command brace-or-space)))
+
+
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
@@ -159,41 +164,41 @@
 ;;
 ;; Command lists for different classes of TinTin++ commands
 (defvar variable-commands-list
-  '( "#variable" 3   "#local" 3      "#cat" 0
-     "#format" 4     "#math" 0       "#replace" 3))
-(defvar unvariable-commands-list '( "#unvariable" 5 "#unlocal" 5))
-(defvar function-command-list '("#function" 3))
-(defvar unfunction-command-list '("#unfunction" 5))
+  '( "#variable" 4   "#local" 4      "#cat" 0
+     "#format" 4     "#math" 0       "#replace" 4))
+(defvar unvariable-commands-list '( "#unvariable" 6 "#unlocal" 6))
+(defvar function-command-list '("#function" 4))
+(defvar unfunction-command-list '("#unfunction" 6))
 (defvar loop-command-list '("#loop" 0))
 (defvar parse-foreach-command-list '("#parse" 0 "#foreach" 0))
 (defvar flow-control-command-list
-  '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 3
-     "#while" 0      "#break" 0      "#continue" 4
-     "#switch" 0     "#case" 0       "#default" 3))
+  '( "#if" 0         "#else" 0       "#elseif" 0     "#return" 4
+     "#while" 0      "#break" 0      "#continue" 5
+     "#switch" 0     "#case" 0       "#default" 4))
 (defvar mud-command-list
-  '(  "#action" 3     "#alias" 0      "#echo" 0       "#showme" 4
-      "#highlight" 4  "#substitute" 3 "#ticker" 4
-      "#delay" 3      "#cr" 0         "#gag" 0
+  '(  "#action" 4     "#alias" 0      "#echo" 0       "#showme" 5
+      "#highlight" 5  "#substitute" 4 "#ticker" 5
+      "#delay" 4      "#cr" 0         "#gag" 0
       "#tab" 0        "#event" 0      "#send" 0))
 (defvar unmud-command-list
-  '( "#unaction" 5   "#unalias" 0    "#unticker" 6
+  '( "#unaction" 6   "#unalias" 0    "#unticker" 7
      "#ungag" 0      "#untab" 0      "#unevent" 0))
 (defvar script-command-list '("#script" 4))
 (defvar builtin-command-list
-  '( "#all" 0        "#bell" 0       "#buffer" 4     "#chat" 0
-     "#commands" 4   "#config" 4     "#cursor" 3     "#daemon" 3
+  '( "#all" 0        "#bell" 0       "#buffer" 5     "#chat" 0
+     "#commands" 5   "#config" 5     "#cursor" 4     "#daemon" 4
      "#debug" 0      "#draw" 0       "#edit" 0       "#end" 0
-     "#grep" 0       "#help" 0       "#history" 4    "#run" 0
-     "#ignore" 3     "#info" 3       "#kill" 0       "#log" 0
-     "#macro" 3      "#map" 0        "#mesage" 4     "#port" 0
-     "#path" 0       "#pathdir" 5    "#prompt" 4     "#regexp" 3
-     "#read" 0       "#scan" 1       "#screen" 3     "#session" 3
-     "#snoop" 0      "#split" 3      "#ssl" 0        "#detatch" 0
-     "#textin" 4     "#write" 0      "#zap" 0))
+     "#grep" 0       "#help" 0       "#history" 5    "#run" 0
+     "#ignore" 4     "#info" 4       "#kill" 0       "#log" 0
+     "#macro" 4      "#map" 0        "#mesage" 5     "#port" 0
+     "#path" 0       "#pathdir" 6    "#prompt" 5     "#regexp" 4
+     "#read" 0       "#scan" 2       "#screen" 4     "#session" 4
+     "#snoop" 0      "#split" 4      "#ssl" 0        "#detatch" 0
+     "#textin" 5     "#write" 0      "#zap" 0))
 
 ;;
 ;; Special handling for the #line command and its subcommands
-(defvar line-command-list '("#line" 1))
+(defvar line-command-list '("#line" 2))
 (defvar line-standard-regex
   (build-command-arg-regex
    (regexp-opt
@@ -208,7 +213,7 @@
 
 ;;
 ;; Special handling for the #list command and its subcommands
-(defvar list-command-list '("#list" 3))
+(defvar list-command-list '("#list" 4))
 (defvar list-standard-regex
   (build-command-arg-regex
    (regexp-opt
@@ -224,7 +229,7 @@
 
 ;;
 ;; Special handling for the #class command and its subcommands
-(defvar class-command-list '("#class" 2))
+(defvar class-command-list '("#class" 3))
 (defvar class-use-regex
   (build-command-arg-regex
    (regexp-opt '("assign" "list" "save" "write" "clear" "close" "kill") t)))

@@ -1,3 +1,69 @@
+;;; tintin-commands.el --- classes and functions representing and highlighting TinTin++ commands
+
+;; Author: Matthew Silver
+;; Keywords: faces, languages
+;; Version: 1.0.1
+;; URL: https://github.com/matthewrsilver/tintin-mode
+
+;;; Commentary:
+
+;; In general, TinTin++ commands have the following form:
+;;
+;;   #command arg0 arg1 ... argN;
+;;
+;; Specific commands have set numbers and types of arguments, which may further vary within
+;; a command when one argument acts as a subcommand specifier. All arguments may optionally
+;; be surrounded by braces and, if so, needn't be followed by a space. Commands themselves
+;; are case insensitive and may be shortened as long as the substring uniquely expands to
+;; a command. With these factors in mind, the following are equivalent:
+;;
+;;   #COMMAND arg0 {arg1} arg2;
+;;   #cOmM {arg0}arg1 {arg2};
+;;   #comman {arg0}{arg1}{arg2};
+;;
+;; Different groups of TinTin++ commands may be grouped into different command categories.
+;; Some are for flow control, others to facilitate scripting, and still others interact
+;; with the TinTin++ environment itself. Further, different argument positions may perform
+;; different actions between commands and even between subcommands.
+;;
+;; To adequately highlight TinTin++ commands, it's important to indicate for a given command
+;; the face that should be used to highlight it; how short the command can be; and the action
+;; performed by each of the argument positions. For example, the following forms of the #list
+;; command must be supported:
+;;
+;;   #list my_list create {a} {b} {c};
+;;   #list my_list size num_items;
+;;   #list my_list get $num_items my_value;
+;;
+;; Note that in the first example (create) `my_list` is a variable that is being assigned
+;; but in the second and third examples (size and get) `my_list` is on the right hand side
+;; and is being accessed to set some other variable.
+;;
+;; To highlight a command like this -- explicitly coloring all variable assignments and also
+;; variable usages, as well as command subtype indicators (create, size and get) and the
+;; command itself -- we need to represent all commands and their argument positions with
+;; functional markers. As such, the #list command above could be represented by
+;;
+;;   (list-command
+;;     '(var-assignment list-create-keyword)
+;;     '(var-usage list-size-keyword final-var-assignment)
+;;     '(var-usage list-get-keyword arg final-var-assignment))
+;;
+;; which would then get transformed into a list of regular expressions and associated font
+;; faces describing how capture groups should be highlighted for each of the subcommands.
+;; To take the size subcommand as an example, the following is shown by font-lock-studio:
+;;
+;;   "\\(\\(?:#list?\\)\\)\\(?:[ \t]+\\){?\\([@$&*%a-zA-Z0-9_\"]+\\(?:\\[.*]\\)?\\)\\(?:[} \t]\\|$\\)\\(?\:[ \t]*\\){?\\(size\\)\\(?:[} \t;]\\|$\\)\\(?:[ \t]*\\){?\\([@$&*%a-zA-Z0-9_\"]+\\(?:\\[.*]\\)?\\)\\\(?:[} \t;]\\|$\\)"
+;;     (1 font-lock-keyword-face)
+;;     (2 'tintin-variable-usage-face keep)
+;;     (3 'font-lock-type-face nil)
+;;     (4 'font-lock-variable-name-face keep)
+;;
+;; This code provides the means to specify commands in the concise form above and produce
+;; appropriate search-based fontifiers for use in font-lock-keywords easily.
+
+;;; Code:
+
 (require 'cl-lib)
 (require 'eieio)
 

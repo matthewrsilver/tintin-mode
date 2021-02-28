@@ -180,6 +180,8 @@
 
 ;;
 ;; Command lists for different classes of TinTin++ commands
+(defvar toggle-constant-regex (build-command-arg-regex (regexp-opt '("off" "on") t)))
+
 (defvar variable-commands-list
   '( "#variable" 4   "#local" 4      "#cat" 0
      "#format" 4     "#math" 0       "#replace" 4))
@@ -219,7 +221,15 @@
 (defvar bell-ring-regex (build-command-arg-regex (regexp-opt '("ring") t)))
 (defvar bell-volume-regex (build-command-arg-regex (regexp-opt '("volume") t)))
 (defvar bell-toggle-regex (build-command-arg-regex (regexp-opt '("flash" "focus" "margin") t)))
-(defvar bell-value-regex (build-command-arg-regex (regexp-opt '("off" "on") t)))
+
+;;
+;; Special handling for the #buffer command and its subcommands
+(defvar buffer-command-list '("#buffer" 0))
+(defvar buffer-standard-regex
+  (build-command-arg-regex
+   (regexp-opt '("home" "end" "find" "up" "down" "clear" "write" "info") t)))
+(defvar buffer-get-regex (build-command-arg-regex (regexp-opt '("get") t)))
+(defvar buffer-toggle-regex (build-command-arg-regex (regexp-opt '("lock") t)))
 
 ;;
 ;; Special handling for the #line command and its subcommands
@@ -290,6 +300,8 @@
       (tintin-argument :face 'font-lock-function-name-face :override 'keep))
 (setq command-type
       (tintin-argument :face 'font-lock-type-face))
+(setq toggle-value
+      (tintin-argument :regexp 'toggle-constant-regex :face 'font-lock-constant-face))
 
 (setq tintin-font-lock-keywords (append
 
@@ -398,16 +410,26 @@
     (fontify-tintin-cmd script-command
                         '(var-assignment arg)))
 
-    ;; Highlight #bell command
+  ;; Highlight #bell command
   (let ((bell-command (tintin-command :cmds 'bell-command-list :face ''font-lock-builtin-face))
         (bell-ring-keyword (tintin-subcommand :regexp 'bell-ring-regex))
         (bell-volume-keyword (tintin-subcommand :regexp 'bell-volume-regex))
         (bell-toggle-keyword (tintin-subcommand :regexp 'bell-toggle-regex))
-        (bell-toggle-value (tintin-argument :regexp 'bell-value-regex :face 'font-lock-constant-face)))
+        (toggle-value (tintin-argument :regexp 'toggle-constant-regex :face 'font-lock-constant-face)))
     (fontify-tintin-cmd bell-command
                         '(bell-ring-keyword)
                         '(bell-volume-keyword final-arg)
-                        '(bell-toggle-keyword bell-toggle-value)))
+                        '(bell-toggle-keyword toggle-value)))
+
+  ;; Highlight #buffer command
+  (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face ''font-lock-builtin-face))
+        (buffer-standard-keyword (tintin-subcommand :regexp 'buffer-standard-regex))
+        (buffer-get-keyword (tintin-subcommand :regexp 'buffer-get-regex))
+        (buffer-toggle-keyword (tintin-subcommand :regexp 'buffer-toggle-regex)))
+    (fontify-tintin-cmd buffer-command
+                        '(buffer-standard-keyword)
+                        '(buffer-get-keyword var-assignment)
+                        '(buffer-toggle-keyword toggle-value)))
 
   `(;; Continue building tintin-font-lock-keywords with a ist of simpler matchers
 

@@ -35,17 +35,16 @@
 #bell focus off;                        #no || bell focus set to "off";
 #bell focus other;                      #no || bell focus not highlighted if wrong value;
 
-#bell margin on;                         #no || bell margin set to "on";
-#bell margin {on};                       #no || bell margin set to "on";
-#bell margin{on};                        #no || spaces are needed after args without braces;
-#bell marginon;                          #no || spaces are needed after args without braces;
-#bell {margin} on;                       #no || bell margin set to "on";
-#bell {margin} {on};                     #no || bell margin set to "on";
-#bell {margin}{on};                      #no || bell margin set to "on";
-#bell {margin}on;                        #no || bell margin set to "on";
-#bell margin off;                        #no || bell margin set to "off";
-#bell margin other;                      #no || bell margin not highlighted if wrong value;
-
+#bell margin on;                        #no || bell margin set to "on";
+#bell margin {on};                      #no || bell margin set to "on";
+#bell margin{on};                       #no || spaces are needed after args without braces;
+#bell marginon;                         #no || spaces are needed after args without braces;
+#bell {margin} on;                      #no || bell margin set to "on";
+#bell {margin} {on};                    #no || bell margin set to "on";
+#bell {margin}{on};                     #no || bell margin set to "on";
+#bell {margin}on;                       #no || bell margin set to "on";
+#bell margin off;                       #no || bell margin set to "off";
+#bell margin other;                     #no || bell margin not highlighted if wrong value;
 
 #bell ring;                             #no || bell ring is highlighted;
 #bell {ring};                           #no || bell ring is highlighted with braces;
@@ -64,3 +63,42 @@
 #bell {volume}{1};                      #no || volume highlighted with argument;
 #bell volume $x;                        #no || variables don't mess things up;
 
+#buffer;                                #no || terminated bare #buffer command;
+#buffer                                 #no || unterminated bare #buffer command;
+#buf                                    #no || not enough characters;
+#buff                                   #no || works with four characters;
+#buffe                                  #no || works with five characters;
+#bufferz                                #no || doesn't work with extra characters;
+
+#buffer home;                           #no || buffer home without arguments;
+#buffer end;                            #no || buffer end without arguments;
+#buffer clear;                          #no || buffer clear without arguments;
+#buffer write;                          #no || buffer write without arguments;
+
+#buffer up;                             #no || buffer up without arguments;
+#buffer up 1;                           #no || buffer end with arguments;
+#buffer down;                           #no || buffer down without arguments;
+#buffer down 1;                         #no || buffer down with arguments;
+
+#buffer find;                           #no XX bare find?;
+#buffer find string;                    #no || buffer find with argument;
+#buffer find 2 string;                  #no || buffer find with number and argument;
+
+#buffer info;                           #no XX bare info??;
+#buffer info save variable;             #no XX should info args be highlighted??;
+
+#buffer get dest;                       #no || buffer get not highlighted without bounds;
+#buffer get dest                        #no || buffer get is ok if unterminated without bounds;
+#buffer get dest 1;                     #no || buffer get highlighted with a single bound;
+#buffer get dest 1 1;                   #no || buffer get highlighted with two bounds;
+
+#buffer lock on;                        #no || buffer lock set to "on";
+#buffer lock {on};                      #no || buffer lock set to "on";
+#buffer lock{on};                       #no || spaces are needed after args without braces;
+#buffer lockon;                         #no || spaces are needed after args without braces;
+#buffer {lock} on;                      #no || buffer lock set to "on";
+#buffer {lock} {on};                    #no || buffer lock set to "on";
+#buffer {lock}{on};                     #no || buffer lock set to "on";
+#buffer {lock}on;                       #no || buffer lock set to "on";
+#buffer lock off;                       #no || buffer lock set to "off";
+#buffer lock other;                     #no || buffer lock not highlighted if wrong value;

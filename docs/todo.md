@@ -11,7 +11,7 @@
    * oddities with associative arrays/tables which can include spaces
 
 ### Commands that need work
- * The #buffer command has modes that should be highlighted
+ * The #buffer command's info and find modes need a look
 
 ### Comments
  * Comment command stuff doesn't quite work per

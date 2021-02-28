@@ -47,4 +47,4 @@
 «w:\»send verbatim;                         «x:#no || initial backslash sends line verbatim;»
 no line feed«w:\»
                                         «x:#no || final backslash stops from appending a line feed;»
-
+;«w:;»                                      «x:#no || double semicolon is error but often ignored;»

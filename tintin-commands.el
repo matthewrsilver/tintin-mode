@@ -67,6 +67,8 @@
 (require 'cl-lib)
 (require 'eieio)
 
+(setq tintin-command-character "#")
+
 ;;
 ;; A few generic useful functions
 (defun string-join (lst sep)
@@ -120,10 +122,13 @@ For example, the following progression from WORD-DATA to words to regexp:
 
    '(\"#sample\" 5 \"#another\" 0)
     '#sample' '#sampl' '#samp' '#another'
-    '\\(?:#\\(?:another\\|samp\\(?:le?\\)?\\)\\)'
+    '\\(?:another\\|samp\\(?:le?\\)?\\)'
 
 which is wrapped in paretheses to create a capture group, and returned."
-  (concat "\\(" (regexp-opt (initial-substrings-list word-data)) "\\)"))
+  (concat "\\("
+          tintin-command-character
+          (regexp-opt (initial-substrings-list word-data))
+          "\\)"))
 
 ;;
 ;; Classes used to define commands, subcommands, and the arguments therein
@@ -134,7 +139,7 @@ which is wrapped in paretheses to create a capture group, and returned."
   "Base class for standard keyword faces")
 
 (cl-defmethod initialize-instance :after ((obj tintin-command) &rest _)
-  "Custom initializer for the `tintin-command' class"
+  "Custom initializer for the `tintin-command' class."
   (let ((command-list (symbol-value (oref obj cmds))))
     (oset obj regexp (build-tintin-command-regexp command-list))))
 

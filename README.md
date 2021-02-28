@@ -36,13 +36,8 @@ else you prefer) and then update your `.emacs` file to add the mode, e.g.:
 
   A similar issue affects pattern matchers and dice rolls when variables are used within.
 
-* Comments are highlighted whenever `#no` is found until the next semicolon, as TinTin++ comment
-  behavior demands. Currently, this mode does not require a space after `#no` or `#nop`, but if
-  no space is present TinTin++ attempts to evaluate subsequent text as part of the command. This
-  issue is due to a limit on the number of characters that can be used in syntax table comments,
-  but the multi-line requirements make it difficult to use font-locking.
-* A number of commands, for example `#bell` and `#buffer` have special modes that should be
-  highlighted as in commands like `#list`.
+* A number of commands have subcommands toggled by options that should be highlighted
+  along with various argument roles as in commands like `#list`.
 
 ## Origin
 

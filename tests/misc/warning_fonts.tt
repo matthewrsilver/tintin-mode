@@ -47,4 +47,4 @@ ${something}d3                          #no XX dice: variable blocking rest of d
 \send verbatim;                         #no || initial backslash sends line verbatim;
 no line feed\
                                         #no || final backslash stops from appending a line feed;
-
+;;                                      #no || double semicolon is error but often ignored;

@@ -130,6 +130,23 @@
 (defvar default-chars "\\(\\]\\|\\[\\)\\|[{}$]")
 
 ;;
+;; Deal with comments, which are bonkers in TinTin++
+(defvar comment-start-regexp "#[nN][oO][pP]?[ \t\n]+")
+(defvar comment-regexp (concat "\\(" comment-start-regexp "[^;]*?;\\)"))
+
+(defun tintin-comment-extend-region ()
+  "Mark multiline constructs for highlighting #no comments"
+  (save-excursion
+    (goto-char font-lock-beg)
+    (let ((found-point (re-search-backward comment-start-regexp nil t)))
+      (if found-point
+          (progn
+            (goto-char font-lock-end)
+            (if (re-search-forward ";" nil t)
+                (setq font-lock-end (point)))
+            (setq font-lock-beg found-point))))))
+
+;;
 ;; There are a number of different escape codes, all beginning with a `\`
 (rx-define basic-escape (any "aefnrtv"))
 (rx-define control-char (: "c" (any alphanumeric)))
@@ -385,21 +402,20 @@
     (,tintin-special-symbols 1 'font-lock-warning-face)
     (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
     (,speedwalk 1 'font-lock-warning-face)
-    (,dice-roll 1 'font-lock-warning-face keep))))
+    (,dice-roll 1 'font-lock-warning-face keep)
+    (,comment-regexp 1 'font-lock-comment-face t))))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))
 
-    (modify-syntax-entry ?_ "w" st)   ; sets underscore to be counted as word
-    (modify-syntax-entry ?# "w" st)   ; sets hash to be counted as word
+    (modify-syntax-entry ?_ "w" st)      ; sets underscore to be counted as word
+    (modify-syntax-entry ?# "w" st)      ; sets hash to be counted as word
 
-    (modify-syntax-entry ?\' "w" st)  ; quotes are super weird in tintin, and are
-    (modify-syntax-entry ?\" "w" st)  ;   kind of just normal word characters
+    (modify-syntax-entry ?\/ ". 14" st)  ; support for c-style multiline comments
+    (modify-syntax-entry ?* ". 23" st)   ;  which are apparently acceptable!?
 
-    (modify-syntax-entry ?# ". 1" st) ; sets comments to start with:
-    (modify-syntax-entry ?n ". 2" st) ;  `#n` or
-    (modify-syntax-entry ?N ". 2" st) ;  `#N`
-    (modify-syntax-entry ?\; ">" st)  ; and run until terminated by a semicolon!
+    (modify-syntax-entry ?\' "w" st)     ; quotes are super weird in tintin, and are
+    (modify-syntax-entry ?\" "w" st)     ;   kind of just normal word characters
 
     st)
   "Syntax table for tintin-mode")
@@ -413,17 +429,20 @@
   (use-local-map tintin-mode-map)
   (set (make-local-variable 'tab-width) 4)
   (set (make-local-variable 'comment-start) "#nop ")
+  (set (make-local-variable 'comment-start-skip) comment-start-regexp)
   (set (make-local-variable 'comment-end) ";")
   (set (make-local-variable 'font-lock-defaults) '(tintin-font-lock-keywords nil t))
   (set (make-local-variable 'indent-line-function) 'tintin-indent-line)
   (set (make-local-variable 'defun-prompt-regexp) "^#.*")
+  (make-local-variable 'font-lock-extend-region-functions)
+  (add-hook 'font-lock-extend-region-functions 'tintin-comment-extend-region)
   (setq major-mode 'tintin-mode)
-  (setq mode-name "tintin++")
+  (setq mode-name "TinTin++")
   (run-hooks 'tintin-mode-hook)
 )
 
 (defun tintin-indent-line ()
-  "Indent current line as WPDL code"
+  "Indent current line as TinTin++ code"
   (interactive)
   (beginning-of-line)
   (if (bobp)  ; Check for rule 1

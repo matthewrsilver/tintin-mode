@@ -19,9 +19,6 @@
  * The #buffer command has modes that should be highlighted
 
 ### Comments
- * Switch to using font-lock-multiline?
-   * https://www.gnu.org/software/emacs/manual/html_node/elisp/Multiline-Font-Lock.html#Multiline-Font-Lock
- * highlight #nop?[^ ] to indicate a comment is broken
  * Comment command stuff doesn't quite work per
    * http://ergoemacs.org/emacs/elisp_comment_command.html
 

@@ -34,6 +34,9 @@
 (ert-deftest tintin-font-lock-variable-definition-commands-test ()
   (should (tintin-font-lock-test-file "commands/variable_definition_commands.tt")))
 
+(ert-deftest tintin-font-lock-comments-test ()
+  (should (tintin-font-lock-test-file "misc/comments.tt")))
+
 (ert-deftest tintin-font-lock-pattern-matching-test ()
   (should (tintin-font-lock-test-file "misc/pattern_matching.tt")))
 

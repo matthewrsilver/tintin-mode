@@ -1,0 +1,44 @@
+#no text;
+#nop text;
+#noP text;
+#No text;
+#Nop text;
+#NoP text;
+#NO text;
+#NOp text;
+#NOP text;
+#nO text;
+#nOp text;
+#nOP text;
+
+#no comment only to first semicolon; and not after;
+comments #no can begin in the middle; of a line
+
+#no comments can extend across
+multiple lines;
+
+#NoP these also work on
+multiple lines;
+
+#no	and multiline works with tabs
+too;
+
+now onto a few other things....
+
+#no comments {don't} get $other characters\things highlighted inside;
+
+#no
+they can run to another line even without a space;
+
+#nop
+and also when it's nop;
+
+#no	works with tabs too;
+
+amazingly /* this also works; as a comment */ and /* can work
+on multiple lines */ too
+
+#no but the different comment types don't */ conflict;
+
+#nops this isn't a comment;
+#no neither is this

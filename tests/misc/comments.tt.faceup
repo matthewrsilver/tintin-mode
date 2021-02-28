@@ -1,0 +1,44 @@
+«x:#no text;»
+«x:#nop text;»
+«x:#noP text;»
+«x:#No text;»
+«x:#Nop text;»
+«x:#NoP text;»
+«x:#NO text;»
+«x:#NOp text;»
+«x:#NOP text;»
+«x:#nO text;»
+«x:#nOp text;»
+«x:#nOP text;»
+
+«x:#no comment only to first semicolon;» and not after;
+comments «x:#no can begin in the middle;» of a line
+
+«x:#no comments can extend across
+multiple lines;»
+
+«x:#NoP these also work on
+multiple lines;»
+
+«x:#no	and multiline works with tabs
+too;»
+
+now onto a few other things....
+
+«x:#no comments {don't} get $other characters\things highlighted inside;»
+
+«x:#no
+they can run to another line even without a space;»
+
+«x:#nop
+and also when it's nop;»
+
+«x:#no	works with tabs too;»
+
+amazingly «x:/* this also works; as a comment */» and «x:/* can work
+on multiple lines */» too
+
+«x:#no but the different comment types don't */ conflict;»
+
+#nops this isn't a comment;
+#no neither is this

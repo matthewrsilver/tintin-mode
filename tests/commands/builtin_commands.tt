@@ -11,11 +11,56 @@
 #bell                                   #no || unterminated bare command;
 #bel                                    #no || command is too short;
 #bellz                                  #no || command is too long;
-#bell focus on;                         #no XX bell focus set to "on";
-#bell focus {on};                       #no XX bell focus set to "on";
+
+#bell flash on;                         #no || bell flash set to "on";
+#bell flash {on};                       #no || bell flash set to "on";
+#bell flash{on};                        #no || spaces are needed after args without braces;
+#bell flashon;                          #no || spaces are needed after args without braces;
+#bell {flash} on;                       #no || bell flash set to "on";
+#bell {flash} {on};                     #no || bell flash set to "on";
+#bell {flash}{on};                      #no || bell flash set to "on";
+#bell {flash}on;                        #no || bell flash set to "on";
+#bell flash off;                        #no || bell flash set to "off";
+#bell flash other;                      #no || bell flash not highlighted if wrong value;
+#bell flash $on_or_off;                 #no XX this should probably be highlighted;
+
+#bell focus on;                         #no || bell focus set to "on";
+#bell focus {on};                       #no || bell focus set to "on";
 #bell focus{on};                        #no || spaces are needed after args without braces;
 #bell focuson;                          #no || spaces are needed after args without braces;
-#bell {focus} on;                       #no XX bell focus set to "on";
-#bell {focus} {on};                     #no XX bell focus set to "on";
-#bell {focus}{on};                      #no XX bell focus set to "on";
-#bell {focus}on;                        #no XX bell focus set to "on";
+#bell {focus} on;                       #no || bell focus set to "on";
+#bell {focus} {on};                     #no || bell focus set to "on";
+#bell {focus}{on};                      #no || bell focus set to "on";
+#bell {focus}on;                        #no || bell focus set to "on";
+#bell focus off;                        #no || bell focus set to "off";
+#bell focus other;                      #no || bell focus not highlighted if wrong value;
+
+#bell margin on;                         #no || bell margin set to "on";
+#bell margin {on};                       #no || bell margin set to "on";
+#bell margin{on};                        #no || spaces are needed after args without braces;
+#bell marginon;                          #no || spaces are needed after args without braces;
+#bell {margin} on;                       #no || bell margin set to "on";
+#bell {margin} {on};                     #no || bell margin set to "on";
+#bell {margin}{on};                      #no || bell margin set to "on";
+#bell {margin}on;                        #no || bell margin set to "on";
+#bell margin off;                        #no || bell margin set to "off";
+#bell margin other;                      #no || bell margin not highlighted if wrong value;
+
+
+#bell ring;                             #no || bell ring is highlighted;
+#bell {ring};                           #no || bell ring is highlighted with braces;
+#bell {ring}blah;                       #no || bell ring is highlighted even with another arg;
+#bell ring blah;                        #no || bell ring is highlighted even with another arg;
+#bell ring{blah};                       #no || bell ring is not highlighted with more chars;
+
+#bell volume;                           #no || volume not highlighted without argument;
+#bell volume 1                          #no || volume highlighted with argument and no semicolon;
+#bell volume 1;                         #no || volume highlighted with argument;
+#bell volume {1};                       #no || volume highlighted with argument;
+#bell volume{1};                        #no || spaces are needed after args without braces;
+#bell volume1;                          #no || spaces are needed after args without braces;
+#bell {volume} 1;                       #no || volume highlighted with argument;
+#bell {volume} {1};                     #no || volume highlighted with argument;
+#bell {volume}{1};                      #no || volume highlighted with argument;
+#bell volume $x;                        #no || variables don't mess things up;
+

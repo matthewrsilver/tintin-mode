@@ -11,11 +11,56 @@
 «b:#bell»                                   «x:#no || unterminated bare command;»
 #bel                                    «x:#no || command is too short;»
 #bellz                                  «x:#no || command is too long;»
-«b:#bell» focus on;                         «x:#no XX bell focus set to "on";»
-«b:#bell» focus «D:{»on«D:}»;                       «x:#no XX bell focus set to "on";»
+
+«b:#bell» «t:flash» «c:on»;                         «x:#no || bell flash set to "on";»
+«b:#bell» «t:flash» «D:{»«c:on»«D:}»;                       «x:#no || bell flash set to "on";»
+«b:#bell» flash«D:{»on«D:}»;                        «x:#no || spaces are needed after args without braces;»
+«b:#bell» flashon;                          «x:#no || spaces are needed after args without braces;»
+«b:#bell» «D:{»«t:flash»«D:}» «c:on»;                       «x:#no || bell flash set to "on";»
+«b:#bell» «D:{»«t:flash»«D:}» «D:{»«c:on»«D:}»;                     «x:#no || bell flash set to "on";»
+«b:#bell» «D:{»«t:flash»«D:}{»«c:on»«D:}»;                      «x:#no || bell flash set to "on";»
+«b:#bell» «D:{»«t:flash»«D:}»«c:on»;                        «x:#no || bell flash set to "on";»
+«b:#bell» «t:flash» «c:off»;                        «x:#no || bell flash set to "off";»
+«b:#bell» flash other;                      «x:#no || bell flash not highlighted if wrong value;»
+«b:#bell» flash «D:$»«:tintin-variable-usage-face:on_or_off»;                 «x:#no XX this should probably be highlighted;»
+
+«b:#bell» «t:focus» «c:on»;                         «x:#no || bell focus set to "on";»
+«b:#bell» «t:focus» «D:{»«c:on»«D:}»;                       «x:#no || bell focus set to "on";»
 «b:#bell» focus«D:{»on«D:}»;                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» focuson;                          «x:#no || spaces are needed after args without braces;»
-«b:#bell» «D:{»focus«D:}» on;                       «x:#no XX bell focus set to "on";»
-«b:#bell» «D:{»focus«D:}» «D:{»on«D:}»;                     «x:#no XX bell focus set to "on";»
-«b:#bell» «D:{»focus«D:}{»on«D:}»;                      «x:#no XX bell focus set to "on";»
-«b:#bell» «D:{»focus«D:}»on;                        «x:#no XX bell focus set to "on";»
+«b:#bell» «D:{»«t:focus»«D:}» «c:on»;                       «x:#no || bell focus set to "on";»
+«b:#bell» «D:{»«t:focus»«D:}» «D:{»«c:on»«D:}»;                     «x:#no || bell focus set to "on";»
+«b:#bell» «D:{»«t:focus»«D:}{»«c:on»«D:}»;                      «x:#no || bell focus set to "on";»
+«b:#bell» «D:{»«t:focus»«D:}»«c:on»;                        «x:#no || bell focus set to "on";»
+«b:#bell» «t:focus» «c:off»;                        «x:#no || bell focus set to "off";»
+«b:#bell» focus other;                      «x:#no || bell focus not highlighted if wrong value;»
+
+«b:#bell» «t:margin» «c:on»;                         «x:#no || bell margin set to "on";»
+«b:#bell» «t:margin» «D:{»«c:on»«D:}»;                       «x:#no || bell margin set to "on";»
+«b:#bell» margin«D:{»on«D:}»;                        «x:#no || spaces are needed after args without braces;»
+«b:#bell» marginon;                          «x:#no || spaces are needed after args without braces;»
+«b:#bell» «D:{»«t:margin»«D:}» «c:on»;                       «x:#no || bell margin set to "on";»
+«b:#bell» «D:{»«t:margin»«D:}» «D:{»«c:on»«D:}»;                     «x:#no || bell margin set to "on";»
+«b:#bell» «D:{»«t:margin»«D:}{»«c:on»«D:}»;                      «x:#no || bell margin set to "on";»
+«b:#bell» «D:{»«t:margin»«D:}»«c:on»;                        «x:#no || bell margin set to "on";»
+«b:#bell» «t:margin» «c:off»;                        «x:#no || bell margin set to "off";»
+«b:#bell» margin other;                      «x:#no || bell margin not highlighted if wrong value;»
+
+
+«b:#bell» «t:ring»;                             «x:#no || bell ring is highlighted;»
+«b:#bell» «D:{»«t:ring»«D:}»;                           «x:#no || bell ring is highlighted with braces;»
+«b:#bell» «D:{»«t:ring»«D:}»blah;                       «x:#no || bell ring is highlighted even with another arg;»
+«b:#bell» «t:ring» blah;                        «x:#no || bell ring is highlighted even with another arg;»
+«b:#bell» ring«D:{»blah«D:}»;                       «x:#no || bell ring is not highlighted with more chars;»
+
+«b:#bell» volume;                           «x:#no || volume not highlighted without argument;»
+«b:#bell» «t:volume» 1                          «x:#no || volume highlighted with argument and no semicolon;»
+«b:#bell» «t:volume» 1;                         «x:#no || volume highlighted with argument;»
+«b:#bell» «t:volume» «D:{»1«D:}»;                       «x:#no || volume highlighted with argument;»
+«b:#bell» volume«D:{»1«D:}»;                        «x:#no || spaces are needed after args without braces;»
+«b:#bell» volume1;                          «x:#no || spaces are needed after args without braces;»
+«b:#bell» «D:{»«t:volume»«D:}» 1;                       «x:#no || volume highlighted with argument;»
+«b:#bell» «D:{»«t:volume»«D:}» «D:{»1«D:}»;                     «x:#no || volume highlighted with argument;»
+«b:#bell» «D:{»«t:volume»«D:}{»1«D:}»;                      «x:#no || volume highlighted with argument;»
+«b:#bell» «t:volume» «D:$»«:tintin-variable-usage-face:x»;                        «x:#no || variables don't mess things up;»
+

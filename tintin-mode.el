@@ -210,43 +210,45 @@
 ;;
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
-(defvar bell-ring-options '("ring"))
-(defvar bell-volume-options '("volume"))
-(defvar bell-toggle-options '("flash" "focus" "margin"))
+(defvar bell-ring-option (tintin-option :vals '("ring")))
+(defvar bell-volume-option (tintin-option :vals '("volume")))
+(defvar bell-toggle-option (tintin-option :vals '("flash" "focus" "margin")))
 
 ;;
 ;; Special handling for the #buffer command and its subcommands
 (defvar buffer-command-list '("buffer" 0))
-(defvar buffer-get-options '("get"))
-(defvar buffer-toggle-options '("lock"))
-(defvar buffer-standard-options '("home" "end" "find" "up" "down" "clear" "write" "info"))
+(defvar buffer-get-option (tintin-option :vals '("get")))
+(defvar buffer-toggle-option (tintin-option :vals '("lock")))
+(defvar buffer-standard-option
+  (tintin-option :vals '("home" "end" "find" "up" "down" "clear" "write" "info")))
 
 ;;
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
-(defvar line-gag-options '("gag"))
-(defvar line-capture-options '("capture"))
-(defvar line-standard-options
-  '("strip"     "substitute" "background" "convert" "debug"      "ignore"
-    "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
-    "quiet"     "verbatim"   "verbose"    "logverbatim"))
+(defvar line-gag-option (tintin-option :vals '("gag")))
+(defvar line-capture-option (tintin-option :vals '("capture")))
+(defvar line-standard-option
+  (tintin-option :vals '("strip" "substitute" "background" "convert" "debug" "ignore"
+                         "local" "log" "logmode" "msdp" "multishot" "oneshot" "quiet"
+                         "verbatim" "verbose" "logverbatim")))
 
 ;;
 ;; Special handling for the #list command and its subcommands
 (defvar list-command-list '("list" 3))
-(defvar list-create-options '("create" "tokenize"))
-(defvar list-size-options '("size"))
-(defvar list-retrieval-options '("find" "get"))
-(defvar list-standard-options
-  '("add"      "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
-    "order"     "shuffle"   "set"       "simplify"  "sort"))
+(defvar list-create-option (tintin-option :vals '("create" "tokenize")))
+(defvar list-size-option (tintin-option :vals '("size")))
+(defvar list-retrieval-option (tintin-option :vals '("find" "get")))
+(defvar list-standard-option
+  (tintin-option :vals '("add" "clear" "collapse" "delete" "explode" "index" "insert"
+                         "order" "shuffle" "set" "simplify" "sort")))
 
 ;;
 ;; Special handling for the #class command and its subcommands
 (defvar class-command-list '("class" 2))
-(defvar class-use-options '("assign" "list" "save" "write" "clear" "close" "kill"))
-(defvar class-create-options '("load" "open" "read"))
-(defvar class-size-options '("size"))
+(defvar class-create-option (tintin-option :vals '("load" "open" "read")))
+(defvar class-size-option (tintin-option :vals '("size")))
+(defvar class-use-option
+  (tintin-option :vals '("assign" "list" "save" "write" "clear" "close" "kill")))
 
 
 ;;
@@ -304,16 +306,12 @@
     (,tintin-function 1 'tintin-function-face))
 
   ;; Highlight the #list command and its various modes
-  (let ((list-command (tintin-command :cmds 'list-command-list))
-        (list-create-keyword (tintin-option :vals list-create-options))
-        (list-standard-keyword (tintin-option :vals list-standard-options))
-        (list-size-keyword (tintin-option :vals list-size-options))
-        (list-retrieval-keyword (tintin-option :vals list-retrieval-options)))
+  (let ((list-command (tintin-command :cmds 'list-command-list)))
     (fontify-tintin-cmd list-command
-                        '(var-assignment list-create-keyword)
-                        '(var-usage list-standard-keyword)
-                        '(var-usage list-size-keyword final-var-assignment)
-                        '(var-usage list-retrieval-keyword arg final-var-assignment)))
+                        '(var-assignment list-create-option)
+                        '(var-usage list-standard-option)
+                        '(var-usage list-size-option final-var-assignment)
+                        '(var-usage list-retrieval-option arg final-var-assignment)))
 
   ;; Highlight variable defining and deleting commands like #var and #unvar
   (let ((variable-command (tintin-command :cmds 'variable-commands-list)))
@@ -324,14 +322,11 @@
                         '(final-var-usage)))
 
   ;; Highlight the #class command and its various modes
-  (let ((class-command (tintin-command :cmds 'class-command-list))
-        (class-use-keyword (tintin-option :vals class-use-options))
-        (class-create-keyword (tintin-option :vals class-create-options))
-        (class-size-keyword (tintin-option :vals class-size-options)))
+  (let ((class-command (tintin-command :cmds 'class-command-list)))
     (fontify-tintin-cmd class-command
-                        '(var-usage class-use-keyword)
-                        '(var-assignment class-create-keyword)
-                        '(var-usage class-size-keyword final-var-assignment)))
+                        '(var-usage class-use-option)
+                        '(var-assignment class-create-option)
+                        '(var-usage class-size-option final-var-assignment)))
 
   ;; Highlight the #function and #unfunction commands
   (let ((function-command (tintin-command :cmds 'function-command-list)))
@@ -356,14 +351,11 @@
     (fontify-tintin-cmd flow-control-command))
 
   ;; Highlight the #line command
-  (let ((line-command (tintin-command :cmds 'line-command-list :face ''tintin-command-face))
-        (line-standard-keyword (tintin-option :vals line-standard-options))
-        (line-gag-keyword (tintin-option :vals line-gag-options))
-        (line-capture-keyword (tintin-option :vals line-capture-options)))
+  (let ((line-command (tintin-command :cmds 'line-command-list :face ''tintin-command-face)))
     (fontify-tintin-cmd line-command
-                        '(line-standard-keyword)
-                        '(line-gag-keyword)
-                        '(line-capture-keyword var-assignment)))
+                        '(line-standard-option)
+                        '(line-gag-option)
+                        '(line-capture-option var-assignment)))
 
   ;; Highlight mud scripting commands
   (let ((mud-command (tintin-command :cmds 'mud-command-list :face ''tintin-command-face)))
@@ -379,25 +371,18 @@
                         '(var-assignment arg)))
 
   ;; Highlight #bell command
-  (let ((bell-command (tintin-command :cmds 'bell-command-list :face ''font-lock-builtin-face))
-        (bell-ring-keyword (tintin-option :vals bell-ring-options))
-        (bell-volume-keyword (tintin-option :vals bell-volume-options))
-        (bell-toggle-keyword (tintin-option :vals bell-toggle-options))
-        (toggle-value (tintin-argument :vals toggle-constant-values :face 'font-lock-constant-face)))
+  (let ((bell-command (tintin-command :cmds 'bell-command-list :face ''font-lock-builtin-face)))
     (fontify-tintin-cmd bell-command
-                        '(bell-ring-keyword)
-                        '(bell-volume-keyword final-arg)
-                        '(bell-toggle-keyword toggle-value)))
+                        '(bell-ring-option)
+                        '(bell-volume-option final-arg)
+                        '(bell-toggle-option toggle-value)))
 
   ;; Highlight #buffer command
-  (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face ''font-lock-builtin-face))
-        (buffer-standard-keyword (tintin-option :vals buffer-standard-options))
-        (buffer-get-keyword (tintin-option :vals buffer-get-options))
-        (buffer-toggle-keyword (tintin-option :vals buffer-toggle-options)))
+  (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face ''font-lock-builtin-face)))
     (fontify-tintin-cmd buffer-command
-                        '(buffer-standard-keyword)
-                        '(buffer-get-keyword var-assignment)
-                        '(buffer-toggle-keyword toggle-value)))
+                        '(buffer-standard-option)
+                        '(buffer-get-option var-assignment)
+                        '(buffer-toggle-option toggle-value)))
 
   `(;; Continue building tintin-font-lock-keywords with a ist of simpler matchers
 

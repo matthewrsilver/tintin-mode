@@ -87,10 +87,6 @@
   (let ((capture (or capture t)))
     (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
 
-(defun build-command-arg-regex (command)
-  (let ((brace-or-space "\\(?:[}\s\t;]\\|$\\)"))
-    (concat "{?" command brace-or-space)))
-
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
@@ -176,7 +172,7 @@
 
 ;;
 ;; Command lists for different classes of TinTin++ commands
-(defvar toggle-constant-regex (build-command-arg-regex (regexp-opt '("off" "on") t)))
+(defvar toggle-constant-values '("off" "on"))
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
@@ -214,62 +210,43 @@
 ;;
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
-(defvar bell-ring-regex (build-command-arg-regex (regexp-opt '("ring") t)))
-(defvar bell-volume-regex (build-command-arg-regex (regexp-opt '("volume") t)))
-(defvar bell-toggle-regex (build-command-arg-regex (regexp-opt '("flash" "focus" "margin") t)))
+(defvar bell-ring-options '("ring"))
+(defvar bell-volume-options '("volume"))
+(defvar bell-toggle-options '("flash" "focus" "margin"))
 
 ;;
 ;; Special handling for the #buffer command and its subcommands
 (defvar buffer-command-list '("buffer" 0))
-(defvar buffer-standard-regex
-  (build-command-arg-regex
-   (regexp-opt '("home" "end" "find" "up" "down" "clear" "write" "info") t)))
-(defvar buffer-get-regex (build-command-arg-regex (regexp-opt '("get") t)))
-(defvar buffer-toggle-regex (build-command-arg-regex (regexp-opt '("lock") t)))
+(defvar buffer-get-options '("get"))
+(defvar buffer-toggle-options '("lock"))
+(defvar buffer-standard-options '("home" "end" "find" "up" "down" "clear" "write" "info"))
 
 ;;
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
-(defvar line-standard-regex
-  (build-command-arg-regex
-   (regexp-opt
-    '("strip"     "substitute" "background" "convert" "debug"      "ignore"
-      "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
-      "quiet"     "verbatim"   "verbose"    "logverbatim")
-    t)))
-(defvar line-gag-regex
-    (build-command-arg-regex (regexp-opt '("gag") t)))
-(defvar line-capture-regex
-    (build-command-arg-regex (regexp-opt '("capture") t)))
+(defvar line-gag-options '("gag"))
+(defvar line-capture-options '("capture"))
+(defvar line-standard-options
+  '("strip"     "substitute" "background" "convert" "debug"      "ignore"
+    "local"     "log"        "logmode"    "msdp"    "multishot"  "oneshot"
+    "quiet"     "verbatim"   "verbose"    "logverbatim"))
 
 ;;
 ;; Special handling for the #list command and its subcommands
 (defvar list-command-list '("list" 3))
-(defvar list-standard-regex
-  (build-command-arg-regex
-   (regexp-opt
-    '("add"      "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
-     "order"     "shuffle"   "set"       "simplify"  "sort")
-   t)))
-(defvar list-create-regex
-  (build-command-arg-regex (regexp-opt '("create" "tokenize") t)))
-(defvar list-size-regex
-  (build-command-arg-regex (regexp-opt '("size") t)))
-(defvar list-setvar4-regex
-  (build-command-arg-regex (regexp-opt '("find" "get") t)))
+(defvar list-create-options '("create" "tokenize"))
+(defvar list-size-options '("size"))
+(defvar list-retrieval-options '("find" "get"))
+(defvar list-standard-options
+  '("add"      "clear"     "collapse"  "delete"    "explode"   "index"     "insert"
+    "order"     "shuffle"   "set"       "simplify"  "sort"))
 
 ;;
 ;; Special handling for the #class command and its subcommands
 (defvar class-command-list '("class" 2))
-(defvar class-use-regex
-  (build-command-arg-regex
-   (regexp-opt '("assign" "list" "save" "write" "clear" "close" "kill") t)))
-(defvar class-create-regex
-  (build-command-arg-regex
-   (regexp-opt '("load" "open" "read") t)))
-(defvar class-size-regex
-  (build-command-arg-regex
-   (regexp-opt '("size") t)))
+(defvar class-use-options '("assign" "list" "save" "write" "clear" "close" "kill"))
+(defvar class-create-options '("load" "open" "read"))
+(defvar class-size-options '("size"))
 
 
 ;;
@@ -283,21 +260,16 @@
 (defface tintin-variable-usage-face '((t (:foreground "#e09d02"))) "*Face for variable usages.")
 
 (setq arg (tintin-argument))
-(setq final-arg (tintin-argument :regexp'tintin-final-arg))
-(setq var-usage
-      (tintin-argument :face 'tintin-variable-usage-face :override 'keep))
-(setq final-var-usage
-      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'tintin-variable-usage-face))
-(setq var-assignment
-      (tintin-argument :face 'font-lock-variable-name-face :override 'keep))
-(setq final-var-assignment
-      (tintin-argument :regexp 'tintin-final-arg :override 'keep :face 'font-lock-variable-name-face))
-(setq function-name
-      (tintin-argument :face 'font-lock-function-name-face :override 'keep))
-(setq command-type
-      (tintin-argument :face 'font-lock-type-face))
-(setq toggle-value
-      (tintin-argument :regexp 'toggle-constant-regex :face 'font-lock-constant-face))
+(setq final-arg (clone arg :regexp tintin-final-arg))
+
+(setq var-usage (clone arg :face 'tintin-variable-usage-face :override 'keep))
+(setq final-var-usage (clone var-usage :regexp tintin-final-arg))
+(setq var-assignment (clone arg :face 'font-lock-variable-name-face :override 'keep))
+(setq final-var-assignment (clone var-assignment :regexp tintin-final-arg))
+
+(setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
+(setq command-type (clone arg :face 'font-lock-type-face))
+(setq toggle-value (tintin-argument :vals toggle-constant-values :face 'font-lock-constant-face))
 
 (setq tintin-font-lock-keywords (append
 
@@ -333,15 +305,15 @@
 
   ;; Highlight the #list command and its various modes
   (let ((list-command (tintin-command :cmds 'list-command-list))
-        (list-create-keyword (tintin-subcommand :regexp 'list-create-regex))
-        (list-standard-keyword (tintin-subcommand :regexp 'list-standard-regex))
-        (list-size-keyword (tintin-subcommand :regexp 'list-size-regex))
-        (list-setvar4-keyword (tintin-subcommand :regexp 'list-setvar4-regex)))
+        (list-create-keyword (tintin-option :vals list-create-options))
+        (list-standard-keyword (tintin-option :vals list-standard-options))
+        (list-size-keyword (tintin-option :vals list-size-options))
+        (list-retrieval-keyword (tintin-option :vals list-retrieval-options)))
     (fontify-tintin-cmd list-command
                         '(var-assignment list-create-keyword)
                         '(var-usage list-standard-keyword)
                         '(var-usage list-size-keyword final-var-assignment)
-                        '(var-usage list-setvar4-keyword arg final-var-assignment)))
+                        '(var-usage list-retrieval-keyword arg final-var-assignment)))
 
   ;; Highlight variable defining and deleting commands like #var and #unvar
   (let ((variable-command (tintin-command :cmds 'variable-commands-list)))
@@ -353,9 +325,9 @@
 
   ;; Highlight the #class command and its various modes
   (let ((class-command (tintin-command :cmds 'class-command-list))
-        (class-use-keyword (tintin-subcommand :regexp 'class-use-regex))
-        (class-create-keyword (tintin-subcommand :regexp 'class-create-regex))
-        (class-size-keyword (tintin-subcommand :regexp 'class-size-regex)))
+        (class-use-keyword (tintin-option :vals class-use-options))
+        (class-create-keyword (tintin-option :vals class-create-options))
+        (class-size-keyword (tintin-option :vals class-size-options)))
     (fontify-tintin-cmd class-command
                         '(var-usage class-use-keyword)
                         '(var-assignment class-create-keyword)
@@ -385,9 +357,9 @@
 
   ;; Highlight the #line command
   (let ((line-command (tintin-command :cmds 'line-command-list :face ''tintin-command-face))
-        (line-standard-keyword (tintin-subcommand :regexp 'line-standard-regex))
-        (line-gag-keyword (tintin-subcommand :regexp 'line-gag-regex))
-        (line-capture-keyword (tintin-subcommand :regexp 'line-capture-regex)))
+        (line-standard-keyword (tintin-option :vals line-standard-options))
+        (line-gag-keyword (tintin-option :vals line-gag-options))
+        (line-capture-keyword (tintin-option :vals line-capture-options)))
     (fontify-tintin-cmd line-command
                         '(line-standard-keyword)
                         '(line-gag-keyword)
@@ -408,10 +380,10 @@
 
   ;; Highlight #bell command
   (let ((bell-command (tintin-command :cmds 'bell-command-list :face ''font-lock-builtin-face))
-        (bell-ring-keyword (tintin-subcommand :regexp 'bell-ring-regex))
-        (bell-volume-keyword (tintin-subcommand :regexp 'bell-volume-regex))
-        (bell-toggle-keyword (tintin-subcommand :regexp 'bell-toggle-regex))
-        (toggle-value (tintin-argument :regexp 'toggle-constant-regex :face 'font-lock-constant-face)))
+        (bell-ring-keyword (tintin-option :vals bell-ring-options))
+        (bell-volume-keyword (tintin-option :vals bell-volume-options))
+        (bell-toggle-keyword (tintin-option :vals bell-toggle-options))
+        (toggle-value (tintin-argument :vals toggle-constant-values :face 'font-lock-constant-face)))
     (fontify-tintin-cmd bell-command
                         '(bell-ring-keyword)
                         '(bell-volume-keyword final-arg)
@@ -419,9 +391,9 @@
 
   ;; Highlight #buffer command
   (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face ''font-lock-builtin-face))
-        (buffer-standard-keyword (tintin-subcommand :regexp 'buffer-standard-regex))
-        (buffer-get-keyword (tintin-subcommand :regexp 'buffer-get-regex))
-        (buffer-toggle-keyword (tintin-subcommand :regexp 'buffer-toggle-regex)))
+        (buffer-standard-keyword (tintin-option :vals buffer-standard-options))
+        (buffer-get-keyword (tintin-option :vals buffer-get-options))
+        (buffer-toggle-keyword (tintin-option :vals buffer-toggle-options)))
     (fontify-tintin-cmd buffer-command
                         '(buffer-standard-keyword)
                         '(buffer-get-keyword var-assignment)

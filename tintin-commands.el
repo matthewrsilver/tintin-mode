@@ -12,10 +12,10 @@
 ;;   #command arg0 arg1 ... argN;
 ;;
 ;; Specific commands have set numbers and types of arguments, which may further vary within
-;; a command when one argument acts as a subcommand specifier. All arguments may optionally
-;; be surrounded by braces and, if so, needn't be followed by a space. Commands themselves
-;; are case insensitive and may be shortened as long as the substring uniquely expands to
-;; a command. With these factors in mind, the following are equivalent:
+;; a command when one argument is an option that specifies a subcommand. All arguments may
+;; optionally be surrounded by braces and, if so, needn't be followed by a space. Commands
+;; themselves are case insensitive and may be shortened as long as the substring uniquely
+;; expands to a command. With these factors in mind, the following are equivalent:
 ;;
 ;;   #COMMAND arg0 {arg1} arg2;
 ;;   #cOmM {arg0}arg1 {arg2};
@@ -85,6 +85,10 @@
 (defvar tintin-delimiter "\\(?:[\s\t]*\\)")
 (defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
 
+(defun build-command-arg-regex (command)
+  (let ((brace-or-space "\\(?:[}\s\t;]\\|$\\)"))
+    (concat "{?" command brace-or-space)))
+
 ;;
 ;; Utilities to support regexp generation for tintin-command instances
 (defun initial-substrings (word &optional min-len)
@@ -144,20 +148,27 @@ which is wrapped in paretheses to create a capture group, and returned."
     (oset obj regexp (build-tintin-command-regexp command-list))))
 
 (defclass tintin-argument ()
-  ((regexp :initarg :regexp :initform tintin-arg)
+  ((regexp :initarg :regexp :initform (eval tintin-arg))
    (face :initarg :face :initform nil)
-   (override :initarg :override :initform nil))
+   (override :initarg :override :initform nil)
+   (vals :initarg :vals :initform nil))
   "Base class that represents an unhighlighted, generic TinTin++ argument.")
 
-(defclass tintin-subcommand (tintin-argument)
+(cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
+  "Custom initializer for the `tintina-argument' class."
+  (let* ((value-list (oref obj vals))
+         (values-regexp (build-command-arg-regex (regexp-opt value-list t))))
+    (if value-list (oset obj regexp values-regexp))))
+
+(defclass tintin-option (tintin-argument)
   ((face :initform 'font-lock-type-face))
-  "Command subtype argument class, that represents a subtype controlling a TinTin++ command.")
+  "Command option argument class, that represents an option specifying a subcommand type.")
 
 ;;
 ;; Functions to build up seach-based fontificators
 (defun argument-to-regexp (argument)
   "Retrieve the regular expression associated with ARGUMENT."
-  (symbol-value (slot-value argument :regexp)))
+  (slot-value argument :regexp))
 
 (defun argument-to-highlighter (argument idx)
   "Produce a subexp-highlighter for ARGUMENT in capture group IDX.

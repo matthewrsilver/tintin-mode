@@ -6,9 +6,7 @@
  * Clean up regular expressions, figure out word boundaries and special characters {, }, and #.
 
  * Complete migration to simplified class-based approach
-   * don't specify regexes for subcommands, just lists
    * eliminate double quoting
-   * clarify the difference between "options" and "subcommands"
 
  * Consider an anchored-matcher pattern for commands with options?
    * it'd probably make regexps faster because some regexps aren't evaluated
@@ -22,8 +20,6 @@
  * Test for tintin-command-character
  * Particular commands requiring expanded testing:
    * #script
-
-
 
 ### Commands that need work
  * The #buffer command's info and find modes need a look

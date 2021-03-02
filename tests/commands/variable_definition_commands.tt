@@ -16,7 +16,7 @@
 #var {} data;                       #no || good that the value isn't highlighted;
 #var x $result;                     #no || variable usage in value is correctly highlighted;
 #var {x$y} data;                    #no || variable usage in variable definition;
-#no #var {x${y}} data;              #no XX TODO;
+#var {x${y}} data;                  #no || braced variable usage in variable definition;
 #var x[something] data;             #no || array/table highlighted as variable;
 #var x[some thing] data;            #no || array/table highlighted as variable, even with spaces;
 #var test[abc]	data;               #no || highlighting works with tab delimiters too;

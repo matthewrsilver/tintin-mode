@@ -1,7 +1,9 @@
 ### General
  * Seems somewhat slow to load
 
- * Expand documentation to cover the basic competencies
+ * Expand documentation to
+   * cover the basic competencies
+   * document configurability e.g. of tintin character
 
  * Clean up regular expressions, figure out word boundaries and special characters {, }, and #.
 
@@ -59,7 +61,6 @@
 ### Major issues
  * @ symbol breaks tintin args in matching
  * issues with variables inside matchers/formatters e.g. %.${value}s in #format
- * variables inside other contexts are highlighted, but braces break things
 
 ### Misc
  * Work through issues exposed in warning fonts test

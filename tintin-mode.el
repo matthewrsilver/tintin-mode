@@ -27,17 +27,8 @@
 
 ;; Known Issues:
 ;;
-;; * Variables with braces `${x}` can disrupt highlighting of command arguments. For example, when
-;;   definig a new variable whose name incorporates the value of that variable
-;;
-;;   ```
-;;   #var {my_${x}} {data};
-;;   ```
-;;
-;;   the non-variable text `my_` should be highlighted as a variable definition but is not. This
-;;   issue will in some cases obliterate highlighting of all arguments associated with the command.
-;;
-;;   A similar issue affects pattern matchers and dice rolls when variables are used within.
+;; * Variables with braces `${x}` can be used in pattern matchers and dice rolls but disrupt
+;;   highlighting of the surrounding context.
 ;;
 ;; * A number of commands have subcommands toggled by options that should be highlighted
 ;;   along with various argument roles as in commands like `#list`.
@@ -92,24 +83,24 @@
 ;; Handle pattern matchers, formatters, regular expressions
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
 (defvar tintin-format-numeric "[-+.][0-9]+s")
-(defvar tintin-regex-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
-(defvar tintin-regex-ops (concat "\\(" tintin-regex-classes "\\|[+?.*]\\|[iI]\\)"))
-(defvar tintin-regex-ops-wrapped (concat "!?" (optional-braces tintin-regex-ops) ))
+(defvar tintin-regexp-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
+(defvar tintin-regexp-ops (concat "\\(" tintin-regexp-classes "\\|[+?.*]\\|[iI]\\)"))
+(defvar tintin-regexp-ops-wrapped (concat "!?" (optional-braces tintin-regexp-ops) ))
 (defvar tintin-numeric-capture "[1-9]?[0-9]")
 (defvar tintin-captures
   (concat "\\(\\%[\\%\\\\]?\\("
           tintin-format-basic      "\\|"
           tintin-format-numeric    "\\|"
-          tintin-regex-ops-wrapped "\\|"
+          tintin-regexp-ops-wrapped "\\|"
           tintin-numeric-capture   "\\|"
           "\*\\)\\|\\%\\%\\)"))
-(defvar tintin-regex-matches "\\(&[1-9]?[0-9]\\)")
+(defvar tintin-regexp-matches "\\(&[1-9]?[0-9]\\)")
 
 ;;
 ;; Handle various simple highlighted faces
 (defvar var-prefix "\\([$&*]\\)")
 (defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
-(defvar var-table "\\(?:\\[.*]\\)?")
+(defvar var-table "\\(?:\\[[^]]*\\]\\)?")
 (defvar hex-chars "[a-fA-F0-9]")
 (defvar tintin-variable (concat "\\(" var-prefix (optional-braces (concat var-chars var-table)) "\\)"))
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
@@ -127,7 +118,7 @@
 (defvar insert-comment-str (concat tintin-command-character "nop "))
 
 (defun tintin-comment-extend-region ()
-  "Mark multiline constructs for highlighting #no comments"
+  "Mark multiline constructs for highlighting #nop? comments"
   (save-excursion
     (goto-char font-lock-beg)
     (let ((found-point (re-search-backward comment-start-regexp nil t)))
@@ -278,7 +269,7 @@
   `(;; Begin building tintin-font-lock-keywords with a list of simple matchers
     ;; Highlight captures in actions, aliases, etc.
     (,tintin-captures . 'tintin-capture-face)
-    (,tintin-regex-matches . 'tintin-capture-face)
+    (,tintin-regexp-matches . 'tintin-capture-face)
 
     ;; Highlight all braces and $, setting to default before anything else can get to them
     ;; This is made necessary by two items below:
@@ -406,12 +397,11 @@
 
     (modify-syntax-entry ?_ "w" st)      ; sets underscore to be counted as word
     (modify-syntax-entry ?# "w" st)      ; sets hash to be counted as word
+    (modify-syntax-entry ?\' "w" st)     ; quotes are super weird in TinTin++, and are
+    (modify-syntax-entry ?\" "w" st)     ;   kind of just normal word characters
 
     (modify-syntax-entry ?\/ ". 14" st)  ; support for c-style multiline comments
-    (modify-syntax-entry ?* ". 23" st)   ;  which are apparently acceptable!?
-
-    (modify-syntax-entry ?\' "w" st)     ; quotes are super weird in tintin, and are
-    (modify-syntax-entry ?\" "w" st)     ;   kind of just normal word characters
+    (modify-syntax-entry ?* ". 23" st)   ;   which are apparently acceptable in TinTin++!?
 
     st)
   "Syntax table for tintin-mode")
@@ -437,8 +427,7 @@
 
   (setq major-mode 'tintin-mode)
   (setq mode-name "TinTin++")
-  (run-hooks 'tintin-mode-hook)
-)
+  (run-hooks 'tintin-mode-hook))
 
 (defun tintin-indent-line ()
   "Indent current line as TinTin++ code"

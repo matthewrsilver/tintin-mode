@@ -30,8 +30,10 @@
 «w:03d4»                                    «x:#no || dice: zero padding works;»
 «w:3d04»                                    «x:#no || dice: zero padding works;»
 «w:0d0»                                     «x:#no || dice: zeros work;»
-«w:1d»«D:${»«:tintin-variable-usage-face:something»«D:}»                          «x:#no || dice: variable doesn't block dice roll;»
+«w:1d»«D:${»«:tintin-variable-usage-face:something»«D:}»                          «x:#no || dice: braced variable doesn't block dice roll;»
+«w:1d»«D:$»«:tintin-variable-usage-face:something»                            «x:#no || dice: variable doesn't block dice roll;»
 «D:${»«:tintin-variable-usage-face:something»«D:}»«w:d3»                          «x:#no || dice: variable doesn't block dice roll;»
+«D:$»«:tintin-variable-usage-face:somethingd3»                            «x:#no || dice: obviously this doesn't work;»
 «w:1s2e3w1u5d3n»                            «x:#no || speedwalk: standard speedwalk;»
 «w:3s0w»                                    «x:#no || speedwalk: zeros work;»
 «w:3d4e»                                    «x:#no || speedwalk: work in spite of dice roll inside;»

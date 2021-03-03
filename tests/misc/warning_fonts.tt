@@ -30,8 +30,10 @@
 03d4                                    #no || dice: zero padding works;
 3d04                                    #no || dice: zero padding works;
 0d0                                     #no || dice: zeros work;
-1d${something}                          #no || dice: variable doesn't block dice roll;
+1d${something}                          #no || dice: braced variable doesn't block dice roll;
+1d$something                            #no || dice: variable doesn't block dice roll;
 ${something}d3                          #no || dice: variable doesn't block dice roll;
+$somethingd3                            #no || dice: obviously this doesn't work;
 1s2e3w1u5d3n                            #no || speedwalk: standard speedwalk;
 3s0w                                    #no || speedwalk: zeros work;
 3d4e                                    #no || speedwalk: work in spite of dice roll inside;

@@ -27,7 +27,7 @@
 
 ;; Known Issues:
 ;;
-;; * Variables with braces `${x}` can be used in pattern matchers and dice rolls but disrupt
+;; * TinTin++ allows variables with braces `${x}` to be used in pattern matchers but disrupt
 ;;   highlighting of the surrounding context.
 ;;
 ;; * A number of commands have subcommands toggled by options that should be highlighted
@@ -151,11 +151,13 @@
 ;; and collide often, so need to be handled together
 (rx-define start-marker (or (any "{\s\t") line-start))
 (rx-define end-marker (or (any "}\s\t;") line-end))
-(rx-define move-direction (any "nsewud"))
+(rx-define move-direction (or (any "nsewud")))
 (rx-define no-pad-int (or "0" (: (any "1-9") (* (any "0-9")))))
 (defvar dice-roll
   (rx (: start-marker
-         (group (+ no-pad-int) "d" (+ no-pad-int))
+         (group (or (+ no-pad-int) (regexp braced-variable))
+                "d"
+                (or (+ no-pad-int) (regexp braced-variable)))
          (not move-direction)
          end-marker)))
 (defvar speedwalk

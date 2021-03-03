@@ -77,7 +77,7 @@
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
-(defvar braced-variable "${[^}]}")
+(defvar braced-variable "${[^}]*}")
 (defvar capture-chars (concat "\\(?:[@$&*%a-zA-Z0-9_\"]\\|" braced-variable "\\)+"))
 (defvar var-table "\\(?:\\[[^]]*\\]\\)?")
 (defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))

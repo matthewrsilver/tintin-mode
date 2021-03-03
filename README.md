@@ -24,18 +24,8 @@ else you prefer) and then update your `.emacs` file to add the mode, e.g.:
 
 ## Known Issues
 
-* Variables with braces `${x}` can disrupt highlighting of command arguments. For example, when
-  definig a new variable whose name incorporates the value of that variable
-
-  ```
-  #var {my_${x}} {data};
-  ```
-
-  the non-variable text `my_` should be highlighted as a variable definition but is not. This
-  issue will in some cases obliterate highlighting of all arguments associated with the command.
-
-  A similar issue affects pattern matchers and dice rolls when variables are used within.
-
+* TinTin++ allows variables with braces `${x}` to be used in pattern matchers but disrupt
+  highlighting of the surrounding context.
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
 

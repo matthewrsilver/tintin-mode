@@ -32,7 +32,8 @@
 «w:0d0»                                     «x:#no || dice: zeros work;»
 «w:1d»«D:${»«:tintin-variable-usage-face:something»«D:}»                          «x:#no || dice: braced variable doesn't block dice roll;»
 «w:1d»«D:$»«:tintin-variable-usage-face:something»                            «x:#no || dice: variable doesn't block dice roll;»
-«D:${»«:tintin-variable-usage-face:something»«D:}»«w:d3»                          «x:#no || dice: variable doesn't block dice roll;»
+{«w:1d»«D:$»«:tintin-variable-usage-face:something»}                          «x:#no || dice: variable doesn't block dice roll in braces;»
+«D:${»«:tintin-variable-usage-face:something»«D:}»«w:d3»                          «x:#no || dice: initial braced variable ok in dice roll;»
 «D:$»«:tintin-variable-usage-face:somethingd3»                            «x:#no || dice: obviously this doesn't work;»
 «w:1s2e3w1u5d3n»                            «x:#no || speedwalk: standard speedwalk;»
 «w:3s0w»                                    «x:#no || speedwalk: zeros work;»
@@ -43,7 +44,7 @@
 5w2d2                                   «x:#no || speedwalk: no space b/w walk and roll is bad;»
 
 «x:#no Miscellaneous special characters;»
-«:tintin-command-face:#action» «D:{»«w:~»Text with «:tintin-capture-face:%1» codes.«D:}»;         «x:#no || ~ means color codes must be matched;»
+«:tintin-command-face:#action» {«w:~»Text with «:tintin-capture-face:%1» codes.};         «x:#no || ~ means color codes must be matched;»
 «w:!»                                       «x:#no || execute last command;»
 «w:!»prefix;                                «x:#no || execute last command starting with a prefix;»
 «w:\»send verbatim;                         «x:#no || initial backslash sends line verbatim;»

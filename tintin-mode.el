@@ -79,39 +79,58 @@
     (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
 
 
+
+;;
+;; Handle matching of variable usages
+(rx-define rx-var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
+(rx-define rx-var-table (: "[" (* (not "]")) "]"))
+(rx-define rx-tintin-var (: rx-var-chars (? rx-var-table)))
+(defvar tintin-variable
+  (rx (: (group-n 1 (any "&$*"))
+     (or (: (group-n 3 "{") (group-n 2 rx-tintin-var) (group-n 4 "}"))
+         (group-n 2 rx-tintin-var)))))
+(rx-define tintin-variable-pattern
+  (: (any "&$*")
+     (or (: "{" rx-tintin-var "}")
+         rx-tintin-var)))
+;; TODO: this doesn't work??
+;;(defvar raw-tintin-variable (rx-to-string (rx rx-raw-tintin-variable) t))
+
+;; TODO: these are on the verge of obsolescence and should be killed
+(defvar var-prefix "\\([$&*]\\)")
+(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
+(defvar var-table "\\(?:\\[[^]]*\\]\\)?")
+;; Needed to match variables in dice rolls and in toggle constant arguments
+(defvar raw-tintin-variable (concat var-prefix (optional-braces (concat var-chars var-table))))
+
+
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
+(defvar number-or-variable (concat "\\(?:[0-9]+\\|" braced-variable "\\)"))
 (defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
-(defvar tintin-format-numeric "[-+.][0-9]+s")
+(defvar tintin-format-numeric (concat "[-+.]" number-or-variable "+s"))
 (defvar tintin-regexp-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
 (defvar tintin-regexp-ops (concat "\\(" tintin-regexp-classes "\\|[+?.*]\\|[iI]\\)"))
 (defvar tintin-regexp-ops-wrapped (concat "!?" (optional-braces tintin-regexp-ops) ))
 (defvar tintin-numeric-capture "[1-9]?[0-9]")
 (defvar tintin-captures
   (concat "\\(\\%[\\%\\\\]?\\("
-          tintin-format-basic      "\\|"
-          tintin-format-numeric    "\\|"
+          tintin-format-basic       "\\|"
+          tintin-format-numeric     "\\|"
           tintin-regexp-ops-wrapped "\\|"
-          tintin-numeric-capture   "\\|"
+          tintin-numeric-capture    "\\|"
           "\*\\)\\|\\%\\%\\)"))
 (defvar tintin-regexp-matches "\\(&[1-9]?[0-9]\\)")
 
 ;;
 ;; Handle various simple highlighted faces
-(defvar var-prefix "\\([$&*]\\)")
-(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
-(defvar var-table "\\(?:\\[[^]]*\\]\\)?")
 (defvar hex-chars "[a-fA-F0-9]")
-(defvar raw-tintin-variable (concat var-prefix (optional-braces (concat var-chars var-table))))
-(defvar uncaptured-tintin-variable (concat "\\(?:" raw-tintin-variable "\\)"))
-(defvar tintin-variable (concat "\\(" raw-tintin-variable "\\)"))
-(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
 (defvar tintin-repeat-cmd (concat "\\(" tintin-command-character "[0-9]+\\)\\(?:[\s\t;]\\|$\\)"))
+(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
 (defvar double-semicolon-warning ";\\(;\\)")
-(defvar default-chars "\\(\\]\\|\\[\\)\\|[{}$]")
 
 ;;
 ;; Deal with comments, which are bonkers in TinTin++
@@ -157,7 +176,7 @@
   (rx (: start-marker
          (group (or (+ no-pad-int) (regexp braced-variable))
                 "d"
-                (or (+ no-pad-int) (regexp braced-variable)))
+                (or (+ no-pad-int) tintin-variable-pattern))
          (not move-direction)
          end-marker)))
 (defvar speedwalk
@@ -168,7 +187,7 @@
 ;;
 ;; Command lists for different classes of TinTin++ commands
 (defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" "on") uncaptured-tintin-variable))
+  (build-tintin-arg-regexp '("off" "on") raw-tintin-variable))
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
@@ -276,15 +295,9 @@
     (,tintin-captures . 'tintin-capture-face)
     (,tintin-regexp-matches . 'tintin-capture-face)
 
-    ;; Highlight all braces and $, setting to default before anything else can get to them
-    ;; This is made necessary by two items below:
-    ;;   1. Variables that occur inside a table lookup: $foo[$bar]
-    ;;   2. Braces after the variable prefix: ${foo}
-    (,default-chars (0 'default keep))
-
     ;; Highlight variables as they're used. This is done up top and we're explicit
-    ;; about the default face of the initial symbol [&$*] so subsequent elements
-    ;; in font-lock-keywords can use the `keep` override mode, filling in the
+    ;; about the default face of the initial symbol [&$*] and any braces so subsequent
+    ;; elements in font-lock-keywords can use the `keep` override mode, filling in the
     ;; unhighighted adjacent characters as veriable definitions as necessary, for
     ;; example in this case:
     ;;
@@ -295,11 +308,27 @@
     ;; `the_` to be highlighted as font-lock-variable-name-face but then the
     ;; remaining portion to be highlighted as a variable usage.
     (,tintin-variable
-     (2 'default-face keep)
-     (3 'tintin-variable-usage-face keep))
+     (1 'default t)
+     (2 'tintin-variable-usage-face t)
+     (3 'default t t)
+     (4 'default t t))
 
     ;; Handle functions as they're used
-    (,tintin-function 1 'tintin-function-face))
+    (,tintin-function 1 'tintin-function-face)
+
+    ;; Handle repeat command
+    (,tintin-repeat-cmd 1 'tintin-command-face)
+
+    ;; Handle colors.
+    (,ansi-color-code . 'tintin-ansi-face)
+    (,ansi-gray-code . 'tintin-ansi-face)
+
+    ;; Handle special symbols, speedwalk, and dice rolls
+    (,tintin-special-symbols 1 'font-lock-warning-face)
+    (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
+    (,speedwalk 1 'font-lock-warning-face)
+    (,dice-roll 1 'font-lock-warning-face keep)
+    (,double-semicolon-warning 1 'font-lock-warning-face))
 
   ;; Highlight the #list command and its various modes
   (let ((list-command (tintin-command :cmds 'list-command-list)))
@@ -380,22 +409,8 @@
                         '(buffer-get-option var-assignment)
                         '(buffer-toggle-option toggle-value)))
 
-  `(;; Continue building tintin-font-lock-keywords with a ist of simpler matchers
-
-    ;; Handle repeat command
-    (,tintin-repeat-cmd 1 'tintin-command-face)
-
-    ;; Handle colors.
-    (,ansi-color-code . 'tintin-ansi-face)
-    (,ansi-gray-code . 'tintin-ansi-face)
-
-    ;; Handle special symbols, speedwalk, and dice rolls
-    (,tintin-special-symbols 1 'font-lock-warning-face)
-    (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
-    (,speedwalk 1 'font-lock-warning-face)
-    (,dice-roll 1 'font-lock-warning-face keep)
-    (,double-semicolon-warning 1 'font-lock-warning-face)
-    (,comment-regexp 1 'font-lock-comment-face t))))
+  ;; Finish with the comment face that overrides everything
+  `((,comment-regexp 1 'font-lock-comment-face t))))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))

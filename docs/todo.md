@@ -15,7 +15,6 @@
    * concern is with multiple matches and sets of anchored matchers on one line?
 
  * Work out a generic tintin token regexp
-   * oddities with associative arrays/tables which can include spaces
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -60,10 +59,9 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
- * issues with variables inside matchers/formatters e.g. %.${value}s in #format
 
 ### Misc
- * Work through issues exposed in warning fonts test
  * enable configuration of ~ symbol, as tintin does
  * use slightly different color for contents of square braces??
  * tintin files must start with a valid command; consider highlighting failures here?
+ * add autoload for .tin files, not just .tt

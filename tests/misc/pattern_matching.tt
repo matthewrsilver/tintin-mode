@@ -1,7 +1,6 @@
 #no Tests for regex and pattern matching;
 
 #no Important failing tests;
-#no %.${val}s                           #no XX this should highlight at least the s, maybe more;
 
 #no Format basic matchers;
 %a                                  #no || format: print corresponding charset character;
@@ -38,6 +37,7 @@
 %+9s                                #no || format: pad string with up to 9 spaces;
 %-9s                                #no || format: post pad string with up to 9 spaces;
 %.8s                                #no || format: copy at most 8 characters;
+%.${val}s                           #no || format: variables acceptable instead of integer;
 
 #no Regex capture classes;
 %P                                  #no || regexp: match 0 to any number of non printable characters;

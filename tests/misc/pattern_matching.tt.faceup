@@ -1,7 +1,6 @@
 «x:#no Tests for regex and pattern matching;»
 
 «x:#no Important failing tests;»
-«x:#no %.${val}s                           #no XX this should highlight at least the s, maybe more;»
 
 «x:#no Format basic matchers;»
 «:tintin-capture-face:%a»                                  «x:#no || format: print corresponding charset character;»
@@ -32,12 +31,13 @@
 «:tintin-capture-face:%X»                                  «x:#no || format: convert dec to hexadecimal;»
 «:tintin-capture-face:%%»                                  «x:#no || format: literal "%" character;»
 %!X                                 «x:#no || format: raw matching is not supported;»
-%«D:{»X«D:}»                                «x:#no || format: braces not supported;»
+%{X}                                «x:#no || format: braces not supported;»
 
 «x:#no Format numeric matchers;»
 «:tintin-capture-face:%+9s»                                «x:#no || format: pad string with up to 9 spaces;»
 «:tintin-capture-face:%-9s»                                «x:#no || format: post pad string with up to 9 spaces;»
 «:tintin-capture-face:%.8s»                                «x:#no || format: copy at most 8 characters;»
+«:tintin-capture-face:%.»«D:${»«:tintin-variable-usage-face:val»«D:}»«:tintin-capture-face:s»                           «x:#no || format: variables acceptable instead of integer;»
 
 «x:#no Regex capture classes;»
 «:tintin-capture-face:%P»                                  «x:#no || regexp: match 0 to any number of non printable characters;»

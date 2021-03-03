@@ -86,10 +86,6 @@
 (defvar tintin-delimiter "\\(?:[\s\t]*\\)")
 (defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
 
-(defun build-command-arg-regex (command)
-  (let ((brace-or-space "\\(?:[}\s\t;]\\|$\\)"))
-    (concat "{?" command brace-or-space)))
-
 ;;
 ;; Utilities to support regexp generation for tintin-command instances
 (defun initial-substrings (word &optional min-len)
@@ -135,6 +131,17 @@ which is wrapped in paretheses to create a capture group, and returned."
           (regexp-opt (initial-substrings-list word-data))
           "\\)"))
 
+(defun build-tintin-arg-regexp (value-list &rest others)
+  "Return a regular expression matching all in VALUES-LIST or OTHERS.
+Elements of VALUE-LIST are strings with possible values that should be matched
+in completion. Optionally, additional arguments can be provided in OTHERS that
+may be matches as well, though these are complete regular expressions."
+  (let* ((brace-or-space "\\(?:[}\s\t;]\\|$\\)")
+         (arg-regexp (regexp-opt value-list nil))
+         (regexps (cons arg-regexp others)))
+    (concat "{?\\(" (string-join regexps "\\|") "\\)" brace-or-space)))
+
+
 ;;
 ;; Classes used to define commands, subcommands, and the arguments therein
 (defclass tintin-command ()
@@ -158,7 +165,7 @@ which is wrapped in paretheses to create a capture group, and returned."
 (cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
   "Custom initializer for the `tintina-argument' class."
   (let* ((value-list (oref obj vals))
-         (values-regexp (build-command-arg-regex (regexp-opt value-list t))))
+         (values-regexp (build-tintin-arg-regexp value-list)))
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)

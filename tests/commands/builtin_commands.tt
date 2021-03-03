@@ -22,7 +22,8 @@
 #bell {flash}on;                        #no || bell flash set to "on";
 #bell flash off;                        #no || bell flash set to "off";
 #bell flash other;                      #no || bell flash not highlighted if wrong value;
-#bell flash $on_or_off;                 #no XX this should probably be highlighted;
+#bell flash $on_or_off;                 #no || variables are acceptable for the toggle;
+#bell flash ${on_or_off};               #no || braced variables are acceptable for the toggle;
 
 #bell focus on;                         #no || bell focus set to "on";
 #bell focus {on};                       #no || bell focus set to "on";
@@ -62,6 +63,7 @@
 #bell {volume} {1};                     #no || volume highlighted with argument;
 #bell {volume}{1};                      #no || volume highlighted with argument;
 #bell volume $x;                        #no || variables don't mess things up;
+#bell volume ${x};                      #no || braced variables don't mess things up;
 
 #buffer;                                #no || terminated bare #buffer command;
 #buffer                                 #no || unterminated bare #buffer command;

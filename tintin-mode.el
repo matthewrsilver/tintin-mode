@@ -102,7 +102,9 @@
 (defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
 (defvar var-table "\\(?:\\[[^]]*\\]\\)?")
 (defvar hex-chars "[a-fA-F0-9]")
-(defvar tintin-variable (concat "\\(" var-prefix (optional-braces (concat var-chars var-table)) "\\)"))
+(defvar raw-tintin-variable (concat var-prefix (optional-braces (concat var-chars var-table))))
+(defvar uncaptured-tintin-variable (concat "\\(?:" raw-tintin-variable "\\)"))
+(defvar tintin-variable (concat "\\(" raw-tintin-variable "\\)"))
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
 (defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
@@ -163,7 +165,8 @@
 
 ;;
 ;; Command lists for different classes of TinTin++ commands
-(defvar toggle-constant-values '("off" "on"))
+(defvar toggle-constant-values
+  (build-tintin-arg-regexp '("off" "on") uncaptured-tintin-variable))
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
@@ -262,7 +265,7 @@
 
 (setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
 (setq command-type (clone arg :face 'font-lock-type-face))
-(setq toggle-value (tintin-argument :vals toggle-constant-values :face 'font-lock-constant-face))
+(setq toggle-value (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 
 (setq tintin-font-lock-keywords (append
 

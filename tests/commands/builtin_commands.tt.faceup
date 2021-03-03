@@ -22,7 +22,8 @@
 «b:#bell» «D:{»«t:flash»«D:}»«c:on»;                        «x:#no || bell flash set to "on";»
 «b:#bell» «t:flash» «c:off»;                        «x:#no || bell flash set to "off";»
 «b:#bell» flash other;                      «x:#no || bell flash not highlighted if wrong value;»
-«b:#bell» flash «D:$»«:tintin-variable-usage-face:on_or_off»;                 «x:#no XX this should probably be highlighted;»
+«b:#bell» «t:flash» «D:$»«:tintin-variable-usage-face:on_or_off»;                 «x:#no || variables are acceptable for the toggle;»
+«b:#bell» «t:flash» «D:${»«:tintin-variable-usage-face:on_or_off»«D:}»;               «x:#no || braced variables are acceptable for the toggle;»
 
 «b:#bell» «t:focus» «c:on»;                         «x:#no || bell focus set to "on";»
 «b:#bell» «t:focus» «D:{»«c:on»«D:}»;                       «x:#no || bell focus set to "on";»
@@ -62,6 +63,7 @@
 «b:#bell» «D:{»«t:volume»«D:}» «D:{»1«D:}»;                     «x:#no || volume highlighted with argument;»
 «b:#bell» «D:{»«t:volume»«D:}{»1«D:}»;                      «x:#no || volume highlighted with argument;»
 «b:#bell» «t:volume» «D:$»«:tintin-variable-usage-face:x»;                        «x:#no || variables don't mess things up;»
+«b:#bell» «t:volume» «D:${»«:tintin-variable-usage-face:x»«D:}»;                      «x:#no || braced variables don't mess things up;»
 
 «b:#buffer»;                                «x:#no || terminated bare #buffer command;»
 «b:#buffer»                                 «x:#no || unterminated bare #buffer command;»

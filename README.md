@@ -24,8 +24,8 @@ else you prefer) and then update your `.emacs` file to add the mode, e.g.:
 
 ## Known Issues
 
-* TinTin++ allows variables with braces `${x}` to be used in pattern matchers but disrupt
-  highlighting of the surrounding context.
+* The presence of an `@`, typically used in a function call, can break matching for arguments
+  in different tintin commands.
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
 

@@ -59,6 +59,8 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
+ * variables inside pattern matchers are still not covered in some cases, should apply
+   recent change to _all_ numeric elements
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

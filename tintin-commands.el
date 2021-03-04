@@ -77,6 +77,7 @@
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
+;; TODO: unify this with variable handling approach in tintin-mode.el
 (defvar braced-variable "${[^}]*}")
 (defvar capture-chars (concat "\\(?:[@$&*%a-zA-Z0-9_\"]\\|" braced-variable "\\)+"))
 (defvar var-table "\\(?:\\[[^]]*\\]\\)?")

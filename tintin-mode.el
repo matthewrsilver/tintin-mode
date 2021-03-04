@@ -74,52 +74,39 @@
 
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
-(defun optional-braces (rgx &optional capture)
-  (let ((capture (or capture t)))
-    (concat (if capture "\\(" "\\(?:") rgx "\\|{" rgx "}\\)")))
-
-
-
 ;;
 ;; Handle matching of variable usages
-(rx-define rx-var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
-(rx-define rx-var-table (: "[" (* (not "]")) "]"))
-(rx-define rx-tintin-var (: rx-var-chars (? rx-var-table)))
-(defvar tintin-variable
-  (rx (: (group-n 1 (any "&$*"))
-     (or (: (group-n 3 "{") (group-n 2 rx-tintin-var) (group-n 4 "}"))
-         (group-n 2 rx-tintin-var)))))
-(rx-define tintin-variable-pattern
-  (: (any "&$*")
-     (or (: "{" rx-tintin-var "}")
-         rx-tintin-var)))
-;; TODO: this doesn't work??
-;;(defvar raw-tintin-variable (rx-to-string (rx rx-raw-tintin-variable) t))
-
-;; TODO: these are on the verge of obsolescence and should be killed
-(defvar var-prefix "\\([$&*]\\)")
-(defvar var-chars "[a-zA-Z_][a-zA-Z0-9_]*")
-(defvar var-table "\\(?:\\[[^]]*\\]\\)?")
-;; Needed to match variables in dice rolls and in toggle constant arguments
-(defvar raw-tintin-variable (concat var-prefix (optional-braces (concat var-chars var-table))))
-
+(rx-define var-prefix (any "&$*"))
+(rx-define var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
+(rx-define var-table (: "[" (* (not "]")) "]"))
+(rx-define tintin-var-name (: var-chars (? var-table)))
+(rx-define braced-tintin-variable (: var-prefix "{" tintin-var-name "}"))
+(rx-define optionally-braced (rx-elem) (or (group rx-elem) (: "{" (group rx-elem) "}")))
+(rx-define tintin-variable-pattern (: (group var-prefix) (optionally-braced tintin-var-name)))
+(defvar tintin-variable (rx tintin-variable-pattern))
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
-(defvar number-or-variable (concat "\\(?:[0-9]+\\|" braced-variable "\\)"))
-(defvar tintin-format-basic "[acdfghlmnprstuwxACDHLMSTUX]")
-(defvar tintin-format-numeric (concat "[-+.]" number-or-variable "+s"))
-(defvar tintin-regexp-classes "\\(+[0-9]+\\(\\.\\.[0-9]*\\)?\\)?[aAdDpPsSuUwW]")
-(defvar tintin-regexp-ops (concat "\\(" tintin-regexp-classes "\\|[+?.*]\\|[iI]\\)"))
-(defvar tintin-regexp-ops-wrapped (concat "!?" (optional-braces tintin-regexp-ops) ))
-(defvar tintin-numeric-capture "[1-9]?[0-9]")
-(defvar tintin-captures
-  (concat "\\(\\%[\\%\\\\]?\\("
-          tintin-format-basic       "\\|"
-          tintin-format-numeric     "\\|"
-          tintin-regexp-ops-wrapped "\\|"
-          tintin-numeric-capture    "\\|"
-          "\*\\)\\|\\%\\%\\)"))
+;; TODO: apply number-or-variable in tintin-regexp-classes etc.
+(rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
+
+(rx-define tintin-format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
+(defvar tintin-format-basic-matcher (rx (tintin-capture tintin-format-basic)))
+
+(rx-define number-or-variable (group (or (+ (any "0-9")) braced-tintin-variable)))
+(rx-define tintin-format-numeric (group (: (any "-+.") (+ number-or-variable) "s")))
+(defvar tintin-format-numeric-matcher (rx (tintin-capture tintin-format-numeric)))
+
+(rx-define tintin-regexp-classes (: (? "+" (+ digit) (? (: ".." (* digit)))) (any "aAdDpPsSuUwW")))
+(rx-define tintin-regexp-ops (or tintin-regexp-classes (any "+?.*") (any "iI")))
+(rx-define tintin-regexp-ops-wrapped (: (? "!") (group (optionally-braced tintin-regexp-ops))))
+(defvar tintin-regexp-ops-matcher (rx (tintin-capture tintin-regexp-ops-wrapped)))
+
+(rx-define tintin-numeric-capture (: (? (any "1-9")) digit))
+(defvar tintin-numeric-capture-matcher (rx (tintin-capture tintin-numeric-capture)))
+
+(defvar tintin-generic-capture-matcher (rx (tintin-capture "*")))
+(defvar tintin-double-percent "%%")
 (defvar tintin-regexp-matches "\\(&[1-9]?[0-9]\\)")
 
 ;;
@@ -187,7 +174,7 @@
 ;;
 ;; Command lists for different classes of TinTin++ commands
 (defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" "on") raw-tintin-variable))
+  (build-tintin-arg-regexp '("off" "on") tintin-variable))
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
@@ -291,8 +278,13 @@
 (setq tintin-font-lock-keywords (append
 
   `(;; Begin building tintin-font-lock-keywords with a list of simple matchers
-    ;; Highlight captures in actions, aliases, etc.
-    (,tintin-captures . 'tintin-capture-face)
+    ;; Highlight captures in actions, aliases, etc. Order matters.
+    (,tintin-format-basic-matcher . 'tintin-capture-face)
+    (,tintin-format-numeric-matcher . 'tintin-capture-face)
+    (,tintin-regexp-ops-matcher . 'tintin-capture-face)
+    (,tintin-numeric-capture-matcher . 'tintin-capture-face)
+    (,tintin-generic-capture-matcher . 'tintin-capture-face)
+    (,tintin-double-percent . 'tintin-capture-face)
     (,tintin-regexp-matches . 'tintin-capture-face)
 
     ;; Highlight variables as they're used. This is done up top and we're explicit
@@ -308,10 +300,11 @@
     ;; `the_` to be highlighted as font-lock-variable-name-face but then the
     ;; remaining portion to be highlighted as a variable usage.
     (,tintin-variable
-     (1 'default t)
-     (2 'tintin-variable-usage-face t)
-     (3 'default t t)
-     (4 'default t t))
+     (0 'default t)
+     (2 'tintin-variable-usage-face t t)
+     (3 'tintin-variable-usage-face t t))
+     ;;(3 'default t t)
+     ;;(4 'default t t))
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)

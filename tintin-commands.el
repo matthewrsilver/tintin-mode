@@ -83,9 +83,6 @@
 (defvar var-table "\\(?:\\[[^]]*\\]\\)?")
 (defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
 (defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t;]\\|$\\)"))
-(defvar tintin-space "\\(?:[\s\t]+\\)")
-(defvar tintin-delimiter "\\(?:[\s\t]*\\)")
-(defvar tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
 
 ;;
 ;; Utilities to support regexp generation for tintin-command instances
@@ -203,7 +200,9 @@ matcher to be highlighted, per search-based fontification."
 When ARGS-REGEXP is populated, this return value is simply a delimiter followed
 by ARGS-REGEXP itself. When ARGS-REGEXP is empty, then a special regexp is
 returned that allows for the presence of a semicolon after the command."
-  (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp)))
+  (let ((tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
+        (tintin-space "\\(?:[\s\t]+\\)"))
+    (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp))))
 
 (defun fontify-tintin-subcommand (command &optional arguments)
   "Return search-based fontifier for COMMAND and ARGUMENTS.
@@ -212,7 +211,8 @@ of arguments to produce a regular expression that matches them in sequence, and
 concatenates it with a regular expression for the command itself, then returns
 a search-based fontifier with a matcher for a command and arguments and
 highlighters for each of the capture groups to be highlighted."
-  (let* ((arg-values (mapcar #'eval arguments))
+  (let* ((tintin-delimiter "\\(?:[\s\t]*\\)")
+         (arg-values (mapcar #'eval arguments))
          (command-face (slot-value command :face))
          (command-regexp (slot-value command :regexp))
          (args-regexp-list (mapcar #'argument-to-regexp arg-values))

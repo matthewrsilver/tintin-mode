@@ -87,17 +87,17 @@
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
-;; TODO: apply number-or-variable in tintin-regexp-classes etc.
 (rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
+(rx-define number-or-variable (group (or (+ digit) braced-tintin-variable)))
 
 (rx-define tintin-format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
 (defvar tintin-format-basic-matcher (rx (tintin-capture tintin-format-basic)))
 
-(rx-define number-or-variable (group (or (+ (any "0-9")) braced-tintin-variable)))
 (rx-define tintin-format-numeric (group (: (any "-+.") (+ number-or-variable) "s")))
 (defvar tintin-format-numeric-matcher (rx (tintin-capture tintin-format-numeric)))
 
-(rx-define tintin-regexp-classes (: (? "+" (+ digit) (? (: ".." (* digit)))) (any "aAdDpPsSuUwW")))
+(rx-define tintin-regexp-classes
+  (: (? "+" number-or-variable (? (: ".." (* number-or-variable)))) (any "aAdDpPsSuUwW")))
 (rx-define tintin-regexp-ops (or tintin-regexp-classes (any "+?.*") (any "iI")))
 (rx-define tintin-regexp-ops-wrapped (: (? "!") (group (optionally-braced tintin-regexp-ops))))
 (defvar tintin-regexp-ops-matcher (rx (tintin-capture tintin-regexp-ops-wrapped)))
@@ -106,8 +106,8 @@
 (defvar tintin-numeric-capture-matcher (rx (tintin-capture tintin-numeric-capture)))
 
 (defvar tintin-generic-capture-matcher (rx (tintin-capture "*")))
+(defvar tintin-regexp-matches (rx (: "&" tintin-numeric-capture)))
 (defvar tintin-double-percent "%%")
-(defvar tintin-regexp-matches "\\(&[1-9]?[0-9]\\)")
 
 ;;
 ;; Handle various simple highlighted faces

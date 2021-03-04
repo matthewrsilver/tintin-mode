@@ -57,7 +57,9 @@
 «:tintin-capture-face:%+1U»                                «x:#no || regexp: match one non unicode character;»
 «:tintin-capture-face:%+1w»                                «x:#no || regexp: match one word character;»
 «:tintin-capture-face:%+1W»                                «x:#no || regexp: match one non word character;»
+«:tintin-capture-face:%+»«D:${»«:tintin-variable-usage-face:num_match»«D:}»«:tintin-capture-face:W»                     «x:#no || regexp: match variable number of non word characters;»
 «:tintin-capture-face:%+3..5s»                             «x:#no || regexp: match between three and five space;»
+«:tintin-capture-face:%+»«D:${»«:tintin-variable-usage-face:begin»«D:}»«:tintin-capture-face:..»«D:${»«:tintin-variable-usage-face:end»«D:}»«:tintin-capture-face:s»                 «x:#no || regexp: match between two variable numbers;»
 «:tintin-capture-face:%+0..w»                              «x:#no || regexp: match zero or more word characters;»
 «:tintin-capture-face:%!+0..w»                             «x:#no || regexp: raw matching is ok for these matches;»
 «:tintin-capture-face:%{+0..w}»                            «x:#no || regexp: braces are ok for these mtches;»

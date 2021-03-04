@@ -57,7 +57,9 @@
 %+1U                                #no || regexp: match one non unicode character;
 %+1w                                #no || regexp: match one word character;
 %+1W                                #no || regexp: match one non word character;
+%+${num_match}W                     #no || regexp: match variable number of non word characters;
 %+3..5s                             #no || regexp: match between three and five space;
+%+${begin}..${end}s                 #no || regexp: match between two variable numbers;
 %+0..w                              #no || regexp: match zero or more word characters;
 %!+0..w                             #no || regexp: raw matching is ok for these matches;
 %{+0..w}                            #no || regexp: braces are ok for these mtches;

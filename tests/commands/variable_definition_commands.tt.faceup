@@ -23,6 +23,7 @@
 «k:#var» «v:x[some»«D:$»«:tintin-variable-usage-face:thing»«v:]» data;            «x:#no || array/table highlighted with variable usage;»
 «k:#var» «v:x[some »«D:$»«:tintin-variable-usage-face:thing»«v:]» data;           «x:#no || array/table highlighted with variable usage;»
 «k:#var» «v:x[some »«D:${»«:tintin-variable-usage-face:thing»«D:}»«v:]» data;         «x:#no || array/table highlighted with braced variable usage;»
+«k:#var» «v:x[a][b]» data;                  «x:#no || multiple braces are acceptable too;»
 «k:#if» {«D:$»«:tintin-variable-usage-face:a»} {«k:#var» «v:x» t}{«k:#var» «v:x» f};      «x:#no || multiple definitions on same line;»
 «k:#var» «v:x» a; «k:#var» «v:x» b;                 «x:#no || multiple definitions on same line;»
 «k:#var» x; data;                       «x:#no || prematurely terminated command not highlighted;»

@@ -76,13 +76,34 @@
   (mapconcat 'identity lst sep))
 
 ;;
+;; Key regular expressions that are useful here in specifying broad TinTin++
+;; command structure, but are also useful in highlighting key aspects of code.
+(rx-define var-prefix (any "&$*"))
+(rx-define var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
+(rx-define var-table (: "[" (* (not "]")) "]"))
+(rx-define tintin-var-name (: var-chars (? var-table)))
+
+;; Regular expressions that allow for specification of variables under a variety
+;; of circumstances: with and without both grouping and presence/absence of braces
+(rx-define braced (g rx-elem) (: "{" (g rx-elem) "}"))
+(rx-define unbraced (g rx-elem) (g rx-elem))
+(rx-define optionally-braced (g rx-elem) (or (g rx-elem) (: "{" (g rx-elem) "}")))
+(rx-define tintin-variable-pattern (g b) (: (g var-prefix) (b g tintin-var-name)))
+
+(rx-define tintin-variable (tintin-variable-pattern group optionally-braced))
+(rx-define braced-tintin-variable (tintin-variable-pattern : braced))
+
+;;
 ;; Provide compact regexes for handling arguments in commands
-;; TODO: unify this with variable handling approach in tintin-mode.el
-(defvar braced-variable "${[^}]*}")
-(defvar capture-chars (concat "\\(?:[@$&*%a-zA-Z0-9_\"]\\|" braced-variable "\\)+"))
-(defvar var-table "\\(?:\\[[^]]*\\]\\)?")
-(defvar tintin-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t]\\|$\\)"))
-(defvar tintin-final-arg (concat "{?\\(" capture-chars var-table "\\)\\(?:[}\s\t;]\\|$\\)"))
+(rx-define capture-chars (group
+   (+ (or (+ (any "@%\"_" alphanumeric))                 ;; characters that may be used in arguments
+          (tintin-variable-pattern : optionally-braced)) ;; variables, braced or not, may be used
+      (* var-table))))                                   ;; table variable definitions are ok at end
+(rx-define tintin-argument (final)
+   (: (? "{") capture-chars (or (any "}\s\t" final) eol)))
+(defvar tintin-arg (rx (tintin-argument "")))
+(defvar tintin-final-arg (rx (tintin-argument ";")))
+
 
 ;;
 ;; Utilities to support regexp generation for tintin-command instances

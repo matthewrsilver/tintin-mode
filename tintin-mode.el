@@ -75,15 +75,10 @@
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
 ;;
-;; Handle matching of variable usages
-(rx-define var-prefix (any "&$*"))
-(rx-define var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
-(rx-define var-table (: "[" (* (not "]")) "]"))
-(rx-define tintin-var-name (: var-chars (? var-table)))
-(rx-define braced-tintin-variable (: var-prefix "{" tintin-var-name "}"))
-(rx-define optionally-braced (rx-elem) (or (group rx-elem) (: "{" (group rx-elem) "}")))
-(rx-define tintin-variable-pattern (: (group var-prefix) (optionally-braced tintin-var-name)))
-(defvar tintin-variable (rx tintin-variable-pattern))
+;; Handle matching of variable usages. This allows for `tintin-variable' as both
+;; a variable and as an rx-form. The latter is scoped separately such that
+;; collisions are impossible, which makes this safe.
+(defvar tintin-variable (rx tintin-variable))
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
@@ -99,7 +94,7 @@
 (rx-define tintin-regexp-classes
   (: (? "+" number-or-variable (? (: ".." (* number-or-variable)))) (any "aAdDpPsSuUwW")))
 (rx-define tintin-regexp-ops (or tintin-regexp-classes (any "+?.*") (any "iI")))
-(rx-define tintin-regexp-ops-wrapped (: (? "!") (group (optionally-braced tintin-regexp-ops))))
+(rx-define tintin-regexp-ops-wrapped (: (? "!") (group (optionally-braced group tintin-regexp-ops))))
 (defvar tintin-regexp-ops-matcher (rx (tintin-capture tintin-regexp-ops-wrapped)))
 
 (rx-define tintin-numeric-capture (: (? (any "1-9")) digit))
@@ -111,8 +106,7 @@
 
 ;;
 ;; Handle various simple highlighted faces
-(defvar hex-chars "[a-fA-F0-9]")
-(defvar ansi-color-code (concat "\\(\<[FB]?" hex-chars "\\{3\\}\>\\)"))
+(defvar ansi-color-code (rx (: "<" (? (any "FB")) (= 3 hex) ">")))
 (defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
 (defvar tintin-repeat-cmd (concat "\\(" tintin-command-character "[0-9]+\\)\\(?:[\s\t;]\\|$\\)"))
 (defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
@@ -161,9 +155,9 @@
 (rx-define no-pad-int (or "0" (: (any "1-9") (* (any "0-9")))))
 (defvar dice-roll
   (rx (: start-marker
-         (group (or (+ no-pad-int) (regexp braced-variable))
+         (group (or (+ no-pad-int) braced-tintin-variable)
                 "d"
-                (or (+ no-pad-int) tintin-variable-pattern))
+                (or (+ no-pad-int) tintin-variable))
          (not move-direction)
          end-marker)))
 (defvar speedwalk
@@ -479,4 +473,3 @@
         (indent-line-to 0)))))
 
 (provide 'tintin-mode)
-

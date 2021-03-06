@@ -75,49 +75,52 @@
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
 ;;
-;; Handle matching of variable usages. This allows for `tintin-variable' as both
-;; a variable and as an rx-form. The latter is scoped separately such that
-;; collisions are impossible, which makes this safe.
+;; Handle matching of variable usages.
+;;
+;; Available from `tintin-commands' are rx forms for matching variables
+;; under a variety of circumstances, i.e.:
+;;   * `tintin-variable'
+;;   * `ungrouped-tintin-variable'
+;;   * `braced-tintin-variable'
+;; The following lisp variable allows for `tintin-variable' to be used as
+;; both a variable and as an rx-form. All rx-forms are scoped separately
+;; such that collisions are impossible, which makes this safe.
 (defvar tintin-variable (rx tintin-variable))
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
 (rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
 (rx-define number-or-variable (group (or (+ digit) braced-tintin-variable)))
-
-(rx-define tintin-format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
-(defvar tintin-format-basic-matcher (rx (tintin-capture tintin-format-basic)))
-
-(rx-define tintin-format-numeric (group (: (any "-+.") (+ number-or-variable) "s")))
-(defvar tintin-format-numeric-matcher (rx (tintin-capture tintin-format-numeric)))
-
-(rx-define tintin-regexp-classes
+(rx-define regexp-classes
   (: (? "+" number-or-variable (? (: ".." (* number-or-variable)))) (any "aAdDpPsSuUwW")))
-(rx-define tintin-regexp-ops (or tintin-regexp-classes (any "+?.*") (any "iI")))
-(rx-define tintin-regexp-ops-wrapped (: (? "!") (group (optionally-braced group tintin-regexp-ops))))
-(defvar tintin-regexp-ops-matcher (rx (tintin-capture tintin-regexp-ops-wrapped)))
-
-(rx-define tintin-numeric-capture (: (? (any "1-9")) digit))
-(defvar tintin-numeric-capture-matcher (rx (tintin-capture tintin-numeric-capture)))
-
-(defvar tintin-generic-capture-matcher (rx (tintin-capture "*")))
-(defvar tintin-regexp-matches (rx (: "&" tintin-numeric-capture)))
-(defvar tintin-double-percent "%%")
+(rx-define format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
+(rx-define format-numeric (group (: (any "-+.") (+ number-or-variable) "s")))
+(rx-define regexp-ops (or regexp-classes (any "+?.*") (any "iI")))
+(rx-define regexp-ops-wrapped (: (? "!") (group (optionally-braced group regexp-ops))))
+(rx-define numeric-capture (: (? (any "1-9")) digit))
+(defvar tintin-regexp-matches (rx "&" numeric-capture))
+(defvar tintin-double-percent (rx "%%"))
+(defvar tintin-capture-matcher
+  (rx (tintin-capture
+       (or format-basic format-numeric regexp-ops-wrapped numeric-capture "*"))))
 
 ;;
 ;; Handle various simple highlighted faces
-(defvar ansi-color-code (rx (: "<" (? (any "FB")) (= 3 hex) ">")))
-(defvar ansi-gray-code "\\(\<[gG][0-9]\\{2\\}\>\\)")
-(defvar tintin-repeat-cmd (concat "\\(" tintin-command-character "[0-9]+\\)\\(?:[\s\t;]\\|$\\)"))
-(defvar tintin-function "\\(@[a-zA-Z_][a-zA-Z0-9_]*\\){")
-(defvar tintin-special-symbols "\\(^[\!\\]\\|~\\).*")
-(defvar double-semicolon-warning ";\\(;\\)")
+(defvar ansi-color-code (rx "<" (? (any "FB")) (= 3 hex) ">"))
+(defvar ansi-gray-code (rx "<" (any "gG") (= 2 digit) ">"))
+(defvar tintin-function (rx (group "@" var-chars ) "{"))
+(defvar tintin-special-symbols (rx (group (or (: bol (any "!\\")) "~")) (* nonl)))
+(defvar double-semicolon-warning (rx ";" (group ";")))
+(defvar tintin-repeat-cmd
+  (rx (group tintin-command-character (+ digit)) (or (any "\s\t;") eol)))
 
 ;;
 ;; Deal with comments, which are bonkers in TinTin++
-(defvar comment-start-regexp (concat tintin-command-character "[nN][oO][pP]?[ \t\n]+"))
-(defvar comment-regexp (concat "\\(" comment-start-regexp "[^;]*?;\\)"))
-(defvar insert-comment-str (concat tintin-command-character "nop "))
+(rx-define comment-start-regexp
+  (: tintin-command-character (any "nN") (any "oO") (? (any "pP")) (+ (any " \t\n"))))
+(defvar comment-start-regexp (rx comment-start-regexp))
+(defvar comment-regexp (rx comment-start-regexp (? (* (not (any ";")))) ";"))
+(defvar insert-comment-str (rx tintin-command-character "nop "))
 
 (defun tintin-comment-extend-region ()
   "Mark multiline constructs for highlighting #nop? comments"
@@ -250,7 +253,6 @@
 ;;
 ;; Now set up the font faces and stand up a few tintin-argument instances that
 ;; enable us to concisely define many commands using tintin-command.el.
-
 (defface tintin-ansi-face '((t (:foreground "#c95d5d"))) "*Face for ansi color codes.")
 (defface tintin-capture-face '((t (:foreground "#8dd110"))) "*Face for capture variables.")
 (defface tintin-function-face '((t (:foreground "#5dc9c9"))) "*Face for user functions.")
@@ -272,12 +274,8 @@
 (setq tintin-font-lock-keywords (append
 
   `(;; Begin building tintin-font-lock-keywords with a list of simple matchers
-    ;; Highlight captures in actions, aliases, etc. Order matters.
-    (,tintin-format-basic-matcher . 'tintin-capture-face)
-    (,tintin-format-numeric-matcher . 'tintin-capture-face)
-    (,tintin-regexp-ops-matcher . 'tintin-capture-face)
-    (,tintin-numeric-capture-matcher . 'tintin-capture-face)
-    (,tintin-generic-capture-matcher . 'tintin-capture-face)
+    ;; Highlight captures in actions, aliases, etc.
+    (,tintin-capture-matcher . 'tintin-capture-face)
     (,tintin-double-percent . 'tintin-capture-face)
     (,tintin-regexp-matches . 'tintin-capture-face)
 
@@ -295,10 +293,8 @@
     ;; remaining portion to be highlighted as a variable usage.
     (,tintin-variable
      (0 'default t)
-     (2 'tintin-variable-usage-face t t)
-     (3 'tintin-variable-usage-face t t))
-     ;;(3 'default t t)
-     ;;(4 'default t t))
+     (2 'tintin-variable-usage-face t t)  ;; match the unbraced form
+     (3 'tintin-variable-usage-face t t)) ;; match the braced form
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)
@@ -397,7 +393,7 @@
                         '(buffer-toggle-option toggle-value)))
 
   ;; Finish with the comment face that overrides everything
-  `((,comment-regexp 1 'font-lock-comment-face t))))
+  `((,comment-regexp 0 'font-lock-comment-face t))))
 
 (defvar tintin-mode-syntax-table
   (let ((st (make-syntax-table)))

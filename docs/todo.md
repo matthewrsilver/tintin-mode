@@ -5,16 +5,17 @@
    * cover the basic competencies
    * document configurability e.g. of tintin character
 
- * Clean up regular expressions, figure out word boundaries and special characters {, }, and #.
+ * Clean up regular expressions
+   * figure out word boundaries and special characters {, }, and #.
 
  * Complete migration to simplified class-based approach
+   * refine relationship between argument regexps and classes
+   * consider a :final slot
    * eliminate double quoting
 
  * Consider an anchored-matcher pattern for commands with options?
    * it'd probably make regexps faster because some regexps aren't evaluated
    * concern is with multiple matches and sets of anchored matchers on one line?
-
- * Work out a generic tintin token regexp
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands

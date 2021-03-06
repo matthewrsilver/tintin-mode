@@ -68,6 +68,7 @@
 (require 'eieio)
 
 (setq tintin-command-character "#")
+(rx-define tintin-command-character (eval tintin-command-character))
 
 ;;
 ;; A few generic useful functions
@@ -85,20 +86,23 @@
 
 ;; Regular expressions that allow for specification of variables under a variety
 ;; of circumstances: with and without both grouping and presence/absence of braces
+(rx-define grouped (&rest rx-elem) (group rx-elem))
+(rx-define ungrouped (&rest rx-elem) (: rx-elem))
 (rx-define braced (g rx-elem) (: "{" (g rx-elem) "}"))
 (rx-define unbraced (g rx-elem) (g rx-elem))
 (rx-define optionally-braced (g rx-elem) (or (g rx-elem) (: "{" (g rx-elem) "}")))
-(rx-define tintin-variable-pattern (g b) (: (g var-prefix) (b g tintin-var-name)))
+(rx-define tintin-var-pattern (g b) (: (g var-prefix) (b g tintin-var-name)))
 
-(rx-define tintin-variable (tintin-variable-pattern group optionally-braced))
-(rx-define braced-tintin-variable (tintin-variable-pattern : braced))
+(rx-define tintin-variable (tintin-var-pattern grouped optionally-braced))
+(rx-define ungrouped-tintin-variable (tintin-var-pattern ungrouped optionally-braced))
+(rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
 (rx-define capture-chars (group
-   (+ (or (+ (any "@%\"_" alphanumeric))                 ;; characters that may be used in arguments
-          (tintin-variable-pattern : optionally-braced)) ;; variables, braced or not, may be used
-      (* var-table))))                                   ;; table variable definitions are ok at end
+   (+ (or (+ (any "@%\"_" alphanumeric))  ;; characters that may be used in arguments
+          ungrouped-tintin-variable)      ;; variables may be used
+      (* var-table))))                    ;; table variable definitions are ok at end
 (rx-define tintin-argument (final)
    (: (? "{") capture-chars (or (any "}\s\t" final) eol)))
 (defvar tintin-arg (rx (tintin-argument "")))
@@ -145,10 +149,8 @@ For example, the following progression from WORD-DATA to words to regexp:
     '\\(?:another\\|samp\\(?:le?\\)?\\)'
 
 which is wrapped in paretheses to create a capture group, and returned."
-  (concat "\\("
-          tintin-command-character
-          (regexp-opt (initial-substrings-list word-data))
-          "\\)"))
+  (rx (group (eval tintin-command-character)
+             (regexp (eval (regexp-opt (initial-substrings-list word-data)))))))
 
 (defun build-tintin-arg-regexp (value-list &rest others)
   "Return a regular expression matching all in VALUES-LIST or OTHERS.
@@ -222,7 +224,7 @@ When ARGS-REGEXP is populated, this return value is simply a delimiter followed
 by ARGS-REGEXP itself. When ARGS-REGEXP is empty, then a special regexp is
 returned that allows for the presence of a semicolon after the command."
   (let ((tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
-        (tintin-space "\\(?:[\s\t]+\\)"))
+        (tintin-space (rx (+ blank))))
     (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp))))
 
 (defun fontify-tintin-subcommand (command &optional arguments)
@@ -232,7 +234,7 @@ of arguments to produce a regular expression that matches them in sequence, and
 concatenates it with a regular expression for the command itself, then returns
 a search-based fontifier with a matcher for a command and arguments and
 highlighters for each of the capture groups to be highlighted."
-  (let* ((tintin-delimiter "\\(?:[\s\t]*\\)")
+  (let* ((tintin-delimiter (rx (* blank)))
          (arg-values (mapcar #'eval arguments))
          (command-face (slot-value command :face))
          (command-regexp (slot-value command :regexp))

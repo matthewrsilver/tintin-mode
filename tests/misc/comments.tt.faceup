@@ -38,7 +38,13 @@ and also when it's nop;»
 amazingly «x:/* this also works; as a comment */» and «x:/* can work
 on multiple lines */» too
 
+«x:/* TODO: c-style commands have issues with $variable and ${variable} overrides though */»
+«x:/* but matchers like %t and %% are ok */»
+
 «x:#no but the different comment types don't */ conflict;»
+«x:/* TODO: #no nevermind */ I take it back.;»
+
+TODO: also worth investigating is relationship between "quoted strings and «x:#no comments";»
 
 #nops this isn't a comment;
 #no neither is this

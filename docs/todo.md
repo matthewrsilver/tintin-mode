@@ -60,6 +60,7 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
+ * variables inside square braces in variables don't get the default chars highlighted
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

@@ -144,11 +144,12 @@ an optimized regular expression that matches the words accordingly.
 
 For example, the following progression from WORD-DATA to words to regexp:
 
-   '(\"#sample\" 5 \"#another\" 0)
-    '#sample' '#sampl' '#samp' '#another'
+   '(\"sample\" 4 \"another\" 0)
+    'sample' 'sampl' 'samp' 'another'
     '\\(?:another\\|samp\\(?:le?\\)?\\)'
 
-which is wrapped in paretheses to create a capture group, and returned."
+which is wrapped in paretheses to create a capture group. The configurable
+`tintin-command-character' is prepended, and the regular expression returned."
   (rx (group (eval tintin-command-character)
              (regexp (eval (regexp-opt (initial-substrings-list word-data)))))))
 

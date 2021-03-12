@@ -38,7 +38,13 @@ and also when it's nop;
 amazingly /* this also works; as a comment */ and /* can work
 on multiple lines */ too
 
+/* TODO: c-style commands have issues with $variable and ${variable} overrides though */
+/* but matchers like %t and %% are ok */
+
 #no but the different comment types don't */ conflict;
+/* TODO: #no nevermind */ I take it back.;
+
+TODO: also worth investigating is relationship between "quoted strings and #no comments";
 
 #nops this isn't a comment;
 #no neither is this

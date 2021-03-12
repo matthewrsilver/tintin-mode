@@ -175,7 +175,7 @@
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
-     "format" 3     "math" 0       "replace" 3))
+     "format" 4     "math" 0       "replace" 3))
 (defvar unvariable-commands-list '( "unvariable" 5 "unlocal" 5))
 (defvar function-command-list '("function" 3))
 (defvar unfunction-command-list '("unfunction" 5))
@@ -273,13 +273,7 @@
 
 (setq tintin-font-lock-keywords (append
 
-  `(;; Begin building tintin-font-lock-keywords with a list of simple matchers
-    ;; Highlight captures in actions, aliases, etc.
-    (,tintin-capture-matcher . 'tintin-capture-face)
-    (,tintin-double-percent . 'tintin-capture-face)
-    (,tintin-regexp-matches . 'tintin-capture-face)
-
-    ;; Highlight variables as they're used. This is done up top and we're explicit
+  `(;; Highlight variables as they're used. This is done up top and we're explicit
     ;; about the default face of the initial symbol [&$*] and any braces so subsequent
     ;; elements in font-lock-keywords can use the `keep` override mode, filling in the
     ;; unhighighted adjacent characters as veriable definitions as necessary, for
@@ -292,9 +286,15 @@
     ;; `the_` to be highlighted as font-lock-variable-name-face but then the
     ;; remaining portion to be highlighted as a variable usage.
     (,tintin-variable
-     (0 'default t)
-     (2 'tintin-variable-usage-face t t)  ;; match the unbraced form
-     (3 'tintin-variable-usage-face t t)) ;; match the braced form
+     (2 'tintin-variable-usage-face nil t) ;; match the unbraced form
+     (3 'tintin-variable-usage-face nil t) ;; match the braced form
+     (0 'default keep))
+
+    ;; Begin building tintin-font-lock-keywords with a list of simple matchers
+    ;; Highlight captures in actions, aliases, etc.
+    (,tintin-capture-matcher 0 'tintin-capture-face keep)
+    (,tintin-double-percent 0 'tintin-capture-face keep)
+    (,tintin-regexp-matches 0 'tintin-capture-face keep)
 
     ;; Handle functions as they're used
     (,tintin-function 1 'tintin-function-face)

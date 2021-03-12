@@ -80,9 +80,9 @@
 ;; Key regular expressions that are useful here in specifying broad TinTin++
 ;; command structure, but are also useful in highlighting key aspects of code.
 (rx-define var-prefix (any "&$*"))
-(rx-define var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_"))))
+(rx-define var-chars (: (any "a-zA-Z_") (* (any "a-zA-Z0-9_.'"))))
 (rx-define var-table (: "[" (* (not "]")) "]"))
-(rx-define tintin-var-name (: var-chars (? var-table)))
+(rx-define tintin-var-name (: var-chars (* var-table)))
 
 ;; Regular expressions that allow for specification of variables under a variety
 ;; of circumstances: with and without both grouping and presence/absence of braces
@@ -92,8 +92,10 @@
 (rx-define unbraced (g rx-elem) (g rx-elem))
 (rx-define optionally-braced (g rx-elem) (or (g rx-elem) (: "{" (g rx-elem) "}")))
 (rx-define tintin-var-pattern (g b) (: (g var-prefix) (b g tintin-var-name)))
+(rx-define simple-var-pattern (g b) (: (g var-prefix) (b g var-chars)))
 
 (rx-define tintin-variable (tintin-var-pattern grouped optionally-braced))
+(rx-define simple-variable (simple-var-pattern grouped optionally-braced))
 (rx-define ungrouped-tintin-variable (tintin-var-pattern ungrouped optionally-braced))
 (rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
 

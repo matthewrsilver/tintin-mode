@@ -86,6 +86,7 @@
 ;; both a variable and as an rx-form. All rx-forms are scoped separately
 ;; such that collisions are impossible, which makes this safe.
 (defvar tintin-variable (rx tintin-variable))
+(defvar simple-variable (rx simple-variable))
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions
@@ -285,12 +286,15 @@
     ;; a variable called `the_thing` is created with value `data` and we'd want
     ;; `the_` to be highlighted as font-lock-variable-name-face but then the
     ;; remaining portion to be highlighted as a variable usage.
-    (,tintin-variable
+    (,simple-variable
      (2 'tintin-variable-usage-face nil t) ;; match the unbraced form
      (3 'tintin-variable-usage-face nil t) ;; match the braced form
      (0 'default keep))
+    (,tintin-variable
+     (2 'tintin-variable-usage-face keep t) ;; match the unbraced form
+     (3 'tintin-variable-usage-face keep t) ;; match the braced form
+     (0 'default keep))
 
-    ;; Begin building tintin-font-lock-keywords with a list of simple matchers
     ;; Highlight captures in actions, aliases, etc.
     (,tintin-capture-matcher 0 'tintin-capture-face keep)
     (,tintin-double-percent 0 'tintin-capture-face keep)

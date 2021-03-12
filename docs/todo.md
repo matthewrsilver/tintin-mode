@@ -29,7 +29,7 @@
  * The #config command has many modes, particularly toggles
  * It looks like #cursor does some weird stuff
  * The #daemon command has modes
- * THe #debug command has a toggle with "log" as well
+ * The #debug command has a toggle with "log" as well
  * The #edit command has a number of options
  * The #format command is in good shape but:
    * additional matchers for the time (%t) format specifier??
@@ -46,6 +46,7 @@
  * The #scan command has options
  * The #screen command has options, some complex
  * The #snoop command has a toggle, and interacts with sessionname
+ * The #unvariable command can be used for any number of variables
  * #[sessionname] is a thing....
    * there's support for sending commands to a session with #<sesssionname> {commands}:
    * and text can be evauated in a session with @<sessionname>{text}:
@@ -60,7 +61,8 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
- * variables inside square braces in variables don't get the default chars highlighted
+ * All sorts of characters should be allowed in braced variables, but are not highlighted
+   * Also in variable definitions too, of course
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

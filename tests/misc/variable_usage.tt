@@ -1,0 +1,37 @@
+#no Tests for variable usage forms;
+
+#no Standard variables;
+$variable_usage                         #no || standard variable;
+$variable_usage[table]                  #no || variable with table;
+$variable_usage[table and spaces]       #no || variable with table and spaces;
+$variable_usage[table and $variable]    #no || variable with table and spaces contianing variable;
+$variable_usage[table ${variable}]      #no || variable with table, spaces, and braced  variable;
+$variable_usage[+ "wow" & don't!]       #no || tables can have all sorts of characters in them;
+$variable[multiple][tables]             #no || nested tables work;
+$dot.notation.for.real                  #no || dot notation works;
+$dots.and[tables]                       #no || dot notation can be mixed with tables;
+$can't_believe_this_works               #no || single quotes are actually fine in variable names;
+$"nope"this"does_not_work"              #no || double quotes don't work in unbraced variables;
+$neither"does"this                      #no || double quotes don't work in unbraced variables;
+$"nor_does_this"                        #no || double quotes don't work in unbraced variables;
+${variable_usage}                       #no || braced variable;
+${variable_usage[table]}                #no || braced variable with table;
+${variable_usage[table and spaces]}     #no || braced variable with table and spaces;
+${variable_usage[table and $variable]}  #no || braced variable with table, spaces, and variable;
+${variable_usage[table ${variable}]}    #no || braced variable with table, spaces, braced variable;
+${variable_usage[+ "wow" & don't!]}     #no || tables can have all sorts of characters in them;
+${variable[multiple][tables]}           #no || braced variables and nested tables work;
+${dot.notation.for.real}                #no || dot notation works;
+${dots.and[tables]}                     #no || dot notation can be mixed with braces;
+${can't_believe_this_works}             #no || single quotes are fine in braced variables;
+${"yep"this"works_w_braces"}            #no XX double quotes should be ok unless they are excl ends;
+${so"does"this}                         #no XX as above, this should work: more than just ends;
+${"this_still_doesnt"}                  #no || double quotes at just the ends don't work;
+${believe it or not, "this" works....}  #no XX this madness should work... braces are permissive;
+${uh oh... #no works here too}          #no XX commands should just be highlighted as variables;
+
+#no Other variable forms with different prefixes;
+&variable_existence                     #no || tests for variable existence work as normal usages;
+&{variable_existence}                   #no || tests for variable existence work as normal usages;
+*table_keys                             #no || accessing tabke keys work as normal usages;
+*{table_keys}                           #no || accessing tabke keys work as normal usages;

@@ -1,0 +1,37 @@
+«x:#no Tests for variable usage forms;»
+
+«x:#no Standard variables;»
+«D:$»«:tintin-variable-usage-face:variable_usage»                         «x:#no || standard variable;»
+«D:$»«:tintin-variable-usage-face:variable_usage[table]»                  «x:#no || variable with table;»
+«D:$»«:tintin-variable-usage-face:variable_usage[table and spaces]»       «x:#no || variable with table and spaces;»
+«D:$»«:tintin-variable-usage-face:variable_usage[table and »«D:$»«:tintin-variable-usage-face:variable]»    «x:#no || variable with table and spaces contianing variable;»
+«D:$»«:tintin-variable-usage-face:variable_usage[table »«D:${»«:tintin-variable-usage-face:variable»«D:}»«:tintin-variable-usage-face:]»      «x:#no || variable with table, spaces, and braced  variable;»
+«D:$»«:tintin-variable-usage-face:variable_usage[+ "wow" & don't!]»       «x:#no || tables can have all sorts of characters in them;»
+«D:$»«:tintin-variable-usage-face:variable[multiple][tables]»             «x:#no || nested tables work;»
+«D:$»«:tintin-variable-usage-face:dot.notation.for.real»                  «x:#no || dot notation works;»
+«D:$»«:tintin-variable-usage-face:dots.and[tables]»                       «x:#no || dot notation can be mixed with tables;»
+«D:$»«:tintin-variable-usage-face:can't_believe_this_works»               «x:#no || single quotes are actually fine in variable names;»
+$"nope"this"does_not_work"              «x:#no || double quotes don't work in unbraced variables;»
+«D:$»«:tintin-variable-usage-face:neither»"does"this                      «x:#no || double quotes don't work in unbraced variables;»
+$"nor_does_this"                        «x:#no || double quotes don't work in unbraced variables;»
+«D:${»«:tintin-variable-usage-face:variable_usage»«D:}»                       «x:#no || braced variable;»
+«D:${»«:tintin-variable-usage-face:variable_usage[table]»«D:}»                «x:#no || braced variable with table;»
+«D:${»«:tintin-variable-usage-face:variable_usage[table and spaces]»«D:}»     «x:#no || braced variable with table and spaces;»
+«D:${»«:tintin-variable-usage-face:variable_usage[table and »«D:$»«:tintin-variable-usage-face:variable]»«D:}»  «x:#no || braced variable with table, spaces, and variable;»
+«D:${»«:tintin-variable-usage-face:variable_usage[table »«D:${»«:tintin-variable-usage-face:variable»«D:}»«:tintin-variable-usage-face:]»«D:}»    «x:#no || braced variable with table, spaces, braced variable;»
+«D:${»«:tintin-variable-usage-face:variable_usage[+ "wow" & don't!]»«D:}»     «x:#no || tables can have all sorts of characters in them;»
+«D:${»«:tintin-variable-usage-face:variable[multiple][tables]»«D:}»           «x:#no || braced variables and nested tables work;»
+«D:${»«:tintin-variable-usage-face:dot.notation.for.real»«D:}»                «x:#no || dot notation works;»
+«D:${»«:tintin-variable-usage-face:dots.and[tables]»«D:}»                     «x:#no || dot notation can be mixed with braces;»
+«D:${»«:tintin-variable-usage-face:can't_believe_this_works»«D:}»             «x:#no || single quotes are fine in braced variables;»
+${"yep"this"works_w_braces"}            «x:#no XX double quotes should be ok unless they are excl ends;»
+${so"does"this}                         «x:#no XX as above, this should work: more than just ends;»
+${"this_still_doesnt"}                  «x:#no || double quotes at just the ends don't work;»
+${believe it or not, "this" works....}  «x:#no XX this madness should work... braces are permissive;»
+${uh oh... «x:#no works here too}          #no XX commands should just be highlighted as variables;»
+
+«x:#no Other variable forms with different prefixes;»
+«D:&»«:tintin-variable-usage-face:variable_existence»                     «x:#no || tests for variable existence work as normal usages;»
+«D:&{»«:tintin-variable-usage-face:variable_existence»«D:}»                   «x:#no || tests for variable existence work as normal usages;»
+«D:*»«:tintin-variable-usage-face:table_keys»                             «x:#no || accessing tabke keys work as normal usages;»
+«D:*{»«:tintin-variable-usage-face:table_keys»«D:}»                           «x:#no || accessing tabke keys work as normal usages;»

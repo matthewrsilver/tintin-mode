@@ -16,7 +16,7 @@
 «k:#var» {} data;                       «x:#no || good that the value isn't highlighted;»
 «k:#var» «v:x» «D:$»«:tintin-variable-usage-face:result»;                     «x:#no || variable usage in value is correctly highlighted;»
 «k:#var» {«v:x»«D:$»«:tintin-variable-usage-face:y»} data;                    «x:#no || variable usage in variable definition;»
-«k:#var» {«v:x»«D:${»«:tintin-variable-usage-face:y»«D:}»} data;                  «x:#no || braced variable usage in variable definition;»
+«k:#var» {«v:x»«D:${»«:tintin-variable-usage-face:y»«D:}}» data;                  «x:#no || braced variable usage in variable definition;»
 «k:#var» «v:x[something]» data;             «x:#no || array/table highlighted as variable;»
 «k:#var» «v:x[some thing]» data;            «x:#no || array/table highlighted as variable, even with spaces;»
 «k:#var» «v:test[abc]»	data;               «x:#no || highlighting works with tab delimiters too;»

@@ -117,8 +117,9 @@
       (if found-point
           (progn
             (goto-char font-lock-end)
-            (if (re-search-forward ";" nil t)
-                (setq font-lock-end (point)))
+            (if (re-search-forward ";" nil "wow")
+                (setq font-lock-end (point))
+              (setq font-lock-end (point-max)))
             (setq font-lock-beg found-point))))))
 
 ;;

@@ -99,10 +99,16 @@
 (rx-define ungrouped-tintin-variable (tintin-var-pattern ungrouped optionally-braced))
 (rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
 
+(rx-define braced-content (+ (or (simple-var-pattern ungrouped braced) (not "}"))))
 (rx-define optionally-braced-tintin-variable
   (: (group var-prefix)
      (or (group tintin-var-name)
-         (: "{" (group (+ (or (simple-var-pattern ungrouped braced) (not "}")))) "}"))))
+         (: "{" (group
+                 (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
+                     (: (not "\"") braced-content (not "\""))
+                     (: braced-content (not "\""))
+                     (: (not "\"") braced-content)))
+            "}" ))))
 
 ;;
 ;; Provide compact regexes for handling arguments in commands

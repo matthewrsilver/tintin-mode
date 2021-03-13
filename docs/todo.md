@@ -61,8 +61,7 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
- * All sorts of characters should be allowed in braced variables, but are not highlighted
-   * Also in variable definitions too, of course
+ * Need to expand variable definitions to handle various characters
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

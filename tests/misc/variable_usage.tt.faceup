@@ -24,11 +24,11 @@ $"nor_does_this"                        «x:#no || double quotes don't work in u
 «D:${»«:tintin-variable-usage-face:dot.notation.for.real»«D:}»                «x:#no || dot notation works;»
 «D:${»«:tintin-variable-usage-face:dots.and[tables]»«D:}»                     «x:#no || dot notation can be mixed with braces;»
 «D:${»«:tintin-variable-usage-face:can't_believe_this_works»«D:}»             «x:#no || single quotes are fine in braced variables;»
-${"yep"this"works_w_braces"}            «x:#no XX double quotes should be ok unless they are excl ends;»
-${so"does"this}                         «x:#no XX as above, this should work: more than just ends;»
-${"this_still_doesnt"}                  «x:#no || double quotes at just the ends don't work;»
-${believe it or not, "this" works....}  «x:#no XX this madness should work... braces are permissive;»
-${uh oh... «x:#no works here too}          #no XX commands should just be highlighted as variables;»
+«D:${»«:tintin-variable-usage-face:"yep"this"works_w_braces"»«D:}»            «x:#no || double quotes should be ok unless they are excl ends;»
+«D:${»«:tintin-variable-usage-face:so"does"this»«D:}»                         «x:#no || as above, this should work: more than just ends;»
+«D:${»«:tintin-variable-usage-face:"this_still_doesnt"»«D:}»                  «x:#no XX double quotes at just the ends don't work;»
+«D:${»«:tintin-variable-usage-face:believe it or not, "this" works....»«D:}»  «x:#no || this madness should work... braces are permissive;»
+«D:${»«:tintin-variable-usage-face:uh oh... »«x:#no works here too}          #no XX commands should just be highlighted as variables;»
 
 «x:#no Other variable forms with different prefixes;»
 «D:&»«:tintin-variable-usage-face:variable_existence»                     «x:#no || tests for variable existence work as normal usages;»

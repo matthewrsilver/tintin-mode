@@ -75,20 +75,6 @@
 (add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
 
 ;;
-;; Handle matching of variable usages.
-;;
-;; Available from `tintin-commands' are rx forms for matching variables
-;; under a variety of circumstances, i.e.:
-;;   * `tintin-variable'
-;;   * `ungrouped-tintin-variable'
-;;   * `braced-tintin-variable'
-;; The following lisp variable allows for `tintin-variable' to be used as
-;; both a variable and as an rx-form. All rx-forms are scoped separately
-;; such that collisions are impossible, which makes this safe.
-(defvar tintin-variable (rx tintin-variable))
-(defvar simple-variable (rx simple-variable))
-
-;;
 ;; Handle pattern matchers, formatters, regular expressions
 (rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
 (rx-define number-or-variable (group (or (+ digit) braced-tintin-variable)))
@@ -172,7 +158,7 @@
 ;;
 ;; Command lists for different classes of TinTin++ commands
 (defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" "on") tintin-variable))
+  (build-tintin-arg-regexp '("off" "on") (rx tintin-variable)))
 
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
@@ -286,11 +272,11 @@
     ;; a variable called `the_thing` is created with value `data` and we'd want
     ;; `the_` to be highlighted as font-lock-variable-name-face but then the
     ;; remaining portion to be highlighted as a variable usage.
-    (,simple-variable
+    (,(rx simple-variable)
      (2 'tintin-variable-usage-face nil t) ;; match the unbraced form
      (3 'tintin-variable-usage-face nil t) ;; match the braced form
      (0 'default keep))
-    (,tintin-variable
+    (,(rx optionally-braced-tintin-variable)
      (2 'tintin-variable-usage-face keep t) ;; match the unbraced form
      (3 'tintin-variable-usage-face keep t) ;; match the braced form
      (0 'default keep))
@@ -415,7 +401,7 @@
 
 ;;;###autoload
 (defun tintin-mode ()
-  "Major mode for editing tintin config files"
+  "Major mode for editing TinTin++ code."
   (interactive)
   (kill-all-local-variables)
   (set-syntax-table tintin-mode-syntax-table)
@@ -437,7 +423,7 @@
   (run-hooks 'tintin-mode-hook))
 
 (defun tintin-indent-line ()
-  "Indent current line as TinTin++ code"
+  "Indent current line as TinTin++ code."
   (interactive)
   (beginning-of-line)
   (if (bobp)  ; Check for rule 1

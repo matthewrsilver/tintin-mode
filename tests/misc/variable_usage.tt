@@ -24,10 +24,10 @@ ${variable[multiple][tables]}           #no || braced variables and nested table
 ${dot.notation.for.real}                #no || dot notation works;
 ${dots.and[tables]}                     #no || dot notation can be mixed with braces;
 ${can't_believe_this_works}             #no || single quotes are fine in braced variables;
-${"yep"this"works_w_braces"}            #no XX double quotes should be ok unless they are excl ends;
-${so"does"this}                         #no XX as above, this should work: more than just ends;
-${"this_still_doesnt"}                  #no || double quotes at just the ends don't work;
-${believe it or not, "this" works....}  #no XX this madness should work... braces are permissive;
+${"yep"this"works_w_braces"}            #no || double quotes should be ok unless they are excl ends;
+${so"does"this}                         #no || as above, this should work: more than just ends;
+${"this_still_doesnt"}                  #no XX double quotes at just the ends don't work;
+${believe it or not, "this" works....}  #no || this madness should work... braces are permissive;
 ${uh oh... #no works here too}          #no XX commands should just be highlighted as variables;
 
 #no Other variable forms with different prefixes;

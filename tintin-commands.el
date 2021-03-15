@@ -67,7 +67,8 @@
 (require 'cl-lib)
 (require 'eieio)
 
-(setq tintin-command-character "#")
+(defcustom  tintin-command-character "#"
+  "The symbol used to mark the beginning of TinTin++ commands.")
 (rx-define tintin-command-character (eval tintin-command-character))
 
 ;;

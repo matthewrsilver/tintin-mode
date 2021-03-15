@@ -64,7 +64,7 @@ C-style `/* comments */` and the TinTin++ no-op `#no comment-like thing;` are we
 Unexpected behavior of the comment-like `#nop` command is captured such that failure to
 terminate a `#nop` command with a semicolon allows the comment to flow onto subsequent lines.
 This is an easily-overlooked behavior of the `#nop` command, and can be instrumental in
-identifying misbehaving commants that are affecting subsequent lines.
+identifying misbehaving comments that are unintentionally consuming additional lines.
 
 ### Miscellaneous helpful highlights
 
@@ -78,13 +78,14 @@ game interaction in TinTin++, including:
 
 TinTin++ allows users to customize their scripts in a number of ways. The most critical is the
 ability to alter the character used for TinTin++ commands, which is `#` by default. To configure
-`tintin-mode` to use a different character, set the custom variable `tintin-command-character`
-to a string with the desired character. This can be done by adding to `custom-set-variables`:
+`tintin-mode` to use a different character (e.g. `/`), set `tintin-command-character` to a
+string with the desired character. This can be done by adding to `custom-set-variables`
 
 ```lisp
 (custom-set-variables '(tintin-command-character "/"))
 ```
-but can also be done safely with `setq` prior to loading/requiring the mode:
+
+but can also be done safely with `setq` prior to loading/requiring the mode
 
 ```lisp
 (setq tintin-command-character "/")
@@ -97,6 +98,13 @@ but can also be done safely with `setq` prior to loading/requiring the mode:
   in different tintin commands.
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
+* Variable definitions do not support all of the various diverse characters that may be included
+  in variable names when the names are surrounded by braces.
+* The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
+  be safely incuded within braces as part of an argument to another TinTin++ command. In these
+  cases, code is incorrectly highlighted as a comment.
+* Comments created with the `#nop` command are not highlighted at all if there is no semicolon
+  found before the end of the buffer.
 
 ## Origin
 

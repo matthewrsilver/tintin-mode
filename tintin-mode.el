@@ -17,11 +17,61 @@
 
 ;; Usage:
 ;;
-;; To use tintin-mode add this repo, or the tintin-mode directory, inside `.emacs.d` (or wherever
-;; else you prefer) and then update your `.emacs` file to add the mode, e.g.:
+;; To use `tintin-mode` add this repo, or the `tintin-mode` directory, inside `.emacs.d` (or
+;; wherever else you prefer) and then update your `.emacs` file to add the mode, e.g.:
 ;;
 ;; ```lisp
 ;; (add-to-list 'load-path "~/.emacs.d/tintin-mode")
+;; (require 'tintin-mode)
+;; ```
+
+;; Key Features:
+;;
+;; * Highlighting of all TinTin++ commands
+;;   * Flow control and variable/function definitions are highlighted as keywords
+;;   * Commands for interacting with TinTin++ itself are highlighted as built-ins
+;;   * Scripting commands and those for game interaction are highlighted separately
+;;   * Commands are case-insensitive and may be abbreviated, so these are equivalent:
+;;     ```
+;;     #Variable
+;;     #var
+;;     #vArIAb
+;;     ```
+;; * For many commands, positional arguments are highlighted based on their function, i.e. as
+;;   variable definitions/assignments, variable usages, or options/types. The syntax of each
+;;   of the arguments is based on the value of command option arguments, which specify specific
+;;   command subtypes. Thus the `create` and `find` options of the `#list` command produce
+;;   different highlighting behaviors:
+;;   ```
+;;   #list my_list create {element 0} {element 1} {element 2};
+;;   #list my_list find {element 0} index;
+;;   ```
+;; * Variables and function definitions and usages are highlighted under most circumstances.
+;; * Unexpected behavior of the comment-like `#nop` command is captured such that failure to
+;;   terminate a `#nop` command with a semicolon allows the comment to flow onto subsequent lines.
+;;   This is an easily-overlooked behavior of the `#nop` command, and can be instrumental in
+;;   identifying misbehaving commants that are affecting subsequent lines.
+;; * Support for various syntactical constructs that are used to manipulate text and facilitate
+;;   game interaction in TinTin++, including:
+;;   * Regular expressions, formatter specifiers, and pattern matchers
+;;   * Various color and grayscale markers
+;;   * Dice roll and speedwalk strings
+
+;; Customization:
+;;
+;; TinTin++ allows users to customize their scripts in a number of ways. The most critical is the
+;; ability to alter the character used for TinTin++ commands, which is `#` by default. To configure
+;; `tintin-mode` to use a different character, set the custom variable `tintin-command-character`
+;; to a string with the desired character. This can be done by adding to `custom-set-variables`:
+;;
+;; ```lisp
+;; (custom-set-variables '(tintin-command-character "/"))
+;; ```
+;;
+;; but can also be done safely with `setq` prior to loading/requiring the mode:
+;;
+;; ```lisp
+;; (setq tintin-command-character "/")
 ;; (require 'tintin-mode)
 ;; ```
 

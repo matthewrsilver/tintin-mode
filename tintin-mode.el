@@ -27,32 +27,52 @@
 
 ;; Key Features:
 ;;
-;; * Highlighting of all TinTin++ commands
+;; Highlighting of TinTin++ commands:
+;;
+;; Commands are broken into three categories according to their roles when writing scripts to
+;; automate gameplay and interact with TinTin++:
 ;;   * Flow control and variable/function definitions are highlighted as keywords
 ;;   * Commands for interacting with TinTin++ itself are highlighted as built-ins
 ;;   * Scripting commands and those for game interaction are highlighted separately
-;;   * Commands are case-insensitive and may be abbreviated, so these are equivalent:
-;;     ```
-;;     #Variable
-;;     #var
-;;     #vArIAb
-;;     ```
-;; * For many commands, positional arguments are highlighted based on their function, i.e. as
-;;   variable definitions/assignments, variable usages, or options/types. The syntax of each
-;;   of the arguments is based on the value of command option arguments, which specify specific
-;;   command subtypes. Thus the `create` and `find` options of the `#list` command produce
-;;   different highlighting behaviors:
-;;   ```
-;;   #list my_list create {element 0} {element 1} {element 2};
-;;   #list my_list find {element 0} index;
-;;   ```
-;; * Variables and function definitions and usages are highlighted under most circumstances.
-;; * Unexpected behavior of the comment-like `#nop` command is captured such that failure to
-;;   terminate a `#nop` command with a semicolon allows the comment to flow onto subsequent lines.
-;;   This is an easily-overlooked behavior of the `#nop` command, and can be instrumental in
-;;   identifying misbehaving commants that are affecting subsequent lines.
-;; * Support for various syntactical constructs that are used to manipulate text and facilitate
-;;   game interaction in TinTin++, including:
+;;
+;; Further, commands are case-insensitive and may be abbreviated, so the following commands are
+;; equivalent
+;; ```
+;; #Variable
+;; #var
+;; #vArIAb
+;; ```
+;;
+;; For many commands, positional arguments are highlighted based on their function, i.e. as
+;; variable definitions/assignments, variable usages, or options/types. The syntax of each
+;; of the arguments is based on the value of command option arguments, which specify specific
+;; command subtypes. Thus the `create` and `find` options of the `#list` command produce
+;; different highlighting behaviors:
+;; ```
+;; #list my_list create {element 0} {element 1} {element 2};
+;; #list my_list find {element 0} index;
+;; ```
+;;
+;; Variables and Functions:
+;;
+;; Variables and function definitions and usages are highlighted under most circumstances. When
+;; TinTin++ variables are surrounded by braces they may contain just about any character. This is
+;; supported in most cases for variable uses (e.g. `${this "works" & just wow!}`) but not yet
+;; definitions and assignments.
+;;
+;; Comments:
+;;
+;; C-style `/* comments */` and the TinTin++ no-op `#no comment-like thing;` are well-supported.
+;;
+;; Unexpected behavior of the comment-like `#nop` command is captured such that failure to
+;; terminate a `#nop` command with a semicolon allows the comment to flow onto subsequent lines.
+;; This is an easily-overlooked behavior of the `#nop` command, and can be instrumental in
+;; identifying misbehaving commants that are affecting subsequent lines.
+;;
+;; Miscellaneous helpful highlights:
+;;
+;; Support for various syntactical constructs that are used to manipulate text and facilitate
+;; game interaction in TinTin++, including:
 ;;   * Regular expressions, formatter specifiers, and pattern matchers
 ;;   * Various color and grayscale markers
 ;;   * Dice roll and speedwalk strings
@@ -67,7 +87,6 @@
 ;; ```lisp
 ;; (custom-set-variables '(tintin-command-character "/"))
 ;; ```
-;;
 ;; but can also be done safely with `setq` prior to loading/requiring the mode:
 ;;
 ;; ```lisp

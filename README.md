@@ -34,21 +34,16 @@ automate gameplay and interact with TinTin++:
 
 Further, commands are case-insensitive and may be abbreviated, so the following commands are
 equivalent
-```
-#Variable
-#var
-#vArIAb
-```
+
+![Case-insensitive highlighting with abbreviation.](docs/variable_command_highlighting.png)
 
 For many commands, positional arguments are highlighted based on their function, i.e. as
 variable definitions/assignments, variable usages, or options/types. The syntax of each
 of the arguments is based on the value of command option arguments, which specify specific
 command subtypes. Thus the `create` and `find` options of the `#list` command produce
 different highlighting behaviors:
-```
-#list my_list create {element 0} {element 1} {element 2};
-#list my_list find {element 0} index;
-```
+
+![Highlighting of the #list command based on options.](docs/list_options_highlighting.png)
 
 ### Variables and Functions
 

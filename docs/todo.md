@@ -36,6 +36,8 @@
  * The #history command has options
  * The #ignore command has a toggle
  * The #info command has a toggle plus "list" and "save"
+ * The #list command (and presumably others) is highlighted incorrectly when unhighligted args
+   are braced but have spaces in them!
  * The #log command has subcommands
  * The #map command has a ton going on
  * The #message command has a toggle

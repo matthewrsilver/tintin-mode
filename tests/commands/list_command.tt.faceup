@@ -256,5 +256,6 @@
 «k:#list» seqfind {item} result;            «x:#no || spaces are needed after args without braces;»
 «k:#list» seqfind{item} result;             «x:#no || spaces are needed after args without braces;»
 «k:#list» seqfinditem result;               «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item «v:0»} result;         «x:#no XX spaces not correctly supported in braced args;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:get» index «v:result»;             «x:#no || copy an item at index to {result};»

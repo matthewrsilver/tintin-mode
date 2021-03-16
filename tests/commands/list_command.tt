@@ -256,5 +256,6 @@
 #list seqfind {item} result;            #no || spaces are needed after args without braces;
 #list seqfind{item} result;             #no || spaces are needed after args without braces;
 #list seqfinditem result;               #no || spaces are needed after args without braces;
+#list seq find {item 0} result;         #no XX spaces not correctly supported in braced args;
 
 #list seq get index result;             #no || copy an item at index to {result};

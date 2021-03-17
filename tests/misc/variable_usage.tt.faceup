@@ -26,10 +26,10 @@ $"nor_does_this"                        «x:#no || double quotes don't work in u
 «D:${»«:tintin-variable-usage-face:can't_believe_this_works»«D:}»             «x:#no || single quotes are fine in braced variables;»
 «D:${»«:tintin-variable-usage-face:"yep"this"works_w_braces"»«D:}»            «x:#no || double quotes should be ok unless they are excl ends;»
 «D:${»«:tintin-variable-usage-face:so"does"this»«D:}»                         «x:#no || as above, this should work: more than just ends;»
-${"this_still_doesnt"}                  «x:#no || double quotes at just the ends don't work;»
+$«D:{»"this_still_doesnt"«D:}»                  «x:#no || double quotes at just the ends don't work;»
 «D:${»«:tintin-variable-usage-face:"this"does"»«D:}»                          «x:#no || double quotes at ends are fine if one is inside too;»
 «D:${»«:tintin-variable-usage-face:"""»«D:}»                                  «x:#no || even just three quotes works;»
-${""}                                   «x:#no || but two quotes don't work;»
+$«D:{»""«D:}»                                   «x:#no || but two quotes don't work;»
 «D:${»«:tintin-variable-usage-face:x""»«D:}»                                  «x:#no || adding a character at the beginning is ok;»
 «D:${»«:tintin-variable-usage-face:""x»«D:}»                                  «x:#no || adding a character at the end is ok;»
 «D:${»«:tintin-variable-usage-face:believe it or not, "this" works....»«D:}»  «x:#no || this madness should work... braces are permissive;»

@@ -168,6 +168,7 @@
 
 ;;
 ;; Handle various simple highlighted faces
+(defvar brace-matcher (rx (: (any "{}"))))
 (defvar ansi-color-code (rx "<" (? (any "FB")) (= 3 hex) ">"))
 (defvar ansi-gray-code (rx "<" (any "gG") (= 2 digit) ">"))
 (defvar tintin-function (rx (group "@" var-chars ) "{"))
@@ -331,7 +332,7 @@
 (setq final-var-assignment (clone var-assignment :regexp tintin-final-arg))
 
 (setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
-(setq command-type (clone arg :face 'font-lock-type-face))
+(setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
 (setq toggle-value (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 
 (setq tintin-font-lock-keywords (append
@@ -377,7 +378,8 @@
     (,'escape-code-matcher-func 1 'font-lock-warning-face keep)
     (,speedwalk 1 'font-lock-warning-face)
     (,dice-roll 1 'font-lock-warning-face keep)
-    (,double-semicolon-warning 1 'font-lock-warning-face))
+    (,double-semicolon-warning 1 'font-lock-warning-face)
+    (,brace-matcher 0 'default keep))
 
   ;; Highlight the #list command and its various modes
   (let ((list-command (tintin-command :cmds 'list-command-list)))

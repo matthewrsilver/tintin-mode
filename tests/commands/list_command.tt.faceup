@@ -9,36 +9,36 @@
 «k:#class» seq nonsense;                    «x:#no || unknown modes not highlighted;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:add» item;                     «x:#no || add {item} to the list;»
-«k:#list» «:tintin-variable-usage-face:seq» «t:add» {item};                   «x:#no || add {item} to the list;»
-«k:#list» seq add{item};                    «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:add» «D:{»item«D:}»;                   «x:#no || add {item} to the list;»
+«k:#list» seq add«D:{»item«D:}»;                    «x:#no || spaces are needed after args without braces;»
 «k:#list» seq additem;                      «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:add» item;                   «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:add» {item};                 «x:#no || add {item} to the list;»
-«k:#list» {seq} add{item};                  «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} additem;                    «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:add» item;                    «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:add» {item};                  «x:#no || add {item} to the list;»
-«k:#list» {seq}add{item};                   «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}additem;                     «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:add»} item;                  «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:add»} {item};                «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:add»}{item};                 «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:add»}item;                   «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:add»} item;                 «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:add»} {item};               «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:add»}{item};                «x:#no || add {item} to the list;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:add»}item;                  «x:#no || add {item} to the list;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:add»} item;                   «x:#no || add {item} to the list;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:add»} {item};                 «x:#no || add {item} to the list;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:add»}{item};                  «x:#no || add {item} to the list;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:add»}item;                    «x:#no || add {item} to the list;»
-«k:#list» seq{add} item;                    «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{add} {item};                  «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{add}{item};                   «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{add}item;                     «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:add» item;                   «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:add» «D:{»item«D:}»;                 «x:#no || add {item} to the list;»
+«k:#list» «D:{»seq«D:}» add«D:{»item«D:}»;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» additem;                    «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:add» item;                    «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:add» «D:{»item«D:}»;                  «x:#no || add {item} to the list;»
+«k:#list» «D:{»seq«D:}»add«D:{»item«D:}»;                   «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»additem;                     «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:add»«D:}» item;                  «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:add»«D:}» «D:{»item«D:}»;                «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:add»«D:}{»item«D:}»;                 «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:add»«D:}»item;                   «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:add»«D:}» item;                 «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:add»«D:}» «D:{»item«D:}»;               «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:add»«D:}{»item«D:}»;                «x:#no || add {item} to the list;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:add»«D:}»item;                  «x:#no || add {item} to the list;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:add»«D:}» item;                   «x:#no || add {item} to the list;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:add»«D:}» «D:{»item«D:}»;                 «x:#no || add {item} to the list;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:add»«D:}{»item«D:}»;                  «x:#no || add {item} to the list;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:add»«D:}»item;                    «x:#no || add {item} to the list;»
+«k:#list» seq«D:{»add«D:}» item;                    «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»add«D:}» «D:{»item«D:}»;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»add«D:}{»item«D:}»;                   «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»add«D:}»item;                     «x:#no || spaces are needed after args without braces;»
 «k:#list» seqadd item;                      «x:#no || spaces are needed after args without braces;»
-«k:#list» seqadd {item};                    «x:#no || spaces are needed after args without braces;»
-«k:#list» seqadd{item};                     «x:#no || spaces are needed after args without braces;»
+«k:#list» seqadd «D:{»item«D:}»;                    «x:#no || spaces are needed after args without braces;»
+«k:#list» seqadd«D:{»item«D:}»;                     «x:#no || spaces are needed after args without braces;»
 «k:#list» seqadditem;                       «x:#no || spaces are needed after args without braces;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:clear»;                        «x:#no || empty the given list;»
@@ -54,208 +54,208 @@
 «k:#list» «:tintin-variable-usage-face:seq» «t:sort» item;                    «x:#no || insert item in alphabetic order;»
 
 «k:#list» «v:seq» «t:create» item;                  «x:#no || create a list using {items};»
-«k:#list» «v:seq» «t:create» {item};                «x:#no || create a list using {items};»
-«k:#list» seq create{item};                 «x:#no || spaces are needed after args without braces;»
+«k:#list» «v:seq» «t:create» «D:{»item«D:}»;                «x:#no || create a list using {items};»
+«k:#list» seq create«D:{»item«D:}»;                 «x:#no || spaces are needed after args without braces;»
 «k:#list» seq createitem;                   «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»} «t:create» item;                «x:#no || create a list using {items};»
-«k:#list» {«v:seq»} «t:create» {item};              «x:#no || create a list using {items};»
-«k:#list» {seq} create{item};               «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} createitem;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»}«t:create» item;                 «x:#no || create a list using {items};»
-«k:#list» {«v:seq»}«t:create» {item};               «x:#no || create a list using {items};»
-«k:#list» {seq}create{item};                «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}createitem;                  «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»}{«t:create»} item;               «x:#no || create a list using {items};»
-«k:#list» {«v:seq»}{«t:create»} {item};             «x:#no || create a list using {items};»
-«k:#list» {«v:seq»}{«t:create»}{item};              «x:#no || create a list using {items};»
-«k:#list» {«v:seq»}{«t:create»}item;                «x:#no || create a list using {items};»
-«k:#list» {«v:seq»} {«t:create»} item;              «x:#no || create a list using {items};»
-«k:#list» {«v:seq»} {«t:create»} {item};            «x:#no || create a list using {items};»
-«k:#list» {«v:seq»} {«t:create»}{item};             «x:#no || create a list using {items};»
-«k:#list» {«v:seq»} {«t:create»}item;               «x:#no || create a list using {items};»
-«k:#list» «v:seq» {«t:create»} item;                «x:#no || create a list using {items};»
-«k:#list» «v:seq» {«t:create»} {item};              «x:#no || create a list using {items};»
-«k:#list» «v:seq» {«t:create»}{item};               «x:#no || create a list using {items};»
-«k:#list» «v:seq» {«t:create»}item;                 «x:#no || create a list using {items};»
-«k:#list» seq{create} item;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{create} {item};               «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{create}{item};                «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{create}item;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}» «t:create» item;                «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}» «t:create» «D:{»item«D:}»;              «x:#no || create a list using {items};»
+«k:#list» «D:{»seq«D:}» create«D:{»item«D:}»;               «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» createitem;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}»«t:create» item;                 «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}»«t:create» «D:{»item«D:}»;               «x:#no || create a list using {items};»
+«k:#list» «D:{»seq«D:}»create«D:{»item«D:}»;                «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»createitem;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}{»«t:create»«D:}» item;               «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}{»«t:create»«D:}» «D:{»item«D:}»;             «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}{»«t:create»«D:}{»item«D:}»;              «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}{»«t:create»«D:}»item;                «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:create»«D:}» item;              «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:create»«D:}» «D:{»item«D:}»;            «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:create»«D:}{»item«D:}»;             «x:#no || create a list using {items};»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:create»«D:}»item;               «x:#no || create a list using {items};»
+«k:#list» «v:seq» «D:{»«t:create»«D:}» item;                «x:#no || create a list using {items};»
+«k:#list» «v:seq» «D:{»«t:create»«D:}» «D:{»item«D:}»;              «x:#no || create a list using {items};»
+«k:#list» «v:seq» «D:{»«t:create»«D:}{»item«D:}»;               «x:#no || create a list using {items};»
+«k:#list» «v:seq» «D:{»«t:create»«D:}»item;                 «x:#no || create a list using {items};»
+«k:#list» seq«D:{»create«D:}» item;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»create«D:}» «D:{»item«D:}»;               «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»create«D:}{»item«D:}»;                «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»create«D:}»item;                  «x:#no || spaces are needed after args without braces;»
 «k:#list» seqcreate item;                   «x:#no || spaces are needed after args without braces;»
-«k:#list» seqcreate {item};                 «x:#no || spaces are needed after args without braces;»
-«k:#list» seqcreate{item};                  «x:#no || spaces are needed after args without braces;»
+«k:#list» seqcreate «D:{»item«D:}»;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» seqcreate«D:{»item«D:}»;                  «x:#no || spaces are needed after args without braces;»
 «k:#list» seqcreateitem;                    «x:#no || spaces are needed after args without braces;»
 
 «k:#list» «v:seq» «t:tokenize» item;                «x:#no || create a character list;»
-«k:#list» «v:seq» «t:tokenize» {item};              «x:#no || create a character list;»
-«k:#list» seq tokenize{item};               «x:#no || spaces are needed after args without braces;»
+«k:#list» «v:seq» «t:tokenize» «D:{»item«D:}»;              «x:#no || create a character list;»
+«k:#list» seq tokenize«D:{»item«D:}»;               «x:#no || spaces are needed after args without braces;»
 «k:#list» seq tokenizeitem;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»} «t:tokenize» item;              «x:#no || create a character list;»
-«k:#list» {«v:seq»} «t:tokenize» {item};            «x:#no || create a character list;»
-«k:#list» {seq} tokenize{item};             «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} tokenizeitem;               «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»}«t:tokenize» item;               «x:#no || create a character list;»
-«k:#list» {«v:seq»}«t:tokenize» {item};             «x:#no || create a character list;»
-«k:#list» {seq}tokenize{item};              «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}tokenizeitem;                «x:#no || spaces are needed after args without braces;»
-«k:#list» {«v:seq»}{«t:tokenize»} item;             «x:#no || create a character list;»
-«k:#list» {«v:seq»}{«t:tokenize»} {item};           «x:#no || create a character list;»
-«k:#list» {«v:seq»}{«t:tokenize»}{item};            «x:#no || create a character list;»
-«k:#list» {«v:seq»}{«t:tokenize»}item;              «x:#no || create a character list;»
-«k:#list» {«v:seq»} {«t:tokenize»} item;            «x:#no || create a character list;»
-«k:#list» {«v:seq»} {«t:tokenize»} {item};          «x:#no || create a character list;»
-«k:#list» {«v:seq»} {«t:tokenize»}{item};           «x:#no || create a character list;»
-«k:#list» {«v:seq»} {«t:tokenize»}item;             «x:#no || create a character list;»
-«k:#list» «v:seq» {«t:tokenize»} item;              «x:#no || create a character list;»
-«k:#list» «v:seq» {«t:tokenize»} {item};            «x:#no || create a character list;»
-«k:#list» «v:seq» {«t:tokenize»}{item};             «x:#no || create a character list;»
-«k:#list» «v:seq» {«t:tokenize»}item;               «x:#no || create a character list;»
-«k:#list» seq{tokenize} item;               «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{tokenize} {item};             «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{tokenize}{item};              «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{tokenize}item;                «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}» «t:tokenize» item;              «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}» «t:tokenize» «D:{»item«D:}»;            «x:#no || create a character list;»
+«k:#list» «D:{»seq«D:}» tokenize«D:{»item«D:}»;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» tokenizeitem;               «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}»«t:tokenize» item;               «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}»«t:tokenize» «D:{»item«D:}»;             «x:#no || create a character list;»
+«k:#list» «D:{»seq«D:}»tokenize«D:{»item«D:}»;              «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»tokenizeitem;                «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«v:seq»«D:}{»«t:tokenize»«D:}» item;             «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}{»«t:tokenize»«D:}» «D:{»item«D:}»;           «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}{»«t:tokenize»«D:}{»item«D:}»;            «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}{»«t:tokenize»«D:}»item;              «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:tokenize»«D:}» item;            «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:tokenize»«D:}» «D:{»item«D:}»;          «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:tokenize»«D:}{»item«D:}»;           «x:#no || create a character list;»
+«k:#list» «D:{»«v:seq»«D:}» «D:{»«t:tokenize»«D:}»item;             «x:#no || create a character list;»
+«k:#list» «v:seq» «D:{»«t:tokenize»«D:}» item;              «x:#no || create a character list;»
+«k:#list» «v:seq» «D:{»«t:tokenize»«D:}» «D:{»item«D:}»;            «x:#no || create a character list;»
+«k:#list» «v:seq» «D:{»«t:tokenize»«D:}{»item«D:}»;             «x:#no || create a character list;»
+«k:#list» «v:seq» «D:{»«t:tokenize»«D:}»item;               «x:#no || create a character list;»
+«k:#list» seq«D:{»tokenize«D:}» item;               «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»tokenize«D:}» «D:{»item«D:}»;             «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»tokenize«D:}{»item«D:}»;              «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»tokenize«D:}»item;                «x:#no || spaces are needed after args without braces;»
 «k:#list» seqtokenize item;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» seqtokenize {item};               «x:#no || spaces are needed after args without braces;»
-«k:#list» seqtokenize{item};                «x:#no || spaces are needed after args without braces;»
+«k:#list» seqtokenize «D:{»item«D:}»;               «x:#no || spaces are needed after args without braces;»
+«k:#list» seqtokenize«D:{»item«D:}»;                «x:#no || spaces are needed after args without braces;»
 «k:#list» seqtokenizeitem;                  «x:#no || spaces are needed after args without braces;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:size» «v:result»;                  «x:#no || copy list size to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» «t:size» {«v:result»};                «x:#no || copy list size to {result};»
-«k:#list» seq size{result};                 «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:size» «D:{»«v:result»«D:}»;                «x:#no || copy list size to {result};»
+«k:#list» seq size«D:{»result«D:}»;                 «x:#no || spaces are needed after args without braces;»
 «k:#list» seq sizeresult;                   «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:size» «v:result»;                «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:size» {«v:result»};              «x:#no || copy list size to {result};»
-«k:#list» {seq} size{result};               «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} sizeresult;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:size» «v:result»;                 «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:size» {«v:result»};               «x:#no || copy list size to {result};»
-«k:#list» {seq}size{result};                «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}sizeresult;                  «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:size»} «v:result»;               «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:size»} {«v:result»};             «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:size»}{«v:result»};              «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:size»}«v:result»;                «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:size»} «v:result»;              «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:size»} {«v:result»};            «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:size»}{«v:result»};             «x:#no || copy list size to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:size»}«v:result»;               «x:#no || copy list size to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:size»} «v:result»;                «x:#no || copy list size to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:size»} {«v:result»};              «x:#no || copy list size to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:size»}{«v:result»};               «x:#no || copy list size to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:size»}«v:result»;                 «x:#no || copy list size to {result};»
-«k:#list» seq{size} result;                 «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{size} {result};               «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{size}{result};                «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{size}result;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:size» «v:result»;                «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:size» «D:{»«v:result»«D:}»;              «x:#no || copy list size to {result};»
+«k:#list» «D:{»seq«D:}» size«D:{»result«D:}»;               «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» sizeresult;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:size» «v:result»;                 «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:size» «D:{»«v:result»«D:}»;               «x:#no || copy list size to {result};»
+«k:#list» «D:{»seq«D:}»size«D:{»result«D:}»;                «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»sizeresult;                  «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:size»«D:}» «v:result»;               «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:size»«D:}» «D:{»«v:result»«D:}»;             «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:size»«D:}{»«v:result»«D:}»;              «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:size»«D:}»«v:result»;                «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:size»«D:}» «v:result»;              «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:size»«D:}» «D:{»«v:result»«D:}»;            «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:size»«D:}{»«v:result»«D:}»;             «x:#no || copy list size to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:size»«D:}»«v:result»;               «x:#no || copy list size to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:size»«D:}» «v:result»;                «x:#no || copy list size to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:size»«D:}» «D:{»«v:result»«D:}»;              «x:#no || copy list size to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:size»«D:}{»«v:result»«D:}»;               «x:#no || copy list size to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:size»«D:}»«v:result»;                 «x:#no || copy list size to {result};»
+«k:#list» seq«D:{»size«D:}» result;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»size«D:}» «D:{»result«D:}»;               «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»size«D:}{»result«D:}»;                «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»size«D:}»result;                  «x:#no || spaces are needed after args without braces;»
 «k:#list» seqsize result;                   «x:#no || spaces are needed after args without braces;»
-«k:#list» seqsize {result};                 «x:#no || spaces are needed after args without braces;»
-«k:#list» seqsize{result};                  «x:#no || spaces are needed after args without braces;»
+«k:#list» seqsize «D:{»result«D:}»;                 «x:#no || spaces are needed after args without braces;»
+«k:#list» seqsize«D:{»result«D:}»;                  «x:#no || spaces are needed after args without braces;»
 «k:#list» seqsizeresult;                    «x:#no || spaces are needed after args without braces;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:find» item «v:result»;             «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» item {«v:result»};           «x:#no || assign the found index to {result};»
-«k:#list» seq find item{result};            «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» item «D:{»«v:result»«D:}»;           «x:#no || assign the found index to {result};»
+«k:#list» seq find item«D:{»result«D:}»;            «x:#no || spaces are needed after args without braces;»
 «k:#list» seq find itemresult;              «x:#no || spaces are needed after args without braces;»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item} «v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item} {«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item}{«v:result»};          «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item}«v:result»;            «x:#no || assign the found index to {result};»
-«k:#list» seq find{item} result;            «x:#no || spaces are needed after args without braces;»
-«k:#list» seq find{item} {result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» seq find{item}{result};           «x:#no || spaces are needed after args without braces;»
-«k:#list» seq find{item}result;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» «D:{»item«D:}» «v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» «D:{»item«D:}» «D:{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» «D:{»item«D:}{»«v:result»«D:}»;          «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» «D:{»item«D:}»«v:result»;            «x:#no || assign the found index to {result};»
+«k:#list» seq find«D:{»item«D:}» result;            «x:#no || spaces are needed after args without braces;»
+«k:#list» seq find«D:{»item«D:}» «D:{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» seq find«D:{»item«D:}{»result«D:}»;           «x:#no || spaces are needed after args without braces;»
+«k:#list» seq find«D:{»item«D:}»result;             «x:#no || spaces are needed after args without braces;»
 «k:#list» seq finditem result;              «x:#no || spaces are needed after args without braces;»
-«k:#list» seq finditem {result};            «x:#no || spaces are needed after args without braces;»
-«k:#list» seq finditem{result};             «x:#no || spaces are needed after args without braces;»
+«k:#list» seq finditem «D:{»result«D:}»;            «x:#no || spaces are needed after args without braces;»
+«k:#list» seq finditem«D:{»result«D:}»;             «x:#no || spaces are needed after args without braces;»
 «k:#list» seq finditemresult;               «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» item «v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» item {«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» {seq} find item{result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} find itemresult;            «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» {item} «v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» {item} {«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» {item}{«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} «t:find» {item}«v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» {seq} find{item} result;          «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} find{item} {result};        «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} find{item}{result};         «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} find{item}result;           «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} finditem result;            «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} finditem {result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} finditem{result};           «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} finditemresult;             «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» item «v:result»;            «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» item {«v:result»};          «x:#no || assign the found index to {result};»
-«k:#list» {seq}find item{result};           «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}find itemresult;             «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» {item} «v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» {item} {«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» {item}{«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}«t:find» {item}«v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» {seq}find{item} result;           «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}find{item} {result};         «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}find{item}{result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}find{item}result;            «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}finditem result;             «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}finditem {result};           «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}finditem{result};            «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}finditemresult;              «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} item «v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} item {«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» {seq}{find} item{result};         «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}{find} itemresult;           «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} {item} «v:result»;        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} {item} {«v:result»};      «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} {item}{«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»} {item}«v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}{item} «v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}{item} {«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}{item}{«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}{item}«v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}item «v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»}{«t:find»}item {«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» {seq}{find}item{result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq}{find}itemresult;            «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} item «v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} item {«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» {seq} {find} item{result};        «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} {find} itemresult;          «x:#no || spaces are needed after args without braces;»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} {item} «v:result»;       «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} {item} {«v:result»};     «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} {item}{«v:result»};      «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»} {item}«v:result»;        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}{item} «v:result»;        «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}{item} {«v:result»};      «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}{item}{«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}{item}«v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}item «v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» {«:tintin-variable-usage-face:seq»} {«t:find»}item {«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» {seq} {find}item{result};         «x:#no || spaces are needed after args without braces;»
-«k:#list» {seq} {find}itemresult;           «x:#no || spaces are needed after args without braces;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} item «v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} item {«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» seq {find} item{result};          «x:#no || spaces are needed after args without braces;»
-«k:#list» seq {find} itemresult;            «x:#no || spaces are needed after args without braces;»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} {item} «v:result»;         «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} {item} {«v:result»};       «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} {item}{«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»} {item}«v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}{item} «v:result»;          «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}{item} {«v:result»};        «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}{item}{«v:result»};         «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}{item}«v:result»;           «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}item «v:result»;            «x:#no || assign the found index to {result};»
-«k:#list» «:tintin-variable-usage-face:seq» {«t:find»}item {«v:result»};          «x:#no || assign the found index to {result};»
-«k:#list» seq {find}item{result};           «x:#no || spaces are needed after args without braces;»
-«k:#list» seq {find}itemresult;             «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{find} item result;            «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{find} {item} result;          «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{find}{item} result;           «x:#no || spaces are needed after args without braces;»
-«k:#list» seq{find}item result;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» item «v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» item «D:{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}» find item«D:{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» find itemresult;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» «D:{»item«D:}» «v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» «D:{»item«D:}» «D:{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» «D:{»item«D:}{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «t:find» «D:{»item«D:}»«v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}» find«D:{»item«D:}» result;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» find«D:{»item«D:}» «D:{»result«D:}»;        «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» find«D:{»item«D:}{»result«D:}»;         «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» find«D:{»item«D:}»result;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» finditem result;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» finditem «D:{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» finditem«D:{»result«D:}»;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» finditemresult;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» item «v:result»;            «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» item «D:{»«v:result»«D:}»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}»find item«D:{»result«D:}»;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»find itemresult;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» «D:{»item«D:}» «v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» «D:{»item«D:}» «D:{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» «D:{»item«D:}{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}»«t:find» «D:{»item«D:}»«v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}»find«D:{»item«D:}» result;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»find«D:{»item«D:}» «D:{»result«D:}»;         «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»find«D:{»item«D:}{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»find«D:{»item«D:}»result;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»finditem result;             «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»finditem «D:{»result«D:}»;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»finditem«D:{»result«D:}»;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}»finditemresult;              «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» item «v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» item «D:{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}{»find«D:}» item«D:{»result«D:}»;         «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}{»find«D:}» itemresult;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» «D:{»item«D:}» «v:result»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» «D:{»item«D:}» «D:{»«v:result»«D:}»;      «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» «D:{»item«D:}{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}» «D:{»item«D:}»«v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}{»item«D:}» «v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}{»item«D:}» «D:{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}{»item«D:}{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}{»item«D:}»«v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}»item «v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}{»«t:find»«D:}»item «D:{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}{»find«D:}»item«D:{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}{»find«D:}»itemresult;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» item «v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» item «D:{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}» «D:{»find«D:}» item«D:{»result«D:}»;        «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» «D:{»find«D:}» itemresult;          «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» «D:{»item«D:}» «v:result»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» «D:{»item«D:}» «D:{»«v:result»«D:}»;     «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» «D:{»item«D:}{»«v:result»«D:}»;      «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}» «D:{»item«D:}»«v:result»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}{»item«D:}» «v:result»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}{»item«D:}» «D:{»«v:result»«D:}»;      «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}{»item«D:}{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}{»item«D:}»«v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}»item «v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «D:{»«:tintin-variable-usage-face:seq»«D:}» «D:{»«t:find»«D:}»item «D:{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «D:{»seq«D:}» «D:{»find«D:}»item«D:{»result«D:}»;         «x:#no || spaces are needed after args without braces;»
+«k:#list» «D:{»seq«D:}» «D:{»find«D:}»itemresult;           «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» item «v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» item «D:{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» seq «D:{»find«D:}» item«D:{»result«D:}»;          «x:#no || spaces are needed after args without braces;»
+«k:#list» seq «D:{»find«D:}» itemresult;            «x:#no || spaces are needed after args without braces;»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» «D:{»item«D:}» «v:result»;         «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» «D:{»item«D:}» «D:{»«v:result»«D:}»;       «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» «D:{»item«D:}{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}» «D:{»item«D:}»«v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}{»item«D:}» «v:result»;          «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}{»item«D:}» «D:{»«v:result»«D:}»;        «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}{»item«D:}{»«v:result»«D:}»;         «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}{»item«D:}»«v:result»;           «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}»item «v:result»;            «x:#no || assign the found index to {result};»
+«k:#list» «:tintin-variable-usage-face:seq» «D:{»«t:find»«D:}»item «D:{»«v:result»«D:}»;          «x:#no || assign the found index to {result};»
+«k:#list» seq «D:{»find«D:}»item«D:{»result«D:}»;           «x:#no || spaces are needed after args without braces;»
+«k:#list» seq «D:{»find«D:}»itemresult;             «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»find«D:}» item result;            «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»find«D:}» «D:{»item«D:}» result;          «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»find«D:}{»item«D:}» result;           «x:#no || spaces are needed after args without braces;»
+«k:#list» seq«D:{»find«D:}»item result;             «x:#no || spaces are needed after args without braces;»
 «k:#list» seqfind item result;              «x:#no || spaces are needed after args without braces;»
-«k:#list» seqfind {item} result;            «x:#no || spaces are needed after args without braces;»
-«k:#list» seqfind{item} result;             «x:#no || spaces are needed after args without braces;»
+«k:#list» seqfind «D:{»item«D:}» result;            «x:#no || spaces are needed after args without braces;»
+«k:#list» seqfind«D:{»item«D:}» result;             «x:#no || spaces are needed after args without braces;»
 «k:#list» seqfinditem result;               «x:#no || spaces are needed after args without braces;»
-«k:#list» «:tintin-variable-usage-face:seq» «t:find» {item «v:0»} result;         «x:#no XX spaces not correctly supported in braced args;»
+«k:#list» «:tintin-variable-usage-face:seq» «t:find» «D:{»item «v:0»«D:}» result;         «x:#no XX spaces not correctly supported in braced args;»
 
 «k:#list» «:tintin-variable-usage-face:seq» «t:get» index «v:result»;             «x:#no || copy an item at index to {result};»

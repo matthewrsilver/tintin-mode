@@ -31,7 +31,7 @@
 «:tintin-capture-face:%X»                                  «x:#no || format: convert dec to hexadecimal;»
 «:tintin-capture-face:%%»                                  «x:#no || format: literal "%" character;»
 %!X                                 «x:#no || format: raw matching is not supported;»
-%{X}                                «x:#no || format: braces not supported;»
+%«D:{»X«D:}»                                «x:#no || format: braces not supported;»
 
 «x:#no Format numeric matchers;»
 «:tintin-capture-face:%+9s»                                «x:#no || format: pad string with up to 9 spaces;»

@@ -64,6 +64,7 @@
 #bell {volume}{1};                      #no || volume highlighted with argument;
 #bell volume $x;                        #no || variables don't mess things up;
 #bell volume ${x};                      #no || braced variables don't mess things up;
+#bell volume {${x}};                    #no || braced variables in braces don't mess things up;
 
 #buffer;                                #no || terminated bare #buffer command;
 #buffer                                 #no || unterminated bare #buffer command;

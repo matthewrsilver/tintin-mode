@@ -44,10 +44,11 @@
 5w2d2                                   «x:#no || speedwalk: no space b/w walk and roll is bad;»
 
 «x:#no Miscellaneous special characters;»
-«:tintin-command-face:#action» «D:{»«w:~»Text with «:tintin-capture-face:%1» codes.«D:}»;         «x:#no || ~ means color codes must be matched;»
+«:tintin-command-face:#action» «D:{»«w:~»Text with «:tintin-capture-face:%1» codes.«D:};»         «x:#no || ~ means color codes must be matched;»
 «w:!»                                       «x:#no || execute last command;»
-«w:!»prefix;                                «x:#no || execute last command starting with a prefix;»
-«w:\»send verbatim;                         «x:#no || initial backslash sends line verbatim;»
+«w:!»prefix«D:;»                                «x:#no || execute last command starting with a prefix;»
+«w:\»send verbatim«D:;»                         «x:#no || initial backslash sends line verbatim;»
 no line feed«w:\»
                                         «x:#no || final backslash stops from appending a line feed;»
-;«w:;»                                      «x:#no || double semicolon is error but often ignored;»
+«D:;»«w:;»                                      «x:#no || double semicolon is error but often ignored;»
+«x:#no blah;»«w:;»                              «x:#no || double semicolon is warning after comment too;»

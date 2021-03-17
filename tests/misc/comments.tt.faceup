@@ -11,7 +11,7 @@
 «x:#nOp text;»
 «x:#nOP text;»
 
-«x:#no comment only to first semicolon;» and not after;
+«x:#no comment only to first semicolon;» and not after«D:;»
 comments «x:#no can begin in the middle;» of a line
 
 «x:#no comments can extend across
@@ -46,5 +46,5 @@ on multiple lines */» too
 
 TODO: also worth investigating is relationship between "quoted strings and «x:#no comments";»
 
-#nops this isn't a comment;
+#nops this isn't a comment«D:;»
 #no neither is this

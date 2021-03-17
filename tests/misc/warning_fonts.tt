@@ -51,3 +51,4 @@ $somethingd3                            #no || dice: obviously this doesn't work
 no line feed\
                                         #no || final backslash stops from appending a line feed;
 ;;                                      #no || double semicolon is error but often ignored;
+#no blah;;                              #no || double semicolon is warning after comment too;

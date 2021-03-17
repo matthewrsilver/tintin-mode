@@ -49,8 +49,8 @@ different highlighting behaviors:
 
 Variables and function definitions and usages are highlighted under most circumstances. When
 TinTin++ variables are surrounded by braces they may contain just about any character. This is
-supported in most cases for variable uses (e.g. `${this "works" & just wow!}`) but not yet
-definitions and assignments.
+supported in most cases for variable uses (e.g. `${this "works" & just wow!}`) and to a limited
+extent in definitions and assignments (where some issues with quotes remain).
 
 ### Comments
 
@@ -93,8 +93,8 @@ but can also be done safely with `setq` prior to loading/requiring the mode
   in different tintin commands.
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
-* Variable definitions do not support all of the various diverse characters that may be included
-  in variable names when the names are surrounded by braces.
+* Variable definitions do not correctly handle the presence of quotes in braced and unbraced
+  contexts.
 * The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
   be safely incuded within braces as part of an argument to another TinTin++ command. In these
   cases, code is incorrectly highlighted as a comment.

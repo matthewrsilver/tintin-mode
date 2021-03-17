@@ -1,21 +1,10 @@
 ### General
  * Seems somewhat slow to load
 
- * Expand documentation to
-   * cover the basic competencies
-   * document configurability e.g. of tintin character
-
- * Clean up regular expressions
-   * figure out word boundaries and special characters {, }, and #.
-
  * Complete migration to simplified class-based approach
    * refine relationship between argument regexps and classes
    * consider a :final slot
    * eliminate double quoting
-
- * Consider an anchored-matcher pattern for commands with options?
-   * it'd probably make regexps faster because some regexps aren't evaluated
-   * concern is with multiple matches and sets of anchored matchers on one line?
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -36,8 +25,6 @@
  * The #history command has options
  * The #ignore command has a toggle
  * The #info command has a toggle plus "list" and "save"
- * The #list command (and presumably others) is highlighted incorrectly when unhighligted args
-   are braced but have spaces in them!
  * The #log command has subcommands
  * The #map command has a ton going on
  * The #message command has a toggle
@@ -63,7 +50,7 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
- * Need to expand variable definitions to handle various characters
+ * Work is still needed to better handle quotes in variable definitions
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

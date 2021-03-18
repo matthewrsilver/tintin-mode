@@ -52,8 +52,7 @@
 ;;
 ;; Variables and function definitions and usages are highlighted under most circumstances. When
 ;; TinTin++ variables are surrounded by braces they may contain just about any character. This is
-;; supported in most cases for variable uses (e.g. `${this "works" & just wow!}`) and to a limited
-;; extent in definitions and assignments (where some issues with quotes remain).
+;; supported in most cases for variable uses and definitions.
 ;;
 ;; Comments:
 ;;

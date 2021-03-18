@@ -39,9 +39,9 @@
 «k:#var» «v:dot.notation.for.real »a«D:;»           «x:#no || dot notation works;»
 «k:#var» «v:dots.and[tables] »a«D:;»                «x:#no || dot notation can be mixed with tables;»
 «k:#var» «v:can't_believe_this_works »a«D:;»        «x:#no || single quotes are actually fine in variable names;»
-«k:#var» «v:"nope"this"does_not_work" »a«D:;»       «x:#no XX double quotes don't work in unbraced variables;»
-«k:#var» «v:neither"does"this »a«D:;»               «x:#no XX double quotes don't work in unbraced variables;»
-«k:#var» «v:"nor_does_this" »a«D:;»                 «x:#no XX double quotes don't work in unbraced variables;»
+«k:#var» «v:neither"does"this »a«D:;»               «x:#no || double quotes work in unbraced variables definitions;»
+«k:#var» "nope"this"does_not_work" a«D:;»       «x:#no || double quotes can't start unbraced definitions;»
+«k:#var» "nor_does_this" a«D:;»                 «x:#no || double quotes can't start unbraced definitions;»
 «k:#var» «D:{»«v:var_def»«D:}» a«D:;»                       «x:#no || braced variable;»
 «k:#var» «D:{»«v:var_def[table]»«D:}» a«D:;»                «x:#no || braced variable with table;»
 «k:#var» «D:{»«v:var_def[table and spaces]»«D:}» a«D:;»     «x:#no || braced variable with table and spaces;»
@@ -54,10 +54,10 @@
 «k:#var» «D:{»«v:can't_believe_this_works»«D:}» a«D:;»      «x:#no || single quotes are fine in braced variables;»
 «k:#var» «D:{»«v:"yep"this"works_w_braces"»«D:}» a«D:;»     «x:#no || double quotes should be ok unless they are excl ends;»
 «k:#var» «D:{»«v:so"does"this»«D:}» a«D:;»                  «x:#no || as above, this should work: more than just ends;»
-«k:#var» «D:{»«v:"this_still_doesnt"»«D:}» a«D:;»           «x:#no XX double quotes at just the ends don't work;»
+«k:#var» «D:{»"this_still_doesnt"«D:}» a«D:;»           «x:#no || double quotes at just the ends don't work;»
 «k:#var» «D:{»«v:"this"does"»«D:}» a«D:;»                   «x:#no || double quotes at ends are fine if one is inside too;»
 «k:#var» «D:{»«v:"""»«D:}» a«D:;»                           «x:#no || even just three quotes works;»
-«k:#var» «D:{»«v:""»«D:}» a«D:;»                            «x:#no XX but two quotes don't work;»
+«k:#var» «D:{»""«D:}» a«D:;»                            «x:#no || but two quotes don't work;»
 «k:#var» «D:{»«v:x""»«D:}» a«D:;»                           «x:#no || adding a character at the beginning is ok;»
 «k:#var» «D:{»«v:""x»«D:}» a«D:;»                           «x:#no || adding a character at the end is ok;»
 «k:#var» «D:{»«v:believe it, "this" works....»«D:}» a«D:;»  «x:#no || this madness should work... braces are permissive;»

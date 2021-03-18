@@ -50,7 +50,6 @@
 
 ### Major issues
  * @ symbol breaks tintin args in matching
- * Work is still needed to better handle quotes in variable definitions
 
 ### Misc
  * enable configuration of ~ symbol, as tintin does

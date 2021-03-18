@@ -101,24 +101,24 @@
 (rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
 
 (rx-define braced-content (* (or (simple-var-pattern ungrouped braced) (not "}"))))
+(rx-define variable-name-for-bracing
+  (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
+      (: (not "\"") braced-content (not "\""))
+      (: braced-content (not "\""))
+      (: (not "\"") braced-content)))
+(rx-define braced-variable-name (: "{" (group variable-name-for-bracing) "}" ))
 (rx-define optionally-braced-tintin-variable
-  (: (group var-prefix)
-     (or (group tintin-var-name)
-         (: "{" (group
-                 (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
-                     (: (not "\"") braced-content (not "\""))
-                     (: braced-content (not "\""))
-                     (: (not "\"") braced-content)))
-            "}" ))))
+  (: (group var-prefix) (or (group tintin-var-name) braced-variable-name)))
 
 ;;
 ;; Provide compact regexes for handling arguments in commands
 (rx-define capture-chars
-   (+ (or (+ (any "@%\"'_." alphanumeric))  ;; characters that may be used in arguments
-          ungrouped-tintin-variable)      ;; variables may be used
-      (* var-table)))                     ;; table variable definitions are ok at end
-(rx-define tintin-argument (final)
-  (group (or (: "{" braced-content "}") (: capture-chars (or (any "\s\t" final) eol) ))))
+  (+ (or (: (any alphanumeric "_") (* (any "@%\"'_." alphanumeric)))
+         ungrouped-tintin-variable)
+     (* var-table)))
+(rx-define tintin-argument (final) (group (or "{}"
+  (: "{" variable-name-for-bracing "}")
+  (: capture-chars (or (any "\s\t" final) eol)))))
 (defvar tintin-arg (rx (tintin-argument "")))
 (defvar tintin-final-arg (rx (tintin-argument ";")))
 

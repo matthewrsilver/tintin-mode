@@ -39,9 +39,9 @@
 #var dot.notation.for.real a;           #no || dot notation works;
 #var dots.and[tables] a;                #no || dot notation can be mixed with tables;
 #var can't_believe_this_works a;        #no || single quotes are actually fine in variable names;
-#var "nope"this"does_not_work" a;       #no XX double quotes don't work in unbraced variables;
-#var neither"does"this a;               #no XX double quotes don't work in unbraced variables;
-#var "nor_does_this" a;                 #no XX double quotes don't work in unbraced variables;
+#var neither"does"this a;               #no || double quotes work in unbraced variables definitions;
+#var "nope"this"does_not_work" a;       #no || double quotes can't start unbraced definitions;
+#var "nor_does_this" a;                 #no || double quotes can't start unbraced definitions;
 #var {var_def} a;                       #no || braced variable;
 #var {var_def[table]} a;                #no || braced variable with table;
 #var {var_def[table and spaces]} a;     #no || braced variable with table and spaces;
@@ -54,10 +54,10 @@
 #var {can't_believe_this_works} a;      #no || single quotes are fine in braced variables;
 #var {"yep"this"works_w_braces"} a;     #no || double quotes should be ok unless they are excl ends;
 #var {so"does"this} a;                  #no || as above, this should work: more than just ends;
-#var {"this_still_doesnt"} a;           #no XX double quotes at just the ends don't work;
+#var {"this_still_doesnt"} a;           #no || double quotes at just the ends don't work;
 #var {"this"does"} a;                   #no || double quotes at ends are fine if one is inside too;
 #var {"""} a;                           #no || even just three quotes works;
-#var {""} a;                            #no XX but two quotes don't work;
+#var {""} a;                            #no || but two quotes don't work;
 #var {x""} a;                           #no || adding a character at the beginning is ok;
 #var {""x} a;                           #no || adding a character at the end is ok;
 #var {believe it, "this" works....} a;  #no || this madness should work... braces are permissive;

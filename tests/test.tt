@@ -47,4 +47,7 @@ $first
 #show ${first}${second}
 
 
+#list @getlist{} find val result;
 
+#var x ${x[]}
+#var x {${x[]}};  /* <---- noooo */

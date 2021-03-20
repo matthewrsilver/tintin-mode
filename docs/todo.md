@@ -52,4 +52,3 @@
  * enable configuration of ~ symbol, as tintin does
  * use slightly different color for contents of square braces??
  * tintin files must start with a valid command; consider highlighting failures here?
- * add autoload for .tin files, not just .tt

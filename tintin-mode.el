@@ -140,7 +140,10 @@
     map)
   "Keymap for tintin major mode")
 
-(add-to-list 'auto-mode-alist '("\\.tt" . tintin-mode))
+(setq auto-mode-alist
+      (append '(("\\.tt\\'" . tintin-mode)
+                ("\\.tin\\'" . tintin-mode))
+              auto-mode-alist))
 
 ;;
 ;; Handle pattern matchers, formatters, regular expressions

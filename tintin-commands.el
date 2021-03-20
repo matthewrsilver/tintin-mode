@@ -103,7 +103,8 @@
 (rx-define simple-func-pattern
   (: "@" var-chars "{" (* (or (not "}") ungrouped-tintin-variable)) "}"))
 
-(rx-define braced-content (* (or (simple-var-pattern ungrouped braced) (not "}"))))
+(rx-define braced-content
+  (* (or (simple-var-pattern ungrouped braced) simple-func-pattern (not "}"))))
 (rx-define variable-name-for-bracing
   (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
       (: (not "\"") braced-content (not "\""))
@@ -121,11 +122,18 @@
          (: (any alphanumeric "_")
             (* (any "@%\"'_.,!#^&*()?><:+=-" alphanumeric))))
      (* var-table)))
+
 (rx-define tintin-argument (final) (group (or "{}"
-  (: "{" variable-name-for-bracing "}")
+  (: "{" braced-content "}" )
   (: capture-chars (or (any "\s\t" final) eol)))))
 (defvar tintin-arg (rx (tintin-argument "")))
 (defvar tintin-final-arg (rx (tintin-argument ";")))
+
+(rx-define tintin-variable-argument (final) (group (or "{}"
+  (: "{" variable-name-for-bracing "}")
+  (: capture-chars (or (any "\s\t" final) eol)))))
+(defvar tintin-var-arg (rx (tintin-variable-argument "")))
+(defvar tintin-final-var-arg (rx (tintin-variable-argument ";")))
 
 
 ;;
@@ -204,7 +212,7 @@ may be matches as well, though these are complete regular expressions."
   "Base class that represents an unhighlighted, generic TinTin++ argument.")
 
 (cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
-  "Custom initializer for the `tintina-argument' class."
+  "Custom initializer for the `tintin-argument' class."
   (let* ((value-list (oref obj vals))
          (values-regexp (build-tintin-arg-regexp value-list)))
     (if value-list (oset obj regexp values-regexp))))

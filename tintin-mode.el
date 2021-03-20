@@ -319,10 +319,11 @@
 (setq arg (tintin-argument))
 (setq final-arg (clone arg :regexp tintin-final-arg))
 
-(setq var-usage (clone arg :face 'tintin-variable-usage-face :override 'keep))
-(setq final-var-usage (clone var-usage :regexp tintin-final-arg))
-(setq var-assignment (clone arg :face 'font-lock-variable-name-face :override 'keep))
-(setq final-var-assignment (clone var-assignment :regexp tintin-final-arg))
+(setq var-arg (tintin-argument :regexp tintin-var-arg :override 'keep))
+(setq var-usage (clone var-arg :face 'tintin-variable-usage-face))
+(setq final-var-usage (clone var-usage :regexp tintin-final-var-arg))
+(setq var-assignment (clone var-arg :face 'font-lock-variable-name-face))
+(setq final-var-assignment (clone var-assignment :regexp tintin-final-var-arg))
 
 (setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
 (setq command-type (clone arg :face 'font-lock-type-face :override 'keep))

@@ -1,8 +1,6 @@
 ### General
- * Seems somewhat slow to load
-
  * Complete migration to simplified class-based approach
-   * refine relationship between argument regexps and classes
+   * refine relationship (and naming) between argument regexps and classes
    * consider a :final slot
    * eliminate double quoting
 

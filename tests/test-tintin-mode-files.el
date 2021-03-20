@@ -43,6 +43,9 @@
 (ert-deftest tintin-font-lock-variable-usage-test ()
   (should (tintin-font-lock-test-file "misc/variable_usage.tt")))
 
+(ert-deftest tintin-font-lock-function-usage-test ()
+  (should (tintin-font-lock-test-file "misc/function_usage.tt")))
+
 (ert-deftest tintin-font-lock-warning-test ()
   (should (tintin-font-lock-test-file "misc/warning_fonts.tt")))
 

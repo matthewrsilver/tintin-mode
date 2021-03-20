@@ -88,12 +88,8 @@ but can also be done safely with `setq` prior to loading/requiring the mode
 
 ## Known Issues
 
-* The presence of an `@`, typically used in a function call, can break matching for arguments
-  in different tintin commands.
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
-* Variable definitions do not correctly handle the presence of quotes in braced and unbraced
-  contexts.
 * The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
   be safely incuded within braces as part of an argument to another TinTin++ command. In these
   cases, code is incorrectly highlighted as a comment.

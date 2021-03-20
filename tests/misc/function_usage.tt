@@ -1,0 +1,21 @@
+#no Test function usages;
+
+#no Basic function calls;
+@foo                                    #no || successful non-highlight without brace;
+@foo{;                                  #no XX shouldn't highlight because of lack of closing brace;
+@foo{};                                 #no || successful highlight of function call without args;
+@foo{a;b;c;};                           #no || successful highlight of function call with args;
+@foo{$something};                       #no || highlighs with variable argument;
+@foo{${another}};                       #no || works with braced variable argument;
+@foo{$first;$second;$third};            #no || works with multiple braced variable arguments;
+@get_color{&1;100}                      #no || works with pattern matching arguments;
+
+#no Function calls in command arguments;
+#list seq find @fnd{$info} x;           #no || works even with variable arguments as basic arg;
+#list seq find @fnd{${info}} x;         #no || works even with variable arguments as basic arg;
+#list seq find @fnd{$x[tab$le!]} x;     #no || works even with variable arguments as basic arg;
+#list seq find @fnd{$x[tab${le}!]} x;   #no || works even with variable arguments as basic arg;
+#list @whichlist{} find $some_var x;    #no || works as a variable usage argument;
+#var result {${result}@one{}@two{}};    #no || works in a basic arg and with multiples;
+#parse {@stuff{}} elem {};              #no || works as a basic argument in parse command;
+#loop {1} {@max{}} var {};              #no || works as a loop range argument;

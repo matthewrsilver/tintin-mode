@@ -1,0 +1,21 @@
+«x:#no Test function usages;»
+
+«x:#no Basic function calls;»
+@foo                                    «x:#no || successful non-highlight without brace;»
+«:tintin-function-face:@foo»«D:{;»                                  «x:#no XX shouldn't highlight because of lack of closing brace;»
+«:tintin-function-face:@foo»«D:{};»                                 «x:#no || successful highlight of function call without args;»
+«:tintin-function-face:@foo»«D:{»a«D:;»b«D:;»c«D:;};»                           «x:#no || successful highlight of function call with args;»
+«:tintin-function-face:@foo»«D:{$»«:tintin-variable-usage-face:something»«D:};»                       «x:#no || highlighs with variable argument;»
+«:tintin-function-face:@foo»«D:{${»«:tintin-variable-usage-face:another»«D:}};»                       «x:#no || works with braced variable argument;»
+«:tintin-function-face:@foo»«D:{$»«:tintin-variable-usage-face:first»«D:;$»«:tintin-variable-usage-face:second»«D:;$»«:tintin-variable-usage-face:third»«D:};»            «x:#no || works with multiple braced variable arguments;»
+«:tintin-function-face:@get_color»«D:{»«:tintin-capture-face:&1»«D:;»100«D:}»                      «x:#no || works with pattern matching arguments;»
+
+«x:#no Function calls in command arguments;»
+«k:#list» «:tintin-variable-usage-face:seq »«t:find» «:tintin-function-face:@fnd»«D:{$»«:tintin-variable-usage-face:info»«D:}» «v:x»«D:;»           «x:#no || works even with variable arguments as basic arg;»
+«k:#list» «:tintin-variable-usage-face:seq »«t:find» «:tintin-function-face:@fnd»«D:{${»«:tintin-variable-usage-face:info»«D:}}» «v:x»«D:;»         «x:#no || works even with variable arguments as basic arg;»
+«k:#list» «:tintin-variable-usage-face:seq »«t:find» «:tintin-function-face:@fnd»«D:{$»«:tintin-variable-usage-face:x[tab»«D:$»«:tintin-variable-usage-face:le!]»«D:}» «v:x»«D:;»     «x:#no || works even with variable arguments as basic arg;»
+«k:#list» «:tintin-variable-usage-face:seq »«t:find» «:tintin-function-face:@fnd»«D:{$»«:tintin-variable-usage-face:x[tab»«D:${»«:tintin-variable-usage-face:le»«D:}»«:tintin-variable-usage-face:!]»«D:}» «v:x»«D:;»   «x:#no || works even with variable arguments as basic arg;»
+«k:#list» «:tintin-function-face:@whichlist»«D:{}»«:tintin-variable-usage-face: »«t:find» «D:$»«:tintin-variable-usage-face:some_var» «v:x»«D:;»    «x:#no || works as a variable usage argument;»
+«k:#var» «v:result »«D:{${»«:tintin-variable-usage-face:result»«D:}»«:tintin-function-face:@one»«D:{}»«:tintin-function-face:@two»«D:{}};»    «x:#no || works in a basic arg and with multiples;»
+«k:#parse» «D:{»«:tintin-function-face:@stuff»«D:{}}» «v:elem »«D:{};»              «x:#no || works as a basic argument in parse command;»
+«k:#loop» «D:{»1«D:}» «D:{»«:tintin-function-face:@max»«D:{}}» «v:var »«D:{};»              «x:#no || works as a loop range argument;»

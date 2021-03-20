@@ -48,10 +48,9 @@
    * If this approach allows semicolons in the braces, then it could get weird
  * If there's no trailing semicolon should still highlight as comment just to end
 
-### Major issues
- * @ symbol breaks tintin args in matching
-
 ### Misc
+ * braced variable usage flows onto next line!?
+ * closing brace after table gets highlighted?? (e.g. "{${x[]}}")
  * enable configuration of ~ symbol, as tintin does
  * use slightly different color for contents of square braces??
  * tintin files must start with a valid command; consider highlighting failures here?

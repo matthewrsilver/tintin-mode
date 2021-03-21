@@ -2,7 +2,6 @@
  * Complete migration to simplified class-based approach
    * refine relationship (and naming) between argument regexps and classes
    * consider a :final slot
-   * eliminate double quoting
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -47,6 +46,7 @@
  * If there's no trailing semicolon should still highlight as comment just to end
 
 ### Misc
- * enable configuration of ~ symbol, as tintin does
- * use slightly different color for contents of square braces??
+ * enable configuration of characters used for
+   * verbatim lines [ "\" ]
+   * repeating commands  [ "!" ]
  * tintin files must start with a valid command; consider highlighting failures here?

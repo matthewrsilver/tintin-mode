@@ -196,7 +196,7 @@ may be matches as well, though these are complete regular expressions."
 ;; Classes used to define commands, subcommands, and the arguments therein
 (defclass tintin-command ()
   ((cmds :initarg :cmds)
-   (face :initarg :face :initform 'font-lock-keyword-face)
+   (face :initarg :face :initform font-lock-keyword-face)
    (regexp :initarg :regexp))
   "Base class for standard keyword faces")
 
@@ -271,7 +271,7 @@ highlighters for each of the capture groups to be highlighted."
          (args-regexp (string-join args-regexp-list tintin-delimiter))
          (cmd-subtype-regexp (concat command-regexp (post-command-regexp args-regexp))))
     ;; Make a list with a regexp as a matcher, a highlighter, and subexp-highlighters
-    (append (list cmd-subtype-regexp `(1 ,command-face))
+    (append (list cmd-subtype-regexp `(1 ',command-face))
             (make-highlighters arg-values))))
 
 (defun fontify-tintin-cmd (command &rest subcommands)

@@ -424,34 +424,34 @@
     (fontify-tintin-cmd flow-control-command))
 
   ;; Highlight the #line command
-  (let ((line-command (tintin-command :cmds 'line-command-list :face ''tintin-command-face)))
+  (let ((line-command (tintin-command :cmds 'line-command-list :face 'tintin-command-face)))
     (fontify-tintin-cmd line-command
                         '(line-standard-option)
                         '(line-gag-option)
                         '(line-capture-option var-assignment)))
 
   ;; Highlight mud scripting commands
-  (let ((mud-command (tintin-command :cmds 'mud-command-list :face ''tintin-command-face)))
+  (let ((mud-command (tintin-command :cmds 'mud-command-list :face 'tintin-command-face)))
     (fontify-tintin-cmd mud-command))
-  (let ((unmud-command (tintin-command :cmds 'unmud-command-list :face ''tintin-command-face)))
+  (let ((unmud-command (tintin-command :cmds 'unmud-command-list :face 'tintin-command-face)))
     (fontify-tintin-cmd unmud-command))
 
   ;; Highlight tintin builtins for working with tintin or setting up sessions
-  (let ((built-command (tintin-command :cmds 'builtin-command-list :face ''font-lock-builtin-face)))
+  (let ((built-command (tintin-command :cmds 'builtin-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd built-command))
-  (let ((script-command (tintin-command :cmds 'script-command-list :face ''font-lock-builtin-face)))
+  (let ((script-command (tintin-command :cmds 'script-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd script-command
                         '(var-assignment arg)))
 
   ;; Highlight #bell command
-  (let ((bell-command (tintin-command :cmds 'bell-command-list :face ''font-lock-builtin-face)))
+  (let ((bell-command (tintin-command :cmds 'bell-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd bell-command
                         '(bell-ring-option)
                         '(bell-volume-option final-arg)
                         '(bell-toggle-option toggle-value)))
 
   ;; Highlight #buffer command
-  (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face ''font-lock-builtin-face)))
+  (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd buffer-command
                         '(buffer-standard-option)
                         '(buffer-get-option var-assignment)

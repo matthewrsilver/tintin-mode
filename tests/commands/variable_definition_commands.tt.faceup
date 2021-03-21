@@ -109,3 +109,13 @@
 «k:#if» «D:{$»«:tintin-variable-usage-face:a»«D:}» «D:{»«k:#cat» «v:x »t«D:}{»«k:#cat» «v:x »f«D:};»          «x:#no || multiple definitions on same line;»
 «k:#cat» «v:x »a«D:;» «k:#cat» «v:x »b«D:;»                     «x:#no || multiple definitions on same line;»
 «k:#cat» x«D:;» data«D:;»                           «x:#no || prematurely terminated command not highlighted;»
+
+«x:#no Multiline and in-progress variable name arguments;»
+«k:#var» «D:{»«v:in progress»
+not a variable                          «x:#no || Line above is in progress, this one is unrelated;»
+«k:#var» «D:{»«v:in progress»
+not a variable«D:}»                         «x:#no || Line above is in progress, this one is unrelated;»
+«k:#unvar» «D:{»«:tintin-variable-usage-face:in progress»
+not a variable                          «x:#no || Line above is in progress, this one is unrelated;»
+«k:#unvar» «D:{»«:tintin-variable-usage-face:in progress»
+not a variable«D:}»                         «x:#no || Line above is in progress, this one is unrelated;»

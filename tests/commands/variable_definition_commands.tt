@@ -109,3 +109,13 @@
 #if {$a} {#cat x t}{#cat x f};          #no || multiple definitions on same line;
 #cat x a; #cat x b;                     #no || multiple definitions on same line;
 #cat x; data;                           #no || prematurely terminated command not highlighted;
+
+#no Multiline and in-progress variable name arguments;
+#var {in progress
+not a variable                          #no || Line above is in progress, this one is unrelated;
+#var {in progress
+not a variable}                         #no || Line above is in progress, this one is unrelated;
+#unvar {in progress
+not a variable                          #no || Line above is in progress, this one is unrelated;
+#unvar {in progress
+not a variable}                         #no || Line above is in progress, this one is unrelated;

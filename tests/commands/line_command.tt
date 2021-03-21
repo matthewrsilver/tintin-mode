@@ -31,6 +31,7 @@
 #line {strip} {text};                  #no || strip with various braces/spacings;
 #line strip {text};                    #no || strip with various braces/spacings;
 #line strip{text};                     #no || strip with various braces/spacings;
+#line strip something something;       #no || strup with multiple arguments;
 
 #line substitute text;                 #no || substitute with various braces/spacings;
 #line {substitute} text;               #no || substitute with various braces/spacings;

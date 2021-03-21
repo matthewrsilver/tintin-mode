@@ -31,6 +31,7 @@
 «:tintin-command-face:#line» «D:{»«t:strip»«D:}» «D:{»text«D:};»                  «x:#no || strip with various braces/spacings;»
 «:tintin-command-face:#line» «t:strip» «D:{»text«D:};»                    «x:#no || strip with various braces/spacings;»
 «:tintin-command-face:#line» strip«D:{»text«D:};»                     «x:#no || strip with various braces/spacings;»
+«:tintin-command-face:#line» «t:strip» something something«D:;»       «x:#no || strup with multiple arguments;»
 
 «:tintin-command-face:#line» «t:substitute» text«D:;»                 «x:#no || substitute with various braces/spacings;»
 «:tintin-command-face:#line» «D:{»«t:substitute»«D:}» text«D:;»               «x:#no || substitute with various braces/spacings;»

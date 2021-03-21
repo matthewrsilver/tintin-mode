@@ -101,16 +101,16 @@
 (rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
 
 (rx-define simple-func-pattern
-  (: "@" var-chars "{" (* (or (not "}") ungrouped-tintin-variable)) "}"))
+  (: "@" var-chars "{" (* (or (not "}") ungrouped-tintin-variable)) (or "}" eol)))
 
 (rx-define braced-content
-  (* (or (simple-var-pattern ungrouped braced) simple-func-pattern (not "}"))))
+  (* (or (simple-var-pattern ungrouped braced) simple-func-pattern (not (any "}\n")))))
 (rx-define variable-name-for-bracing
   (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
       (: (not "\"") braced-content (not "\""))
       (: braced-content (not "\""))
       (: (not "\"") braced-content)))
-(rx-define braced-variable-name (: "{" (group variable-name-for-bracing) "}" ))
+(rx-define braced-variable-name (: "{" (group variable-name-for-bracing) (or "}" eol) ))
 (rx-define optionally-braced-tintin-variable
   (: (group var-prefix) (or (group tintin-var-name) braced-variable-name)))
 
@@ -124,13 +124,13 @@
      (* var-table)))
 
 (rx-define tintin-argument (final) (group (or "{}"
-  (: "{" braced-content "}" )
+  (: "{" braced-content (or "}" eol))
   (: capture-chars (or (any "\s\t" final) eol)))))
 (defvar tintin-arg (rx (tintin-argument "")))
 (defvar tintin-final-arg (rx (tintin-argument ";")))
 
 (rx-define tintin-variable-argument (final) (group (or "{}"
-  (: "{" variable-name-for-bracing "}")
+  (: "{" variable-name-for-bracing (or "}" eol))
   (: capture-chars (or (any "\s\t" final) eol)))))
 (defvar tintin-var-arg (rx (tintin-variable-argument "")))
 (defvar tintin-final-var-arg (rx (tintin-variable-argument ";")))

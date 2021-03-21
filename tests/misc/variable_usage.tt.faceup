@@ -34,9 +34,19 @@ $«D:{»""«D:}»                                   «x:#no || but two quotes do
 «D:${»«:tintin-variable-usage-face:""x»«D:}»                                  «x:#no || adding a character at the end is ok;»
 «D:${»«:tintin-variable-usage-face:believe it or not, "this" works....»«D:}»  «x:#no || this madness should work... braces are permissive;»
 «D:${»«:tintin-variable-usage-face:uh oh... »«x:#no works here too}          #no XX commands should just be highlighted as variables;»
+«D:$»«:tintin-variable-usage-face:first»«D:$»«:tintin-variable-usage-face:second»                           «x:#no || two consecutive unbraced variables;»
+«D:${»«:tintin-variable-usage-face:first»«D:}$»«:tintin-variable-usage-face:second»                         «x:#no || braced variable followed by unbraced variable;»
+«D:${»«:tintin-variable-usage-face:first»«D:}${»«:tintin-variable-usage-face:second»«D:}»                       «x:#no || two consecutive braced variables;»
+«D:$»«:tintin-variable-usage-face:first»«D:${»«:tintin-variable-usage-face:second»«D:}»                         «x:#no || unbraced variable followed by braced variable;»
 
 «x:#no Other variable forms with different prefixes;»
 «D:&»«:tintin-variable-usage-face:variable_existence»                     «x:#no || tests for variable existence work as normal usages;»
 «D:&{»«:tintin-variable-usage-face:variable_existence»«D:}»                   «x:#no || tests for variable existence work as normal usages;»
 «D:*»«:tintin-variable-usage-face:table_keys»                             «x:#no || accessing tabke keys work as normal usages;»
 «D:*{»«:tintin-variable-usage-face:table_keys»«D:}»                           «x:#no || accessing tabke keys work as normal usages;»
+
+«x:#no Multiline and in-progress variables usages;»
+«D:${»«:tintin-variable-usage-face:in progress»
+not a variable                          «x:#no || Line above is in progress, this one is unrelated;»
+«D:${»«:tintin-variable-usage-face:in progress»
+not a variable«D:}»                         «x:#no || Line above is in progress, this one is unrelated;»

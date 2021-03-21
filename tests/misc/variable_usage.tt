@@ -34,9 +34,19 @@ ${x""}                                  #no || adding a character at the beginni
 ${""x}                                  #no || adding a character at the end is ok;
 ${believe it or not, "this" works....}  #no || this madness should work... braces are permissive;
 ${uh oh... #no works here too}          #no XX commands should just be highlighted as variables;
+$first$second                           #no || two consecutive unbraced variables;
+${first}$second                         #no || braced variable followed by unbraced variable;
+${first}${second}                       #no || two consecutive braced variables;
+$first${second}                         #no || unbraced variable followed by braced variable;
 
 #no Other variable forms with different prefixes;
 &variable_existence                     #no || tests for variable existence work as normal usages;
 &{variable_existence}                   #no || tests for variable existence work as normal usages;
 *table_keys                             #no || accessing tabke keys work as normal usages;
 *{table_keys}                           #no || accessing tabke keys work as normal usages;
+
+#no Multiline and in-progress variables usages;
+${in progress
+not a variable                          #no || Line above is in progress, this one is unrelated;
+${in progress
+not a variable}                         #no || Line above is in progress, this one is unrelated;

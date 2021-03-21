@@ -1,9 +1,3 @@
-#no comment and unhighlighted $thing
-that runs onto next line with an unhighlighted $thing too;
-
-#nop comment terminated;
-not a comment;
-
 #function;
 #function a{b};
 #function a {b};
@@ -32,22 +26,6 @@ not a comment;
 #foreach {test_${items[%*]}_info} {elem} {};
 
 #alias something;
-
-#line
-#linez
-#line;
-#line gag;
-#line strip something something;
-#line capture result something;
-
-#var things *hello;
-$first
-#show $first$second
-#show ${first}$second
-#show ${first}${second}
-
-
-#list @getlist{} find val result;
 
 #var x ${x[]}
 #var x {${x[]}};  /* <---- noooo */

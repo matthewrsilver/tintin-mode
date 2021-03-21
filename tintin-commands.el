@@ -104,9 +104,10 @@
   (: "@" var-chars "{" (* (or (not "}") ungrouped-tintin-variable)) (or "}" eol)))
 
 (rx-define braced-content
-  (* (or (simple-var-pattern ungrouped braced) simple-func-pattern (not (any "}\n")))))
+  (* (or ungrouped-tintin-variable simple-func-pattern (not (any "}\n")))))
 (rx-define variable-name-for-bracing
-  (or (: "\"" (? braced-content) "\"" (? braced-content) "\"")
+  (or tintin-var-name
+      (: "\"" (? braced-content) "\"" (? braced-content) "\"")
       (: (not "\"") braced-content (not "\""))
       (: braced-content (not "\""))
       (: (not "\"") braced-content)))

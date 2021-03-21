@@ -20,6 +20,9 @@ $"nor_does_this"                        «x:#no || double quotes don't work in u
 «D:${»«:tintin-variable-usage-face:variable_usage[table and »«D:$»«:tintin-variable-usage-face:variable]»«D:}»  «x:#no || braced variable with table, spaces, and variable;»
 «D:${»«:tintin-variable-usage-face:variable_usage[table »«D:${»«:tintin-variable-usage-face:variable»«D:}»«:tintin-variable-usage-face:]»«D:}»    «x:#no || braced variable with table, spaces, braced variable;»
 «D:${»«:tintin-variable-usage-face:variable_usage[+ "wow" & don't!]»«D:}»     «x:#no || tables can have all sorts of characters in them;»
+«D:${»«:tintin-variable-usage-face:x[]»«D:}»
+                                        «x:#no || close brace misinterpreted after ] and no more chars;»
+«D:{${»«:tintin-variable-usage-face:x[]»«D:}}»                                «x:#no || close brace misinterpreted after ] when braced;»
 «D:${»«:tintin-variable-usage-face:variable[multiple][tables]»«D:}»           «x:#no || braced variables and nested tables work;»
 «D:${»«:tintin-variable-usage-face:dot.notation.for.real»«D:}»                «x:#no || dot notation works;»
 «D:${»«:tintin-variable-usage-face:dots.and[tables]»«D:}»                     «x:#no || dot notation can be mixed with braces;»

@@ -26,6 +26,3 @@
 #foreach {test_${items[%*]}_info} {elem} {};
 
 #alias something;
-
-#var x ${x[]}
-#var x {${x[]}};  /* <---- noooo */

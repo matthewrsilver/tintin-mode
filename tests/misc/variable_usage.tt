@@ -20,6 +20,9 @@ ${variable_usage[table and spaces]}     #no || braced variable with table and sp
 ${variable_usage[table and $variable]}  #no || braced variable with table, spaces, and variable;
 ${variable_usage[table ${variable}]}    #no || braced variable with table, spaces, braced variable;
 ${variable_usage[+ "wow" & don't!]}     #no || tables can have all sorts of characters in them;
+${x[]}
+                                        #no || close brace misinterpreted after ] and no more chars;
+{${x[]}}                                #no || close brace misinterpreted after ] when braced;
 ${variable[multiple][tables]}           #no || braced variables and nested tables work;
 ${dot.notation.for.real}                #no || dot notation works;
 ${dots.and[tables]}                     #no || dot notation can be mixed with braces;

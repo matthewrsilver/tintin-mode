@@ -145,10 +145,9 @@
                 ("\\.tin\\'" . tintin-mode))
               auto-mode-alist))
 
-;;
 ;; Handle pattern matchers, formatters, regular expressions
 (rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
-(rx-define number-or-variable (group (or (+ digit) braced-tintin-variable)))
+(rx-define number-or-variable (group (or (+ digit) tintin-variable)))
 (rx-define regexp-classes
   (: (? "+" number-or-variable (? (: ".." (* number-or-variable)))) (any "aAdDpPsSuUwW")))
 (rx-define format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
@@ -162,7 +161,6 @@
   (rx (tintin-capture
        (or format-basic format-numeric regexp-ops-wrapped numeric-capture "*"))))
 
-;;
 ;; Handle various simple highlighted faces
 (defvar default-chars-matcher (rx (: (any "{};"))))
 (defvar ansi-color-code (rx "<" (? (any "FB")) (= 3 hex) ">"))
@@ -173,7 +171,6 @@
 (defvar tintin-repeat-cmd
   (rx (group tintin-command-character (+ digit)) (or (any "\s\t;") eol)))
 
-;;
 ;; Deal with comments, which are bonkers in TinTin++
 (rx-define comment-start-regexp
   (: tintin-command-character (any "nN") (any "oO") (? (any "pP")) (+ (any " \t\n"))))
@@ -209,7 +206,6 @@
   (let ((case-fold-search nil))
     (re-search-forward tintin-escape-codes limit t)))
 
-;;
 ;; Regular expressions for speedwalks and dice rolls, which are syntactically similar
 ;; and collide often, so need to be handled together
 (rx-define start-marker (or (any "{\s\t") line-start))
@@ -218,7 +214,7 @@
 (rx-define no-pad-int (or "0" (: (any "1-9") (* (any "0-9")))))
 (defvar dice-roll
   (rx (: start-marker
-         (group (or (+ no-pad-int) braced-tintin-variable)
+         (group (or (+ no-pad-int) tintin-variable)
                 "d"
                 (or (+ no-pad-int) tintin-variable))
          (not move-direction)
@@ -228,11 +224,7 @@
          (group (+ (: (+ (any "0-9")) move-direction)))
          end-marker)))
 
-;;
 ;; Command lists for different classes of TinTin++ commands
-(defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" "on") (rx tintin-variable)))
-
 (defvar variable-commands-list
   '( "variable" 3   "local" 3      "cat" 0
      "format" 4     "math" 0       "replace" 3))
@@ -266,14 +258,12 @@
      "snoop" 0      "split" 3      "ssl" 0        "detatch" 0
      "textin" 4     "write" 0      "zap" 0        "ats" 0))
 
-;;
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
 (defvar bell-ring-option (tintin-option :vals '("ring")))
 (defvar bell-volume-option (tintin-option :vals '("volume")))
 (defvar bell-toggle-option (tintin-option :vals '("flash" "focus" "margin")))
 
-;;
 ;; Special handling for the #buffer command and its subcommands
 (defvar buffer-command-list '("buffer" 0))
 (defvar buffer-get-option (tintin-option :vals '("get")))
@@ -281,7 +271,6 @@
 (defvar buffer-standard-option
   (tintin-option :vals '("home" "end" "find" "up" "down" "clear" "write" "info")))
 
-;;
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
 (defvar line-gag-option (tintin-option :vals '("gag")))
@@ -291,7 +280,6 @@
                          "local" "log" "logmode" "msdp" "multishot" "oneshot" "quiet"
                          "verbatim" "verbose" "logverbatim")))
 
-;;
 ;; Special handling for the #list command and its subcommands
 (defvar list-command-list '("list" 3))
 (defvar list-create-option (tintin-option :vals '("create" "tokenize")))
@@ -301,7 +289,6 @@
   (tintin-option :vals '("add" "clear" "collapse" "delete" "explode" "index" "insert"
                          "order" "shuffle" "set" "simplify" "sort")))
 
-;;
 ;; Special handling for the #class command and its subcommands
 (defvar class-command-list '("class" 2))
 (defvar class-create-option (tintin-option :vals '("load" "open" "read")))
@@ -309,28 +296,6 @@
 (defvar class-use-option
   (tintin-option :vals '("assign" "list" "save" "write" "clear" "close" "kill")))
 
-
-;;
-;; Now set up the font faces and stand up a few tintin-argument instances that
-;; enable us to concisely define many commands using tintin-command.el.
-(defface tintin-ansi-face '((t (:foreground "#c95d5d"))) "*Face for ansi color codes.")
-(defface tintin-capture-face '((t (:foreground "#8dd110"))) "*Face for capture variables.")
-(defface tintin-function-face '((t (:foreground "#5dc9c9"))) "*Face for user functions.")
-(defface tintin-command-face '((t (:foreground "#5d74c9"))) "*Face for user hash commands.")
-(defface tintin-variable-usage-face '((t (:foreground "#e09d02"))) "*Face for variable usages.")
-
-(setq arg (tintin-argument))
-(setq final-arg (clone arg :regexp tintin-final-arg))
-
-(setq var-arg (tintin-argument :regexp tintin-var-arg :override 'keep))
-(setq var-usage (clone var-arg :face 'tintin-variable-usage-face))
-(setq final-var-usage (clone var-usage :regexp tintin-final-var-arg))
-(setq var-assignment (clone var-arg :face 'font-lock-variable-name-face))
-(setq final-var-assignment (clone var-assignment :regexp tintin-final-var-arg))
-
-(setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
-(setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
-(setq toggle-value (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 
 (setq tintin-font-lock-keywords (append
 

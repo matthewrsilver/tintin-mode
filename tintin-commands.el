@@ -67,17 +67,23 @@
 (require 'cl-lib)
 (require 'eieio)
 
-(defcustom  tintin-command-character "#"
-  "The symbol used to mark the beginning of TinTin++ commands.")
-(rx-define tintin-command-character (eval tintin-command-character))
-
-;;
-;; A few generic useful functions
 (defun string-join (lst sep)
   "Join strings in LST with SEP between each, returning the result."
   (mapconcat 'identity lst sep))
 
-;;
+
+;; Set up the font faces and stand up a few tintin-argument instances that
+;; enable us to concisely define many commands.
+(defface tintin-ansi-face '((t (:foreground "#c95d5d"))) "*Face for ansi color codes.")
+(defface tintin-capture-face '((t (:foreground "#8dd110"))) "*Face for capture variables.")
+(defface tintin-function-face '((t (:foreground "#5dc9c9"))) "*Face for user functions.")
+(defface tintin-command-face '((t (:foreground "#5d74c9"))) "*Face for user hash commands.")
+(defface tintin-variable-usage-face '((t (:foreground "#e09d02"))) "*Face for variable usages.")
+
+(defcustom  tintin-command-character "#"
+  "The symbol used to mark the beginning of TinTin++ commands.")
+(rx-define tintin-command-character (eval tintin-command-character))
+
 ;; Key regular expressions that are useful here in specifying broad TinTin++
 ;; command structure, but are also useful in highlighting key aspects of code.
 (rx-define var-prefix (any "&$*"))
@@ -87,24 +93,17 @@
 
 ;; Regular expressions that allow for specification of variables under a variety
 ;; of circumstances: with and without both grouping and presence/absence of braces
-(rx-define grouped (&rest rx-elem) (group rx-elem))
-(rx-define ungrouped (&rest rx-elem) (: rx-elem))
-(rx-define braced (g rx-elem) (: "{" (g rx-elem) "}"))
-(rx-define unbraced (g rx-elem) (g rx-elem))
 (rx-define optionally-braced (g rx-elem) (or (g rx-elem) (: "{" (g rx-elem) "}")))
-(rx-define tintin-var-pattern (g b) (: (g var-prefix) (b g tintin-var-name)))
-(rx-define simple-var-pattern (g b) (: (g var-prefix) (b g var-chars)))
-
-(rx-define tintin-variable (tintin-var-pattern grouped optionally-braced))
-(rx-define simple-variable (simple-var-pattern grouped optionally-braced))
-(rx-define ungrouped-tintin-variable (tintin-var-pattern ungrouped optionally-braced))
-(rx-define braced-tintin-variable (tintin-var-pattern ungrouped braced))
-
+(rx-define tintin-variable
+  (: var-prefix (optionally-braced sequence tintin-var-name)))
+(rx-define simple-variable
+  (: (group var-prefix) (optionally-braced group var-chars)))
 (rx-define simple-func-pattern
-  (: "@" var-chars "{" (* (or (not "}") ungrouped-tintin-variable)) (or "}" eol)))
+  (: "@" var-chars "{" (* (or (not "}") tintin-variable)) (or "}" eol)))
 
+;; Regular expressions that allow
 (rx-define braced-content
-  (* (or ungrouped-tintin-variable simple-func-pattern (not (any "}\n")))))
+  (* (or tintin-variable simple-func-pattern (not (any "}\n")))))
 (rx-define variable-name-for-bracing
   (or tintin-var-name
       (: "\"" (? braced-content) "\"" (? braced-content) "\"")
@@ -115,10 +114,9 @@
 (rx-define optionally-braced-tintin-variable
   (: (group var-prefix) (or (group tintin-var-name) braced-variable-name)))
 
-;;
 ;; Provide compact regexes for handling arguments in commands
 (rx-define capture-chars
-  (+ (or ungrouped-tintin-variable
+  (+ (or tintin-variable
          simple-func-pattern
          (: (any alphanumeric "_")
             (* (any "@%\"'_.,!#^&*()?><:+=-" alphanumeric))))
@@ -137,7 +135,6 @@
 (defvar tintin-final-var-arg (rx (tintin-variable-argument ";")))
 
 
-;;
 ;; Utilities to support regexp generation for tintin-command instances
 (defun initial-substrings (word &optional min-len)
   "Given string WORD return a list of all initial substrings.
@@ -191,38 +188,6 @@ may be matches as well, though these are complete regular expressions."
          (regexps (cons arg-regexp others)))
     (concat "{?\\(" (string-join regexps "\\|") "\\)" brace-or-space)))
 
-
-;;
-;; Classes used to define commands, subcommands, and the arguments therein
-(defclass tintin-command ()
-  ((cmds :initarg :cmds)
-   (face :initarg :face :initform font-lock-keyword-face)
-   (regexp :initarg :regexp))
-  "Base class for standard keyword faces")
-
-(cl-defmethod initialize-instance :after ((obj tintin-command) &rest _)
-  "Custom initializer for the `tintin-command' class."
-  (let ((command-list (symbol-value (oref obj cmds))))
-    (oset obj regexp (build-tintin-command-regexp command-list))))
-
-(defclass tintin-argument ()
-  ((regexp :initarg :regexp :initform (eval tintin-arg))
-   (face :initarg :face :initform nil)
-   (override :initarg :override :initform nil)
-   (vals :initarg :vals :initform nil))
-  "Base class that represents an unhighlighted, generic TinTin++ argument.")
-
-(cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
-  "Custom initializer for the `tintin-argument' class."
-  (let* ((value-list (oref obj vals))
-         (values-regexp (build-tintin-arg-regexp value-list)))
-    (if value-list (oset obj regexp values-regexp))))
-
-(defclass tintin-option (tintin-argument)
-  ((face :initform 'font-lock-type-face))
-  "Command option argument class, that represents an option specifying a subcommand type.")
-
-;;
 ;; Functions to build up seach-based fontificators
 (defun argument-to-regexp (argument)
   "Retrieve the regular expression associated with ARGUMENT."
@@ -282,5 +247,52 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
   (let ((base-and-subcommands (append '(nil) subcommands)))
     (mapcar (lambda (args) (fontify-tintin-subcommand command args))
             base-and-subcommands)))
+
+;; Classes used to define commands, subcommands, and the arguments therein
+(defclass tintin-command ()
+  ((cmds :initarg :cmds)
+   (face :initarg :face :initform font-lock-keyword-face)
+   (regexp :initarg :regexp))
+  "Base class for standard keyword faces")
+
+(cl-defmethod initialize-instance :after ((obj tintin-command) &rest _)
+  "Custom initializer for the `tintin-command' class."
+  (let ((command-list (symbol-value (oref obj cmds))))
+    (oset obj regexp (build-tintin-command-regexp command-list))))
+
+(defclass tintin-argument ()
+  ((regexp :initarg :regexp :initform (eval tintin-arg))
+   (face :initarg :face :initform nil)
+   (override :initarg :override :initform nil)
+   (vals :initarg :vals :initform nil))
+  "Base class that represents an unhighlighted, generic TinTin++ argument.")
+
+(cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
+  "Custom initializer for the `tintin-argument' class."
+  (let* ((value-list (oref obj vals))
+         (values-regexp (build-tintin-arg-regexp value-list)))
+    (if value-list (oset obj regexp values-regexp))))
+
+(defclass tintin-option (tintin-argument)
+  ((face :initform 'font-lock-type-face))
+  "Command option argument class, that represents an option specifying a subcommand type.")
+
+
+(setq arg (tintin-argument))
+(setq final-arg (clone arg :regexp tintin-final-arg))
+
+(setq var-arg (tintin-argument :regexp tintin-var-arg :override 'keep))
+(setq var-usage (clone var-arg :face 'tintin-variable-usage-face))
+(setq final-var-usage (clone var-usage :regexp tintin-final-var-arg))
+(setq var-assignment (clone var-arg :face 'font-lock-variable-name-face))
+(setq final-var-assignment (clone var-assignment :regexp tintin-final-var-arg))
+
+(setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
+(setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
+
+(defvar toggle-constant-values
+  (build-tintin-arg-regexp '("off" "on") (rx tintin-variable)))
+(setq toggle-value (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
+
 
 (provide 'tintin-commands)

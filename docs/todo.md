@@ -46,6 +46,8 @@
  * If there's no trailing semicolon should still highlight as comment just to end
 
 ### Misc
+ * variables may start with a 0, but allowing this conflicts with pattern matchers...
+   * maybe a way out: variables can't be _only_ numbers!
  * enable configuration of characters used for
    * verbatim lines [ "\" ]
    * repeating commands  [ "!" ]

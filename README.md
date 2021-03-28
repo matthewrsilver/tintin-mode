@@ -93,8 +93,8 @@ these chatacters as well. The full set of configurable characters is
 | Character Role     | `#config` Option  | `tintin-mode` Variable      | Default |
 | :----------------- | :---------------- | :-------------------------- | :-----: |
 | TinTin++ commands  | `{TINTIN CHAR}`   | `tintin-command-character`  | `#`     |
-| verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatin-character` | `\\`    |
-| repeating commands | `{REPEAT CHAR}`   | `tintin-repeat-character`   | `!`     |
+| Verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatin-character` | `\`     |
+| Repeating commands | `{REPEAT CHAR}`   | `tintin-repeat-character`   | `!`     |
 
 ## Known Issues
 

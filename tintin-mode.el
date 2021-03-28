@@ -73,10 +73,11 @@
 
 ;; Customization:
 ;;
-;; TinTin++ allows users to customize their scripts in a number of ways. The most critical is the
-;; ability to alter the character used for TinTin++ commands, which is `#` by default. To configure
-;; `tintin-mode` to use a different character (e.g. `/`), set `tintin-command-character` to a
-;; string with the desired character. This can be done by adding to `custom-set-variables`
+;; TinTin++ allows users to [configure how their scripts should be interpreted][6] in a number of
+;; ways. The most critical is the ability to alter the character used for TinTin++ commands, which
+;; is `#` by default. To configure `tintin-mode` to use a different character (e.g. `/`), set
+;; `tintin-command-character` to a string with the desired character. This can be done by adding
+;; to `custom-set-variables`
 ;;
 ;; ```lisp
 ;; (custom-set-variables '(tintin-command-character "/"))
@@ -88,6 +89,15 @@
 ;; (setq tintin-command-character "/")
 ;; (require 'tintin-mode)
 ;; ```
+;;
+;; Tintin++ allows other characters to be configured, and `tintin-mode` supports customization of
+;; these chatacters as well. The full set of configurable characters is
+;;
+;; | Character Role     | `#config` Option  | `tintin-mode` Variable      | Default |
+;; | :----------------- | :---------------- | :-------------------------- | :-----: |
+;; | TinTin++ commands  | `{TINTIN CHAR}`   | `tintin-command-character`  | `#`     |
+;; | verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatin-character` | `\\`    |
+;; | repeating commands | `{REPEAT CHAR}`   | `tintin-repeat-character`   | `!`     |
 
 ;; Known Issues:
 ;;
@@ -128,6 +138,7 @@
 ;; [3]: https://tintin.sourceforge.io/forum/viewtopic.php?t=1447#p5500
 ;; [4]: http://dawn-e.users.sourceforge.net/tintin-mode.el
 ;; [5]: https://github.com/sunwayforever/tintin-mode
+;; [6]: https://mudhalla.net/tintin/manual/config.php
 
 ;;; Code:
 
@@ -144,6 +155,15 @@
       (append '(("\\.tt\\'" . tintin-mode)
                 ("\\.tin\\'" . tintin-mode))
               auto-mode-alist))
+
+(defcustom  tintin-verbatim-character "\\"
+  "The symbol used to mark lines that are not parsed by TinTin++.")
+(rx-define tintin-verbatim-character (eval tintin-verbatim-character))
+
+(defcustom  tintin-repeating-character "!"
+  "The symbol used to repeat previous commands.")
+(rx-define tintin-repeating-character (eval tintin-repeating-character))
+
 
 ;; Handle pattern matchers, formatters, regular expressions
 (rx-define tintin-capture (pattern) (: "%" (? (any "%\\")) pattern))
@@ -166,7 +186,9 @@
 (defvar ansi-color-code (rx "<" (? (any "FB")) (= 3 hex) ">"))
 (defvar ansi-gray-code (rx "<" (any "gG") (= 2 digit) ">"))
 (defvar tintin-function (rx (group "@" var-chars ) "{"))
-(defvar tintin-special-symbols (rx (group (or (: bol (any "!\\")) "~")) (* nonl)))
+(defvar tintin-special-symbols
+  (rx (group (or (: bol (or tintin-repeating-character tintin-verbatim-character)) "~"))
+      (* nonl)))
 (defvar double-semicolon-warning (rx ";" (group ";")))
 (defvar tintin-repeat-cmd
   (rx (group tintin-command-character (+ digit)) (or (any "\s\t;") eol)))

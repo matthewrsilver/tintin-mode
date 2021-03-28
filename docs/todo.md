@@ -2,6 +2,8 @@
  * Complete migration to simplified class-based approach
    * refine relationship (and naming) between argument regexps and classes
    * consider a :final slot
+ * variables may start with a 0, but allowing this conflicts with pattern matchers...
+   * maybe a way out: variables can't be _only_ numbers!
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -46,9 +48,4 @@
  * If there's no trailing semicolon should still highlight as comment just to end
 
 ### Misc
- * variables may start with a 0, but allowing this conflicts with pattern matchers...
-   * maybe a way out: variables can't be _only_ numbers!
- * enable configuration of characters used for
-   * verbatim lines [ "\" ]
-   * repeating commands  [ "!" ]
  * tintin files must start with a valid command; consider highlighting failures here?

@@ -175,7 +175,7 @@ For example, the following progression from WORD-DATA to words to regexp:
 
 which is wrapped in paretheses to create a capture group. The configurable
 `tintin-command-character' is prepended, and the regular expression returned."
-  (rx (group (eval tintin-command-character)
+  (rx (group tintin-command-character
              (regexp (eval (regexp-opt (initial-substrings-list word-data)))))))
 
 (defun build-tintin-arg-regexp (value-list &rest others)

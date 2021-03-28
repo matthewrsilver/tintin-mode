@@ -1,4 +1,4 @@
-;;; test-tintin-mode-samples.el --- Tests for TinTin++ syntax highlighting
+;;; test-tintin-mode-files.el --- Tests for TinTin++ syntax highlighting
 
 ;; Author: Matthew Silver
 ;; Keywords: faces languages

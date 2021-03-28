@@ -70,10 +70,11 @@ game interaction in TinTin++, including:
 
 ## Customization
 
-TinTin++ allows users to customize their scripts in a number of ways. The most critical is the
-ability to alter the character used for TinTin++ commands, which is `#` by default. To configure
-`tintin-mode` to use a different character (e.g. `/`), set `tintin-command-character` to a
-string with the desired character. This can be done by adding to `custom-set-variables`
+TinTin++ allows users to [configure how their scripts should be interpreted][6] in a number of
+ways. The most critical is the ability to alter the character used for TinTin++ commands, which
+is `#` by default. To configure `tintin-mode` to use a different character (e.g. `/`), set
+`tintin-command-character` to a string with the desired character. This can be done by adding
+to `custom-set-variables`
 
 ```lisp
 (custom-set-variables '(tintin-command-character "/"))
@@ -85,6 +86,15 @@ but can also be done safely with `setq` prior to loading/requiring the mode
 (setq tintin-command-character "/")
 (require 'tintin-mode)
 ```
+
+Tintin++ allows other characters to be configured, and `tintin-mode` supports customization of
+these chatacters as well. The full set of configurable characters is
+
+| Character Role     | `#config` Option  | `tintin-mode` Variable      | Default |
+| :----------------- | :---------------- | :-------------------------- | :-----: |
+| TinTin++ commands  | `{TINTIN CHAR}`   | `tintin-command-character`  | `#`     |
+| verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatin-character` | `\\`    |
+| repeating commands | `{REPEAT CHAR}`   | `tintin-repeat-character`   | `!`     |
 
 ## Known Issues
 
@@ -123,6 +133,7 @@ original post.
 [3]: https://tintin.sourceforge.io/forum/viewtopic.php?t=1447#p5500
 [4]: http://dawn-e.users.sourceforge.net/tintin-mode.el
 [5]: https://github.com/sunwayforever/tintin-mode
+[6]: https://mudhalla.net/tintin/manual/config.php
 
 
 ---

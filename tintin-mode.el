@@ -269,7 +269,7 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "buffer" 4     "chat" 0       "gts" 0
+  '( "all" 0        "chat" 0       "gts" 0
      "commands" 4   "config" 4     "cursor" 3     "daemon" 3
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "help" 0       "history" 4    "run" 0
@@ -287,7 +287,7 @@
 (defvar bell-toggle-option (tintin-option :vals '("flash" "focus" "margin")))
 
 ;; Special handling for the #buffer command and its subcommands
-(defvar buffer-command-list '("buffer" 0))
+(defvar buffer-command-list '("buffer" 2))
 (defvar buffer-get-option (tintin-option :vals '("get")))
 (defvar buffer-toggle-option (tintin-option :vals '("lock")))
 (defvar buffer-standard-option

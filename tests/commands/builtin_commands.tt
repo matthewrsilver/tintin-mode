@@ -68,7 +68,9 @@
 
 #buffer;                                #no || terminated bare #buffer command;
 #buffer                                 #no || unterminated bare #buffer command;
-#buf                                    #no || not enough characters;
+#b                                      #no || not enough characters;
+#bu                                     #no || works with two characters;
+#buf                                    #no || works with three characters;
 #buff                                   #no || works with four characters;
 #buffe                                  #no || works with five characters;
 #bufferz                                #no || doesn't work with extra characters;

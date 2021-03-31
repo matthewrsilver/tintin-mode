@@ -68,7 +68,9 @@
 
 «b:#buffer»«D:;»                                «x:#no || terminated bare #buffer command;»
 «b:#buffer»                                 «x:#no || unterminated bare #buffer command;»
-#buf                                    «x:#no || not enough characters;»
+#b                                      «x:#no || not enough characters;»
+«b:#bu»                                     «x:#no || works with two characters;»
+«b:#buf»                                    «x:#no || works with three characters;»
 «b:#buff»                                   «x:#no || works with four characters;»
 «b:#buffe»                                  «x:#no || works with five characters;»
 #bufferz                                «x:#no || doesn't work with extra characters;»

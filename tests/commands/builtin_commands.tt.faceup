@@ -85,12 +85,41 @@
 «b:#buffer» «t:down»«D:;»                           «x:#no || buffer down without arguments;»
 «b:#buffer» «t:down» 1«D:;»                         «x:#no || buffer down with arguments;»
 
-«b:#buffer» «t:find»«D:;»                           «x:#no XX bare find?;»
+«b:#buffer» find«D:;»                           «x:#no || bare find not highlighted;»
 «b:#buffer» «t:find» string«D:;»                    «x:#no || buffer find with argument;»
 «b:#buffer» «t:find» 2 string«D:;»                  «x:#no || buffer find with number and argument;»
 
-«b:#buffer» «t:info»«D:;»                           «x:#no XX bare info??;»
-«b:#buffer» «t:info» save variable«D:;»             «x:#no XX should info args be highlighted??;»
+«b:#buffer» «t:info»«D:;»                           «x:#no || bare info;»
+«b:#buffer» «D:{»«t:info»«D:};»                         «x:#no || braced info;»
+«b:#buffer» «t:info»                            «x:#no || unterminated bare info;»
+«b:#buffer» «D:{»«t:info»«D:}»                          «x:#no || unterminated braced info;»
+«b:#buffer» «t:info» «t:save» «v:variable»«D:;»             «x:#no || special double option is highlighted correctly;»
+«b:#buffer» «t:info» savevariable«D:;»              «x:#no || not highlighted without spaces;»
+«b:#buffer» «t:info» «t:save» «D:{»«v:variable»«D:};»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info» save«D:{»variable«D:};»            «x:#no || not highlighted without spaces;»
+«b:#buffer» infosave variable«D:;»              «x:#no || not highlighted without spaces;»
+«b:#buffer» «t:info» «D:{»«t:save»«D:}» «v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info» «D:{»«t:save»«D:}»«v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info» «D:{»«t:save»«D:}» «D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info» «D:{»«t:save»«D:}{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» info«D:{»save«D:}» variable«D:;»            «x:#no || not highlighted without spaces;»
+«b:#buffer» «D:{»«t:info»«D:}» «t:save» «v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» savevariable«D:;»            «x:#no || not highlighted without spaces;»
+«b:#buffer» «D:{»«t:info»«D:}» «t:save» «D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» save«D:{»variable«D:};»          «x:#no || not highlighted without spaces;»
+«b:#buffer» «D:{»«t:info»«D:}»«t:save» «v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}»savevariable«D:;»             «x:#no || not highlighted without spaces;»
+«b:#buffer» «D:{»«t:info»«D:}»«t:save» «D:{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}»save«D:{»variable«D:};»           «x:#no || not highlighted without spaces;»
+«b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}» «v:variable»«D:;»         «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}»«v:variable»«D:;»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}» «D:{»«v:variable»«D:};»       «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}{»«v:variable»«D:};»        «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}» «v:variable»«D:;»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}»«v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}» «D:{»«v:variable»«D:};»        «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
+
 
 «b:#buffer» get dest«D:;»                       «x:#no || buffer get not highlighted without bounds;»
 «b:#buffer» «t:get» «v:dest »                       «x:#no || buffer get is ok if unterminated without bounds;»

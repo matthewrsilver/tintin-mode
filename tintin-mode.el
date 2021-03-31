@@ -290,8 +290,11 @@
 (defvar buffer-command-list '("buffer" 2))
 (defvar buffer-get-option (tintin-option :vals '("get")))
 (defvar buffer-toggle-option (tintin-option :vals '("lock")))
+(defvar buffer-info-option (tintin-option :vals '("info")))
+(defvar buffer-save-option (tintin-option :vals '("save")))
+(defvar buffer-find-option (tintin-option :vals '("find")))
 (defvar buffer-standard-option
-  (tintin-option :vals '("home" "end" "find" "up" "down" "clear" "write" "info")))
+  (tintin-option :vals '("home" "end" "up" "down" "clear" "write" "info")))
 
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
@@ -440,9 +443,12 @@
   ;; Highlight #buffer command
   (let ((buffer-command (tintin-command :cmds 'buffer-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd buffer-command
+                        '(buffer-info-option buffer-save-option final-var-assignment)
                         '(buffer-standard-option)
                         '(buffer-get-option var-assignment)
-                        '(buffer-toggle-option toggle-value)))
+                        '(buffer-toggle-option toggle-value)
+                        '(buffer-find-option arg final-arg)
+                        '(buffer-find-option final-arg)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

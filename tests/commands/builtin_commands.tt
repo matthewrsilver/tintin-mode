@@ -85,12 +85,41 @@
 #buffer down;                           #no || buffer down without arguments;
 #buffer down 1;                         #no || buffer down with arguments;
 
-#buffer find;                           #no XX bare find?;
+#buffer find;                           #no || bare find not highlighted;
 #buffer find string;                    #no || buffer find with argument;
 #buffer find 2 string;                  #no || buffer find with number and argument;
 
-#buffer info;                           #no XX bare info??;
-#buffer info save variable;             #no XX should info args be highlighted??;
+#buffer info;                           #no || bare info;
+#buffer {info};                         #no || braced info;
+#buffer info                            #no || unterminated bare info;
+#buffer {info}                          #no || unterminated braced info;
+#buffer info save variable;             #no || special double option is highlighted correctly;
+#buffer info savevariable;              #no || not highlighted without spaces;
+#buffer info save {variable};           #no || info args are highlighted correctly;
+#buffer info save{variable};            #no || not highlighted without spaces;
+#buffer infosave variable;              #no || not highlighted without spaces;
+#buffer info {save} variable;           #no || info args are highlighted correctly;
+#buffer info {save}variable;            #no || info args are highlighted correctly;
+#buffer info {save} {variable};         #no || info args are highlighted correctly;
+#buffer info {save}{variable};          #no || info args are highlighted correctly;
+#buffer info{save} variable;            #no || not highlighted without spaces;
+#buffer {info} save variable;           #no || info args are highlighted correctly;
+#buffer {info} savevariable;            #no || not highlighted without spaces;
+#buffer {info} save {variable};         #no || info args are highlighted correctly;
+#buffer {info} save{variable};          #no || not highlighted without spaces;
+#buffer {info}save variable;            #no || info args are highlighted correctly;
+#buffer {info}savevariable;             #no || not highlighted without spaces;
+#buffer {info}save {variable};          #no || info args are highlighted correctly;
+#buffer {info}save{variable};           #no || not highlighted without spaces;
+#buffer {info} {save} variable;         #no || info args are highlighted correctly;
+#buffer {info} {save}variable;          #no || info args are highlighted correctly;
+#buffer {info} {save} {variable};       #no || info args are highlighted correctly;
+#buffer {info} {save}{variable};        #no || info args are highlighted correctly;
+#buffer {info}{save} variable;          #no || info args are highlighted correctly;
+#buffer {info}{save}variable;           #no || info args are highlighted correctly;
+#buffer {info}{save} {variable};        #no || info args are highlighted correctly;
+#buffer {info}{save}{variable};         #no || info args are highlighted correctly;
+
 
 #buffer get dest;                       #no || buffer get not highlighted without bounds;
 #buffer get dest                        #no || buffer get is ok if unterminated without bounds;

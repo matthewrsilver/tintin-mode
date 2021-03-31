@@ -12,7 +12,6 @@
    * #script
 
 ### Commands that need work
- * The #buffer command's info and find modes need a look
  * The #chat command has many modes
  * The #config command has many modes, particularly toggles
  * It looks like #cursor does some weird stuff

@@ -292,7 +292,7 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 
 (defvar toggle-constant-values
   (build-tintin-arg-regexp '("off" "on") (rx tintin-variable)))
-(setq toggle-value (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
-
+(defvar toggle-value
+  (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 
 (provide 'tintin-commands)

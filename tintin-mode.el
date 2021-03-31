@@ -104,6 +104,11 @@
 ;; * A number of commands have subcommands toggled by options that should be highlighted
 ;;   along with various argument roles as in commands like `#list`.
 ;;
+;; * Proper highlighting for subcommands assumes that command option arguments are fully spelled
+;;   out, but TinTin++ actually supports partial options. For example, `#list seq create` could
+;;   also be represented with `#list seq cr` but `tintin-mode` would not highlight `seq` as a
+;;   variable assignment or `cr` as a command subtype option;
+;;
 ;; * The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
 ;;   be safely incuded within braces as part of an argument to another TinTin++ command. In these
 ;;   cases, code is incorrectly highlighted as a comment.
@@ -270,7 +275,7 @@
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
   '( "all" 0        "gts" 0
-     "commands" 4   "config" 4     "cursor" 3     "daemon" 3
+     "commands" 4   "config" 3     "cursor" 3     "daemon" 3
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "help" 0       "history" 4    "run" 0
      "ignore" 3     "info" 3       "kill" 0       "log" 0

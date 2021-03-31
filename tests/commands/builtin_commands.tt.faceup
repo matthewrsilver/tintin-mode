@@ -126,6 +126,8 @@
 «b:#buffer» «t:get» «v:dest »1 1«D:;»                   «x:#no || buffer get highlighted with two bounds;»
 
 «b:#buffer» «t:lock» «c:on»«D:;»                        «x:#no || buffer lock set to "on";»
+«b:#buffer» «t:lock» «c:ON»«D:;»                        «x:#no || buffer lock set to "ON";»
+«b:#buffer» «t:lock» «D:${»«:tintin-variable-usage-face:set»«D:};»                    «x:#no || bugger lock set to the value of a variable;»
 «b:#buffer» «t:lock» «D:{»«c:on»«D:};»                      «x:#no || buffer lock set to "on";»
 «b:#buffer» lock«D:{»on«D:};»                       «x:#no || spaces are needed after args without braces;»
 «b:#buffer» lockon«D:;»                         «x:#no || spaces are needed after args without braces;»
@@ -142,6 +144,7 @@
 «b:#ch»                                     «x:#no || chat command with two characters;»
 «b:#ch»«D:;»                                    «x:#no || chat command with two characters;»
 #c                                      «x:#no || one character is not enough;»
+«b:#chat» nonsense blah«D:;»                    «x:#no || only real options are highlighted;»
 
 «b:#chat» «t:init» 1337«D:;»                        «x:#no || chat init command with arguments;»
 «b:#chat» «t:init» «D:{»1337«D:};»                      «x:#no || chat init command with arguments;»
@@ -180,9 +183,11 @@
 «b:#chat» «D:{»«t:serve»«D:}» «D:{»buddy«D:};»                  «x:#no || Forward all public chat messages;»
 «b:#chat» «D:{»«t:uninitialize»«D:};»                   «x:#no || Uninitialize the chat port;»
 «b:#chat» «D:{»«t:who»«D:};»                            «x:#no || Show all connections;»
+«b:#chat» «D:{»«t:zap»«D:}» «D:{»buddy«D:};»                    «x:#no || Close a connection to a buddy;»
 
 «b:#chat» «t:message» buddy hey«D:;»                «x:#no || Send a message to a buddy;»
 «b:#chat» «t:message» «c:all» hey«D:;»                  «x:#no || Send a message to all;»
+«b:#chat» «t:message» «c:ALL» hey«D:;»                  «x:#no || Send a message to all;»
 «b:#chat» «t:message» «D:$»«:tintin-variable-usage-face:recipient» hey«D:;»           «x:#no || Send a message to a buddy based on a variable;»
 «b:#chat» «D:{»«t:emote»«D:}» buddy «D:{»text«D:};»             «x:#no || Send an emote message;»
 «b:#chat» «D:{»«t:emote»«D:}» «D:{»«c:all»«D:}» «D:{»text«D:};»             «x:#no || Send an emote message;»

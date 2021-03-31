@@ -126,6 +126,8 @@
 #buffer get dest 1 1;                   #no || buffer get highlighted with two bounds;
 
 #buffer lock on;                        #no || buffer lock set to "on";
+#buffer lock ON;                        #no || buffer lock set to "ON";
+#buffer lock ${set};                    #no || bugger lock set to the value of a variable;
 #buffer lock {on};                      #no || buffer lock set to "on";
 #buffer lock{on};                       #no || spaces are needed after args without braces;
 #buffer lockon;                         #no || spaces are needed after args without braces;
@@ -142,6 +144,7 @@
 #ch                                     #no || chat command with two characters;
 #ch;                                    #no || chat command with two characters;
 #c                                      #no || one character is not enough;
+#chat nonsense blah;                    #no || only real options are highlighted;
 
 #chat init 1337;                        #no || chat init command with arguments;
 #chat init {1337};                      #no || chat init command with arguments;
@@ -180,9 +183,11 @@
 #chat {serve} {buddy};                  #no || Forward all public chat messages;
 #chat {uninitialize};                   #no || Uninitialize the chat port;
 #chat {who};                            #no || Show all connections;
+#chat {zap} {buddy};                    #no || Close a connection to a buddy;
 
 #chat message buddy hey;                #no || Send a message to a buddy;
 #chat message all hey;                  #no || Send a message to all;
+#chat message ALL hey;                  #no || Send a message to all;
 #chat message $recipient hey;           #no || Send a message to a buddy based on a variable;
 #chat {emote} buddy {text};             #no || Send an emote message;
 #chat {emote} {all} {text};             #no || Send an emote message;

@@ -120,7 +120,6 @@
 #buffer {info}{save} {variable};        #no || info args are highlighted correctly;
 #buffer {info}{save}{variable};         #no || info args are highlighted correctly;
 
-
 #buffer get dest;                       #no || buffer get not highlighted without bounds;
 #buffer get dest                        #no || buffer get is ok if unterminated without bounds;
 #buffer get dest 1;                     #no || buffer get highlighted with a single bound;
@@ -136,3 +135,62 @@
 #buffer {lock}on;                       #no || buffer lock set to "on";
 #buffer lock off;                       #no || buffer lock set to "off";
 #buffer lock other;                     #no || buffer lock not highlighted if wrong value;
+
+#chat;                                  #no || chat command with semicolon;
+#chat                                   #no || chat command without semicolon;
+#cha                                    #no || chat command with three characters;
+#ch                                     #no || chat command with two characters;
+#ch;                                    #no || chat command with two characters;
+#c                                      #no || one character is not enough;
+
+#chat init 1337;                        #no || chat init command with arguments;
+#chat init {1337};                      #no || chat init command with arguments;
+#chat init1337;                         #no || chat init command with arguments;
+#chat init{1337};                       #no || chat init command with arguments;
+#chat {init} 1337;                      #no || chat init command with arguments;
+#chat {init} {1337};                    #no || chat init command with arguments;
+#chat {init}1337;                       #no || chat init command with arguments;
+#chat {init}{1337};                     #no || chat init command with arguments;
+
+#chat name my_name;                     #no || Set the chat name;
+#chat name my_name                      #no || Set the chat name;
+#chat name                              #no || Set the chat name;
+#chat accept buddy 123;                 #no || Accept a file transfer from a buddy;
+#chat call some.domain.com 1337;        #no || Connect to a chat server;
+#chat call some.domain.com;             #no || Connect to a chat server;
+
+#chat {cancel} buddy;                   #no || Cancel a file transfer;
+#chat {color} red;                      #no || Set the default color;
+#chat {decline} buddy;                  #no || Decline a file transfer;
+#chat {dnd};                            #no || Decline new connections;
+#chat {download} {/Users/me/Downloads}; #no || Set your download directory;
+#chat {forward} {buddy};                #no || Forward all chat messages;
+#chat {forward} {all};                  #no || The "all" constant is not always highlighted;
+#chat {forwardall} {buddy};             #no || Forward all session output;
+#chat {filestat} {buddy};               #no || Show file transfer data;
+#chat {group} {buddy} {name};           #no || Assign a chat group;
+#chat {ignore} {buddy};                 #no || Ignores someone;
+#chat {info};                           #no || Displays your info;
+#chat {ip} {192.168.0.1};               #no || Changes your IP address;
+#chat {peek} {buddy};                   #no || Show one's public connections;
+#chat {ping} {buddy};                   #no || Display response time;
+#chat {reply} {text};                   #no || Reply to last private message;
+#chat {request} {buddy};                #no || Request one's public connections;
+#chat {sendfile} {buddy} {filename};    #no || Start a file transfer;
+#chat {serve} {buddy};                  #no || Forward all public chat messages;
+#chat {uninitialize};                   #no || Uninitialize the chat port;
+#chat {who};                            #no || Show all connections;
+
+#chat message buddy hey;                #no || Send a message to a buddy;
+#chat message all hey;                  #no || Send a message to all;
+#chat message $recipient hey;           #no || Send a message to a buddy based on a variable;
+#chat {emote} buddy {text};             #no || Send an emote message;
+#chat {emote} {all} {text};             #no || Send an emote message;
+#chat {paste} {buddy} {text};           #no || Pastes a block of text;
+#chat {paste} {all} {text};             #no || Pastes a block of text;
+#chat {private} {buddy};                #no || Make a connection private;
+#chat {private} {all};                  #no || Make a connection private;
+#chat {public} {buddy};                 #no || Make a connection public;
+#chat {public} {all};                   #no || Make a connection public;
+#chat {send} {buddy} {text};            #no || Sends a raw data string;
+#chat {send} {all} {text};              #no || Sends a raw data string;

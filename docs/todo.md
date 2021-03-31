@@ -12,7 +12,6 @@
    * #script
 
 ### Commands that need work
- * The #chat command has many modes
  * The #config command has many modes, particularly toggles
  * It looks like #cursor does some weird stuff
  * The #daemon command has modes

@@ -269,7 +269,7 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "chat" 0       "gts" 0
+  '( "all" 0        "gts" 0
      "commands" 4   "config" 4     "cursor" 3     "daemon" 3
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "help" 0       "history" 4    "run" 0
@@ -295,6 +295,18 @@
 (defvar buffer-find-option (tintin-option :vals '("find")))
 (defvar buffer-standard-option
   (tintin-option :vals '("home" "end" "up" "down" "clear" "write" "info")))
+
+;; Special handling for the #chat command and its subcommands
+(defvar chat-command-list '("chat" 2))
+(defvar chat-all-constant
+  (tintin-option :vals '("all")  :face 'font-lock-constant-face))
+(defvar chat-send-option
+  (tintin-option :vals '("message" "emote" "paste" "private" "public" "send")))
+(defvar chat-standard-option
+  (tintin-option :vals '("init" "name" "message" "accept" "call" "cancel" "color" "decline"
+                         "dnd" "download" "emote" "forward" "forwardall" "filestat" "group"
+                         "ignore" "info" "ip" "paste" "peek" "ping" "private" "public" "reply"
+                         "request" "send" "sendfile" "serve" "uninitialize" "who" "zap")))
 
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
@@ -449,6 +461,12 @@
                         '(buffer-toggle-option toggle-value)
                         '(buffer-find-option arg final-arg)
                         '(buffer-find-option final-arg)))
+
+  ;; Highlight #chat command
+  (let ((chat-command (tintin-command :cmds 'chat-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd chat-command
+                        '(chat-send-option chat-all-constant)
+                        '(chat-standard-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

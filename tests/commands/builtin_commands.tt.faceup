@@ -120,7 +120,6 @@
 «b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}» «D:{»«v:variable»«D:};»        «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
 
-
 «b:#buffer» get dest«D:;»                       «x:#no || buffer get not highlighted without bounds;»
 «b:#buffer» «t:get» «v:dest »                       «x:#no || buffer get is ok if unterminated without bounds;»
 «b:#buffer» «t:get» «v:dest »1«D:;»                     «x:#no || buffer get highlighted with a single bound;»
@@ -136,3 +135,62 @@
 «b:#buffer» «D:{»«t:lock»«D:}»«c:on»«D:;»                       «x:#no || buffer lock set to "on";»
 «b:#buffer» «t:lock» «c:off»«D:;»                       «x:#no || buffer lock set to "off";»
 «b:#buffer» lock other«D:;»                     «x:#no || buffer lock not highlighted if wrong value;»
+
+«b:#chat»«D:;»                                  «x:#no || chat command with semicolon;»
+«b:#chat»                                   «x:#no || chat command without semicolon;»
+«b:#cha»                                    «x:#no || chat command with three characters;»
+«b:#ch»                                     «x:#no || chat command with two characters;»
+«b:#ch»«D:;»                                    «x:#no || chat command with two characters;»
+#c                                      «x:#no || one character is not enough;»
+
+«b:#chat» «t:init» 1337«D:;»                        «x:#no || chat init command with arguments;»
+«b:#chat» «t:init» «D:{»1337«D:};»                      «x:#no || chat init command with arguments;»
+«b:#chat» init1337«D:;»                         «x:#no || chat init command with arguments;»
+«b:#chat» init«D:{»1337«D:};»                       «x:#no || chat init command with arguments;»
+«b:#chat» «D:{»«t:init»«D:}» 1337«D:;»                      «x:#no || chat init command with arguments;»
+«b:#chat» «D:{»«t:init»«D:}» «D:{»1337«D:};»                    «x:#no || chat init command with arguments;»
+«b:#chat» «D:{»«t:init»«D:}»1337«D:;»                       «x:#no || chat init command with arguments;»
+«b:#chat» «D:{»«t:init»«D:}{»1337«D:};»                     «x:#no || chat init command with arguments;»
+
+«b:#chat» «t:name» my_name«D:;»                     «x:#no || Set the chat name;»
+«b:#chat» «t:name» my_name                      «x:#no || Set the chat name;»
+«b:#chat» «t:name»                              «x:#no || Set the chat name;»
+«b:#chat» «t:accept» buddy 123«D:;»                 «x:#no || Accept a file transfer from a buddy;»
+«b:#chat» «t:call» some.domain.com 1337«D:;»        «x:#no || Connect to a chat server;»
+«b:#chat» «t:call» some.domain.com«D:;»             «x:#no || Connect to a chat server;»
+
+«b:#chat» «D:{»«t:cancel»«D:}» buddy«D:;»                   «x:#no || Cancel a file transfer;»
+«b:#chat» «D:{»«t:color»«D:}» red«D:;»                      «x:#no || Set the default color;»
+«b:#chat» «D:{»«t:decline»«D:}» buddy«D:;»                  «x:#no || Decline a file transfer;»
+«b:#chat» «D:{»«t:dnd»«D:};»                            «x:#no || Decline new connections;»
+«b:#chat» «D:{»«t:download»«D:}» «D:{»/Users/me/Downloads«D:};» «x:#no || Set your download directory;»
+«b:#chat» «D:{»«t:forward»«D:}» «D:{»buddy«D:};»                «x:#no || Forward all chat messages;»
+«b:#chat» «D:{»«t:forward»«D:}» «D:{»all«D:};»                  «x:#no || The "all" constant is not always highlighted;»
+«b:#chat» «D:{»«t:forwardall»«D:}» «D:{»buddy«D:};»             «x:#no || Forward all session output;»
+«b:#chat» «D:{»«t:filestat»«D:}» «D:{»buddy«D:};»               «x:#no || Show file transfer data;»
+«b:#chat» «D:{»«t:group»«D:}» «D:{»buddy«D:}» «D:{»name«D:};»           «x:#no || Assign a chat group;»
+«b:#chat» «D:{»«t:ignore»«D:}» «D:{»buddy«D:};»                 «x:#no || Ignores someone;»
+«b:#chat» «D:{»«t:info»«D:};»                           «x:#no || Displays your info;»
+«b:#chat» «D:{»«t:ip»«D:}» «D:{»192.168.0.1«D:};»               «x:#no || Changes your IP address;»
+«b:#chat» «D:{»«t:peek»«D:}» «D:{»buddy«D:};»                   «x:#no || Show one's public connections;»
+«b:#chat» «D:{»«t:ping»«D:}» «D:{»buddy«D:};»                   «x:#no || Display response time;»
+«b:#chat» «D:{»«t:reply»«D:}» «D:{»text«D:};»                   «x:#no || Reply to last private message;»
+«b:#chat» «D:{»«t:request»«D:}» «D:{»buddy«D:};»                «x:#no || Request one's public connections;»
+«b:#chat» «D:{»«t:sendfile»«D:}» «D:{»buddy«D:}» «D:{»filename«D:};»    «x:#no || Start a file transfer;»
+«b:#chat» «D:{»«t:serve»«D:}» «D:{»buddy«D:};»                  «x:#no || Forward all public chat messages;»
+«b:#chat» «D:{»«t:uninitialize»«D:};»                   «x:#no || Uninitialize the chat port;»
+«b:#chat» «D:{»«t:who»«D:};»                            «x:#no || Show all connections;»
+
+«b:#chat» «t:message» buddy hey«D:;»                «x:#no || Send a message to a buddy;»
+«b:#chat» «t:message» «c:all» hey«D:;»                  «x:#no || Send a message to all;»
+«b:#chat» «t:message» «D:$»«:tintin-variable-usage-face:recipient» hey«D:;»           «x:#no || Send a message to a buddy based on a variable;»
+«b:#chat» «D:{»«t:emote»«D:}» buddy «D:{»text«D:};»             «x:#no || Send an emote message;»
+«b:#chat» «D:{»«t:emote»«D:}» «D:{»«c:all»«D:}» «D:{»text«D:};»             «x:#no || Send an emote message;»
+«b:#chat» «D:{»«t:paste»«D:}» «D:{»buddy«D:}» «D:{»text«D:};»           «x:#no || Pastes a block of text;»
+«b:#chat» «D:{»«t:paste»«D:}» «D:{»«c:all»«D:}» «D:{»text«D:};»             «x:#no || Pastes a block of text;»
+«b:#chat» «D:{»«t:private»«D:}» «D:{»buddy«D:};»                «x:#no || Make a connection private;»
+«b:#chat» «D:{»«t:private»«D:}» «D:{»«c:all»«D:};»                  «x:#no || Make a connection private;»
+«b:#chat» «D:{»«t:public»«D:}» «D:{»buddy«D:};»                 «x:#no || Make a connection public;»
+«b:#chat» «D:{»«t:public»«D:}» «D:{»«c:all»«D:};»                   «x:#no || Make a connection public;»
+«b:#chat» «D:{»«t:send»«D:}» «D:{»buddy«D:}» «D:{»text«D:};»            «x:#no || Sends a raw data string;»
+«b:#chat» «D:{»«t:send»«D:}» «D:{»«c:all»«D:}» «D:{»text«D:};»              «x:#no || Sends a raw data string;»

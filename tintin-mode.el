@@ -10,8 +10,8 @@
 ;; An emacs major mode for editing [TinTin++][1] scripts.
 
 ;; This major mode focuses on highlighting as many aspects of the TinTin++ scripting language as
-;; possible, grouping commands into functional groups and highlighting specific modes that many
-;; commands use to accomplish different tasks. An example highlighted tintin script:
+;; possible, organizing commands into functional categoriess and highlighting specific modes that
+;; many commands use to accomplish different tasks. An example highlighted tintin script:
 ;;
 ;; ![Example TinTin++ script](docs/sample_tintin_script.png)
 
@@ -94,7 +94,7 @@
 ;; ```
 ;;
 ;; Tintin++ allows other characters to be configured, and `tintin-mode` supports customization of
-;; these chatacters as well. The full set of configurable characters is
+;; these characters as well. The full set of configurable characters is
 ;;
 ;; | Character Role     | `#config` Option  | `tintin-mode` Variable      | Default |
 ;; | :----------------- | :---------------- | :-------------------------- | :-----: |

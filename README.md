@@ -7,8 +7,8 @@
 An emacs major mode for editing [TinTin++][1] scripts.
 
 This major mode focuses on highlighting as many aspects of the TinTin++ scripting language as
-possible, organizing commands into functional categoriess and highlighting specific modes that
-many commands use to accomplish different tasks. An example highlighted tintin script:
+possible, organizing commands into functional categories and highlighting specific modes that
+many commands use to accomplish different tasks. An example highlighted TinTin++ script:
 
 ![Example TinTin++ script](docs/sample_tintin_script.png)
 

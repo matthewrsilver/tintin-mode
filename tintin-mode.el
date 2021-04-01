@@ -48,6 +48,9 @@
 ;;
 ;; ![Highlighting of the #list command based on options.](docs/list_options_highlighting.png)
 ;;
+;; Like commands, these options may also be abbreviated. So `#list animals create` above could
+;; be shortened to `#lis animals cr` as well.
+;;
 ;; Variables and Functions:
 ;;
 ;; Variables and function definitions and usages are highlighted under most circumstances. When
@@ -103,11 +106,6 @@
 ;;
 ;; * A number of commands have subcommands toggled by options that should be highlighted
 ;;   along with various argument roles as in commands like `#list`.
-;;
-;; * Proper highlighting for subcommands assumes that command option arguments are fully spelled
-;;   out, but TinTin++ actually supports partial options. For example, `#list seq create` could
-;;   also be represented with `#list seq cr` but `tintin-mode` would not highlight `seq` as a
-;;   variable assignment or `cr` as a command subtype option;
 ;;
 ;; * The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
 ;;   be safely incuded within braces as part of an argument to another TinTin++ command. In these
@@ -287,56 +285,58 @@
 
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
-(defvar bell-ring-option (tintin-option :vals '("ring")))
-(defvar bell-volume-option (tintin-option :vals '("volume")))
-(defvar bell-toggle-option (tintin-option :vals '("flash" "focus" "margin")))
+(defvar bell-ring-option (tintin-option :vals '("ring" 1)))
+(defvar bell-volume-option (tintin-option :vals '("volume" 1)))
+(defvar bell-toggle-option (tintin-option :vals '("flash" 2 "focus" 2 "margin" 1)))
 
 ;; Special handling for the #buffer command and its subcommands
 (defvar buffer-command-list '("buffer" 2))
-(defvar buffer-get-option (tintin-option :vals '("get")))
-(defvar buffer-toggle-option (tintin-option :vals '("lock")))
-(defvar buffer-info-option (tintin-option :vals '("info")))
-(defvar buffer-save-option (tintin-option :vals '("save")))
-(defvar buffer-find-option (tintin-option :vals '("find")))
+(defvar buffer-get-option (tintin-option :vals '("get" 1)))
+(defvar buffer-toggle-option (tintin-option :vals '("lock" 1)))
+(defvar buffer-info-option (tintin-option :vals '("info" 1)))
+(defvar buffer-save-option (tintin-option :vals '("save" 1)))
+(defvar buffer-find-option (tintin-option :vals '("find" 1)))
 (defvar buffer-standard-option
-  (tintin-option :vals '("home" "end" "up" "down" "clear" "write" "info")))
+  (tintin-option :vals '("home" 1 "end" 1 "up" 1 "down" 1 "clear" 1 "write" 1 "info" 1)))
 
 ;; Special handling for the #chat command and its subcommands
 (defvar chat-command-list '("chat" 2))
 (defvar chat-all-constant
-  (tintin-option :vals '("all")  :face 'font-lock-constant-face))
+  (tintin-option :vals '("all" 0)  :face 'font-lock-constant-face))
 (defvar chat-send-option
-  (tintin-option :vals '("message" "emote" "paste" "private" "public" "send")))
+  (tintin-option :vals '("message" 1 "emote" 1 "paste" 2 "private" 2 "public" 2 "send" 3)))
 (defvar chat-standard-option
-  (tintin-option :vals '("init" "name" "message" "accept" "call" "cancel" "color" "decline"
-                         "dnd" "download" "emote" "forward" "forwardall" "filestat" "group"
-                         "ignore" "info" "ip" "paste" "peek" "ping" "private" "public" "reply"
-                         "request" "send" "sendfile" "serve" "uninitialize" "who" "zap")))
+  (tintin-option :vals '("init" 2 "name" 1 "message" 1 "accept" 1 "call" 1 "cancel" 3
+                         "color" 2 "decline" 1 "dnd" 2 "download" 2 "emote" 1 "forward" 1
+                         "forwardall" 8 "filestat" 2 "group" 1 "ignore" 2 "info" 3 "ip" 2
+                         "paste" 2 "peek" 2 "ping" 2 "private" 2 "public" 2 "reply" 3
+                         "request" 3 "send" 3 "sendfile" 5 "serve" 3 "uninitialize" 1
+                         "who" 1 "zap" 1)))
 
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
-(defvar line-gag-option (tintin-option :vals '("gag")))
-(defvar line-capture-option (tintin-option :vals '("capture")))
+(defvar line-gag-option (tintin-option :vals '("gag" 1)))
+(defvar line-capture-option (tintin-option :vals '("capture" 2)))
 (defvar line-standard-option
-  (tintin-option :vals '("strip" "substitute" "background" "convert" "debug" "ignore"
-                         "local" "log" "logmode" "msdp" "multishot" "oneshot" "quiet"
-                         "verbatim" "verbose" "logverbatim")))
+  (tintin-option :vals '("strip" 2 "substitute" 2 "background" 1 "convert" 2 "debug" 1
+                         "ignore" 1 "local" 3 "log" 3 "logmode" 4 "msdp" 2 "multishot" 2
+                         "oneshot" 1 "quiet" 1 "verbatim" 5 "verbose" 5 "logverbatim" 4)))
 
 ;; Special handling for the #list command and its subcommands
 (defvar list-command-list '("list" 3))
-(defvar list-create-option (tintin-option :vals '("create" "tokenize")))
-(defvar list-size-option (tintin-option :vals '("size")))
-(defvar list-retrieval-option (tintin-option :vals '("find" "get")))
+(defvar list-create-option (tintin-option :vals '("create" 2 "tokenize" 1)))
+(defvar list-size-option (tintin-option :vals '("size" 2)))
+(defvar list-retrieval-option (tintin-option :vals '("find" 1 "get" 1)))
 (defvar list-standard-option
-  (tintin-option :vals '("add" "clear" "collapse" "delete" "explode" "index" "insert"
-                         "order" "shuffle" "set" "simplify" "sort")))
+  (tintin-option :vals '("add" 1 "clear" 2 "collapse" 2 "delete" 1 "explode" 1 "index" 2
+                         "insert" 2 "order" 1 "shuffle" 2 "set" 2 "simplify" 2 "sort" 2)))
 
 ;; Special handling for the #class command and its subcommands
 (defvar class-command-list '("class" 2))
-(defvar class-create-option (tintin-option :vals '("load" "open" "read")))
-(defvar class-size-option (tintin-option :vals '("size")))
+(defvar class-create-option (tintin-option :vals '("load" 2 "open" 1 "read" 1)))
+(defvar class-size-option (tintin-option :vals '("size" 2)))
 (defvar class-use-option
-  (tintin-option :vals '("assign" "list" "save" "write" "clear" "close" "kill")))
+  (tintin-option :vals '("assign" 1 "list" 2 "save" 2 "write" 1 "clear" 3 "close" 3 "kill" 1)))
 
 
 (setq tintin-font-lock-keywords (append

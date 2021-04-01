@@ -184,7 +184,7 @@ Elements of VALUE-LIST are strings with possible values that should be matched
 in completion. Optionally, additional arguments can be provided in OTHERS that
 may be matches as well, though these are complete regular expressions."
   (let* ((brace-or-space "\\(?:[}\s\t;]\\|$\\)")
-         (arg-regexp (regexp-opt value-list nil))
+         (arg-regexp (regexp-opt (initial-substrings-list value-list)))
          (regexps (cons arg-regexp others)))
     (concat "{?\\(" (string-join regexps "\\|") "\\)" brace-or-space)))
 
@@ -291,7 +291,7 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 (setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
 
 (defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" "on") (rx tintin-variable)))
+  (build-tintin-arg-regexp '("off" 2 "on" 1) (rx tintin-variable)))
 (defvar toggle-value
   (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 

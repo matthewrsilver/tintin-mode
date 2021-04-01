@@ -13,6 +13,10 @@
 #bellz                                  «x:#no || command is too long;»
 
 «b:#bell» «t:flash» «c:on»«D:;»                         «x:#no || bell flash set to "on";»
+«b:#bell» «t:flas» «c:on»«D:;»                          «x:#no || bell flash works with shortened option;»
+«b:#bell» «t:fla» «c:on»«D:;»                           «x:#no || bell flash works with shortened option;»
+«b:#bell» «t:fl» «c:on»«D:;»                            «x:#no || bell flash works with shortened option;»
+«b:#bell» f on«D:;»                             «x:#no || bell flash needs at least two characters;»
 «b:#bell» «t:flash» «D:{»«c:on»«D:};»                       «x:#no || bell flash set to "on";»
 «b:#bell» flash«D:{»on«D:};»                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» flashon«D:;»                          «x:#no || spaces are needed after args without braces;»
@@ -26,6 +30,11 @@
 «b:#bell» «t:flash» «D:${»«:tintin-variable-usage-face:on_or_off»«D:};»               «x:#no || braced variables are acceptable for the toggle;»
 
 «b:#bell» «t:focus» «c:on»«D:;»                         «x:#no || bell focus set to "on";»
+«b:#bell» «t:focu» «c:on»«D:;»                          «x:#no || bell focus works with shortened option;»
+«b:#bell» «t:foc» «c:on»«D:;»                           «x:#no || bell focus works with shortened option;»
+«b:#bell» «t:fo» «c:on»«D:;»                            «x:#no || bell focus works with shortened option;»
+«b:#bell» «D:{»«t:fo»«D:}» «c:on»«D:;»                          «x:#no || bell focus works with shortened braced option;»
+«b:#bell» f on«D:;»                             «x:#no || bell focus needs at laest two characters;»
 «b:#bell» «t:focus» «D:{»«c:on»«D:};»                       «x:#no || bell focus set to "on";»
 «b:#bell» focus«D:{»on«D:};»                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» focuson«D:;»                          «x:#no || spaces are needed after args without braces;»
@@ -37,6 +46,7 @@
 «b:#bell» focus other«D:;»                      «x:#no || bell focus not highlighted if wrong value;»
 
 «b:#bell» «t:margin» «c:on»«D:;»                        «x:#no || bell margin set to "on";»
+«b:#bell» «t:marg» «c:on»«D:;»                          «x:#no || bell margin works with shortened option;»
 «b:#bell» «t:margin» «D:{»«c:on»«D:};»                      «x:#no || bell margin set to "on";»
 «b:#bell» margin«D:{»on«D:};»                       «x:#no || spaces are needed after args without braces;»
 «b:#bell» marginon«D:;»                         «x:#no || spaces are needed after args without braces;»
@@ -94,6 +104,8 @@
 «b:#buffer» «t:info»                            «x:#no || unterminated bare info;»
 «b:#buffer» «D:{»«t:info»«D:}»                          «x:#no || unterminated braced info;»
 «b:#buffer» «t:info» «t:save» «v:variable»«D:;»             «x:#no || special double option is highlighted correctly;»
+«b:#buffer» «t:i» «t:s» «v:variable»«D:;»                   «x:#no || works with shortened options;»
+«b:#buffer» «D:{»«t:i»«D:}» «D:{»«t:s»«D:}» «v:variable»«D:;»               «x:#no || works with shortened options;»
 «b:#buffer» «t:info» savevariable«D:;»              «x:#no || not highlighted without spaces;»
 «b:#buffer» «t:info» «t:save» «D:{»«v:variable»«D:};»           «x:#no || info args are highlighted correctly;»
 «b:#buffer» «t:info» save«D:{»variable«D:};»            «x:#no || not highlighted without spaces;»
@@ -127,6 +139,9 @@
 
 «b:#buffer» «t:lock» «c:on»«D:;»                        «x:#no || buffer lock set to "on";»
 «b:#buffer» «t:lock» «c:ON»«D:;»                        «x:#no || buffer lock set to "ON";»
+«b:#buffer» «t:lock» «c:o»«D:;»
+«b:#buffer» «t:lock» «c:of»«D:;»
+«b:#buffer» «t:l» «c:o»«D:;»
 «b:#buffer» «t:lock» «D:${»«:tintin-variable-usage-face:set»«D:};»                    «x:#no || bugger lock set to the value of a variable;»
 «b:#buffer» «t:lock» «D:{»«c:on»«D:};»                      «x:#no || buffer lock set to "on";»
 «b:#buffer» lock«D:{»on«D:};»                       «x:#no || spaces are needed after args without braces;»

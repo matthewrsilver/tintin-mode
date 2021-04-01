@@ -13,6 +13,10 @@
 #bellz                                  #no || command is too long;
 
 #bell flash on;                         #no || bell flash set to "on";
+#bell flas on;                          #no || bell flash works with shortened option;
+#bell fla on;                           #no || bell flash works with shortened option;
+#bell fl on;                            #no || bell flash works with shortened option;
+#bell f on;                             #no || bell flash needs at least two characters;
 #bell flash {on};                       #no || bell flash set to "on";
 #bell flash{on};                        #no || spaces are needed after args without braces;
 #bell flashon;                          #no || spaces are needed after args without braces;
@@ -26,6 +30,11 @@
 #bell flash ${on_or_off};               #no || braced variables are acceptable for the toggle;
 
 #bell focus on;                         #no || bell focus set to "on";
+#bell focu on;                          #no || bell focus works with shortened option;
+#bell foc on;                           #no || bell focus works with shortened option;
+#bell fo on;                            #no || bell focus works with shortened option;
+#bell {fo} on;                          #no || bell focus works with shortened braced option;
+#bell f on;                             #no || bell focus needs at laest two characters;
 #bell focus {on};                       #no || bell focus set to "on";
 #bell focus{on};                        #no || spaces are needed after args without braces;
 #bell focuson;                          #no || spaces are needed after args without braces;
@@ -37,6 +46,7 @@
 #bell focus other;                      #no || bell focus not highlighted if wrong value;
 
 #bell margin on;                        #no || bell margin set to "on";
+#bell marg on;                          #no || bell margin works with shortened option;
 #bell margin {on};                      #no || bell margin set to "on";
 #bell margin{on};                       #no || spaces are needed after args without braces;
 #bell marginon;                         #no || spaces are needed after args without braces;
@@ -94,6 +104,8 @@
 #buffer info                            #no || unterminated bare info;
 #buffer {info}                          #no || unterminated braced info;
 #buffer info save variable;             #no || special double option is highlighted correctly;
+#buffer i s variable;                   #no || works with shortened options;
+#buffer {i} {s} variable;               #no || works with shortened options;
 #buffer info savevariable;              #no || not highlighted without spaces;
 #buffer info save {variable};           #no || info args are highlighted correctly;
 #buffer info save{variable};            #no || not highlighted without spaces;
@@ -127,6 +139,9 @@
 
 #buffer lock on;                        #no || buffer lock set to "on";
 #buffer lock ON;                        #no || buffer lock set to "ON";
+#buffer lock o;
+#buffer lock of;
+#buffer l o;
 #buffer lock ${set};                    #no || bugger lock set to the value of a variable;
 #buffer lock {on};                      #no || buffer lock set to "on";
 #buffer lock{on};                       #no || spaces are needed after args without braces;

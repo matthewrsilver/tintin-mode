@@ -45,6 +45,9 @@ different highlighting behaviors:
 
 ![Highlighting of the #list command based on options.](docs/list_options_highlighting.png)
 
+Like commands, these options may also be abbreviated. So `#list animals create` above could
+be shortened to `#lis animals cr` as well.
+
 ### Variables and Functions
 
 Variables and function definitions and usages are highlighted under most circumstances. When
@@ -100,10 +103,6 @@ these chatacters as well. The full set of configurable characters is
 
 * A number of commands have subcommands toggled by options that should be highlighted
   along with various argument roles as in commands like `#list`.
-* Proper highlighting for subcommands assumes that command option arguments are fully spelled
-  out, but TinTin++ actually supports partial options. For example, `#list seq create` could
-  also be represented with `#list seq cr` but `tintin-mode` would not highlight `seq` as a
-  variable assignment or `cr` as a command subtype option;
 * The string `"#nop"` is _always_ highlighted as a comment, but in some cases this string may
   be safely incuded within braces as part of an argument to another TinTin++ command. In these
   cases, code is incorrectly highlighted as a comment.

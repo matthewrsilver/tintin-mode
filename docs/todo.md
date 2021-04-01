@@ -4,11 +4,12 @@
    * consider a :final slot
  * variables may start with a 0, but allowing this conflicts with pattern matchers...
    * maybe a way out: variables can't be _only_ numbers!
- * Options may actually be abbreviated, but this is not supported
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
+ * Tests for shortened options should be more pervasive
  * Test for tintin-command-character and other configurable characters
+ * Tests for individual functions in tintin-commands.el
  * Particular commands requiring expanded testing:
    * #script
 

@@ -1,6 +1,24 @@
 #no Tests for the #script command;
 
-#script {ruby -e 'print "#show hello world"'};
-#script {python -c 'print "#show hello world"'};
-#script {php -r 'echo "#show hello world"'};
-#script {path} {pwd};
+#script {ruby -e 'print "#show hello world"'};             #no || Execute ruby command;
+#script result {ruby -e 'print "#show hello world"'};      #no || Store result of ruby command;
+#script {result} {ruby -e 'print "#show hello world"'};    #no || Store braced result;
+#script {result}{ruby -e 'print "#show hello world"'};     #no || Store braced result no spaces;
+
+#script {python -c 'print "#show hello world"'};           #no || Execute python command;
+#script result {python -c 'print "#show hello world"'};    #no || Store result of python command;
+#script {result} {python -c 'print "#show hello world"'};  #no || Store braced result;
+#script {result}{python -c 'print "#show hello world"'};   #no || Store braced result no spaces;
+
+#script {php -r 'echo "#show hello world"'};               #no || Execute php command;
+#script result {php -r 'echo "#show hello world"'};        #no || Store result of php command;
+#script {result} {php -r 'echo "#show hello world"'};      #no || Store braced result;
+#script {result}{php -r 'echo "#show hello world"'};       #no || Store braced result no spaces;
+
+#script path pwd;                                          #no || variable not highlighted;
+#script path {pwd};                                        #no || variable highlighted;
+#script path{pwd};                                         #no || no highlighting without spaces;
+#script {path} pwd;                                        #no || variable not highlighted;
+#script {path}pwd;                                         #no || variable not highlighted;
+#script {path} {pwd};                                      #no || variable highlighted;
+#script {path}{pwd};                                       #no || variable highlighted;

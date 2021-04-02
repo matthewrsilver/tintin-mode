@@ -1,6 +1,24 @@
 «x:#no Tests for the #script command;»
 
-«b:#script» «D:{»ruby -e 'print "«:tintin-command-face:#show» hello world"'«D:};»
-«b:#script» «D:{»python -c 'print "«:tintin-command-face:#show» hello world"'«D:};»
-«b:#script» «D:{»php -r 'echo "«:tintin-command-face:#show» hello world"'«D:};»
-«b:#script» «D:{»«v:path»«D:}» «D:{»pwd«D:};»
+«b:#script» «D:{»ruby -e 'print "«:tintin-command-face:#show» hello world"'«D:};»             «x:#no || Execute ruby command;»
+«b:#script» «v:result »«D:{»ruby -e 'print "«:tintin-command-face:#show» hello world"'«D:};»      «x:#no || Store result of ruby command;»
+«b:#script» «D:{»«v:result»«D:}» «D:{»ruby -e 'print "«:tintin-command-face:#show» hello world"'«D:};»    «x:#no || Store braced result;»
+«b:#script» «D:{»«v:result»«D:}{»ruby -e 'print "«:tintin-command-face:#show» hello world"'«D:};»     «x:#no || Store braced result no spaces;»
+
+«b:#script» «D:{»python -c 'print "«:tintin-command-face:#show» hello world"'«D:};»           «x:#no || Execute python command;»
+«b:#script» «v:result »«D:{»python -c 'print "«:tintin-command-face:#show» hello world"'«D:};»    «x:#no || Store result of python command;»
+«b:#script» «D:{»«v:result»«D:}» «D:{»python -c 'print "«:tintin-command-face:#show» hello world"'«D:};»  «x:#no || Store braced result;»
+«b:#script» «D:{»«v:result»«D:}{»python -c 'print "«:tintin-command-face:#show» hello world"'«D:};»   «x:#no || Store braced result no spaces;»
+
+«b:#script» «D:{»php -r 'echo "«:tintin-command-face:#show» hello world"'«D:};»               «x:#no || Execute php command;»
+«b:#script» «v:result »«D:{»php -r 'echo "«:tintin-command-face:#show» hello world"'«D:};»        «x:#no || Store result of php command;»
+«b:#script» «D:{»«v:result»«D:}» «D:{»php -r 'echo "«:tintin-command-face:#show» hello world"'«D:};»      «x:#no || Store braced result;»
+«b:#script» «D:{»«v:result»«D:}{»php -r 'echo "«:tintin-command-face:#show» hello world"'«D:};»       «x:#no || Store braced result no spaces;»
+
+«b:#script» «v:path »pwd«D:;»                                          «x:#no || variable not highlighted;»
+«b:#script» «v:path »«D:{»pwd«D:};»                                        «x:#no || variable highlighted;»
+«b:#script» path«D:{»pwd«D:};»                                         «x:#no || no highlighting without spaces;»
+«b:#script» «D:{»«v:path»«D:}» pwd«D:;»                                        «x:#no || variable not highlighted;»
+«b:#script» «D:{»«v:path»«D:}»pwd«D:;»                                         «x:#no || variable not highlighted;»
+«b:#script» «D:{»«v:path»«D:}» «D:{»pwd«D:};»                                      «x:#no || variable highlighted;»
+«b:#script» «D:{»«v:path»«D:}{»pwd«D:};»                                       «x:#no || variable highlighted;»

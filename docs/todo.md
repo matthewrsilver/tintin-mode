@@ -10,8 +10,6 @@
  * Tests for shortened options should be more pervasive
  * Test for tintin-command-character and other configurable characters
  * Tests for individual functions in tintin-commands.el
- * Particular commands requiring expanded testing:
-   * #script
 
 ### Commands that need work
  * The #config command has many modes, particularly toggles

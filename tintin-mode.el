@@ -448,7 +448,7 @@
     (fontify-tintin-cmd built-command))
   (let ((script-command (tintin-command :cmds 'script-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd script-command
-                        '(var-assignment arg)))
+                        '(var-assignment final-arg)))
 
   ;; Highlight #bell command
   (let ((bell-command (tintin-command :cmds 'bell-command-list :face 'font-lock-builtin-face)))

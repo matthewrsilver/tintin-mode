@@ -272,15 +272,14 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "gts" 0
-     "commands" 4   "cursor" 3     "daemon" 3
+  '( "all" 0        "commands" 2   "cursor" 3     "daemon" 3     "detatch" 0
      "debug" 0      "draw" 0       "edit" 0       "end" 0
-     "grep" 0       "help" 0       "history" 4    "run" 0
+     "grep" 0       "gts" 0        "help" 0       "history" 4
      "ignore" 3     "info" 3       "kill" 0       "log" 0
      "macro" 3      "map" 0        "mesage" 4     "port" 0
      "path" 0       "pathdir" 5    "prompt" 4     "regexp" 3
-     "read" 0       "scan" 1       "screen" 3     "session" 3
-     "snoop" 0      "split" 3      "ssl" 0        "detatch" 0
+     "read" 0       "run" 0        "scan" 1       "screen" 3
+     "session" 3    "snoop" 0      "split" 3      "ssl" 0
      "textin" 4     "write" 0      "zap" 0        "ats" 0))
 
 ;; Special handling for the #bell command and its subcommands
@@ -360,10 +359,23 @@
 (defvar config-toggle-first-words-option
   (tintin-option :regexp config-toggle-option-first-words-keywords-regexp))
 
-;; auto tab, buffer size, charset, color mode, command color, connect retry, history size,
-;; log mode, packet patch, random seed, repeat char, tab width, tintin char, verbatim char
-;;(defvar config-standard-option-regexp "")
-;;(defvar config-standard-option (tintin-option :regexp config-quantity-option-regexp))
+;; TODO {color mode} is true and false?
+(defvar config-standard-option-keywords
+  '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
+    "connect retry" 3 "history size" 1 "log mode" 1 "packet patch" 1 "random seed" 2
+    "repeat char" 2 "tab width" 1 "tintin char" 2 "verbatim char" 10))
+(defvar config-standard-option-keywords-regexp
+  (rx "{" (config-option-group config-standard-option-keywords) (or "}" eol)))
+(defvar config-standard-option
+  (tintin-option :regexp config-standard-option-keywords-regexp))
+
+(defvar config-standard-option-first-word-keywords
+  '("auto" 1 "buffer" 1 "charset" 1 "color" 2 "command" 3 "connect" 3 "history" 1
+    "log" 1 "packet" 1 "random" 2 "repeat" 2 "tab" 1 "tintin" 2))
+(defvar config-standard-option-first-words-keywords-regexp
+  (rx (config-option-group config-standard-option-first-word-keywords)))
+(defvar config-standard-first-words-option
+  (tintin-option :regexp config-standard-option-first-words-keywords-regexp))
 
 (setq tintin-font-lock-keywords (append
 
@@ -503,7 +515,9 @@
   (let ((config-command (tintin-command :cmds 'config-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd config-command
                         '(config-toggle-option toggle-value)
-                        '(config-toggle-first-words-option toggle-value)))
+                        '(config-toggle-first-words-option toggle-value)
+                        '(config-standard-option final-arg)
+                        '(config-standard-first-words-option final-arg)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

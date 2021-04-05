@@ -273,7 +273,7 @@
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
   '( "all" 0        "gts" 0
-     "commands" 4   "config" 3     "cursor" 3     "daemon" 3
+     "commands" 4   "cursor" 3     "daemon" 3
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "help" 0       "history" 4    "run" 0
      "ignore" 3     "info" 3       "kill" 0       "log" 0
@@ -338,6 +338,32 @@
 (defvar class-use-option
   (tintin-option :vals '("assign" 1 "list" 2 "save" 2 "write" 1 "clear" 3 "close" 3 "kill" 1)))
 
+;; Special handling for the #config command and its subcommands
+(defvar config-command-list '("config" 3))
+(rx-define config-option-group (keyword-list)
+           (group-n 2 (regexp (eval
+                               (regexp-opt (initial-substrings-list keyword-list))))))
+
+(defvar config-toggle-option-keywords
+  '("color patch" 7 "command echo" 9 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
+    "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
+(defvar config-toggle-option-keywords-regexp
+  (rx "{" (config-option-group config-toggle-option-keywords) (or "}" eol)))
+(defvar config-toggle-option
+  (tintin-option :regexp config-toggle-option-keywords-regexp))
+
+(defvar config-toggle-option-first-word-keywords
+  '("mouse" 2 "screen" 1 "scroll" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1
+    "verbose" 5 "wordwrap" 1))
+(defvar config-toggle-option-first-words-keywords-regexp
+  (rx (config-option-group config-toggle-option-first-word-keywords)))
+(defvar config-toggle-first-words-option
+  (tintin-option :regexp config-toggle-option-first-words-keywords-regexp))
+
+;; auto tab, buffer size, charset, color mode, command color, connect retry, history size,
+;; log mode, packet patch, random seed, repeat char, tab width, tintin char, verbatim char
+;;(defvar config-standard-option-regexp "")
+;;(defvar config-standard-option (tintin-option :regexp config-quantity-option-regexp))
 
 (setq tintin-font-lock-keywords (append
 
@@ -472,6 +498,12 @@
     (fontify-tintin-cmd chat-command
                         '(chat-send-option chat-all-constant)
                         '(chat-standard-option)))
+
+  ;; Highlight #config command
+  (let ((config-command (tintin-command :cmds 'config-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd config-command
+                        '(config-toggle-option toggle-value)
+                        '(config-toggle-first-words-option toggle-value)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

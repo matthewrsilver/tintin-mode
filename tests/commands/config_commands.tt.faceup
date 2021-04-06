@@ -15,9 +15,9 @@
 «b:#config» «D:{»«t:color patch»«D:}» «c:on»«D:;»               «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:color patch»«D:}» «D:$»«:tintin-variable-usage-face:value»«D:;»           «x:#no || toggle subcommands highlighted with variable;»
 «b:#config» «D:{»«t:color p»«D:}» «c:on»«D:;»                   «x:#no || shortened toggle subcommands highlighted;»
-«b:#config» «t:color» p on«D:;»                     «x:#no || braces needed for options with spaces;»
+«b:#config» «t:color »p on«D:;»                     «x:#no || braces needed for options with spaces;»
 «b:#config» «D:{»«t:color»«D:}» on«D:;»                     «x:#no || color is "color mode" option, so toggle not present;»
-«b:#config» «t:color» on«D:;»                       «x:#no || no braces needed for options without spaces;»
+«b:#config» «t:color »on«D:;»                       «x:#no || no braces needed for options without spaces;»
 
 «b:#config» «D:{»command echo«D:};»                 «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:command echo»«D:}» «c:OFF»«D:;»             «x:#no || toggle subcommands highlighted;»
@@ -28,8 +28,8 @@
 «b:#config» «D:{»«t:mouse tracking»«D:}» «c:OFF»«D:;»           «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:mouse»«D:}» «c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:mo»«D:}» «c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:mouse» «c:OFF»«D:;»                      «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:mo» «c:OFF»«D:;»                         «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:mouse »«c:OFF»«D:;»                      «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:mo »«c:OFF»«D:;»                         «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»repeat enter«D:};»                 «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:repeat enter»«D:}» «c:O»«D:;»               «x:#no || toggle subcommands highlighted;»
@@ -41,47 +41,47 @@
 «b:#config» «D:{»«t:screen r»«D:}» «c:OFF»«D:;»                 «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:screen»«D:}» «c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:s»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:screen» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:s» «c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:screen »«c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:s »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»scroll lock«D:};»                  «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:scroll lock»«D:}» «c:OFF»«D:;»              «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:scroll l»«D:}» «c:OFF»«D:;»                 «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:scroll»«D:}» «c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:scro»«D:}» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:scroll» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:scro» «c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:scroll »«c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:scro »«c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»speedwalk«D:};»                    «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:speedwalk»«D:}» «c:OFF»«D:;»                «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:sp»«D:}» «c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:speedwalk» «c:OFF»«D:;»                  «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:sp» «c:OFF»«D:;»                         «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:speedwalk »«c:OFF»«D:;»                  «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:sp »«c:OFF»«D:;»                         «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»telnet«D:};»                       «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:telnet»«D:}» «c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:te»«D:}» «c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:t»«D:}» OFF«D:;»                        «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:telnet» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:t» OFF«D:;»                          «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:telnet »«c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:t »OFF«D:;»                          «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»verbatim«D:};»                     «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:verbatim»«D:}» «c:OFF»«D:;»                 «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:v»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:verbatim» «c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:v» «c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:verbatim »«c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:v »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»verbose«D:};»                      «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:verbose»«D:}» «c:OFF»«D:;»                  «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:verbo»«D:}» «c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:verbose» «c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:verbo» «c:OFF»«D:;»                      «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:verbose »«c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:verbo »«c:OFF»«D:;»                      «x:#no || toggle subcommands highlighted;»
 
 «b:#config» «D:{»wordwrap«D:};»                     «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:wordwrap»«D:}» «c:OFF»«D:;»                 «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:w»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:wordwrap» «c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
-«b:#config» «t:w» «c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:wordwrap »«c:OFF»«D:;»                   «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:w »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
 
 «x:#no Tests for standard options;»
 «b:#config» «D:{»auto tab«D:};»                     «x:#no XX should highlight without an argument, which prints;»
@@ -89,84 +89,122 @@
 «b:#config» «D:{»«t:auto tab»«D:}» «D:$»«:tintin-variable-usage-face:tab_size»«D:;»           «x:#no || standard subcommands highlighted;»
 «b:#config» «D:{»«t:auto t»«D:}» 5000«D:;»                  «x:#no || standard subcommands highlighted;»
 «b:#config» «D:{»«t:auto»«D:}» 5000«D:;»                    «x:#no || standard subcommands highlighted;»
-«b:#config» «t:auto» 5000«D:;»                      «x:#no || standard subcommands highlighted;»
-«b:#config» «t:a» 5000«D:;»                         «x:#no || standard subcommands highlighted;»
-«b:#config» «t:a» «D:$»«:tintin-variable-usage-face:tab_size»«D:;»                    «x:#no || standard subcommands highlighted;»
+«b:#config» «t:auto »5000«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «t:a »5000«D:;»                         «x:#no || standard subcommands highlighted;»
+«b:#config» «t:a »«D:$»«:tintin-variable-usage-face:tab_size»«D:;»                    «x:#no || standard subcommands highlighted;»
 
-«x:#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
-«x:#no
-#no #config {wordwrap};»                     «x:#no XX should highlight without an argument, which prints;»
-«x:#no #config {wordwrap} OFF;»                 «x:#no || standard subcommands highlighted;»
-«x:#no #config {w} OFF;»                        «x:#no || standard subcommands highlighted;»
-«x:#no #config wordwrap OFF;»                   «x:#no || standard subcommands highlighted;»
-«x:#no #config w OFF;»                          «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»buffer size«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:buffer size»«D:}» 10000«D:;»            «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:buffer s»«D:}» 10000«D:;»               «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:buffer»«D:}» 10000«D:;»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:b»«D:}» 10000«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «t:buffer »10000«D:;»                   «x:#no || standard subcommands highlighted;»
+«b:#config» «t:b »10000«D:;»                        «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»charset«D:};»                      «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:charset»«D:}» UTF-8«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:c»«D:}» UTF-8«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «t:charset »ASCII«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «t:c »AUTO«D:;»                         «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»color mode«D:};»                   «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:color mode»«D:}» ON«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:color m»«D:}» off«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:color»«D:}» ANSI«D:;»                   «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:co»«D:}» 256«D:;»                       «x:#no || standard subcommands highlighted;»
+«b:#config» «t:color »TRUE«D:;»                     «x:#no || standard subcommands highlighted;»
+«b:#config» «t:co »true«D:;»                        «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»command color«D:};»                «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:command color»«D:}» «D:{»«w:\e»[0«D:;»37m«D:};»     «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:command c»«D:}» «D:{»«w:\e»[0«D:;»37m«D:};»         «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:command»«D:}» «D:{»«w:\e»[0«D:;»37m«D:};»           «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:com»«D:}» «D:{»«w:\e»[0«D:;»37m«D:};»               «x:#no || standard subcommands highlighted;»
+«b:#config» «t:command »«D:{»«w:\e»[0«D:;»37m«D:};»             «x:#no || standard subcommands highlighted;»
+«b:#config» «t:com »«D:{»«w:\e»[0«D:;»37m«D:};»                 «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»connect retry«D:};»                «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:connect retry»«D:}» 0.0«D:;»            «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:connect r»«D:}» 0.0«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:connect»«D:}» 0.0«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:con»«D:}» 0.0«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «t:connect »0.0«D:;»                    «x:#no || standard subcommands highlighted;»
+«b:#config» «t:con »0.0«D:;»                        «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»history size«D:};»                 «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:history size»«D:}» 1000«D:;»            «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:history s»«D:}» 1000«D:;»               «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:history»«D:}» 1000«D:;»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:h»«D:}» 1000«D:;»                       «x:#no || standard subcommands highlighted;»
+«b:#config» «t:history »1000«D:;»                   «x:#no || standard subcommands highlighted;»
+«b:#config» «t:h »1000«D:;»                         «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»log mode«D:};»                     «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:log mode»«D:}» HTML«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:log m»«D:}» PLAIN«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:log»«D:}» RAW«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:l»«D:}» HTML«D:;»                       «x:#no || standard subcommands highlighted;»
+«b:#config» «t:log »raw«D:;»                        «x:#no || standard subcommands highlighted;»
+«b:#config» «t:l »plain«D:;»                        «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»packet patch«D:};»                 «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:packet patch»«D:}» AUTO«D:;»            «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:packet p»«D:}» auto«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:packet»«D:}» auto«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:p»«D:}» auto«D:;»                       «x:#no || standard subcommands highlighted;»
+«b:#config» «t:packet »auto«D:;»                    «x:#no || standard subcommands highlighted;»
+«b:#config» «t:p »auto«D:;»                         «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»random seed«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:random seed»«D:}» 821815483«D:;»        «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:random s»«D:}» 821815483«D:;»           «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:random»«D:}» 821815483«D:;»             «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:ra»«D:}» 821815483«D:;»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «t:random »821815483«D:;»               «x:#no || standard subcommands highlighted;»
+«b:#config» «t:ra »821815483«D:;»                   «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»repeat char«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»repeat char«D:}» !«D:;»                «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:repeat char»«D:}» «D:{»!«D:};»              «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»repeat c«D:}» !«D:;»                   «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:repeat c»«D:}» «D:{»!«D:};»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»repeat«D:}» !«D:;»                     «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:repeat»«D:}» «D:{»!«D:};»                   «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»re«D:}» !«D:;»                         «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:re»«D:}» «D:{»!«D:};»                       «x:#no || standard subcommands highlighted;»
+«b:#config» repeat !«D:;»                       «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «t:repeat »«D:{»!«D:};»                     «x:#no || standard subcommands highlighted;»
+«b:#config» re !«D:;»                           «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «t:re »«D:{»!«D:};»                         «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»tab width«D:};»                    «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:tab width»«D:}» 4«D:;»                  «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:tab w»«D:}» 4«D:;»                      «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:tab»«D:}» 4«D:;»                        «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:t»«D:}» 4«D:;»                          «x:#no || standard subcommands highlighted;»
+«b:#config» «t:tab »4«D:;»                          «x:#no || standard subcommands highlighted;»
+«b:#config» «t:t »4«D:;»                            «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»tintin char«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»tintin char«D:}» #«D:;»                «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:tintin char»«D:}» «D:{»#«D:};»              «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»tintin c«D:}» #«D:;»                   «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:tintin c»«D:}» «D:{»#«D:};»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»tintin«D:}» #«D:;»                     «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:tintin»«D:}» «D:{»#«D:};»                   «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»ti«D:}» #«D:;»                         «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:ti»«D:}» «D:{»#«D:};»                       «x:#no || standard subcommands highlighted;»
+«b:#config» tintin #«D:;»                       «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «t:tintin »«D:{»#«D:};»                     «x:#no || standard subcommands highlighted;»
+«b:#config» ti #«D:;»                           «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «t:ti »«D:{»#«D:};»                         «x:#no || standard subcommands highlighted;»
+
+«b:#config» «D:{»verbatim char«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»verbatim char«D:}» \«D:;»                «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:verbatim char»«D:}» «D:{»\«D:};»              «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»verbatim c«D:}» \«D:;»                   «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:verbatim c»«D:}» «D:{»\«D:};»                 «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»verbatim«D:}» \«D:;»                     «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»verbatim«D:}» «D:{»\«D:};»                   «x:#no XX too short is not highlighted;»
+«b:#config» verbatim \«D:;»                       «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» verbatim «D:{»\«D:};»                     «x:#no XX too short is not highlighted;»

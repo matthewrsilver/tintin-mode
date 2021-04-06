@@ -339,43 +339,35 @@
 
 ;; Special handling for the #config command and its subcommands
 (defvar config-command-list '("config" 3))
-(rx-define config-option-group (keyword-list)
-           (group-n 2 (regexp (eval
-                               (regexp-opt (initial-substrings-list keyword-list))))))
+(rx-define config-option-rx (keyword-list)
+           (regexp (eval
+                    (regexp-opt (initial-substrings-list keyword-list)))))
+(rx-define config-option-multiword (keyword-list firstword-list)
+           (group (or (: "{" (config-option-rx keyword-list) (or "}" eol))
+                      (: (config-option-rx firstword-list) (or blank eol)))))
 
-(defvar config-toggle-option-keywords
+(defvar config-toggle-keywords
   '("color patch" 7 "command echo" 9 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
-(defvar config-toggle-option-keywords-regexp
-  (rx "{" (config-option-group config-toggle-option-keywords) (or "}" eol)))
-(defvar config-toggle-option
-  (tintin-option :regexp config-toggle-option-keywords-regexp))
-
-(defvar config-toggle-option-first-word-keywords
+(defvar config-toggle-firstwords
   '("mouse" 2 "screen" 1 "scroll" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1
     "verbose" 5 "wordwrap" 1))
-(defvar config-toggle-option-first-words-keywords-regexp
-  (rx (config-option-group config-toggle-option-first-word-keywords)))
-(defvar config-toggle-first-words-option
-  (tintin-option :regexp config-toggle-option-first-words-keywords-regexp))
+(defvar config-toggle-option-regexp
+  (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords)))
+(defvar config-toggle-option
+  (tintin-option :regexp config-toggle-option-regexp :override 'keep))
 
-;; TODO {color mode} is true and false?
-(defvar config-standard-option-keywords
+(defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "packet patch" 1 "random seed" 2
     "repeat char" 2 "tab width" 1 "tintin char" 2 "verbatim char" 10))
-(defvar config-standard-option-keywords-regexp
-  (rx "{" (config-option-group config-standard-option-keywords) (or "}" eol)))
-(defvar config-standard-option
-  (tintin-option :regexp config-standard-option-keywords-regexp))
-
-(defvar config-standard-option-first-word-keywords
+(defvar config-standard-firstwords
   '("auto" 1 "buffer" 1 "charset" 1 "color" 2 "command" 3 "connect" 3 "history" 1
     "log" 1 "packet" 1 "random" 2 "repeat" 2 "tab" 1 "tintin" 2))
-(defvar config-standard-option-first-words-keywords-regexp
-  (rx (config-option-group config-standard-option-first-word-keywords)))
-(defvar config-standard-first-words-option
-  (tintin-option :regexp config-standard-option-first-words-keywords-regexp))
+(defvar config-standard-option-regexp
+  (rx (config-option-multiword config-standard-keywords config-standard-firstwords)))
+(defvar config-standard-option
+  (tintin-option :regexp config-standard-option-regexp :override 'keep))
 
 (setq tintin-font-lock-keywords (append
 
@@ -515,9 +507,7 @@
   (let ((config-command (tintin-command :cmds 'config-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd config-command
                         '(config-toggle-option toggle-value)
-                        '(config-toggle-first-words-option toggle-value)
-                        '(config-standard-option final-arg)
-                        '(config-standard-first-words-option final-arg)))
+                        '(config-standard-option final-arg)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

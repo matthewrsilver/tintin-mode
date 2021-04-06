@@ -93,80 +93,118 @@
 #config a 5000;                         #no || standard subcommands highlighted;
 #config a $tab_size;                    #no || standard subcommands highlighted;
 
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
-#no
-#no #config {wordwrap};                     #no XX should highlight without an argument, which prints;
-#no #config {wordwrap} OFF;                 #no || standard subcommands highlighted;
-#no #config {w} OFF;                        #no || standard subcommands highlighted;
-#no #config wordwrap OFF;                   #no || standard subcommands highlighted;
-#no #config w OFF;                          #no || standard subcommands highlighted;
+#config {buffer size};                  #no XX should highlight without an argument, which prints;
+#config {buffer size} 10000;            #no || standard subcommands highlighted;
+#config {buffer s} 10000;               #no || standard subcommands highlighted;
+#config {buffer} 10000;                 #no || standard subcommands highlighted;
+#config {b} 10000;                      #no || standard subcommands highlighted;
+#config buffer 10000;                   #no || standard subcommands highlighted;
+#config b 10000;                        #no || standard subcommands highlighted;
+
+#config {charset};                      #no XX should highlight without an argument, which prints;
+#config {charset} UTF-8;                #no || standard subcommands highlighted;
+#config {c} UTF-8;                      #no || standard subcommands highlighted;
+#config charset ASCII;                  #no || standard subcommands highlighted;
+#config c AUTO;                         #no || standard subcommands highlighted;
+
+#config {color mode};                   #no XX should highlight without an argument, which prints;
+#config {color mode} ON;                #no || standard subcommands highlighted;
+#config {color m} off;                  #no || standard subcommands highlighted;
+#config {color} ANSI;                   #no || standard subcommands highlighted;
+#config {co} 256;                       #no || standard subcommands highlighted;
+#config color TRUE;                     #no || standard subcommands highlighted;
+#config co true;                        #no || standard subcommands highlighted;
+
+#config {command color};                #no XX should highlight without an argument, which prints;
+#config {command color} {\e[0;37m};     #no || standard subcommands highlighted;
+#config {command c} {\e[0;37m};         #no || standard subcommands highlighted;
+#config {command} {\e[0;37m};           #no || standard subcommands highlighted;
+#config {com} {\e[0;37m};               #no || standard subcommands highlighted;
+#config command {\e[0;37m};             #no || standard subcommands highlighted;
+#config com {\e[0;37m};                 #no || standard subcommands highlighted;
+
+#config {connect retry};                #no XX should highlight without an argument, which prints;
+#config {connect retry} 0.0;            #no || standard subcommands highlighted;
+#config {connect r} 0.0;                #no || standard subcommands highlighted;
+#config {connect} 0.0;                  #no || standard subcommands highlighted;
+#config {con} 0.0;                      #no || standard subcommands highlighted;
+#config connect 0.0;                    #no || standard subcommands highlighted;
+#config con 0.0;                        #no || standard subcommands highlighted;
+
+#config {history size};                 #no XX should highlight without an argument, which prints;
+#config {history size} 1000;            #no || standard subcommands highlighted;
+#config {history s} 1000;               #no || standard subcommands highlighted;
+#config {history} 1000;                 #no || standard subcommands highlighted;
+#config {h} 1000;                       #no || standard subcommands highlighted;
+#config history 1000;                   #no || standard subcommands highlighted;
+#config h 1000;                         #no || standard subcommands highlighted;
+
+#config {log mode};                     #no XX should highlight without an argument, which prints;
+#config {log mode} HTML;                #no || standard subcommands highlighted;
+#config {log m} PLAIN;                  #no || standard subcommands highlighted;
+#config {log} RAW;                      #no || standard subcommands highlighted;
+#config {l} HTML;                       #no || standard subcommands highlighted;
+#config log raw;                        #no || standard subcommands highlighted;
+#config l plain;                        #no || standard subcommands highlighted;
+
+#config {packet patch};                 #no XX should highlight without an argument, which prints;
+#config {packet patch} AUTO;            #no || standard subcommands highlighted;
+#config {packet p} auto;                #no || standard subcommands highlighted;
+#config {packet} auto;                  #no || standard subcommands highlighted;
+#config {p} auto;                       #no || standard subcommands highlighted;
+#config packet auto;                    #no || standard subcommands highlighted;
+#config p auto;                         #no || standard subcommands highlighted;
+
+#config {random seed};                  #no XX should highlight without an argument, which prints;
+#config {random seed} 821815483;        #no || standard subcommands highlighted;
+#config {random s} 821815483;           #no || standard subcommands highlighted;
+#config {random} 821815483;             #no || standard subcommands highlighted;
+#config {ra} 821815483;                 #no || standard subcommands highlighted;
+#config random 821815483;               #no || standard subcommands highlighted;
+#config ra 821815483;                   #no || standard subcommands highlighted;
+
+#config {repeat char};                  #no XX should highlight without an argument, which prints;
+#config {repeat char} !;                #no XX highlighting is broken for symbols without braces;
+#config {repeat char} {!};              #no || standard subcommands highlighted;
+#config {repeat c} !;                   #no XX highlighting is broken for symbols without braces;
+#config {repeat c} {!};                 #no || standard subcommands highlighted;
+#config {repeat} !;                     #no XX highlighting is broken for symbols without braces;
+#config {repeat} {!};                   #no || standard subcommands highlighted;
+#config {re} !;                         #no XX highlighting is broken for symbols without braces;
+#config {re} {!};                       #no || standard subcommands highlighted;
+#config repeat !;                       #no XX highlighting is broken for symbols without braces;
+#config repeat {!};                     #no || standard subcommands highlighted;
+#config re !;                           #no XX highlighting is broken for symbols without braces;
+#config re {!};                         #no || standard subcommands highlighted;
+
+#config {tab width};                    #no XX should highlight without an argument, which prints;
+#config {tab width} 4;                  #no || standard subcommands highlighted;
+#config {tab w} 4;                      #no || standard subcommands highlighted;
+#config {tab} 4;                        #no || standard subcommands highlighted;
+#config {t} 4;                          #no || standard subcommands highlighted;
+#config tab 4;                          #no || standard subcommands highlighted;
+#config t 4;                            #no || standard subcommands highlighted;
+
+#config {tintin char};                  #no XX should highlight without an argument, which prints;
+#config {tintin char} #;                #no XX highlighting is broken for symbols without braces;
+#config {tintin char} {#};              #no || standard subcommands highlighted;
+#config {tintin c} #;                   #no XX highlighting is broken for symbols without braces;
+#config {tintin c} {#};                 #no || standard subcommands highlighted;
+#config {tintin} #;                     #no XX highlighting is broken for symbols without braces;
+#config {tintin} {#};                   #no || standard subcommands highlighted;
+#config {ti} #;                         #no XX highlighting is broken for symbols without braces;
+#config {ti} {#};                       #no || standard subcommands highlighted;
+#config tintin #;                       #no XX highlighting is broken for symbols without braces;
+#config tintin {#};                     #no || standard subcommands highlighted;
+#config ti #;                           #no XX highlighting is broken for symbols without braces;
+#config ti {#};                         #no || standard subcommands highlighted;
+
+#config {verbatim char};                  #no XX should highlight without an argument, which prints;
+#config {verbatim char} \;                #no XX highlighting is broken for symbols without braces;
+#config {verbatim char} {\};              #no || standard subcommands highlighted;
+#config {verbatim c} \;                   #no XX highlighting is broken for symbols without braces;
+#config {verbatim c} {\};                 #no || standard subcommands highlighted;
+#config {verbatim} \;                     #no XX highlighting is broken for symbols without braces;
+#config {verbatim} {\};                   #no XX too short is not highlighted;
+#config verbatim \;                       #no XX highlighting is broken for symbols without braces;
+#config verbatim {\};                     #no XX too short is not highlighted;

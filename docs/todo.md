@@ -4,6 +4,7 @@
    * consider a :final slot
  * variables may start with a 0, but allowing this conflicts with pattern matchers...
    * maybe a way out: variables can't be _only_ numbers!
+ * improve images in READMEx
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands

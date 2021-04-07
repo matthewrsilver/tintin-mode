@@ -99,7 +99,7 @@
 ;; | Character Role     | `#config` Option  | `tintin-mode` Variable      | Default |
 ;; | :----------------- | :---------------- | :-------------------------- | :-----: |
 ;; | TinTin++ commands  | `{TINTIN CHAR}`   | `tintin-command-character`  | `#`     |
-;; | Verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatin-character` | `\`     |
+;; | Verbatim lines     | `{VERBATIM CHAR}` | `tintin-verbatim-character` | `\`     |
 ;; | Repeating commands | `{REPEAT CHAR}`   | `tintin-repeat-character`   | `!`     |
 
 ;; Known Issues:

@@ -361,14 +361,25 @@
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
-    "random seed" 2 "repeat char" 2 "tab width" 1 "tintin char" 2 "verbatim char" 10))
+    "random seed" 2 "tab width" 1))
 (defvar config-standard-firstwords
   '("auto" 1 "buffer" 1 "charset" 1 "color" 2 "command" 3 "connect" 3 "history" 1
-    "log" 1 "packet" 1 "random" 2 "repeat" 2 "tab" 1 "tintin" 2))
+    "log" 1 "packet" 1 "random" 2 "tab" 1))
 (defvar config-standard-option-regexp
   (rx (config-option-multiword config-standard-keywords config-standard-firstwords)))
 (defvar config-standard-option
   (tintin-option :regexp config-standard-option-regexp :override 'keep))
+
+(defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
+(defvar config-char-firstwords '("repeat" 2 "tintin" 2))
+(defvar config-char-option-regexp
+  (rx (config-option-multiword config-char-keywords config-char-firstwords)))
+(defvar config-char-option
+  (tintin-option :regexp config-char-option-regexp :override 'keep))
+(defvar settable-character-regexp
+  (rx (group (optionally-braced sequence (not (any "{};"))))))
+(defvar settable-character
+  (tintin-argument :regexp settable-character-regexp :override 'keep))
 
 (setq tintin-font-lock-keywords (append
 
@@ -507,8 +518,12 @@
   ;; Highlight #config command
   (let ((config-command (tintin-command :cmds 'config-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd config-command
+                        '(config-toggle-option)
                         '(config-toggle-option toggle-value)
-                        '(config-standard-option final-arg)))
+                        '(config-standard-option)
+                        '(config-standard-option final-arg)
+                        '(config-char-option)
+                        '(config-char-option settable-character)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

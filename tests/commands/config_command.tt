@@ -16,6 +16,8 @@
 #config {child l} on;                   #no || shortened toggle subcommands highlighted;
 #config child l on;                     #no || braces needed for options with spaces;
 #config {child} on;                     #no || just one word works;
+#config child                           #no || should highlight without an argument, which prints;
+#config child;                          #no || should highlight without an argument, which prints;
 #config child on;                       #no || no braces needed for options without spaces;
 #config chi on;                         #no || no braces needed for options without spaces;
 
@@ -127,6 +129,8 @@
 #config {auto tab} $tab_size;           #no || standard subcommands highlighted;
 #config {auto t} 5000;                  #no || standard subcommands highlighted;
 #config {auto} 5000;                    #no || standard subcommands highlighted;
+#config auto                            #no || should highlight without an argument, which prints;
+#config auto;                           #no || should highlight without an argument, which prints;
 #config auto 5000;                      #no || standard subcommands highlighted;
 #config a 5000;                         #no || standard subcommands highlighted;
 #config a $tab_size;                    #no || standard subcommands highlighted;

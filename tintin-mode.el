@@ -342,10 +342,12 @@
 (rx-define config-option-rx (keyword-list)
            (regexp (eval
                     (regexp-opt (initial-substrings-list keyword-list)))))
-(rx-define config-option-multiword (keyword-list firstword-list)
-           (group (or (: "{" (config-option-rx keyword-list) (or "}" eol))
-                      (: (config-option-rx firstword-list) (or blank eol)))))
-
+(rx-define config-option-multiword (keyword-list firstword-list &rest term)
+           (group (or (: "{"
+                         (config-option-rx keyword-list)
+                         (or "}" eol))
+                      (: (config-option-rx firstword-list)
+                         (or blank eol (eval (or term regexp-unmatchable)))))))
 (defvar config-toggle-keywords
   '("child lock" 3 "color patch" 7 "command echo" 9 "convert meta" 4 "debug telnet" 1
     "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
@@ -357,6 +359,10 @@
   (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords)))
 (defvar config-toggle-option
   (tintin-option :regexp config-toggle-option-regexp :override 'keep))
+(defvar config-toggle-option-final-regexp
+  (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords ";")))
+(defvar config-toggle-option-final
+  (tintin-option :regexp config-toggle-option-final-regexp :override 'keep))
 
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
@@ -369,6 +375,10 @@
   (rx (config-option-multiword config-standard-keywords config-standard-firstwords)))
 (defvar config-standard-option
   (tintin-option :regexp config-standard-option-regexp :override 'keep))
+(defvar config-standard-option-final-regexp
+  (rx (config-option-multiword config-standard-keywords config-standard-firstwords ";")))
+(defvar config-standard-option-final
+  (tintin-option :regexp config-standard-option-final-regexp :override 'keep))
 
 (defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
 (defvar config-char-firstwords '("repeat" 2 "tintin" 2))
@@ -376,6 +386,10 @@
   (rx (config-option-multiword config-char-keywords config-char-firstwords)))
 (defvar config-char-option
   (tintin-option :regexp config-char-option-regexp :override 'keep))
+(defvar config-char-option-final-regexp
+  (rx (config-option-multiword config-char-keywords config-char-firstwords ";")))
+(defvar config-char-option-final
+  (tintin-option :regexp config-char-option-final-regexp :override 'keep))
 (defvar settable-character-regexp
   (rx (group (optionally-braced sequence (not (any "{};"))))))
 (defvar settable-character
@@ -518,11 +532,11 @@
   ;; Highlight #config command
   (let ((config-command (tintin-command :cmds 'config-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd config-command
-                        '(config-toggle-option)
+                        '(config-toggle-option-final)
                         '(config-toggle-option toggle-value)
-                        '(config-standard-option)
+                        '(config-standard-option-final)
                         '(config-standard-option final-arg)
-                        '(config-char-option)
+                        '(config-char-option-final)
                         '(config-char-option settable-character)))
 
   ;; Finish with the comment face that overrides everything

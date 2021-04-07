@@ -16,6 +16,8 @@
 «b:#config» «D:{»«t:child l»«D:}» «c:on»«D:;»                   «x:#no || shortened toggle subcommands highlighted;»
 «b:#config» «t:child »l on«D:;»                     «x:#no || braces needed for options with spaces;»
 «b:#config» «D:{»«t:child»«D:}» «c:on»«D:;»                     «x:#no || just one word works;»
+«b:#config» «t:child »                          «x:#no || should highlight without an argument, which prints;»
+«b:#config» «t:child»«D:;»                          «x:#no || should highlight without an argument, which prints;»
 «b:#config» «t:child »«c:on»«D:;»                       «x:#no || no braces needed for options without spaces;»
 «b:#config» «t:chi »«c:on»«D:;»                         «x:#no || no braces needed for options without spaces;»
 
@@ -127,6 +129,8 @@
 «b:#config» «D:{»«t:auto tab»«D:}» «D:$»«:tintin-variable-usage-face:tab_size»«D:;»           «x:#no || standard subcommands highlighted;»
 «b:#config» «D:{»«t:auto t»«D:}» 5000«D:;»                  «x:#no || standard subcommands highlighted;»
 «b:#config» «D:{»«t:auto»«D:}» 5000«D:;»                    «x:#no || standard subcommands highlighted;»
+«b:#config» «t:auto »                           «x:#no || should highlight without an argument, which prints;»
+«b:#config» «t:auto»«D:;»                           «x:#no || should highlight without an argument, which prints;»
 «b:#config» «t:auto »5000«D:;»                      «x:#no || standard subcommands highlighted;»
 «b:#config» «t:a »5000«D:;»                         «x:#no || standard subcommands highlighted;»
 «b:#config» «t:a »«D:$»«:tintin-variable-usage-face:tab_size»«D:;»                    «x:#no || standard subcommands highlighted;»
@@ -239,7 +243,7 @@
 «b:#config» «D:{»«t:ti»«D:}» «D:{»#«D:};»                       «x:#no || character setting subcommands highlighted;»
 «b:#config» «D:{»«t:t»«D:}» #«D:;»                          «x:#no || not highlighted because t expands to "tab width";»
 «b:#config» «t:tintin »                         «x:#no || bare option is highlighted;»
-«b:#config» tintin«D:;»                         «x:#no XX bare option isn't highlighted when semicolon present;»
+«b:#config» «t:tintin»«D:;»                         «x:#no XX bare option isn't highlighted when semicolon present;»
 «b:#config» «t:tintin »#«D:;»                       «x:#no || character setting subcommands highlighted;»
 «b:#config» «t:tintin »«D:{»#«D:};»                     «x:#no || character setting subcommands highlighted;»
 «b:#config» «t:ti »#«D:;»                           «x:#no || character setting subcommands highlighted;»

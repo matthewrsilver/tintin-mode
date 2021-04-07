@@ -11,6 +11,14 @@
 «b:#config» nonsense«D:;»                       «x:#no || unknown modes not highlighted;»
 
 «x:#no Tests for toggle options;»
+«b:#config» «D:{»child lock«D:};»                   «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:child lock»«D:}» «c:on»«D:;»                «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:child l»«D:}» «c:on»«D:;»                   «x:#no || shortened toggle subcommands highlighted;»
+«b:#config» child l on«D:;»                     «x:#no || braces needed for options with spaces;»
+«b:#config» «D:{»«t:child»«D:}» «c:on»«D:;»                     «x:#no || just one word works;»
+«b:#config» «t:child »«c:on»«D:;»                       «x:#no || no braces needed for options without spaces;»
+«b:#config» «t:chi »«c:on»«D:;»                         «x:#no || no braces needed for options without spaces;»
+
 «b:#config» «D:{»color patch«D:};»                  «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:color patch»«D:}» «c:on»«D:;»               «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:color patch»«D:}» «D:$»«:tintin-variable-usage-face:value»«D:;»           «x:#no || toggle subcommands highlighted with variable;»
@@ -24,7 +32,37 @@
 «b:#config» «D:{»«t:command e»«D:}» «c:OFF»«D:;»                «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:command»«D:}» OFF«D:;»                  «x:#no || toggle subcommands highlighted;»
 
-«b:#config» «D:{»mouase tracking«D:};»              «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»convert meta«D:};»                 «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:convert meta»«D:}» «c:OFF»«D:;»             «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:convert m»«D:}» «c:OFF»«D:;»                «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:convert»«D:}» «c:OFF»«D:;»                  «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:conv»«D:}» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:con»«D:}» OFF«D:;»                      «x:#no || "con" is "connect retry" and is not a toggle;»
+«b:#config» «t:convert »«c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:conv »«c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:con »OFF«D:;»                        «x:#no || "con" is "connect retry" and is not a toggle;»
+
+«b:#config» «D:{»debug telnet«D:};»                 «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:debug telnet»«D:}» «c:OFF»«D:;»             «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:debug t»«D:}» «c:OFF»«D:;»                  «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:debug»«D:}» «c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:d»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:debug »«c:OFF»«D:;»                      «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:d »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+
+«b:#config» «D:{»inheritance«D:};»                  «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:inheritance»«D:}» «c:OFF»«D:;»              «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:i»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:inheritance »«c:OFF»«D:;»                «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:i »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+
+«b:#config» «D:{»mccp«D:};»                         «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:mccp»«D:}» «c:OFF»«D:;»                     «x:#no || toggle subcommands highlighted;»
+«b:#config» «D:{»«t:m»«D:}» «c:OFF»«D:;»                        «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:mccp »«c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
+«b:#config» «t:m »«c:OFF»«D:;»                          «x:#no || toggle subcommands highlighted;»
+
+«b:#config» «D:{»mouse tracking«D:};»               «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:mouse tracking»«D:}» «c:OFF»«D:;»           «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:mouse»«D:}» «c:OFF»«D:;»                    «x:#no || toggle subcommands highlighted;»
 «b:#config» «D:{»«t:mo»«D:}» «c:OFF»«D:;»                       «x:#no || toggle subcommands highlighted;»
@@ -147,6 +185,10 @@
 «b:#config» «t:log »raw«D:;»                        «x:#no || standard subcommands highlighted;»
 «b:#config» «t:l »plain«D:;»                        «x:#no || standard subcommands highlighted;»
 
+«b:#config» «D:{»log level«D:};»                    «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»«t:log level»«D:}» LOW«D:;»                «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»«t:log l»«D:}» HIGH«D:;»                   «x:#no || standard subcommands highlighted;»
+
 «b:#config» «D:{»packet patch«D:};»                 «x:#no XX should highlight without an argument, which prints;»
 «b:#config» «D:{»«t:packet patch»«D:}» AUTO«D:;»            «x:#no || standard subcommands highlighted;»
 «b:#config» «D:{»«t:packet p»«D:}» auto«D:;»                «x:#no || standard subcommands highlighted;»
@@ -199,12 +241,12 @@
 «b:#config» ti #«D:;»                           «x:#no XX highlighting is broken for symbols without braces;»
 «b:#config» «t:ti »«D:{»#«D:};»                         «x:#no || standard subcommands highlighted;»
 
-«b:#config» «D:{»verbatim char«D:};»                  «x:#no XX should highlight without an argument, which prints;»
-«b:#config» «D:{»verbatim char«D:}» \«D:;»                «x:#no XX highlighting is broken for symbols without braces;»
-«b:#config» «D:{»«t:verbatim char»«D:}» «D:{»\«D:};»              «x:#no || standard subcommands highlighted;»
-«b:#config» «D:{»verbatim c«D:}» \«D:;»                   «x:#no XX highlighting is broken for symbols without braces;»
-«b:#config» «D:{»«t:verbatim c»«D:}» «D:{»\«D:};»                 «x:#no || standard subcommands highlighted;»
-«b:#config» «D:{»verbatim«D:}» \«D:;»                     «x:#no XX highlighting is broken for symbols without braces;»
-«b:#config» «D:{»verbatim«D:}» «D:{»\«D:};»                   «x:#no XX too short is not highlighted;»
-«b:#config» verbatim \«D:;»                       «x:#no XX highlighting is broken for symbols without braces;»
-«b:#config» verbatim «D:{»\«D:};»                     «x:#no XX too short is not highlighted;»
+«b:#config» «D:{»verbatim char«D:};»                «x:#no XX should highlight without an argument, which prints;»
+«b:#config» «D:{»verbatim char«D:}» \«D:;»              «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:verbatim char»«D:}» «D:{»\«D:};»            «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»verbatim c«D:}» \«D:;»                 «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»«t:verbatim c»«D:}» «D:{»\«D:};»               «x:#no || standard subcommands highlighted;»
+«b:#config» «D:{»verbatim«D:}» \«D:;»                   «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» «D:{»verbatim«D:}» «D:{»\«D:};»                 «x:#no XX too short is not highlighted;»
+«b:#config» verbatim \«D:;»                     «x:#no XX highlighting is broken for symbols without braces;»
+«b:#config» verbatim «D:{»\«D:};»                   «x:#no XX too short is not highlighted;»

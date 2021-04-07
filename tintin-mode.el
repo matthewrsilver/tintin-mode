@@ -347,11 +347,12 @@
                       (: (config-option-rx firstword-list) (or blank eol)))))
 
 (defvar config-toggle-keywords
-  '("color patch" 7 "command echo" 9 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
+  '("child lock" 3 "color patch" 7 "command echo" 9 "convert meta" 4 "debug telnet" 1
+    "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
 (defvar config-toggle-firstwords
-  '("mouse" 2 "screen" 1 "scroll" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1
-    "verbose" 5 "wordwrap" 1))
+  '("child" 3 "convert" 4 "debug" 1 "inheritance" 1 "mccp" 1 "mouse" 2 "screen" 1
+    "scroll" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
 (defvar config-toggle-option-regexp
   (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords)))
 (defvar config-toggle-option
@@ -359,8 +360,8 @@
 
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
-    "connect retry" 3 "history size" 1 "log mode" 1 "packet patch" 1 "random seed" 2
-    "repeat char" 2 "tab width" 1 "tintin char" 2 "verbatim char" 10))
+    "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
+    "random seed" 2 "repeat char" 2 "tab width" 1 "tintin char" 2 "verbatim char" 10))
 (defvar config-standard-firstwords
   '("auto" 1 "buffer" 1 "charset" 1 "color" 2 "command" 3 "connect" 3 "history" 1
     "log" 1 "packet" 1 "random" 2 "repeat" 2 "tab" 1 "tintin" 2))

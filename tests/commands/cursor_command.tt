@@ -1,0 +1,45 @@
+#no Tests for the #cursor command;
+
+#cursor;                                #no || bare cursor with semicolon;
+#cursor                                 #no || bare cursor without semicolon;
+#curso                                  #no || five character #cursor;
+#curs                                   #no || four character #cursor;
+#cur                                    #no || three character #cursor;
+#cu                                     #no || two character #cursor;
+#c                                      #no || not enough characters;
+#cursors                                #no || too many characters don't match;
+#cursor nonsense;                       #no || unknown modes not highlighted;
+
+#no Tests for options;
+#cursor {backspace};                    #no || full option with braces;
+#cursor {backspace}                     #no || full option with braces and no semicolon;
+#cursor backspace;                      #no || full option without braces;
+#cursor backspace                       #no || full option without braces and no semicolon;
+#cursor {b};                            #no || shortened option with braces;
+#cursor {b}                             #no || shortened option with braces and no semicolon;
+#cursor b;                              #no || shortened option without braces;
+#cursor b                               #no || shortened option without braces and no semicolon;
+
+#cursor {brace open};                   #no || full option with braces;
+#cursor {brace open}                    #no || full option with braces and no semicolon;
+#cursor {brace o};                      #no || shortened multi-word option with braces;
+#cursor {brace};                        #no || first-word option with braces;
+#cursor brace;                          #no || first- option without braces;
+#cursor brace                           #no || first- option without braces and no semicolon;
+#cursor {br};                           #no || shortened option with braces;
+#cursor {br}                            #no || shortened option without braces;
+#cursor br;                             #no || shortened option without braces;
+#cursor br                              #no || shortened option without braces and no semicolon;
+
+#cursor {brace close};                  #no || full option with braces;
+#cursor {brace close}                   #no || full option with braces and no semicolon;
+#cursor {brace c};                      #no || shortened multi-word option with braces;
+
+#cursor {backward};                     #no || full option with braces;
+#cursor {backward}                      #no || full option with braces and no semicolon;
+#cursor backward;                       #no || full option without braces;
+#cursor backward                        #no || full option without braces and no semicolon;
+#cursor {backw};                        #no || shortened option with braces;
+#cursor {backw}                         #no || shortened option with braces and no semicolon;
+#cursor backw;                          #no || shortened option without braces;
+#cursor backw                           #no || shortened option without braces and no semicolon;

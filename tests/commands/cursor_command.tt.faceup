@@ -1,0 +1,45 @@
+«x:#no Tests for the #cursor command;»
+
+«b:#cursor»«D:;»                                «x:#no || bare cursor with semicolon;»
+«b:#cursor»                                 «x:#no || bare cursor without semicolon;»
+«b:#curso»                                  «x:#no || five character #cursor;»
+«b:#curs»                                   «x:#no || four character #cursor;»
+«b:#cur»                                    «x:#no || three character #cursor;»
+«b:#cu»                                     «x:#no || two character #cursor;»
+#c                                      «x:#no || not enough characters;»
+#cursors                                «x:#no || too many characters don't match;»
+«b:#cursor» nonsense«D:;»                       «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for options;»
+«b:#cursor» «D:{»«t:backspace»«D:};»                    «x:#no || full option with braces;»
+«b:#cursor» «D:{»«t:backspace»«D:}»                     «x:#no || full option with braces and no semicolon;»
+«b:#cursor» «t:backspace»«D:;»                      «x:#no || full option without braces;»
+«b:#cursor» «t:backspace »                      «x:#no || full option without braces and no semicolon;»
+«b:#cursor» «D:{»«t:b»«D:};»                            «x:#no || shortened option with braces;»
+«b:#cursor» «D:{»«t:b»«D:}»                             «x:#no || shortened option with braces and no semicolon;»
+«b:#cursor» «t:b»«D:;»                              «x:#no || shortened option without braces;»
+«b:#cursor» «t:b »                              «x:#no || shortened option without braces and no semicolon;»
+
+«b:#cursor» «D:{»«t:brace open»«D:};»                   «x:#no || full option with braces;»
+«b:#cursor» «D:{»«t:brace open»«D:}»                    «x:#no || full option with braces and no semicolon;»
+«b:#cursor» «D:{»«t:brace o»«D:};»                      «x:#no || shortened multi-word option with braces;»
+«b:#cursor» «D:{»«t:brace»«D:};»                        «x:#no || first-word option with braces;»
+«b:#cursor» «t:brace»«D:;»                          «x:#no || first- option without braces;»
+«b:#cursor» «t:brace »                          «x:#no || first- option without braces and no semicolon;»
+«b:#cursor» «D:{»«t:br»«D:};»                           «x:#no || shortened option with braces;»
+«b:#cursor» «D:{»«t:br»«D:}»                            «x:#no || shortened option without braces;»
+«b:#cursor» «t:br»«D:;»                             «x:#no || shortened option without braces;»
+«b:#cursor» «t:br »                             «x:#no || shortened option without braces and no semicolon;»
+
+«b:#cursor» «D:{»«t:brace close»«D:};»                  «x:#no || full option with braces;»
+«b:#cursor» «D:{»«t:brace close»«D:}»                   «x:#no || full option with braces and no semicolon;»
+«b:#cursor» «D:{»«t:brace c»«D:};»                      «x:#no || shortened multi-word option with braces;»
+
+«b:#cursor» «D:{»«t:backward»«D:};»                     «x:#no || full option with braces;»
+«b:#cursor» «D:{»«t:backward»«D:}»                      «x:#no || full option with braces and no semicolon;»
+«b:#cursor» «t:backward»«D:;»                       «x:#no || full option without braces;»
+«b:#cursor» «t:backward »                       «x:#no || full option without braces and no semicolon;»
+«b:#cursor» «D:{»«t:backw»«D:};»                        «x:#no || shortened option with braces;»
+«b:#cursor» «D:{»«t:backw»«D:}»                         «x:#no || shortened option with braces and no semicolon;»
+«b:#cursor» «t:backw»«D:;»                          «x:#no || shortened option without braces;»
+«b:#cursor» «t:backw »                          «x:#no || shortened option without braces and no semicolon;»

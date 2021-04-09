@@ -272,7 +272,7 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "commands" 2   "cursor" 3     "daemon" 3     "detatch" 0
+  '( "all" 0        "commands" 2   "daemon" 3     "detatch" 0
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "gts" 0        "help" 0       "history" 4
      "ignore" 3     "info" 3       "kill" 0       "log" 0
@@ -363,6 +363,19 @@
   (tintin-option :regexp (rx (multiword-option config-char-keywords))))
 (defvar config-char-option-final
   (tintin-option :regexp (rx (multiword-option config-char-keywords ";"))))
+
+;; Special handling for the #cursor command and its subcommands
+(defvar cursor-command-list '("cursor" 2))
+(defvar cursor-option-keywords
+  '("backspace" 1 "brace open" 2 "brace close" 7 "backward" 5 "clear" 1
+    "clear left" 7 "clear line" 8 "clear right" 7 "convert meta" 2 "ctrl delete" 2
+    "delete" 1 "delete word left" 8 "delete word right" 13 "echo" 1 "end" 2 "enter" 3
+    "exit" 2 "forward" 1 "get" 1 "history next" 1 "history prev" 9 "history search" 9
+    "home" 2 "info" 1 "insert" 3 "next word" 1 "paste buffer" 1 "prev word" 2
+    "redraw input" 1 "screen focus in" 1 "screen focus out" 14 "set" 2 "suspend" 2
+    "tab" 1 "tab l s backward" 5 "tab l s forward" 9))
+(defvar cursor-option
+  (tintin-option :regexp (rx (multiword-option cursor-option-keywords ";"))))
 
 (setq tintin-font-lock-keywords (append
 
@@ -507,6 +520,11 @@
                         '(config-standard-option final-arg)
                         '(config-char-option-final)
                         '(config-char-option settable-character)))
+
+  ;; Highlight #cursor command
+  (let ((cursor-command (tintin-command :cmds 'cursor-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd cursor-command
+                        '(cursor-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

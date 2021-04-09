@@ -161,6 +161,9 @@ for all words in WORD-DATA."
       (append (apply #'initial-substrings (last word-data 2))
               (initial-substrings-list (butlast word-data 2)))))
 
+(rx-define substrings (keyword-list)
+  (regexp (eval (regexp-opt (initial-substrings-list keyword-list)))))
+
 (defun firstword-matcher (word &optional min-len)
   "Return a WORD and MIN-LEN pair with only the first word if relevant.
 When the MIN-LEN is greater than the length of the first word in WORD then
@@ -181,6 +184,11 @@ When such a pair is encountered, it is included in the list that is returned."
   (if (> (length word-data) 0)
       (append (firstwords-list (butlast word-data 2))
               (apply #'firstword-matcher (last word-data 2)))))
+
+(rx-define multiword-option (keyword-list &rest term)
+  (group (or (: "{" (substrings keyword-list) (or "}" eol))
+             (: (substrings (firstwords-list keyword-list))
+                (or blank eol (eval (or term regexp-unmatchable)))))))
 
 (defun build-tintin-command-regexp (word-data)
   "Return a regular expression that matches words in WORD-DATA.
@@ -296,7 +304,8 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)
-  ((face :initform 'font-lock-type-face))
+  ((face :initform 'font-lock-type-face)
+   (override :initarg :override :initform 'keep))
   "Command option argument class, that represents an option specifying a subcommand type.")
 
 
@@ -317,13 +326,9 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 (defvar toggle-value
   (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
 
-;; Regular expressions for matching initial substrings associated with command options
-(rx-define substrings (keyword-list)
-  (regexp (eval (regexp-opt (initial-substrings-list keyword-list)))))
-
-(rx-define multiword-option (keyword-list &rest term)
-  (group (or (: "{" (substrings keyword-list) (or "}" eol))
-             (: (substrings (firstwords-list keyword-list))
-                (or blank eol (eval (or term regexp-unmatchable)))))))
+(defvar settable-character-regexp
+  (rx (group (optionally-braced sequence (not (any "{};"))))))
+(defvar settable-character
+  (tintin-argument :regexp settable-character-regexp :override 'keep))
 
 (provide 'tintin-commands)

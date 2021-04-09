@@ -344,41 +344,25 @@
   '("child lock" 3 "color patch" 7 "command echo" 9 "convert meta" 4 "debug telnet" 1
     "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
-(defvar config-toggle-option-regexp
-  (rx (multiword-option config-toggle-keywords)))
 (defvar config-toggle-option
-  (tintin-option :regexp config-toggle-option-regexp :override 'keep))
-(defvar config-toggle-option-final-regexp
-  (rx (multiword-option config-toggle-keywords ";")))
+  (tintin-option :regexp (rx (multiword-option config-toggle-keywords))))
 (defvar config-toggle-option-final
-  (tintin-option :regexp config-toggle-option-final-regexp :override 'keep))
+  (tintin-option :regexp (rx (multiword-option config-toggle-keywords ";"))))
 
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
     "random seed" 2 "tab width" 1))
-(defvar config-standard-option-regexp
-  (rx (multiword-option config-standard-keywords)))
 (defvar config-standard-option
-  (tintin-option :regexp config-standard-option-regexp :override 'keep))
-(defvar config-standard-option-final-regexp
-  (rx (multiword-option config-standard-keywords ";")))
+  (tintin-option :regexp (rx (multiword-option config-standard-keywords))))
 (defvar config-standard-option-final
-  (tintin-option :regexp config-standard-option-final-regexp :override 'keep))
+  (tintin-option :regexp (rx (multiword-option config-standard-keywords ";"))))
 
 (defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
-(defvar config-char-option-regexp
-  (rx (multiword-option config-char-keywords)))
 (defvar config-char-option
-  (tintin-option :regexp config-char-option-regexp :override 'keep))
-(defvar config-char-option-final-regexp
-  (rx (multiword-option config-char-keywords ";")))
+  (tintin-option :regexp (rx (multiword-option config-char-keywords))))
 (defvar config-char-option-final
-  (tintin-option :regexp config-char-option-final-regexp :override 'keep))
-(defvar settable-character-regexp
-  (rx (group (optionally-braced sequence (not (any "{};"))))))
-(defvar settable-character
-  (tintin-argument :regexp settable-character-regexp :override 'keep))
+  (tintin-option :regexp (rx (multiword-option config-char-keywords ";"))))
 
 (setq tintin-font-lock-keywords (append
 

@@ -1,0 +1,132 @@
+«x:#no Tests for the #daemon command;»
+
+«b:#daemon»«D:;»                                «x:#no || bare daemon with semicolon;»
+«b:#daemon»                                 «x:#no || bare daemon without semicolon;»
+«b:#daemo»                                  «x:#no || five character #daemon;»
+«b:#daem»                                   «x:#no || four character #daemon;»
+«b:#dae»                                    «x:#no || three character #daemon;»
+«b:#da»                                     «x:#no || two character #daemon;»
+«b:#d»                                      «x:#no || one character #daemon;»
+#daemons                                «x:#no || too many characters don't match;»
+«b:#daemon» nonsense«D:;»                       «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for options;»
+«b:#daemon» «D:{»«t:attach»«D:}» «D:{»name«D:};»                «x:#no || braced option & braced argument;»
+«b:#daemon» «D:{»«t:attach»«D:}» «D:{»name«D:}»                 «x:#no || braced option & braced argument without semicolon;»
+«b:#daemon» «D:{»«t:attach»«D:}{»name«D:};»                 «x:#no || braced option & braced argument without space;»
+«b:#daemon» «D:{»«t:attach»«D:}» name«D:;»                  «x:#no || braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:attach»«D:}»name«D:;»                   «x:#no || braced option & unbraced argument without space;»
+«b:#daemon» «t:attach» «D:{»name«D:};»                  «x:#no || unbraced option & braced argument;»
+«b:#daemon» attach«D:{»name«D:};»                   «x:#no || unbraced option & braced argument needs space;»
+«b:#daemon» «t:attach» name«D:;»                    «x:#no || unbraced option & unbraced argument;»
+«b:#daemon» «D:{»«t:attach»«D:};»                       «x:#no || braced option without argument;»
+«b:#daemon» «D:{»«t:attach»«D:}»                        «x:#no || braced option without argument or semicolon;»
+«b:#daemon» «t:attach»«D:;»                         «x:#no || unbraced option without argument;»
+«b:#daemon» «t:attach»                          «x:#no || unbraced option without argument or semicolon;»
+«b:#daemon» «D:{»«t:a»«D:}» «D:{»name«D:};»                     «x:#no || short braced option & braced argument;»
+«b:#daemon» «D:{»«t:a»«D:}» «D:{»name«D:}»                      «x:#no || short braced option & argument no semicolon;»
+«b:#daemon» «D:{»«t:a»«D:}{»name«D:};»                      «x:#no || short braced option & argument without space;»
+«b:#daemon» «D:{»«t:a»«D:}» name«D:;»                       «x:#no || short braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:a»«D:}»name«D:;»                        «x:#no || short braced option & unbraced argument no space;»
+«b:#daemon» «t:a» «D:{»name«D:};»                       «x:#no || short unbraced option & braced argument;»
+«b:#daemon» a«D:{»name«D:};»                        «x:#no || short unbraced option & braced argument needs space;»
+«b:#daemon» «D:{»«t:a»«D:};»                            «x:#no || short braced option without argument;»
+«b:#daemon» «D:{»«t:a»«D:}»                             «x:#no || short braced option without argument or semicolon;»
+«b:#daemon» «t:a»«D:;»                              «x:#no || short unbraced option without argument;»
+«b:#daemon» «t:a»                               «x:#no || short unbraced option without argument or semicolon;»
+
+«b:#daemon» «D:{»«t:detach»«D:}» «D:{»name«D:};»                «x:#no || braced option & braced argument;»
+«b:#daemon» «D:{»«t:detach»«D:}» «D:{»name«D:}»                 «x:#no || braced option & braced argument without semicolon;»
+«b:#daemon» «D:{»«t:detach»«D:}{»name«D:};»                 «x:#no || braced option & braced argument without space;»
+«b:#daemon» «D:{»«t:detach»«D:}» name«D:;»                  «x:#no || braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:detach»«D:}»name«D:;»                   «x:#no || braced option & unbraced argument without space;»
+«b:#daemon» «t:detach» «D:{»name«D:};»                  «x:#no || unbraced option & braced argument;»
+«b:#daemon» detach«D:{»name«D:};»                   «x:#no || unbraced option & braced argument needs space;»
+«b:#daemon» «t:detach» name«D:;»                    «x:#no || unbraced option & unbraced argument;»
+«b:#daemon» «D:{»«t:detach»«D:};»                       «x:#no || braced option without argument;»
+«b:#daemon» «D:{»«t:detach»«D:}»                        «x:#no || braced option without argument or semicolon;»
+«b:#daemon» «t:detach»«D:;»                         «x:#no || unbraced option without argument;»
+«b:#daemon» «t:detach»                          «x:#no || unbraced option without argument or semicolon;»
+«b:#daemon» «D:{»«t:d»«D:}» «D:{»name«D:};»                     «x:#no || short braced option & braced argument;»
+«b:#daemon» «D:{»«t:d»«D:}» «D:{»name«D:}»                      «x:#no || short braced option & argument no semicolon;»
+«b:#daemon» «D:{»«t:d»«D:}{»name«D:};»                      «x:#no || short braced option & argument without space;»
+«b:#daemon» «D:{»«t:d»«D:}» name«D:;»                       «x:#no || short braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:d»«D:}»name«D:;»                        «x:#no || short braced option & unbraced argument no space;»
+«b:#daemon» «t:d» «D:{»name«D:};»                       «x:#no || short unbraced option & braced argument;»
+«b:#daemon» d«D:{»name«D:};»                        «x:#no || short unbraced option & braced argument needs space;»
+«b:#daemon» «D:{»«t:d»«D:};»                            «x:#no || short braced option without argument;»
+«b:#daemon» «D:{»«t:d»«D:}»                             «x:#no || short braced option without argument or semicolon;»
+«b:#daemon» «t:d»«D:;»                              «x:#no || short unbraced option without argument;»
+«b:#daemon» «t:d»                               «x:#no || short unbraced option without argument or semicolon;»
+
+«b:#daemon» «D:{»«t:input»«D:}» «D:{»name«D:};»                 «x:#no || braced option & braced argument;»
+«b:#daemon» «D:{»«t:input»«D:}» «D:{»name«D:}»                  «x:#no || braced option & braced argument without semicolon;»
+«b:#daemon» «D:{»«t:input»«D:}{»name«D:};»                  «x:#no || braced option & braced argument without space;»
+«b:#daemon» «D:{»«t:input»«D:}» name«D:;»                   «x:#no || braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:input»«D:}»name«D:;»                    «x:#no || braced option & unbraced argument without space;»
+«b:#daemon» «t:input» «D:{»name«D:};»                   «x:#no || unbraced option & braced argument;»
+«b:#daemon» input«D:{»name«D:};»                    «x:#no || unbraced option & braced argument needs space;»
+«b:#daemon» «t:input» name«D:;»                     «x:#no || unbraced option & unbraced argument;»
+«b:#daemon» «D:{»«t:input»«D:};»                        «x:#no || braced option without argument;»
+«b:#daemon» «D:{»«t:input»«D:}»                         «x:#no || braced option without argument or semicolon;»
+«b:#daemon» «t:input»«D:;»                          «x:#no || unbraced option without argument;»
+«b:#daemon» «t:input»                           «x:#no || unbraced option without argument or semicolon;»
+«b:#daemon» «D:{»«t:i»«D:}» «D:{»name«D:};»                     «x:#no || short braced option & braced argument;»
+«b:#daemon» «D:{»«t:i»«D:}» «D:{»name«D:}»                      «x:#no || short braced option & argument no semicolon;»
+«b:#daemon» «D:{»«t:i»«D:}{»name«D:};»                      «x:#no || short braced option & argument without space;»
+«b:#daemon» «D:{»«t:i»«D:}» name«D:;»                       «x:#no || short braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:i»«D:}»name«D:;»                        «x:#no || short braced option & unbraced argument no space;»
+«b:#daemon» «t:i» «D:{»name«D:};»                       «x:#no || short unbraced option & braced argument;»
+«b:#daemon» i«D:{»name«D:};»                        «x:#no || short unbraced option & braced argument needs space;»
+«b:#daemon» «D:{»«t:i»«D:};»                            «x:#no || short braced option without argument;»
+«b:#daemon» «D:{»«t:i»«D:}»                             «x:#no || short braced option without argument or semicolon;»
+«b:#daemon» «t:i»«D:;»                              «x:#no || short unbraced option without argument;»
+«b:#daemon» «t:i»                               «x:#no || short unbraced option without argument or semicolon;»
+
+«b:#daemon» «D:{»«t:kill»«D:}» «D:{»name«D:};»                  «x:#no || braced option & braced argument;»
+«b:#daemon» «D:{»«t:kill»«D:}» «D:{»name«D:}»                   «x:#no || braced option & braced argument without semicolon;»
+«b:#daemon» «D:{»«t:kill»«D:}{»name«D:};»                   «x:#no || braced option & braced argument without space;»
+«b:#daemon» «D:{»«t:kill»«D:}» name«D:;»                    «x:#no || braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:kill»«D:}»name«D:;»                     «x:#no || braced option & unbraced argument without space;»
+«b:#daemon» «t:kill» «D:{»name«D:};»                    «x:#no || unbraced option & braced argument;»
+«b:#daemon» kill«D:{»name«D:};»                     «x:#no || unbraced option & braced argument needs space;»
+«b:#daemon» «t:kill» name«D:;»                      «x:#no || unbraced option & unbraced argument;»
+«b:#daemon» «D:{»«t:kill»«D:};»                         «x:#no || braced option without argument;»
+«b:#daemon» «D:{»«t:kill»«D:}»                          «x:#no || braced option without argument or semicolon;»
+«b:#daemon» «t:kill»«D:;»                           «x:#no || unbraced option without argument;»
+«b:#daemon» «t:kill»                            «x:#no || unbraced option without argument or semicolon;»
+«b:#daemon» «D:{»«t:k»«D:}» «D:{»name«D:};»                     «x:#no || short braced option & braced argument;»
+«b:#daemon» «D:{»«t:k»«D:}» «D:{»name«D:}»                      «x:#no || short braced option & argument no semicolon;»
+«b:#daemon» «D:{»«t:k»«D:}{»name«D:};»                      «x:#no || short braced option & argument without space;»
+«b:#daemon» «D:{»«t:k»«D:}» name«D:;»                       «x:#no || short braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:k»«D:}»name«D:;»                        «x:#no || short braced option & unbraced argument no space;»
+«b:#daemon» «t:k» «D:{»name«D:};»                       «x:#no || short unbraced option & braced argument;»
+«b:#daemon» k«D:{»name«D:};»                        «x:#no || short unbraced option & braced argument needs space;»
+«b:#daemon» «D:{»«t:k»«D:};»                            «x:#no || short braced option without argument;»
+«b:#daemon» «D:{»«t:k»«D:}»                             «x:#no || short braced option without argument or semicolon;»
+«b:#daemon» «t:k»«D:;»                              «x:#no || short unbraced option without argument;»
+«b:#daemon» «t:k»                               «x:#no || short unbraced option without argument or semicolon;»
+
+«b:#daemon» «D:{»«t:list»«D:}» «D:{»name«D:};»                  «x:#no || braced option & braced argument;»
+«b:#daemon» «D:{»«t:list»«D:}» «D:{»name«D:}»                   «x:#no || braced option & braced argument without semicolon;»
+«b:#daemon» «D:{»«t:list»«D:}{»name«D:};»                   «x:#no || braced option & braced argument without space;»
+«b:#daemon» «D:{»«t:list»«D:}» name«D:;»                    «x:#no || braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:list»«D:}»name«D:;»                     «x:#no || braced option & unbraced argument without space;»
+«b:#daemon» «t:list» «D:{»name«D:};»                    «x:#no || unbraced option & braced argument;»
+«b:#daemon» list«D:{»name«D:};»                     «x:#no || unbraced option & braced argument needs space;»
+«b:#daemon» «t:list» name«D:;»                      «x:#no || unbraced option & unbraced argument;»
+«b:#daemon» «D:{»«t:list»«D:};»                         «x:#no || braced option without argument;»
+«b:#daemon» «D:{»«t:list»«D:}»                          «x:#no || braced option without argument or semicolon;»
+«b:#daemon» «t:list»«D:;»                           «x:#no || unbraced option without argument;»
+«b:#daemon» «t:list»                            «x:#no || unbraced option without argument or semicolon;»
+«b:#daemon» «D:{»«t:l»«D:}» «D:{»name«D:};»                     «x:#no || short braced option & braced argument;»
+«b:#daemon» «D:{»«t:l»«D:}» «D:{»name«D:}»                      «x:#no || short braced option & argument no semicolon;»
+«b:#daemon» «D:{»«t:l»«D:}{»name«D:};»                      «x:#no || short braced option & argument without space;»
+«b:#daemon» «D:{»«t:l»«D:}» name«D:;»                       «x:#no || short braced option & unbraced argument;»
+«b:#daemon» «D:{»«t:l»«D:}»name«D:;»                        «x:#no || short braced option & unbraced argument no space;»
+«b:#daemon» «t:l» «D:{»name«D:};»                       «x:#no || short unbraced option & braced argument;»
+«b:#daemon» l«D:{»name«D:};»                        «x:#no || short unbraced option & braced argument needs space;»
+«b:#daemon» «D:{»«t:l»«D:};»                            «x:#no || short braced option without argument;»
+«b:#daemon» «D:{»«t:l»«D:}»                             «x:#no || short braced option without argument or semicolon;»
+«b:#daemon» «t:l»«D:;»                              «x:#no || short unbraced option without argument;»
+«b:#daemon» «t:l»                               «x:#no || short unbraced option without argument or semicolon;»

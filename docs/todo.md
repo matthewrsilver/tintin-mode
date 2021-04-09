@@ -13,7 +13,6 @@
  * Tests for individual functions in tintin-commands.el
 
 ### Commands that need work
- * The #daemon command has modes
  * The #debug command has a toggle with "log" as well
  * The #edit command has a number of options
  * The #format command is in good shape but:

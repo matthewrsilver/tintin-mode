@@ -28,6 +28,9 @@
 (ert-deftest tintin-font-lock-cursor-command-test ()
   (should (tintin-font-lock-test-file "commands/cursor_command.tt")))
 
+(ert-deftest tintin-font-lock-daemon-command-test ()
+  (should (tintin-font-lock-test-file "commands/daemon_command.tt")))
+
 (ert-deftest tintin-font-lock-line-command-test ()
   (should (tintin-font-lock-test-file "commands/line_command.tt")))
 

@@ -272,7 +272,7 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "commands" 2   "daemon" 3     "detatch" 0
+  '( "all" 0        "commands" 2   "detatch" 0
      "debug" 0      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "gts" 0        "help" 0       "history" 4
      "ignore" 3     "info" 3       "kill" 0       "log" 0
@@ -376,6 +376,11 @@
     "tab" 1 "tab l s backward" 5 "tab l s forward" 9))
 (defvar cursor-option
   (tintin-option :regexp (rx (multiword-option cursor-option-keywords ";"))))
+
+;; Special handling for the #daemon command and its subcommands
+(defvar daemon-command-list '("daemon" 1))
+(defvar daemon-option
+  (tintin-option :vals '("attach" 1 "detach" 1 "input" 1 "kill" 1 "list" 1)))
 
 (setq tintin-font-lock-keywords (append
 
@@ -525,6 +530,11 @@
   (let ((cursor-command (tintin-command :cmds 'cursor-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd cursor-command
                         '(cursor-option)))
+
+  ;; Highlight #daemon command
+  (let ((daemon-command (tintin-command :cmds 'daemon-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd daemon-command
+                        '(daemon-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

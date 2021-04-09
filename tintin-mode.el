@@ -339,28 +339,17 @@
 
 ;; Special handling for the #config command and its subcommands
 (defvar config-command-list '("config" 3))
-(rx-define config-option-rx (keyword-list)
-           (regexp (eval
-                    (regexp-opt (initial-substrings-list keyword-list)))))
-(rx-define config-option-multiword (keyword-list firstword-list &rest term)
-           (group (or (: "{"
-                         (config-option-rx keyword-list)
-                         (or "}" eol))
-                      (: (config-option-rx firstword-list)
-                         (or blank eol (eval (or term regexp-unmatchable)))))))
+
 (defvar config-toggle-keywords
   '("child lock" 3 "color patch" 7 "command echo" 9 "convert meta" 4 "debug telnet" 1
     "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
-(defvar config-toggle-firstwords
-  '("child" 3 "convert" 4 "debug" 1 "inheritance" 1 "mccp" 1 "mouse" 2 "screen" 1
-    "scroll" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
 (defvar config-toggle-option-regexp
-  (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords)))
+  (rx (multiword-option config-toggle-keywords)))
 (defvar config-toggle-option
   (tintin-option :regexp config-toggle-option-regexp :override 'keep))
 (defvar config-toggle-option-final-regexp
-  (rx (config-option-multiword config-toggle-keywords config-toggle-firstwords ";")))
+  (rx (multiword-option config-toggle-keywords ";")))
 (defvar config-toggle-option-final
   (tintin-option :regexp config-toggle-option-final-regexp :override 'keep))
 
@@ -368,26 +357,22 @@
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
     "random seed" 2 "tab width" 1))
-(defvar config-standard-firstwords
-  '("auto" 1 "buffer" 1 "charset" 1 "color" 2 "command" 3 "connect" 3 "history" 1
-    "log" 1 "packet" 1 "random" 2 "tab" 1))
 (defvar config-standard-option-regexp
-  (rx (config-option-multiword config-standard-keywords config-standard-firstwords)))
+  (rx (multiword-option config-standard-keywords)))
 (defvar config-standard-option
   (tintin-option :regexp config-standard-option-regexp :override 'keep))
 (defvar config-standard-option-final-regexp
-  (rx (config-option-multiword config-standard-keywords config-standard-firstwords ";")))
+  (rx (multiword-option config-standard-keywords ";")))
 (defvar config-standard-option-final
   (tintin-option :regexp config-standard-option-final-regexp :override 'keep))
 
 (defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
-(defvar config-char-firstwords '("repeat" 2 "tintin" 2))
 (defvar config-char-option-regexp
-  (rx (config-option-multiword config-char-keywords config-char-firstwords)))
+  (rx (multiword-option config-char-keywords)))
 (defvar config-char-option
   (tintin-option :regexp config-char-option-regexp :override 'keep))
 (defvar config-char-option-final-regexp
-  (rx (config-option-multiword config-char-keywords config-char-firstwords ";")))
+  (rx (multiword-option config-char-keywords ";")))
 (defvar config-char-option-final
   (tintin-option :regexp config-char-option-final-regexp :override 'keep))
 (defvar settable-character-regexp

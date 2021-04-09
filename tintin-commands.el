@@ -71,6 +71,8 @@
   "Join strings in LST with SEP between each, returning the result."
   (mapconcat 'identity lst sep))
 
+(rx-define rx-or (elements) (regexp (eval (string-join regexps "\\|"))))
+
 
 ;; Set up the font faces and stand up a few tintin-argument instances that
 ;; enable us to concisely define many commands.
@@ -101,7 +103,7 @@
 (rx-define simple-func-pattern
   (: "@" var-chars "{" (* (or (not "}") tintin-variable)) (or "}" eol)))
 
-;; Regular expressions that allow
+;; Regular expressions that match optionally braced variable names
 (rx-define braced-content
   (* (or tintin-variable simple-func-pattern (not (any "}\n")))))
 (rx-define variable-name-for-bracing
@@ -124,13 +126,13 @@
 
 (rx-define tintin-argument (final) (group (or "{}"
   (: "{" braced-content (or "}" eol))
-  (: capture-chars (or (any "\s\t" final) eol)))))
+  (: capture-chars (or (any blank final) eol)))))
 (defvar tintin-arg (rx (tintin-argument "")))
 (defvar tintin-final-arg (rx (tintin-argument ";")))
 
 (rx-define tintin-variable-argument (final) (group (or "{}"
   (: "{" variable-name-for-bracing (or "}" eol))
-  (: capture-chars (or (any "\s\t" final) eol)))))
+  (: capture-chars (or (any blank final) eol)))))
 (defvar tintin-var-arg (rx (tintin-variable-argument "")))
 (defvar tintin-final-var-arg (rx (tintin-variable-argument ";")))
 
@@ -156,8 +158,29 @@ an integer describing the minimum length substring to be generated, per
 All lists of initial substrings are appended together to create a single list
 for all words in WORD-DATA."
   (if (> (length word-data) 0)
-    (append (apply 'initial-substrings (last word-data 2))
-            (initial-substrings-list (butlast word-data 2)))))
+      (append (apply #'initial-substrings (last word-data 2))
+              (initial-substrings-list (butlast word-data 2)))))
+
+(defun firstword-matcher (word &optional min-len)
+  "Return a WORD and MIN-LEN pair with only the first word if relevant.
+When the MIN-LEN is greater than the length of the first word in WORD then
+the pair is not suitable for matching an empty list is returned"
+  (let* ((min-len (if (= min-len 0) (length word) min-len))
+         (firstword (car (split-string word))))
+    (if (>= (length firstword) min-len) `(,firstword ,min-len) '() )))
+
+(defun firstwords-list (word-data)
+  "Return a list of single-word and minimum character pairs from WORD-DATA.
+Pairs of elements comprise WORD-DATA; the first character element is a string
+with a word whose initial substrings should be computed, and the second is
+and integer describing the minimum length substring to be generated, per
+`initial-substrings'. Successive pairs describe new words and minimum lengths.
+This function assesses each pair and identifies those with multi-word strings
+with minimum lengths less than the number of characters in the first string.
+When such a pair is encountered, it is included in the list that is returned."
+  (if (> (length word-data) 0)
+      (append (firstwords-list (butlast word-data 2))
+              (apply #'firstword-matcher (last word-data 2)))))
 
 (defun build-tintin-command-regexp (word-data)
   "Return a regular expression that matches words in WORD-DATA.
@@ -175,18 +198,17 @@ For example, the following progression from WORD-DATA to words to regexp:
 
 which is wrapped in paretheses to create a capture group. The configurable
 `tintin-command-character' is prepended, and the regular expression returned."
-  (rx (group tintin-command-character
-             (regexp (eval (regexp-opt (initial-substrings-list word-data)))))))
+  (rx (group tintin-command-character (substrings word-data))))
 
 (defun build-tintin-arg-regexp (value-list &rest others)
   "Return a regular expression matching all in VALUES-LIST or OTHERS.
 Elements of VALUE-LIST are strings with possible values that should be matched
 in completion. Optionally, additional arguments can be provided in OTHERS that
 may be matches as well, though these are complete regular expressions."
-  (let* ((brace-or-space "\\(?:[}\s\t;]\\|$\\)")
-         (arg-regexp (regexp-opt (initial-substrings-list value-list)))
-         (regexps (cons arg-regexp others)))
-    (concat "{?\\(" (string-join regexps "\\|") "\\)" brace-or-space)))
+  (rx-let ((brace-or-space (or (any "};" blank) eol)))
+    (let* ((arg-regexp (regexp-opt (initial-substrings-list value-list)))
+           (regexps (cons arg-regexp others)))
+      (rx (? "{") (group (rx-or regexps)) brace-or-space))))
 
 ;; Functions to build up seach-based fontificators
 (defun argument-to-regexp (argument)
@@ -294,5 +316,14 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
   (build-tintin-arg-regexp '("off" 2 "on" 1) (rx tintin-variable)))
 (defvar toggle-value
   (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
+
+;; Regular expressions for matching initial substrings associated with command options
+(rx-define substrings (keyword-list)
+  (regexp (eval (regexp-opt (initial-substrings-list keyword-list)))))
+
+(rx-define multiword-option (keyword-list &rest term)
+  (group (or (: "{" (substrings keyword-list) (or "}" eol))
+             (: (substrings (firstwords-list keyword-list))
+                (or blank eol (eval (or term regexp-unmatchable)))))))
 
 (provide 'tintin-commands)

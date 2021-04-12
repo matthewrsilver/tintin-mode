@@ -71,9 +71,6 @@
   "Join strings in LST with SEP between each, returning the result."
   (mapconcat 'identity lst sep))
 
-(rx-define rx-or (elements) (regexp (eval (string-join regexps "\\|"))))
-
-
 ;; Set up the font faces and stand up a few tintin-argument instances that
 ;; enable us to concisely define many commands.
 (defface tintin-ansi-face '((t (:foreground "#c95d5d"))) "*Face for ansi color codes.")
@@ -185,10 +182,11 @@ When such a pair is encountered, it is included in the list that is returned."
       (append (firstwords-list (butlast word-data 2))
               (apply #'firstword-matcher (last word-data 2)))))
 
-(rx-define multiword-option (keyword-list &rest term)
-  (group (or (: "{" (substrings keyword-list) (or "}" eol))
+(rx-define multiword-option (keyword-list)
+  (group (or (: "{" (substrings keyword-list) (or "}" ";" eol))
              (: (substrings (firstwords-list keyword-list))
-                (or blank eol (eval (or term regexp-unmatchable)))))))
+                (or blank eol ";" ))
+             tintin-variable)))
 
 (defun build-tintin-command-regexp (word-data)
   "Return a regular expression that matches words in WORD-DATA.
@@ -207,16 +205,6 @@ For example, the following progression from WORD-DATA to words to regexp:
 which is wrapped in paretheses to create a capture group. The configurable
 `tintin-command-character' is prepended, and the regular expression returned."
   (rx (group tintin-command-character (substrings word-data))))
-
-(defun build-tintin-arg-regexp (value-list &rest others)
-  "Return a regular expression matching all in VALUES-LIST or OTHERS.
-Elements of VALUE-LIST are strings with possible values that should be matched
-in completion. Optionally, additional arguments can be provided in OTHERS that
-may be matches as well, though these are complete regular expressions."
-  (rx-let ((brace-or-space (or (any "};" blank) eol)))
-    (let* ((arg-regexp (regexp-opt (initial-substrings-list value-list)))
-           (regexps (cons arg-regexp others)))
-      (rx (? "{") (group (rx-or regexps)) brace-or-space))))
 
 ;; Functions to build up seach-based fontificators
 (defun argument-to-regexp (argument)
@@ -300,7 +288,7 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 (cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
   "Custom initializer for the `tintin-argument' class."
   (let* ((value-list (oref obj vals))
-         (values-regexp (build-tintin-arg-regexp value-list)))
+         (values-regexp (rx (multiword-option value-list))))
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)
@@ -321,10 +309,9 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 (setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
 (setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
 
-(defvar toggle-constant-values
-  (build-tintin-arg-regexp '("off" 2 "on" 1) (rx tintin-variable)))
+(defvar toggle-constant-values '("off" 2 "on" 1))
 (defvar toggle-value
-  (tintin-argument :regexp toggle-constant-values :face 'font-lock-constant-face))
+  (tintin-option :vals toggle-constant-values :face 'font-lock-constant-face))
 
 (defvar settable-character-regexp
   (rx (group (optionally-braced sequence (not (any "{};"))))))

@@ -4,7 +4,10 @@
    * consider a :final slot
  * variables may start with a 0, but allowing this conflicts with pattern matchers...
    * maybe a way out: variables can't be _only_ numbers!
- * improve images in READMEx
+ * improve images in README
+ * options may have a semicolon after them always, but this means "on" is highlighted here:
+     #bell flash; on;
+   which is not ok
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands

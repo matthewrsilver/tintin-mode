@@ -28,16 +28,16 @@
 «k:#class» cls«D:{»open«D:};»                       «x:#no || spaces are needed after args without braces;»
 «k:#class» clsopen«D:;»                         «x:#no || spaces are needed after args without braces;»
 
-«k:#class» «v:cls »«t:read» filename«D:;»               «x:#no || read with various braces/spacings;»
-«k:#class» «v:cls »«t:read» «D:{»filename«D:};»             «x:#no || read with various braces/spacings;»
+«k:#class» «v:cls »«t:read »filename«D:;»               «x:#no || read with various braces/spacings;»
+«k:#class» «v:cls »«t:read »«D:{»filename«D:};»             «x:#no || read with various braces/spacings;»
 «k:#class» cls read«D:{»filename«D:};»              «x:#no || spaces are needed after args without braces;»
 «k:#class» cls readfilename«D:;»                «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«v:cls»«D:}» «t:read» filename«D:;»             «x:#no || read with various braces/spacings;»
-«k:#class» «D:{»«v:cls»«D:}» «t:read» «D:{»filename«D:};»           «x:#no || read with various braces/spacings;»
+«k:#class» «D:{»«v:cls»«D:}» «t:read »filename«D:;»             «x:#no || read with various braces/spacings;»
+«k:#class» «D:{»«v:cls»«D:}» «t:read »«D:{»filename«D:};»           «x:#no || read with various braces/spacings;»
 «k:#class» «D:{»cls«D:}» read«D:{»filename«D:};»            «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}» readfilename«D:;»              «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«v:cls»«D:}»«t:read» filename«D:;»              «x:#no || read with various braces/spacings;»
-«k:#class» «D:{»«v:cls»«D:}»«t:read» «D:{»filename«D:};»            «x:#no || read with various braces/spacings;»
+«k:#class» «D:{»«v:cls»«D:}»«t:read »filename«D:;»              «x:#no || read with various braces/spacings;»
+«k:#class» «D:{»«v:cls»«D:}»«t:read »«D:{»filename«D:};»            «x:#no || read with various braces/spacings;»
 «k:#class» «D:{»cls«D:}»read«D:{»filename«D:};»             «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}»readfilename«D:;»               «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»«v:cls»«D:}{»«t:read»«D:}» filename«D:;»            «x:#no || read with various braces/spacings;»
@@ -61,16 +61,16 @@
 «k:#class» clsread«D:{»filename«D:};»               «x:#no || spaces are needed after args without braces;»
 «k:#class» clsreadfilename«D:;»                 «x:#no || spaces are needed after args without braces;»
 
-«k:#class» «:tintin-variable-usage-face:cls »«t:assign» argument«D:;»             «x:#no || assign with various braces/spacings;»
-«k:#class» «:tintin-variable-usage-face:cls »«t:assign» «D:{»argument«D:};»           «x:#no || assign with various braces/spacings;»
+«k:#class» «:tintin-variable-usage-face:cls »«t:assign »argument«D:;»             «x:#no || assign with various braces/spacings;»
+«k:#class» «:tintin-variable-usage-face:cls »«t:assign »«D:{»argument«D:};»           «x:#no || assign with various braces/spacings;»
 «k:#class» cls assign«D:{»argument«D:};»            «x:#no || spaces are needed after args without braces;»
 «k:#class» cls assignargument«D:;»              «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:assign» argument«D:;»           «x:#no || assign with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:assign» «D:{»argument«D:};»         «x:#no || assign with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:assign »argument«D:;»           «x:#no || assign with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:assign »«D:{»argument«D:};»         «x:#no || assign with various braces/spacings;»
 «k:#class» «D:{»cls«D:}» assign«D:{»argument«D:};»          «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}» assignargument«D:;»            «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:assign» argument«D:;»            «x:#no || assign with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:assign» «D:{»argument«D:};»          «x:#no || assign with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:assign »argument«D:;»            «x:#no || assign with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:assign »«D:{»argument«D:};»          «x:#no || assign with various braces/spacings;»
 «k:#class» «D:{»cls«D:}»assign«D:{»argument«D:};»           «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}»assignargument«D:;»             «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}{»«t:assign»«D:}» argument«D:;»          «x:#no || assign with various braces/spacings;»
@@ -112,9 +112,9 @@
 «k:#class» cls«D:{»save«D:};»                       «x:#no || spaces are needed after args without braces;»
 «k:#class» clssave«D:;»                         «x:#no || spaces are needed after args without braces;»
 
-«k:#class» «:tintin-variable-usage-face:cls »«t:write» «D:{»filename«D:};»            «x:#no || write with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:write» «D:{»filename«D:};»          «x:#no || write with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:write» «D:{»filename«D:};»           «x:#no || write with various braces/spacings;»
+«k:#class» «:tintin-variable-usage-face:cls »«t:write »«D:{»filename«D:};»            «x:#no || write with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:write »«D:{»filename«D:};»          «x:#no || write with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:write »«D:{»filename«D:};»           «x:#no || write with various braces/spacings;»
 «k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}{»«t:write»«D:}» «D:{»filename«D:};»         «x:#no || write with various braces/spacings;»
 «k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «D:{»«t:write»«D:}» «D:{»filename«D:};»        «x:#no || write with various braces/spacings;»
 «k:#class» «:tintin-variable-usage-face:cls »«D:{»«t:write»«D:}» «D:{»filename«D:};»          «x:#no || write with various braces/spacings;»
@@ -148,16 +148,16 @@
 «k:#class» cls«D:{»kill«D:};»                       «x:#no || spaces are needed after args without braces;»
 «k:#class» clskill«D:;»                         «x:#no || spaces are needed after args without braces;»
 
-«k:#class» «:tintin-variable-usage-face:cls »«t:size» «v:result»«D:;»                 «x:#no || size with various braces/spacings;»
-«k:#class» «:tintin-variable-usage-face:cls »«t:size» «D:{»«v:result»«D:};»               «x:#no || size with various braces/spacings;»
+«k:#class» «:tintin-variable-usage-face:cls »«t:size »«v:result»«D:;»                 «x:#no || size with various braces/spacings;»
+«k:#class» «:tintin-variable-usage-face:cls »«t:size »«D:{»«v:result»«D:};»               «x:#no || size with various braces/spacings;»
 «k:#class» cls size«D:{»result«D:};»                «x:#no || spaces are needed after args without braces;»
 «k:#class» cls sizeresult«D:;»                  «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:size» «v:result»«D:;»               «x:#no || size with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:size» «D:{»«v:result»«D:};»             «x:#no || size with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:size »«v:result»«D:;»               «x:#no || size with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}» «t:size »«D:{»«v:result»«D:};»             «x:#no || size with various braces/spacings;»
 «k:#class» «D:{»cls«D:}» size«D:{»result«D:};»              «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}» sizeresult«D:;»                «x:#no || spaces are needed after args without braces;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:size» «v:result»«D:;»                «x:#no || size with various braces/spacings;»
-«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:size» «D:{»«v:result»«D:};»              «x:#no || size with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:size »«v:result»«D:;»                «x:#no || size with various braces/spacings;»
+«k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}»«t:size »«D:{»«v:result»«D:};»              «x:#no || size with various braces/spacings;»
 «k:#class» «D:{»cls«D:}»size«D:{»result«D:};»               «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»cls«D:}»sizeresult«D:;»                 «x:#no || spaces are needed after args without braces;»
 «k:#class» «D:{»«:tintin-variable-usage-face:cls»«D:}{»«t:size»«D:}» «v:result»«D:;»              «x:#no || size with various braces/spacings;»

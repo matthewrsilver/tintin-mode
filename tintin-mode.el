@@ -344,25 +344,19 @@
   '("child lock" 3 "color patch" 7 "command echo" 9 "convert meta" 4 "debug telnet" 1
     "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
-(defvar config-toggle-option
-  (tintin-option :regexp (rx (multiword-option config-toggle-keywords))))
-(defvar config-toggle-option-final
-  (tintin-option :regexp (rx (multiword-option config-toggle-keywords ";"))))
+(defvar config-toggle-option (tintin-option :vals config-toggle-keywords))
+(defvar config-toggle-option-final (tintin-option :vals config-toggle-keywords))
 
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
     "random seed" 2 "tab width" 1))
-(defvar config-standard-option
-  (tintin-option :regexp (rx (multiword-option config-standard-keywords))))
-(defvar config-standard-option-final
-  (tintin-option :regexp (rx (multiword-option config-standard-keywords ";"))))
+(defvar config-standard-option (tintin-option :vals config-standard-keywords))
+(defvar config-standard-option-final (tintin-option :vals config-standard-keywords))
 
 (defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
-(defvar config-char-option
-  (tintin-option :regexp (rx (multiword-option config-char-keywords))))
-(defvar config-char-option-final
-  (tintin-option :regexp (rx (multiword-option config-char-keywords ";"))))
+(defvar config-char-option (tintin-option :vals config-char-keywords))
+(defvar config-char-option-final (tintin-option :vals config-char-keywords))
 
 ;; Special handling for the #cursor command and its subcommands
 (defvar cursor-command-list '("cursor" 2))
@@ -374,8 +368,7 @@
     "home" 2 "info" 1 "insert" 3 "next word" 1 "paste buffer" 1 "prev word" 2
     "redraw input" 1 "screen focus in" 1 "screen focus out" 14 "set" 2 "suspend" 2
     "tab" 1 "tab l s backward" 5 "tab l s forward" 9))
-(defvar cursor-option
-  (tintin-option :regexp (rx (multiword-option cursor-option-keywords ";"))))
+(defvar cursor-option (tintin-option :vals cursor-option-keywords))
 
 ;; Special handling for the #daemon command and its subcommands
 (defvar daemon-command-list '("daemon" 1))

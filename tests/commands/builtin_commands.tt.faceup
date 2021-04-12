@@ -12,69 +12,69 @@
 #bel                                    «x:#no || command is too short;»
 #bellz                                  «x:#no || command is too long;»
 
-«b:#bell» «t:flash» «c:on»«D:;»                         «x:#no || bell flash set to "on";»
-«b:#bell» «t:flas» «c:on»«D:;»                          «x:#no || bell flash works with shortened option;»
-«b:#bell» «t:fla» «c:on»«D:;»                           «x:#no || bell flash works with shortened option;»
-«b:#bell» «t:fl» «c:on»«D:;»                            «x:#no || bell flash works with shortened option;»
+«b:#bell» «t:flash »«c:on»«D:;»                         «x:#no || bell flash set to "on";»
+«b:#bell» «t:flas »«c:on»«D:;»                          «x:#no || bell flash works with shortened option;»
+«b:#bell» «t:fla »«c:on»«D:;»                           «x:#no || bell flash works with shortened option;»
+«b:#bell» «t:fl »«c:on»«D:;»                            «x:#no || bell flash works with shortened option;»
 «b:#bell» f on«D:;»                             «x:#no || bell flash needs at least two characters;»
-«b:#bell» «t:flash» «D:{»«c:on»«D:};»                       «x:#no || bell flash set to "on";»
+«b:#bell» «t:flash »«D:{»«c:on»«D:};»                       «x:#no || bell flash set to "on";»
 «b:#bell» flash«D:{»on«D:};»                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» flashon«D:;»                          «x:#no || spaces are needed after args without braces;»
 «b:#bell» «D:{»«t:flash»«D:}» «c:on»«D:;»                       «x:#no || bell flash set to "on";»
 «b:#bell» «D:{»«t:flash»«D:}» «D:{»«c:on»«D:};»                     «x:#no || bell flash set to "on";»
 «b:#bell» «D:{»«t:flash»«D:}{»«c:on»«D:};»                      «x:#no || bell flash set to "on";»
 «b:#bell» «D:{»«t:flash»«D:}»«c:on»«D:;»                        «x:#no || bell flash set to "on";»
-«b:#bell» «t:flash» «c:off»«D:;»                        «x:#no || bell flash set to "off";»
+«b:#bell» «t:flash »«c:off»«D:;»                        «x:#no || bell flash set to "off";»
 «b:#bell» flash other«D:;»                      «x:#no || bell flash not highlighted if wrong value;»
-«b:#bell» «t:flash» «D:$»«:tintin-variable-usage-face:on_or_off»«D:;»                 «x:#no || variables are acceptable for the toggle;»
-«b:#bell» «t:flash» «D:${»«:tintin-variable-usage-face:on_or_off»«D:};»               «x:#no || braced variables are acceptable for the toggle;»
+«b:#bell» «t:flash »«D:$»«:tintin-variable-usage-face:on_or_off»«D:;»                 «x:#no || variables are acceptable for the toggle;»
+«b:#bell» «t:flash »«D:${»«:tintin-variable-usage-face:on_or_off»«D:};»               «x:#no || braced variables are acceptable for the toggle;»
 
-«b:#bell» «t:focus» «c:on»«D:;»                         «x:#no || bell focus set to "on";»
-«b:#bell» «t:focu» «c:on»«D:;»                          «x:#no || bell focus works with shortened option;»
-«b:#bell» «t:foc» «c:on»«D:;»                           «x:#no || bell focus works with shortened option;»
-«b:#bell» «t:fo» «c:on»«D:;»                            «x:#no || bell focus works with shortened option;»
+«b:#bell» «t:focus »«c:on»«D:;»                         «x:#no || bell focus set to "on";»
+«b:#bell» «t:focu »«c:on»«D:;»                          «x:#no || bell focus works with shortened option;»
+«b:#bell» «t:foc »«c:on»«D:;»                           «x:#no || bell focus works with shortened option;»
+«b:#bell» «t:fo »«c:on»«D:;»                            «x:#no || bell focus works with shortened option;»
 «b:#bell» «D:{»«t:fo»«D:}» «c:on»«D:;»                          «x:#no || bell focus works with shortened braced option;»
 «b:#bell» f on«D:;»                             «x:#no || bell focus needs at laest two characters;»
-«b:#bell» «t:focus» «D:{»«c:on»«D:};»                       «x:#no || bell focus set to "on";»
+«b:#bell» «t:focus »«D:{»«c:on»«D:};»                       «x:#no || bell focus set to "on";»
 «b:#bell» focus«D:{»on«D:};»                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» focuson«D:;»                          «x:#no || spaces are needed after args without braces;»
 «b:#bell» «D:{»«t:focus»«D:}» «c:on»«D:;»                       «x:#no || bell focus set to "on";»
 «b:#bell» «D:{»«t:focus»«D:}» «D:{»«c:on»«D:};»                     «x:#no || bell focus set to "on";»
 «b:#bell» «D:{»«t:focus»«D:}{»«c:on»«D:};»                      «x:#no || bell focus set to "on";»
 «b:#bell» «D:{»«t:focus»«D:}»«c:on»«D:;»                        «x:#no || bell focus set to "on";»
-«b:#bell» «t:focus» «c:off»«D:;»                        «x:#no || bell focus set to "off";»
+«b:#bell» «t:focus »«c:off»«D:;»                        «x:#no || bell focus set to "off";»
 «b:#bell» focus other«D:;»                      «x:#no || bell focus not highlighted if wrong value;»
 
-«b:#bell» «t:margin» «c:on»«D:;»                        «x:#no || bell margin set to "on";»
-«b:#bell» «t:marg» «c:on»«D:;»                          «x:#no || bell margin works with shortened option;»
-«b:#bell» «t:margin» «D:{»«c:on»«D:};»                      «x:#no || bell margin set to "on";»
+«b:#bell» «t:margin »«c:on»«D:;»                        «x:#no || bell margin set to "on";»
+«b:#bell» «t:marg »«c:on»«D:;»                          «x:#no || bell margin works with shortened option;»
+«b:#bell» «t:margin »«D:{»«c:on»«D:};»                      «x:#no || bell margin set to "on";»
 «b:#bell» margin«D:{»on«D:};»                       «x:#no || spaces are needed after args without braces;»
 «b:#bell» marginon«D:;»                         «x:#no || spaces are needed after args without braces;»
 «b:#bell» «D:{»«t:margin»«D:}» «c:on»«D:;»                      «x:#no || bell margin set to "on";»
 «b:#bell» «D:{»«t:margin»«D:}» «D:{»«c:on»«D:};»                    «x:#no || bell margin set to "on";»
 «b:#bell» «D:{»«t:margin»«D:}{»«c:on»«D:};»                     «x:#no || bell margin set to "on";»
 «b:#bell» «D:{»«t:margin»«D:}»«c:on»«D:;»                       «x:#no || bell margin set to "on";»
-«b:#bell» «t:margin» «c:off»«D:;»                       «x:#no || bell margin set to "off";»
+«b:#bell» «t:margin »«c:off»«D:;»                       «x:#no || bell margin set to "off";»
 «b:#bell» margin other«D:;»                     «x:#no || bell margin not highlighted if wrong value;»
 
 «b:#bell» «t:ring»«D:;»                             «x:#no || bell ring is highlighted;»
 «b:#bell» «D:{»«t:ring»«D:};»                           «x:#no || bell ring is highlighted with braces;»
 «b:#bell» «D:{»«t:ring»«D:}»blah«D:;»                       «x:#no || bell ring is highlighted even with another arg;»
-«b:#bell» «t:ring» blah«D:;»                        «x:#no || bell ring is highlighted even with another arg;»
+«b:#bell» «t:ring »blah«D:;»                        «x:#no || bell ring is highlighted even with another arg;»
 «b:#bell» ring«D:{»blah«D:};»                       «x:#no || bell ring is not highlighted with more chars;»
 
 «b:#bell» volume«D:;»                           «x:#no || volume not highlighted without argument;»
-«b:#bell» «t:volume» 1                          «x:#no || volume highlighted with argument and no semicolon;»
-«b:#bell» «t:volume» 1«D:;»                         «x:#no || volume highlighted with argument;»
-«b:#bell» «t:volume» «D:{»1«D:};»                       «x:#no || volume highlighted with argument;»
+«b:#bell» «t:volume »1                          «x:#no || volume highlighted with argument and no semicolon;»
+«b:#bell» «t:volume »1«D:;»                         «x:#no || volume highlighted with argument;»
+«b:#bell» «t:volume »«D:{»1«D:};»                       «x:#no || volume highlighted with argument;»
 «b:#bell» volume«D:{»1«D:};»                        «x:#no || spaces are needed after args without braces;»
 «b:#bell» volume1«D:;»                          «x:#no || spaces are needed after args without braces;»
 «b:#bell» «D:{»«t:volume»«D:}» 1«D:;»                       «x:#no || volume highlighted with argument;»
 «b:#bell» «D:{»«t:volume»«D:}» «D:{»1«D:};»                     «x:#no || volume highlighted with argument;»
 «b:#bell» «D:{»«t:volume»«D:}{»1«D:};»                      «x:#no || volume highlighted with argument;»
-«b:#bell» «t:volume» «D:$»«:tintin-variable-usage-face:x»«D:;»                        «x:#no || variables don't mess things up;»
-«b:#bell» «t:volume» «D:${»«:tintin-variable-usage-face:x»«D:};»                      «x:#no || braced variables don't mess things up;»
-«b:#bell» «t:volume» «D:{${»«:tintin-variable-usage-face:x»«D:}};»                    «x:#no || braced variables in braces don't mess things up;»
+«b:#bell» «t:volume »«D:$»«:tintin-variable-usage-face:x»«D:;»                        «x:#no || variables don't mess things up;»
+«b:#bell» «t:volume »«D:${»«:tintin-variable-usage-face:x»«D:};»                      «x:#no || braced variables don't mess things up;»
+«b:#bell» «t:volume »«D:{${»«:tintin-variable-usage-face:x»«D:}};»                    «x:#no || braced variables in braces don't mess things up;»
 
 «b:#buffer»«D:;»                                «x:#no || terminated bare #buffer command;»
 «b:#buffer»                                 «x:#no || unterminated bare #buffer command;»
@@ -91,37 +91,37 @@
 «b:#buffer» «t:write»«D:;»                          «x:#no || buffer write without arguments;»
 
 «b:#buffer» «t:up»«D:;»                             «x:#no || buffer up without arguments;»
-«b:#buffer» «t:up» 1«D:;»                           «x:#no || buffer end with arguments;»
+«b:#buffer» «t:up »1«D:;»                           «x:#no || buffer end with arguments;»
 «b:#buffer» «t:down»«D:;»                           «x:#no || buffer down without arguments;»
-«b:#buffer» «t:down» 1«D:;»                         «x:#no || buffer down with arguments;»
+«b:#buffer» «t:down »1«D:;»                         «x:#no || buffer down with arguments;»
 
 «b:#buffer» find«D:;»                           «x:#no || bare find not highlighted;»
-«b:#buffer» «t:find» string«D:;»                    «x:#no || buffer find with argument;»
-«b:#buffer» «t:find» 2 string«D:;»                  «x:#no || buffer find with number and argument;»
+«b:#buffer» «t:find »string«D:;»                    «x:#no || buffer find with argument;»
+«b:#buffer» «t:find »2 string«D:;»                  «x:#no || buffer find with number and argument;»
 
 «b:#buffer» «t:info»«D:;»                           «x:#no || bare info;»
 «b:#buffer» «D:{»«t:info»«D:};»                         «x:#no || braced info;»
-«b:#buffer» «t:info»                            «x:#no || unterminated bare info;»
+«b:#buffer» «t:info »                           «x:#no || unterminated bare info;»
 «b:#buffer» «D:{»«t:info»«D:}»                          «x:#no || unterminated braced info;»
-«b:#buffer» «t:info» «t:save» «v:variable»«D:;»             «x:#no || special double option is highlighted correctly;»
-«b:#buffer» «t:i» «t:s» «v:variable»«D:;»                   «x:#no || works with shortened options;»
+«b:#buffer» «t:info save »«v:variable»«D:;»             «x:#no || special double option is highlighted correctly;»
+«b:#buffer» «t:i s »«v:variable»«D:;»                   «x:#no || works with shortened options;»
 «b:#buffer» «D:{»«t:i»«D:}» «D:{»«t:s»«D:}» «v:variable»«D:;»               «x:#no || works with shortened options;»
-«b:#buffer» «t:info» savevariable«D:;»              «x:#no || not highlighted without spaces;»
-«b:#buffer» «t:info» «t:save» «D:{»«v:variable»«D:};»           «x:#no || info args are highlighted correctly;»
-«b:#buffer» «t:info» save«D:{»variable«D:};»            «x:#no || not highlighted without spaces;»
+«b:#buffer» «t:info »savevariable«D:;»              «x:#no || not highlighted without spaces;»
+«b:#buffer» «t:info save »«D:{»«v:variable»«D:};»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info »save«D:{»variable«D:};»            «x:#no || not highlighted without spaces;»
 «b:#buffer» infosave variable«D:;»              «x:#no || not highlighted without spaces;»
-«b:#buffer» «t:info» «D:{»«t:save»«D:}» «v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
-«b:#buffer» «t:info» «D:{»«t:save»«D:}»«v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
-«b:#buffer» «t:info» «D:{»«t:save»«D:}» «D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
-«b:#buffer» «t:info» «D:{»«t:save»«D:}{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info »«D:{»«t:save»«D:}» «v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info »«D:{»«t:save»«D:}»«v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info »«D:{»«t:save»«D:}» «D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
+«b:#buffer» «t:info »«D:{»«t:save»«D:}{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
 «b:#buffer» info«D:{»save«D:}» variable«D:;»            «x:#no || not highlighted without spaces;»
-«b:#buffer» «D:{»«t:info»«D:}» «t:save» «v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» «t:save »«v:variable»«D:;»           «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}» savevariable«D:;»            «x:#no || not highlighted without spaces;»
-«b:#buffer» «D:{»«t:info»«D:}» «t:save» «D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}» «t:save »«D:{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}» save«D:{»variable«D:};»          «x:#no || not highlighted without spaces;»
-«b:#buffer» «D:{»«t:info»«D:}»«t:save» «v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}»«t:save »«v:variable»«D:;»            «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}»savevariable«D:;»             «x:#no || not highlighted without spaces;»
-«b:#buffer» «D:{»«t:info»«D:}»«t:save» «D:{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
+«b:#buffer» «D:{»«t:info»«D:}»«t:save »«D:{»«v:variable»«D:};»          «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}»save«D:{»variable«D:};»           «x:#no || not highlighted without spaces;»
 «b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}» «v:variable»«D:;»         «x:#no || info args are highlighted correctly;»
 «b:#buffer» «D:{»«t:info»«D:}» «D:{»«t:save»«D:}»«v:variable»«D:;»          «x:#no || info args are highlighted correctly;»
@@ -133,24 +133,24 @@
 «b:#buffer» «D:{»«t:info»«D:}{»«t:save»«D:}{»«v:variable»«D:};»         «x:#no || info args are highlighted correctly;»
 
 «b:#buffer» get dest«D:;»                       «x:#no || buffer get not highlighted without bounds;»
-«b:#buffer» «t:get» «v:dest »                       «x:#no || buffer get is ok if unterminated without bounds;»
-«b:#buffer» «t:get» «v:dest »1«D:;»                     «x:#no || buffer get highlighted with a single bound;»
-«b:#buffer» «t:get» «v:dest »1 1«D:;»                   «x:#no || buffer get highlighted with two bounds;»
+«b:#buffer» «t:get »«v:dest »                       «x:#no || buffer get is ok if unterminated without bounds;»
+«b:#buffer» «t:get »«v:dest »1«D:;»                     «x:#no || buffer get highlighted with a single bound;»
+«b:#buffer» «t:get »«v:dest »1 1«D:;»                   «x:#no || buffer get highlighted with two bounds;»
 
-«b:#buffer» «t:lock» «c:on»«D:;»                        «x:#no || buffer lock set to "on";»
-«b:#buffer» «t:lock» «c:ON»«D:;»                        «x:#no || buffer lock set to "ON";»
-«b:#buffer» «t:lock» «c:o»«D:;»
-«b:#buffer» «t:lock» «c:of»«D:;»
-«b:#buffer» «t:l» «c:o»«D:;»
-«b:#buffer» «t:lock» «D:${»«:tintin-variable-usage-face:set»«D:};»                    «x:#no || bugger lock set to the value of a variable;»
-«b:#buffer» «t:lock» «D:{»«c:on»«D:};»                      «x:#no || buffer lock set to "on";»
+«b:#buffer» «t:lock »«c:on»«D:;»                        «x:#no || buffer lock set to "on";»
+«b:#buffer» «t:lock »«c:ON»«D:;»                        «x:#no || buffer lock set to "ON";»
+«b:#buffer» «t:lock »«c:o»«D:;»
+«b:#buffer» «t:lock »«c:of»«D:;»
+«b:#buffer» «t:l »«c:o»«D:;»
+«b:#buffer» «t:lock »«D:${»«:tintin-variable-usage-face:set»«D:};»                    «x:#no || bugger lock set to the value of a variable;»
+«b:#buffer» «t:lock »«D:{»«c:on»«D:};»                      «x:#no || buffer lock set to "on";»
 «b:#buffer» lock«D:{»on«D:};»                       «x:#no || spaces are needed after args without braces;»
 «b:#buffer» lockon«D:;»                         «x:#no || spaces are needed after args without braces;»
 «b:#buffer» «D:{»«t:lock»«D:}» «c:on»«D:;»                      «x:#no || buffer lock set to "on";»
 «b:#buffer» «D:{»«t:lock»«D:}» «D:{»«c:on»«D:};»                    «x:#no || buffer lock set to "on";»
 «b:#buffer» «D:{»«t:lock»«D:}{»«c:on»«D:};»                     «x:#no || buffer lock set to "on";»
 «b:#buffer» «D:{»«t:lock»«D:}»«c:on»«D:;»                       «x:#no || buffer lock set to "on";»
-«b:#buffer» «t:lock» «c:off»«D:;»                       «x:#no || buffer lock set to "off";»
+«b:#buffer» «t:lock »«c:off»«D:;»                       «x:#no || buffer lock set to "off";»
 «b:#buffer» lock other«D:;»                     «x:#no || buffer lock not highlighted if wrong value;»
 
 «b:#chat»«D:;»                                  «x:#no || chat command with semicolon;»
@@ -161,8 +161,8 @@
 #c                                      «x:#no || one character is not enough;»
 «b:#chat» nonsense blah«D:;»                    «x:#no || only real options are highlighted;»
 
-«b:#chat» «t:init» 1337«D:;»                        «x:#no || chat init command with arguments;»
-«b:#chat» «t:init» «D:{»1337«D:};»                      «x:#no || chat init command with arguments;»
+«b:#chat» «t:init »1337«D:;»                        «x:#no || chat init command with arguments;»
+«b:#chat» «t:init »«D:{»1337«D:};»                      «x:#no || chat init command with arguments;»
 «b:#chat» init1337«D:;»                         «x:#no || chat init command with arguments;»
 «b:#chat» init«D:{»1337«D:};»                       «x:#no || chat init command with arguments;»
 «b:#chat» «D:{»«t:init»«D:}» 1337«D:;»                      «x:#no || chat init command with arguments;»
@@ -170,12 +170,12 @@
 «b:#chat» «D:{»«t:init»«D:}»1337«D:;»                       «x:#no || chat init command with arguments;»
 «b:#chat» «D:{»«t:init»«D:}{»1337«D:};»                     «x:#no || chat init command with arguments;»
 
-«b:#chat» «t:name» my_name«D:;»                     «x:#no || Set the chat name;»
-«b:#chat» «t:name» my_name                      «x:#no || Set the chat name;»
-«b:#chat» «t:name»                              «x:#no || Set the chat name;»
-«b:#chat» «t:accept» buddy 123«D:;»                 «x:#no || Accept a file transfer from a buddy;»
-«b:#chat» «t:call» some.domain.com 1337«D:;»        «x:#no || Connect to a chat server;»
-«b:#chat» «t:call» some.domain.com«D:;»             «x:#no || Connect to a chat server;»
+«b:#chat» «t:name »my_name«D:;»                     «x:#no || Set the chat name;»
+«b:#chat» «t:name »my_name                      «x:#no || Set the chat name;»
+«b:#chat» «t:name »                             «x:#no || Set the chat name;»
+«b:#chat» «t:accept »buddy 123«D:;»                 «x:#no || Accept a file transfer from a buddy;»
+«b:#chat» «t:call »some.domain.com 1337«D:;»        «x:#no || Connect to a chat server;»
+«b:#chat» «t:call »some.domain.com«D:;»             «x:#no || Connect to a chat server;»
 
 «b:#chat» «D:{»«t:cancel»«D:}» buddy«D:;»                   «x:#no || Cancel a file transfer;»
 «b:#chat» «D:{»«t:color»«D:}» red«D:;»                      «x:#no || Set the default color;»
@@ -200,10 +200,10 @@
 «b:#chat» «D:{»«t:who»«D:};»                            «x:#no || Show all connections;»
 «b:#chat» «D:{»«t:zap»«D:}» «D:{»buddy«D:};»                    «x:#no || Close a connection to a buddy;»
 
-«b:#chat» «t:message» buddy hey«D:;»                «x:#no || Send a message to a buddy;»
-«b:#chat» «t:message» «c:all» hey«D:;»                  «x:#no || Send a message to all;»
-«b:#chat» «t:message» «c:ALL» hey«D:;»                  «x:#no || Send a message to all;»
-«b:#chat» «t:message» «D:$»«:tintin-variable-usage-face:recipient» hey«D:;»           «x:#no || Send a message to a buddy based on a variable;»
+«b:#chat» «t:message »buddy hey«D:;»                «x:#no || Send a message to a buddy;»
+«b:#chat» «t:message »«c:all »hey«D:;»                  «x:#no || Send a message to all;»
+«b:#chat» «t:message »«c:ALL »hey«D:;»                  «x:#no || Send a message to all;»
+«b:#chat» «t:message »«D:$»«:tintin-variable-usage-face:recipient» hey«D:;»           «x:#no || Send a message to a buddy based on a variable;»
 «b:#chat» «D:{»«t:emote»«D:}» buddy «D:{»text«D:};»             «x:#no || Send an emote message;»
 «b:#chat» «D:{»«t:emote»«D:}» «D:{»«c:all»«D:}» «D:{»text«D:};»             «x:#no || Send an emote message;»
 «b:#chat» «D:{»«t:paste»«D:}» «D:{»buddy«D:}» «D:{»text«D:};»           «x:#no || Pastes a block of text;»

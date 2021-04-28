@@ -242,7 +242,7 @@ matcher to be highlighted, per search-based fontification."
 When ARGS-REGEXP is populated, this return value is simply a delimiter followed
 by ARGS-REGEXP itself. When ARGS-REGEXP is empty, then a special regexp is
 returned that allows for the presence of a semicolon after the command."
-  (let ((tintin-endable "\\(?:[\s\t]+;?\\|;\\|$\\)")
+  (let ((tintin-endable (rx (group (or (: (+ blank) (? ";")) ";" eol))))
         (tintin-space (rx (+ blank))))
     (if (eq "" args-regexp) tintin-endable (concat tintin-space args-regexp))))
 

@@ -1,13 +1,9 @@
 ### General
  * Complete migration to simplified class-based approach
    * refine relationship (and naming) between argument regexps and classes
-   * consider a :final slot
  * variables may start with a 0, but allowing this conflicts with pattern matchers...
    * maybe a way out: variables can't be _only_ numbers!
  * improve images in README
- * options may have a semicolon after them always, but this means "on" is highlighted here:
-     #bell flash; on;
-   which is not ok
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -45,6 +41,3 @@
    * This should largely be handled by current multiline approach
    * If this approach allows semicolons in the braces, then it could get weird
  * If there's no trailing semicolon should still highlight as comment just to end
-
-### Misc
- * tintin files must start with a valid command; consider highlighting failures here?

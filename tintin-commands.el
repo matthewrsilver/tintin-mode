@@ -183,9 +183,15 @@ When such a pair is encountered, it is included in the list that is returned."
               (apply #'firstword-matcher (last word-data 2)))))
 
 (rx-define multiword-option (keyword-list)
-  (group (or (: "{" (substrings keyword-list) (or "}" ";" eol))
+  (group (or (: "{" (substrings keyword-list) (or "}" eol))
              (: (substrings (firstwords-list keyword-list))
-                (or blank eol ";" ))
+                (or blank eol (not (any alphanumeric "{;"))))
+             tintin-variable)))
+
+(rx-define multiword-option-final (keyword-list)
+  (group (or (: "{" (substrings keyword-list) (or "}" eol))
+             (: (substrings (firstwords-list keyword-list))
+                (or blank eol ";" (not (any alphanumeric "{"))))
              tintin-variable)))
 
 (defun build-tintin-command-regexp (word-data)
@@ -218,8 +224,9 @@ an associated subexp-highlighter describing how a capture group in some other
 matcher should he highlighted, per search-based fontification. Returns nil if
 the value of the :face slot has not been populated."
   (let ((face (slot-value argument :face))
-        (override (slot-value argument :override)))
-    (if face `(,idx ',face ,override))))
+        (override (slot-value argument :override))
+        (optional (slot-value argument :optional)))
+    (if face `(,idx ',face ,override ,optional))))
 
 (defun make-highlighters (highlighter-list)
   "Make a subexp-highlighter for each element in HIGHLIGHTER-LIST.
@@ -282,13 +289,17 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
   ((regexp :initarg :regexp :initform (eval tintin-arg))
    (face :initarg :face :initform nil)
    (override :initarg :override :initform nil)
+   (optional :initarg :optional :initform nil)
+   (final :initarg :final :initform nil)
    (vals :initarg :vals :initform nil))
   "Base class that represents an unhighlighted, generic TinTin++ argument.")
 
 (cl-defmethod initialize-instance :after ((obj tintin-argument) &rest _)
   "Custom initializer for the `tintin-argument' class."
   (let* ((value-list (oref obj vals))
-         (values-regexp (rx (multiword-option value-list))))
+         (values-regexp (if (oref obj final)
+                            (rx (multiword-option-final value-list))
+                          (rx (multiword-option value-list)))))
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)
@@ -311,7 +322,7 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 
 (defvar toggle-constant-values '("off" 2 "on" 1))
 (defvar toggle-value
-  (tintin-option :vals toggle-constant-values :face 'font-lock-constant-face))
+  (tintin-option :vals toggle-constant-values :face 'font-lock-constant-face :final t))
 
 (defvar settable-character-regexp
   (rx (group (optionally-braced sequence (not (any "{};"))))))

@@ -284,7 +284,7 @@
 
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
-(defvar bell-ring-option (tintin-option :vals '("ring" 1)))
+(defvar bell-ring-option (tintin-option :vals '("ring" 1) :final t))
 (defvar bell-volume-option (tintin-option :vals '("volume" 1)))
 (defvar bell-toggle-option (tintin-option :vals '("flash" 2 "focus" 2 "margin" 1)))
 
@@ -296,7 +296,7 @@
 (defvar buffer-save-option (tintin-option :vals '("save" 1)))
 (defvar buffer-find-option (tintin-option :vals '("find" 1)))
 (defvar buffer-standard-option
-  (tintin-option :vals '("home" 1 "end" 1 "up" 1 "down" 1 "clear" 1 "write" 1 "info" 1)))
+  (tintin-option :vals '("home" 1 "end" 1 "up" 1 "down" 1 "clear" 1 "write" 1 "info" 1) :final t))
 
 ;; Special handling for the #chat command and its subcommands
 (defvar chat-command-list '("chat" 2))
@@ -314,7 +314,7 @@
 
 ;; Special handling for the #line command and its subcommands
 (defvar line-command-list '("line" 1))
-(defvar line-gag-option (tintin-option :vals '("gag" 1)))
+(defvar line-gag-option (tintin-option :vals '("gag" 1) :final t))
 (defvar line-capture-option (tintin-option :vals '("capture" 2)))
 (defvar line-standard-option
   (tintin-option :vals '("strip" 2 "substitute" 2 "background" 1 "convert" 2 "debug" 1
@@ -326,16 +326,19 @@
 (defvar list-create-option (tintin-option :vals '("create" 2 "tokenize" 1)))
 (defvar list-size-option (tintin-option :vals '("size" 2)))
 (defvar list-retrieval-option (tintin-option :vals '("find" 1 "get" 1)))
+(defvar list-argless-option
+  (tintin-option :vals '("clear" 2 "collapse" 2 "explode" 1 "index" 2 "shuffle" 2) :final t))
 (defvar list-standard-option
-  (tintin-option :vals '("add" 1 "clear" 2 "collapse" 2 "delete" 1 "explode" 1 "index" 2
-                         "insert" 2 "order" 1 "shuffle" 2 "set" 2 "simplify" 2 "sort" 2)))
+  (tintin-option :vals '("add" 1 "delete" 1 "insert" 2 "order" 1 "set" 2 "simplify" 2 "sort" 2)))
 
 ;; Special handling for the #class command and its subcommands
 (defvar class-command-list '("class" 2))
-(defvar class-create-option (tintin-option :vals '("load" 2 "open" 1 "read" 1)))
+(defvar class-create-option (tintin-option :vals '("read" 1)))
+(defvar class-create-argless-option (tintin-option :vals '("load" 2 "open" 1) :final t))
 (defvar class-size-option (tintin-option :vals '("size" 2)))
-(defvar class-use-option
-  (tintin-option :vals '("assign" 1 "list" 2 "save" 2 "write" 1 "clear" 3 "close" 3 "kill" 1)))
+(defvar class-use-option (tintin-option :vals '("assign" 1 "write" 1)))
+(defvar class-use-argless-option
+  (tintin-option :vals '("list" 2 "save" 2 "clear" 3 "close" 3 "kill" 1) :final t))
 
 ;; Special handling for the #config command and its subcommands
 (defvar config-command-list '("config" 3))
@@ -345,18 +348,18 @@
     "inheritance" 1 "mccp" 1 "mouse tracking" 2 "repeat enter" 8 "screen reader" 1
     "scroll lock" 4 "speedwalk" 2 "telnet" 2 "verbatim" 1 "verbose" 5 "wordwrap" 1))
 (defvar config-toggle-option (tintin-option :vals config-toggle-keywords))
-(defvar config-toggle-option-final (tintin-option :vals config-toggle-keywords))
+(defvar config-toggle-option-final (tintin-option :vals config-toggle-keywords :final t))
 
 (defvar config-standard-keywords
   '("auto tab" 1 "buffer size" 1 "charset" 1 "color mode" 2 "command color" 3
     "connect retry" 3 "history size" 1 "log mode" 1 "log level" 5 "packet patch" 1
     "random seed" 2 "tab width" 1))
 (defvar config-standard-option (tintin-option :vals config-standard-keywords))
-(defvar config-standard-option-final (tintin-option :vals config-standard-keywords))
+(defvar config-standard-option-final (tintin-option :vals config-standard-keywords :final t))
 
 (defvar config-char-keywords '("repeat char" 2 "tintin char" 2 "verbatim char" 10))
 (defvar config-char-option (tintin-option :vals config-char-keywords))
-(defvar config-char-option-final (tintin-option :vals config-char-keywords))
+(defvar config-char-option-final (tintin-option :vals config-char-keywords :final t))
 
 ;; Special handling for the #cursor command and its subcommands
 (defvar cursor-command-list '("cursor" 2))
@@ -368,12 +371,12 @@
     "home" 2 "info" 1 "insert" 3 "next word" 1 "paste buffer" 1 "prev word" 2
     "redraw input" 1 "screen focus in" 1 "screen focus out" 14 "set" 2 "suspend" 2
     "tab" 1 "tab l s backward" 5 "tab l s forward" 9))
-(defvar cursor-option (tintin-option :vals cursor-option-keywords))
+(defvar cursor-option (tintin-option :vals cursor-option-keywords :final t))
 
 ;; Special handling for the #daemon command and its subcommands
 (defvar daemon-command-list '("daemon" 1))
 (defvar daemon-option
-  (tintin-option :vals '("attach" 1 "detach" 1 "input" 1 "kill" 1 "list" 1)))
+  (tintin-option :vals '("attach" 1 "detach" 1 "input" 1 "kill" 1 "list" 1) :final t))
 
 (setq tintin-font-lock-keywords (append
 
@@ -425,6 +428,7 @@
   (let ((list-command (tintin-command :cmds 'list-command-list)))
     (fontify-tintin-cmd list-command
                         '(var-assignment list-create-option)
+                        '(var-usage list-argless-option)
                         '(var-usage list-standard-option)
                         '(var-usage list-size-option final-var-assignment)
                         '(var-usage list-retrieval-option arg final-var-assignment)))
@@ -441,7 +445,9 @@
   (let ((class-command (tintin-command :cmds 'class-command-list)))
     (fontify-tintin-cmd class-command
                         '(var-usage class-use-option)
+                        '(var-usage class-use-argless-option)
                         '(var-assignment class-create-option)
+                        '(var-assignment class-create-argless-option)
                         '(var-usage class-size-option final-var-assignment)))
 
   ;; Highlight the #function and #unfunction commands

@@ -12,6 +12,7 @@
 #bel                                    «x:#no || command is too short;»
 #bellz                                  «x:#no || command is too long;»
 
+«b:#bell» flash«D:;» on«D:;»                        «x:#no || semicolon after flash breaks highlighting;»
 «b:#bell» «t:flash »«c:on»«D:;»                         «x:#no || bell flash set to "on";»
 «b:#bell» «t:flas »«c:on»«D:;»                          «x:#no || bell flash works with shortened option;»
 «b:#bell» «t:fla »«c:on»«D:;»                           «x:#no || bell flash works with shortened option;»

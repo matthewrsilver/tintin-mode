@@ -12,6 +12,7 @@
 #bel                                    #no || command is too short;
 #bellz                                  #no || command is too long;
 
+#bell flash; on;                        #no || semicolon after flash breaks highlighting;
 #bell flash on;                         #no || bell flash set to "on";
 #bell flas on;                          #no || bell flash works with shortened option;
 #bell fla on;                           #no || bell flash works with shortened option;

@@ -182,16 +182,12 @@ When such a pair is encountered, it is included in the list that is returned."
       (append (firstwords-list (butlast word-data 2))
               (apply #'firstword-matcher (last word-data 2)))))
 
-(rx-define multiword-option (keyword-list)
+(rx-define multiword-option (keyword-list is-final)
   (group (or (: "{" (substrings keyword-list) (or "}" eol))
              (: (substrings (firstwords-list keyword-list))
-                (or blank eol (not (any alphanumeric "{;"))))
-             tintin-variable)))
-
-(rx-define multiword-option-final (keyword-list)
-  (group (or (: "{" (substrings keyword-list) (or "}" eol))
-             (: (substrings (firstwords-list keyword-list))
-                (or blank eol ";" (not (any alphanumeric "{"))))
+                (or blank eol
+                    (eval (if is-final ";" regexp-unmatchable))
+                    (not (any alphanumeric "{;"))))
              tintin-variable)))
 
 (defun build-tintin-command-regexp (word-data)
@@ -298,8 +294,8 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
   "Custom initializer for the `tintin-argument' class."
   (let* ((value-list (oref obj vals))
          (values-regexp (if (oref obj final)
-                            (rx (multiword-option-final value-list))
-                          (rx (multiword-option value-list)))))
+                            (rx (multiword-option value-list t))
+                          (rx (multiword-option value-list nil)))))
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)

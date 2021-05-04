@@ -12,7 +12,6 @@
  * Tests for individual functions in tintin-commands.el
 
 ### Commands that need work
- * The #debug command has a toggle with "log" as well
  * The #edit command has a number of options
  * The #format command is in good shape but:
    * additional matchers for the time (%t) format specifier??

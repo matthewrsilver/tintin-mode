@@ -273,7 +273,7 @@
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
   '( "all" 0        "commands" 2   "detatch" 0
-     "debug" 0      "draw" 0       "edit" 0       "end" 0
+     "draw" 0       "edit" 0       "end" 0
      "grep" 0       "gts" 0        "help" 0       "history" 4
      "ignore" 3     "info" 3       "kill" 0       "log" 0
      "macro" 3      "map" 0        "mesage" 4     "port" 0
@@ -281,6 +281,16 @@
      "read" 0       "run" 0        "scan" 1       "screen" 3
      "session" 3    "snoop" 0      "split" 3      "ssl" 0
      "textin" 4     "write" 0      "zap" 0        "ats" 0))
+
+;; Special handling for the #debug command
+(defvar debug-command-list '("debug" 2))
+(defvar debug-toggle-value
+  (tintin-option :vals '("off" 2 "on" 1 "log" 1) :face 'font-lock-constant-face :final t))
+(defvar debug-option
+  (tintin-option :vals '("actions" 1 "aliases" 1 "buttons" 1 "classes" 1 "commands" 1
+                         "configs" 1 "delays" 1 "events" 1 "functions" 1 "gags" 1
+                         "highlights" 1 "macros" 1 "pathdirs" 1 "prompts" 1
+                         "substitutes" 1 "tabs" 1 "tickers" 1 "variables" 1) :final t))
 
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
@@ -534,6 +544,12 @@
   (let ((daemon-command (tintin-command :cmds 'daemon-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd daemon-command
                         '(daemon-option)))
+
+  ;; Highlight #debug command
+  (let ((debug-command (tintin-command :cmds 'debug-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd debug-command
+                        '(debug-option debug-toggle-value)
+                        '(debug-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

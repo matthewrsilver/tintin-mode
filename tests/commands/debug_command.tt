@@ -1,0 +1,171 @@
+#no Tests for the #debug command;
+
+#debug;                                 #no || bare debug with semicolon;
+#debug                                  #no || bare debug without semicolon;
+#debu                                   #no || four character #debug;
+#deb                                    #no || three character #debug;
+#de                                     #no || two character #debug;
+#d                                      #no || one character is actually #daemon;
+#debugs                                 #no || too many characters don't match;
+#debug nonsense;                        #no || unknown modes not highlighted;
+
+#no Tests for different options/lists;
+#debug actions                          #no || actions option without semicolon;
+#debug actions;                         #no || actions option with semicolon;
+#debug actions on;                      #no || actions option with toggle argument;
+#debug actions log;                     #no || actions option with special log toggle argument;
+#debug actions nothing;                 #no || actions option is highlighted even with bad argument;
+#debug a                                #no || actions option with single character, no semicolon;
+#debug a;                               #no || actions option with single character and semicolon;
+#debug a O;                             #no || actions option with single character and toggle;
+#debug a L;                             #no || actions option with single character, abbrev log;
+
+#debug aliases                          #no || aliases option without semicolon;
+#debug aliases;                         #no || aliases option with semicolon;
+#debug aliases on;                      #no || aliases option with toggle argument;
+#debug aliases log;                     #no || aliases option with special log toggle argument;
+#debug aliases nothing;                 #no || aliases option is highlighted even with bad argument;
+
+#debug buttons                          #no || buttons option without semicolon;
+#debug buttons;                         #no || buttons option with semicolon;
+#debug buttons on;                      #no || buttons option with toggle argument;
+#debug buttons log;                     #no || buttons option with special log toggle argument;
+#debug buttons nothing;                 #no || buttons option is highlighted even with bad argument;
+#debug b                                #no || buttons option with single character, no semicolon;
+#debug b;                               #no || buttons option with single character and semicolon;
+#debug b O;                             #no || buttons option with single character and toggle;
+#debug b L;                             #no || buttons option with single character, abbrev log;
+
+#debug classes                          #no || classes option without semicolon;
+#debug classes;                         #no || classes option with semicolon;
+#debug classes on;                      #no || classes option with toggle argument;
+#debug classes log;                     #no || classes option with special log toggle argument;
+#debug classes nothing;                 #no || classes option is highlighted even with bad argument;
+#debug c                                #no || classes option with single character, no semicolon;
+#debug c;                               #no || classes option with single character and semicolon;
+#debug c O;                             #no || classes option with single character and toggle;
+#debug c L;                             #no || classes option with single character, abbrev log;
+
+#debug commands                         #no || commands option without semicolon;
+#debug commands;                        #no || commands option with semicolon;
+#debug commands on;                     #no || commands option with toggle argument;
+#debug commands log;                    #no || commands option with special log toggle argument;
+#debug commands nothing;                #no || commands option is highlighted even with bad arg;
+
+#debug configs                          #no || configs option without semicolon;
+#debug configs;                         #no || configs option with semicolon;
+#debug configs on;                      #no || configs option with toggle argument;
+#debug configs log;                     #no || configs option with special log toggle argument;
+#debug configs nothing;                 #no || configs option is highlighted even with bad arg;
+
+#debug delays                           #no || delays option without semicolon;
+#debug delays;                          #no || delays option with semicolon;
+#debug delays on;                       #no || delays option with toggle argument;
+#debug delays log;                      #no || delays option with special log toggle argument;
+#debug delays nothing;                  #no || delays option is highlighted even with bad argument;
+#debug d                                #no || delays option with single character, no semicolon;
+#debug d;                               #no || delays option with single character and semicolon;
+#debug d O;                             #no || delays option with single character and toggle;
+#debug d L;                             #no || delays option with single character, abbrev log;
+
+#debug events                           #no || events option without semicolon;
+#debug events;                          #no || events option with semicolon;
+#debug events on;                       #no || events option with toggle argument;
+#debug events log;                      #no || events option with special log toggle argument;
+#debug events nothing;                  #no || events option is highlighted even with bad argument;
+#debug e                                #no || events option with single character, no semicolon;
+#debug e;                               #no || events option with single character and semicolon;
+#debug e O;                             #no || events option with single character and toggle;
+#debug e L;                             #no || events option with single character, abbrev log;
+
+#debug functions                        #no || functions option without semicolon;
+#debug functions;                       #no || functions option with semicolon;
+#debug functions on;                    #no || functions option with toggle argument;
+#debug functions log;                   #no || functions option with special log toggle argument;
+#debug functions nothing;               #no || functions option is highlighted even with bad arg;
+#debug f                                #no || functions option with single character, no semicolon;
+#debug f;                               #no || functions option with single character and semicolon;
+#debug f O;                             #no || functions option with single character and toggle;
+#debug f L;                             #no || functions option with single character, abbrev log;
+
+#debug gags                             #no || gags option without semicolon;
+#debug gags;                            #no || gags option with semicolon;
+#debug gags on;                         #no || gags option with toggle argument;
+#debug gags log;                        #no || gags option with special log toggle argument;
+#debug gags nothing;                    #no || gags option is highlighted even with bad arg;
+#debug g                                #no || gags option with single character, no semicolon;
+#debug g;                               #no || gags option with single character and semicolon;
+#debug g O;                             #no || gags option with single character and toggle;
+#debug g L;                             #no || gags option with single character, abbrev log;
+
+#debug highlights                       #no || highlights option without semicolon;
+#debug highlights;                      #no || highlights option with semicolon;
+#debug highlights on;                   #no || highlights option with toggle argument;
+#debug highlights log;                  #no || highlights option with special log toggle argument;
+#debug highlights nothing;              #no || highlights option is highlighted even with bad arg;
+#debug h                                #no || highlights option with single char, no semicolon;
+#debug h;                               #no || highlights option with single char and semicolon;
+#debug h O;                             #no || highlights option with single character and toggle;
+#debug h L;                             #no || highlights option with single character, abbrev log;
+
+#debug macros                           #no || macros option without semicolon;
+#debug macros;                          #no || macros option with semicolon;
+#debug macros on;                       #no || macros option with toggle argument;
+#debug macros log;                      #no || macros option with special log toggle argument;
+#debug macros nothing;                  #no || macros option is highlighted even with bad arg;
+#debug m                                #no || macros option with single character, no semicolon;
+#debug m;                               #no || macros option with single character and semicolon;
+#debug m O;                             #no || macros option with single character and toggle;
+#debug m L;                             #no || macros option with single character, abbrev log;
+
+#debug pathdirs                         #no || pathdirs option without semicolon;
+#debug pathdirs;                        #no || pathdirs option with semicolon;
+#debug pathdirs on;                     #no || pathdirs option with toggle argument;
+#debug pathdirs log;                    #no || pathdirs option with special log toggle argument;
+#debug pathdirs nothing;                #no || pathdirs option is highlighted even with bad arg;
+#debug p                                #no || pathdirs option with single character, no semicolon;
+#debug p;                               #no || pathdirs option with single character and semicolon;
+#debug p O;                             #no || pathdirs option with single character and toggle;
+#debug p L;                             #no || pathdirs option with single character, abbrev log;
+
+#debug prompts                          #no || prompts option without semicolon;
+#debug prompts;                         #no || prompts option with semicolon;
+#debug prompts on;                      #no || prompts option with toggle argument;
+#debug prompts log;                     #no || prompts option with special log toggle argument;
+#debug prompts nothing;                 #no || prompts option is highlighted even with bad arg;
+
+#debug substitutes                      #no || substitutes option without semicolon;
+#debug substitutes;                     #no || substitutes option with semicolon;
+#debug substitutes on;                  #no || substitutes option with toggle argument;
+#debug substitutes log;                 #no || substitutes option with special log toggle argument;
+#debug substitutes nothing;             #no || substitutes option is highlighted even with bad arg;
+#debug s                                #no || substitutes option with single char, no semicolon;
+#debug s;                               #no || substitutes option with single char and semicolon;
+#debug s O;                             #no || substitutes option with single character and toggle;
+#debug s L;                             #no || substitutes option with single character, abbrev log;
+
+#debug tabs                             #no || tabs option without semicolon;
+#debug tabs;                            #no || tabs option with semicolon;
+#debug tabs on;                         #no || tabs option with toggle argument;
+#debug tabs log;                        #no || tabs option with special log toggle argument;
+#debug tabs nothing;                    #no || tabs option is highlighted even with bad arg;
+#debug t                                #no || tabs option with single character, no semicolon;
+#debug t;                               #no || tabs option with single character and semicolon;
+#debug t O;                             #no || tabs option with single character and toggle;
+#debug t L;                             #no || tabs option with single character, abbrev log;
+
+#debug tickers                          #no || tickers option without semicolon;
+#debug tickers;                         #no || tickers option with semicolon;
+#debug tickers on;                      #no || tickers option with toggle argument;
+#debug tickers log;                     #no || tickers option with special log toggle argument;
+#debug tickers nothing;                 #no || tickers option is highlighted even with bad arg;
+
+#debug variables                        #no || variables option without semicolon;
+#debug variables;                       #no || variables option with semicolon;
+#debug variables on;                    #no || variables option with toggle argument;
+#debug variables log;                   #no || variables option with special log toggle argument;
+#debug variables nothing;               #no || variables option is highlighted even with bad arg;
+#debug v                                #no || variables option with single character, no semicolon;
+#debug v;                               #no || variables option with single character and semicolon;
+#debug v O;                             #no || variables option with single character and toggle;
+#debug v L;                             #no || variables option with single character, abbrev log;

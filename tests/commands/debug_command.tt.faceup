@@ -1,0 +1,171 @@
+«x:#no Tests for the #debug command;»
+
+«b:#debug»«D:;»                                 «x:#no || bare debug with semicolon;»
+«b:#debug»                                  «x:#no || bare debug without semicolon;»
+«b:#debu»                                   «x:#no || four character #debug;»
+«b:#deb»                                    «x:#no || three character #debug;»
+«b:#de»                                     «x:#no || two character #debug;»
+«b:#d»                                      «x:#no || one character is actually #daemon;»
+#debugs                                 «x:#no || too many characters don't match;»
+«b:#debug» nonsense«D:;»                        «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for different options/lists;»
+«b:#debug» «t:actions »                         «x:#no || actions option without semicolon;»
+«b:#debug» «t:actions»«D:;»                         «x:#no || actions option with semicolon;»
+«b:#debug» «t:actions »«c:on»«D:;»                      «x:#no || actions option with toggle argument;»
+«b:#debug» «t:actions »«c:log»«D:;»                     «x:#no || actions option with special log toggle argument;»
+«b:#debug» «t:actions »nothing«D:;»                 «x:#no || actions option is highlighted even with bad argument;»
+«b:#debug» «t:a »                               «x:#no || actions option with single character, no semicolon;»
+«b:#debug» «t:a»«D:;»                               «x:#no || actions option with single character and semicolon;»
+«b:#debug» «t:a »«c:O»«D:;»                             «x:#no || actions option with single character and toggle;»
+«b:#debug» «t:a »«c:L»«D:;»                             «x:#no || actions option with single character, abbrev log;»
+
+«b:#debug» «t:aliases »                         «x:#no || aliases option without semicolon;»
+«b:#debug» «t:aliases»«D:;»                         «x:#no || aliases option with semicolon;»
+«b:#debug» «t:aliases »«c:on»«D:;»                      «x:#no || aliases option with toggle argument;»
+«b:#debug» «t:aliases »«c:log»«D:;»                     «x:#no || aliases option with special log toggle argument;»
+«b:#debug» «t:aliases »nothing«D:;»                 «x:#no || aliases option is highlighted even with bad argument;»
+
+«b:#debug» «t:buttons »                         «x:#no || buttons option without semicolon;»
+«b:#debug» «t:buttons»«D:;»                         «x:#no || buttons option with semicolon;»
+«b:#debug» «t:buttons »«c:on»«D:;»                      «x:#no || buttons option with toggle argument;»
+«b:#debug» «t:buttons »«c:log»«D:;»                     «x:#no || buttons option with special log toggle argument;»
+«b:#debug» «t:buttons »nothing«D:;»                 «x:#no || buttons option is highlighted even with bad argument;»
+«b:#debug» «t:b »                               «x:#no || buttons option with single character, no semicolon;»
+«b:#debug» «t:b»«D:;»                               «x:#no || buttons option with single character and semicolon;»
+«b:#debug» «t:b »«c:O»«D:;»                             «x:#no || buttons option with single character and toggle;»
+«b:#debug» «t:b »«c:L»«D:;»                             «x:#no || buttons option with single character, abbrev log;»
+
+«b:#debug» «t:classes »                         «x:#no || classes option without semicolon;»
+«b:#debug» «t:classes»«D:;»                         «x:#no || classes option with semicolon;»
+«b:#debug» «t:classes »«c:on»«D:;»                      «x:#no || classes option with toggle argument;»
+«b:#debug» «t:classes »«c:log»«D:;»                     «x:#no || classes option with special log toggle argument;»
+«b:#debug» «t:classes »nothing«D:;»                 «x:#no || classes option is highlighted even with bad argument;»
+«b:#debug» «t:c »                               «x:#no || classes option with single character, no semicolon;»
+«b:#debug» «t:c»«D:;»                               «x:#no || classes option with single character and semicolon;»
+«b:#debug» «t:c »«c:O»«D:;»                             «x:#no || classes option with single character and toggle;»
+«b:#debug» «t:c »«c:L»«D:;»                             «x:#no || classes option with single character, abbrev log;»
+
+«b:#debug» «t:commands »                        «x:#no || commands option without semicolon;»
+«b:#debug» «t:commands»«D:;»                        «x:#no || commands option with semicolon;»
+«b:#debug» «t:commands »«c:on»«D:;»                     «x:#no || commands option with toggle argument;»
+«b:#debug» «t:commands »«c:log»«D:;»                    «x:#no || commands option with special log toggle argument;»
+«b:#debug» «t:commands »nothing«D:;»                «x:#no || commands option is highlighted even with bad arg;»
+
+«b:#debug» «t:configs »                         «x:#no || configs option without semicolon;»
+«b:#debug» «t:configs»«D:;»                         «x:#no || configs option with semicolon;»
+«b:#debug» «t:configs »«c:on»«D:;»                      «x:#no || configs option with toggle argument;»
+«b:#debug» «t:configs »«c:log»«D:;»                     «x:#no || configs option with special log toggle argument;»
+«b:#debug» «t:configs »nothing«D:;»                 «x:#no || configs option is highlighted even with bad arg;»
+
+«b:#debug» «t:delays »                          «x:#no || delays option without semicolon;»
+«b:#debug» «t:delays»«D:;»                          «x:#no || delays option with semicolon;»
+«b:#debug» «t:delays »«c:on»«D:;»                       «x:#no || delays option with toggle argument;»
+«b:#debug» «t:delays »«c:log»«D:;»                      «x:#no || delays option with special log toggle argument;»
+«b:#debug» «t:delays »nothing«D:;»                  «x:#no || delays option is highlighted even with bad argument;»
+«b:#debug» «t:d »                               «x:#no || delays option with single character, no semicolon;»
+«b:#debug» «t:d»«D:;»                               «x:#no || delays option with single character and semicolon;»
+«b:#debug» «t:d »«c:O»«D:;»                             «x:#no || delays option with single character and toggle;»
+«b:#debug» «t:d »«c:L»«D:;»                             «x:#no || delays option with single character, abbrev log;»
+
+«b:#debug» «t:events »                          «x:#no || events option without semicolon;»
+«b:#debug» «t:events»«D:;»                          «x:#no || events option with semicolon;»
+«b:#debug» «t:events »«c:on»«D:;»                       «x:#no || events option with toggle argument;»
+«b:#debug» «t:events »«c:log»«D:;»                      «x:#no || events option with special log toggle argument;»
+«b:#debug» «t:events »nothing«D:;»                  «x:#no || events option is highlighted even with bad argument;»
+«b:#debug» «t:e »                               «x:#no || events option with single character, no semicolon;»
+«b:#debug» «t:e»«D:;»                               «x:#no || events option with single character and semicolon;»
+«b:#debug» «t:e »«c:O»«D:;»                             «x:#no || events option with single character and toggle;»
+«b:#debug» «t:e »«c:L»«D:;»                             «x:#no || events option with single character, abbrev log;»
+
+«b:#debug» «t:functions »                       «x:#no || functions option without semicolon;»
+«b:#debug» «t:functions»«D:;»                       «x:#no || functions option with semicolon;»
+«b:#debug» «t:functions »«c:on»«D:;»                    «x:#no || functions option with toggle argument;»
+«b:#debug» «t:functions »«c:log»«D:;»                   «x:#no || functions option with special log toggle argument;»
+«b:#debug» «t:functions »nothing«D:;»               «x:#no || functions option is highlighted even with bad arg;»
+«b:#debug» «t:f »                               «x:#no || functions option with single character, no semicolon;»
+«b:#debug» «t:f»«D:;»                               «x:#no || functions option with single character and semicolon;»
+«b:#debug» «t:f »«c:O»«D:;»                             «x:#no || functions option with single character and toggle;»
+«b:#debug» «t:f »«c:L»«D:;»                             «x:#no || functions option with single character, abbrev log;»
+
+«b:#debug» «t:gags »                            «x:#no || gags option without semicolon;»
+«b:#debug» «t:gags»«D:;»                            «x:#no || gags option with semicolon;»
+«b:#debug» «t:gags »«c:on»«D:;»                         «x:#no || gags option with toggle argument;»
+«b:#debug» «t:gags »«c:log»«D:;»                        «x:#no || gags option with special log toggle argument;»
+«b:#debug» «t:gags »nothing«D:;»                    «x:#no || gags option is highlighted even with bad arg;»
+«b:#debug» «t:g »                               «x:#no || gags option with single character, no semicolon;»
+«b:#debug» «t:g»«D:;»                               «x:#no || gags option with single character and semicolon;»
+«b:#debug» «t:g »«c:O»«D:;»                             «x:#no || gags option with single character and toggle;»
+«b:#debug» «t:g »«c:L»«D:;»                             «x:#no || gags option with single character, abbrev log;»
+
+«b:#debug» «t:highlights »                      «x:#no || highlights option without semicolon;»
+«b:#debug» «t:highlights»«D:;»                      «x:#no || highlights option with semicolon;»
+«b:#debug» «t:highlights »«c:on»«D:;»                   «x:#no || highlights option with toggle argument;»
+«b:#debug» «t:highlights »«c:log»«D:;»                  «x:#no || highlights option with special log toggle argument;»
+«b:#debug» «t:highlights »nothing«D:;»              «x:#no || highlights option is highlighted even with bad arg;»
+«b:#debug» «t:h »                               «x:#no || highlights option with single char, no semicolon;»
+«b:#debug» «t:h»«D:;»                               «x:#no || highlights option with single char and semicolon;»
+«b:#debug» «t:h »«c:O»«D:;»                             «x:#no || highlights option with single character and toggle;»
+«b:#debug» «t:h »«c:L»«D:;»                             «x:#no || highlights option with single character, abbrev log;»
+
+«b:#debug» «t:macros »                          «x:#no || macros option without semicolon;»
+«b:#debug» «t:macros»«D:;»                          «x:#no || macros option with semicolon;»
+«b:#debug» «t:macros »«c:on»«D:;»                       «x:#no || macros option with toggle argument;»
+«b:#debug» «t:macros »«c:log»«D:;»                      «x:#no || macros option with special log toggle argument;»
+«b:#debug» «t:macros »nothing«D:;»                  «x:#no || macros option is highlighted even with bad arg;»
+«b:#debug» «t:m »                               «x:#no || macros option with single character, no semicolon;»
+«b:#debug» «t:m»«D:;»                               «x:#no || macros option with single character and semicolon;»
+«b:#debug» «t:m »«c:O»«D:;»                             «x:#no || macros option with single character and toggle;»
+«b:#debug» «t:m »«c:L»«D:;»                             «x:#no || macros option with single character, abbrev log;»
+
+«b:#debug» «t:pathdirs »                        «x:#no || pathdirs option without semicolon;»
+«b:#debug» «t:pathdirs»«D:;»                        «x:#no || pathdirs option with semicolon;»
+«b:#debug» «t:pathdirs »«c:on»«D:;»                     «x:#no || pathdirs option with toggle argument;»
+«b:#debug» «t:pathdirs »«c:log»«D:;»                    «x:#no || pathdirs option with special log toggle argument;»
+«b:#debug» «t:pathdirs »nothing«D:;»                «x:#no || pathdirs option is highlighted even with bad arg;»
+«b:#debug» «t:p »                               «x:#no || pathdirs option with single character, no semicolon;»
+«b:#debug» «t:p»«D:;»                               «x:#no || pathdirs option with single character and semicolon;»
+«b:#debug» «t:p »«c:O»«D:;»                             «x:#no || pathdirs option with single character and toggle;»
+«b:#debug» «t:p »«c:L»«D:;»                             «x:#no || pathdirs option with single character, abbrev log;»
+
+«b:#debug» «t:prompts »                         «x:#no || prompts option without semicolon;»
+«b:#debug» «t:prompts»«D:;»                         «x:#no || prompts option with semicolon;»
+«b:#debug» «t:prompts »«c:on»«D:;»                      «x:#no || prompts option with toggle argument;»
+«b:#debug» «t:prompts »«c:log»«D:;»                     «x:#no || prompts option with special log toggle argument;»
+«b:#debug» «t:prompts »nothing«D:;»                 «x:#no || prompts option is highlighted even with bad arg;»
+
+«b:#debug» «t:substitutes »                     «x:#no || substitutes option without semicolon;»
+«b:#debug» «t:substitutes»«D:;»                     «x:#no || substitutes option with semicolon;»
+«b:#debug» «t:substitutes »«c:on»«D:;»                  «x:#no || substitutes option with toggle argument;»
+«b:#debug» «t:substitutes »«c:log»«D:;»                 «x:#no || substitutes option with special log toggle argument;»
+«b:#debug» «t:substitutes »nothing«D:;»             «x:#no || substitutes option is highlighted even with bad arg;»
+«b:#debug» «t:s »                               «x:#no || substitutes option with single char, no semicolon;»
+«b:#debug» «t:s»«D:;»                               «x:#no || substitutes option with single char and semicolon;»
+«b:#debug» «t:s »«c:O»«D:;»                             «x:#no || substitutes option with single character and toggle;»
+«b:#debug» «t:s »«c:L»«D:;»                             «x:#no || substitutes option with single character, abbrev log;»
+
+«b:#debug» «t:tabs »                            «x:#no || tabs option without semicolon;»
+«b:#debug» «t:tabs»«D:;»                            «x:#no || tabs option with semicolon;»
+«b:#debug» «t:tabs »«c:on»«D:;»                         «x:#no || tabs option with toggle argument;»
+«b:#debug» «t:tabs »«c:log»«D:;»                        «x:#no || tabs option with special log toggle argument;»
+«b:#debug» «t:tabs »nothing«D:;»                    «x:#no || tabs option is highlighted even with bad arg;»
+«b:#debug» «t:t »                               «x:#no || tabs option with single character, no semicolon;»
+«b:#debug» «t:t»«D:;»                               «x:#no || tabs option with single character and semicolon;»
+«b:#debug» «t:t »«c:O»«D:;»                             «x:#no || tabs option with single character and toggle;»
+«b:#debug» «t:t »«c:L»«D:;»                             «x:#no || tabs option with single character, abbrev log;»
+
+«b:#debug» «t:tickers »                         «x:#no || tickers option without semicolon;»
+«b:#debug» «t:tickers»«D:;»                         «x:#no || tickers option with semicolon;»
+«b:#debug» «t:tickers »«c:on»«D:;»                      «x:#no || tickers option with toggle argument;»
+«b:#debug» «t:tickers »«c:log»«D:;»                     «x:#no || tickers option with special log toggle argument;»
+«b:#debug» «t:tickers »nothing«D:;»                 «x:#no || tickers option is highlighted even with bad arg;»
+
+«b:#debug» «t:variables »                       «x:#no || variables option without semicolon;»
+«b:#debug» «t:variables»«D:;»                       «x:#no || variables option with semicolon;»
+«b:#debug» «t:variables »«c:on»«D:;»                    «x:#no || variables option with toggle argument;»
+«b:#debug» «t:variables »«c:log»«D:;»                   «x:#no || variables option with special log toggle argument;»
+«b:#debug» «t:variables »nothing«D:;»               «x:#no || variables option is highlighted even with bad arg;»
+«b:#debug» «t:v »                               «x:#no || variables option with single character, no semicolon;»
+«b:#debug» «t:v»«D:;»                               «x:#no || variables option with single character and semicolon;»
+«b:#debug» «t:v »«c:O»«D:;»                             «x:#no || variables option with single character and toggle;»
+«b:#debug» «t:v »«c:L»«D:;»                             «x:#no || variables option with single character, abbrev log;»

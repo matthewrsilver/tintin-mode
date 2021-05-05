@@ -33,6 +33,30 @@
 %!X                                 #no || format: raw matching is not supported;
 %{X}                                #no || format: braces not supported;
 
+#no Format strftime format specifiers;
+%a                                  #no || Abbreviated name of the day of the week (mon ... sun);
+%A                                  #no || Full name of the day of the week. (Monday ... Sunday);
+%b                                  #no || Abbreviated name of the month (Jan ... Dec);
+%B                                  #no || Full name of the month. (January ... December);
+%C                                  #no || 2 digit numeric century. (19 ... 20);
+%d                                  #no || 2 digit numeric day of the month (01 ... 31);
+%H                                  #no || 2 digit numeric 24-hour clock hour. (00 ... 23);
+%I                                  #no || 2 digit numeric 12-hour clock hour. (01 ... 12);
+%j                                  #no || 3 digit numeric day of the year (001 ... 366);
+%m                                  #no || 2 digit numeric month of the year (01 ... 12);
+%M                                  #no || 2 digit numeric minute of the hour (00 ... 59);
+%p                                  #no || Abbreviated 12 hour clock period (AM ... PM);
+%P                                  #no || Abbreviated 12 hour clock period (am ... pm);
+%S                                  #no || 2 digit numeric second of the minute (00 ...59);
+%u                                  #no || 1 digit numeric day of the week (1 ... 7);
+%U                                  #no || 2 digit numeric Sunday week of the year (00 ... 53);
+%w                                  #no || 1 digit numeric day of the week (0 ... 6);
+%W                                  #no || 2 digit numeric Monday week of the year (00 ... 53);
+%y                                  #no || 2 digit numeric year. (70 ... 38);
+%Y                                  #no || 4 digit numeric year. (1970 ... 2038);
+%z                                  #no || 5 digit timezone offset. (-1200 ... +1400);
+%Z                                  #no || Abbreviated name of the time zone;
+
 #no Format numeric matchers;
 %+9s                                #no || format: pad string with up to 9 spaces;
 %-9s                                #no || format: post pad string with up to 9 spaces;

@@ -4,6 +4,8 @@
  * variables may start with a 0, but allowing this conflicts with pattern matchers...
    * maybe a way out: variables can't be _only_ numbers!
  * improve images in README
+ * Commands mentioned in docs but not available in current version
+   * The #edit command has a number of options
 
 ### Testing
  * Need to add tests for at least all command types, if not all commands
@@ -12,9 +14,6 @@
  * Tests for individual functions in tintin-commands.el
 
 ### Commands that need work
- * The #edit command has a number of options
- * The #format command is in good shape but:
-   * additional matchers for the time (%t) format specifier??
  * The #history command has options
  * The #ignore command has a toggle
  * The #info command has a toggle plus "list" and "save"

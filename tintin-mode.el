@@ -174,6 +174,7 @@
 (rx-define regexp-classes
   (: (? "+" number-or-variable (? (: ".." (* number-or-variable)))) (any "aAdDpPsSuUwW")))
 (rx-define format-basic (group (any "acdfghlmnprstuwxACDHLMSTUX")))
+(rx-define format-strftime (group (any "abdjmpuwyzABCHIMPSUWYZ")))
 (rx-define format-numeric (group (: (any "-+.") (+ number-or-variable) "s")))
 (rx-define regexp-ops (or regexp-classes (any "+?.*") (any "iI")))
 (rx-define regexp-ops-wrapped (: (? "!") (group (optionally-braced group regexp-ops))))
@@ -182,7 +183,8 @@
 (defvar tintin-double-percent (rx "%%"))
 (defvar tintin-capture-matcher
   (rx (tintin-capture
-       (or format-basic format-numeric regexp-ops-wrapped numeric-capture "*"))))
+       (or format-basic format-strftime format-numeric
+           regexp-ops-wrapped numeric-capture "*"))))
 
 ;; Handle various simple highlighted faces
 (defvar default-chars-matcher (rx (: (any "{};"))))

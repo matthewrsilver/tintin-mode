@@ -33,6 +33,30 @@
 %!X                                 «x:#no || format: raw matching is not supported;»
 %«D:{»X«D:}»                                «x:#no || format: braces not supported;»
 
+«x:#no Format strftime format specifiers;»
+«:tintin-capture-face:%a»                                  «x:#no || Abbreviated name of the day of the week (mon ... sun);»
+«:tintin-capture-face:%A»                                  «x:#no || Full name of the day of the week. (Monday ... Sunday);»
+«:tintin-capture-face:%b»                                  «x:#no || Abbreviated name of the month (Jan ... Dec);»
+«:tintin-capture-face:%B»                                  «x:#no || Full name of the month. (January ... December);»
+«:tintin-capture-face:%C»                                  «x:#no || 2 digit numeric century. (19 ... 20);»
+«:tintin-capture-face:%d»                                  «x:#no || 2 digit numeric day of the month (01 ... 31);»
+«:tintin-capture-face:%H»                                  «x:#no || 2 digit numeric 24-hour clock hour. (00 ... 23);»
+«:tintin-capture-face:%I»                                  «x:#no || 2 digit numeric 12-hour clock hour. (01 ... 12);»
+«:tintin-capture-face:%j»                                  «x:#no || 3 digit numeric day of the year (001 ... 366);»
+«:tintin-capture-face:%m»                                  «x:#no || 2 digit numeric month of the year (01 ... 12);»
+«:tintin-capture-face:%M»                                  «x:#no || 2 digit numeric minute of the hour (00 ... 59);»
+«:tintin-capture-face:%p»                                  «x:#no || Abbreviated 12 hour clock period (AM ... PM);»
+«:tintin-capture-face:%P»                                  «x:#no || Abbreviated 12 hour clock period (am ... pm);»
+«:tintin-capture-face:%S»                                  «x:#no || 2 digit numeric second of the minute (00 ...59);»
+«:tintin-capture-face:%u»                                  «x:#no || 1 digit numeric day of the week (1 ... 7);»
+«:tintin-capture-face:%U»                                  «x:#no || 2 digit numeric Sunday week of the year (00 ... 53);»
+«:tintin-capture-face:%w»                                  «x:#no || 1 digit numeric day of the week (0 ... 6);»
+«:tintin-capture-face:%W»                                  «x:#no || 2 digit numeric Monday week of the year (00 ... 53);»
+«:tintin-capture-face:%y»                                  «x:#no || 2 digit numeric year. (70 ... 38);»
+«:tintin-capture-face:%Y»                                  «x:#no || 4 digit numeric year. (1970 ... 2038);»
+«:tintin-capture-face:%z»                                  «x:#no || 5 digit timezone offset. (-1200 ... +1400);»
+«:tintin-capture-face:%Z»                                  «x:#no || Abbreviated name of the time zone;»
+
 «x:#no Format numeric matchers;»
 «:tintin-capture-face:%+9s»                                «x:#no || format: pad string with up to 9 spaces;»
 «:tintin-capture-face:%-9s»                                «x:#no || format: post pad string with up to 9 spaces;»

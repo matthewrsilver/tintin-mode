@@ -1,0 +1,57 @@
+«x:#no Tests for the #history command;»
+
+«b:#history»«D:;»                               «x:#no || bare history with semicolon;»
+«b:#history»                                «x:#no || bare history without semicolon;»
+«b:#histor»                                 «x:#no || six character #history;»
+«b:#histo»                                  «x:#no || five character #history;»
+«b:#hist»                                   «x:#no || four character #history;»
+«b:#his»                                    «x:#no || three character #history;»
+«:tintin-command-face:#hi»                                     «x:#no || two characters is #highlight;»
+«b:#h»                                      «x:#no || one character is #help;»
+#historys                               «x:#no || too many characters don't match;»
+«b:#history» nonsense«D:;»                      «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for different options;»
+«b:#history» «t:delete »                        «x:#no || delete option without semicolon;»
+«b:#history» «D:{»«t:delete»«D:}»                       «x:#no || delete option with braces but no semicolon;»
+«b:#history» «t:delete»«D:;»                        «x:#no || delete option with semicolon;»
+«b:#history» «D:{»«t:delete»«D:};»                      «x:#no || delete option with braces and semicolon;»
+
+«b:#history» «t:list »                          «x:#no || list option without semicolon;»
+«b:#history» «D:{»«t:list»«D:}»                         «x:#no || list option with braces but no semicolon;»
+«b:#history» «t:list»«D:;»                          «x:#no || list option with semicolon;»
+«b:#history» «D:{»«t:list»«D:};»                        «x:#no || list option with braces and semicolon;»
+
+«b:#history» insert                         «x:#no || insert not highlighted without argument;»
+«b:#history» insert«D:;»                        «x:#no || insert not highlighted without argument;»
+«b:#history» «t:insert »command                 «x:#no || insert option without semicolon;»
+«b:#history» «t:insert »command«D:;»                «x:#no || insert option with semicolon;»
+«b:#history» «t:insert »«D:{»command«D:};»              «x:#no || insert option with semicolon;»
+«b:#history» «t:insert »«D:{»«k:#var» «v:x »«D:{»the val«D:}};»     «x:#no || insert option with full command to insert;»
+«b:#history» insert«D:{»command«D:};»               «x:#no || insert not highlighted without space here;»
+«b:#history» «D:{»«t:insert»«D:}» command«D:;»              «x:#no || insert option with semicolon and braces;»
+«b:#history» «D:{»«t:insert»«D:}»command«D:;»               «x:#no || insert option with semicolon and braces;»
+«b:#history» «D:{»«t:insert»«D:}{»command«D:};»             «x:#no || insert option with semicolon and braces;»
+«b:#history» «D:{»«t:insert»«D:}» «D:{»command«D:};»            «x:#no || insert option with semicolon and braces;»
+
+«b:#history» read                           «x:#no || read not highlighted without argument;»
+«b:#history» read«D:;»                          «x:#no || read not highlighted without argument;»
+«b:#history» «t:read »history.txt               «x:#no || read option without semicolon;»
+«b:#history» «t:read »history.txt«D:;»              «x:#no || read option with semicolon;»
+«b:#history» «t:read »«D:{»history.txt«D:};»            «x:#no || read option with semicolon;»
+«b:#history» read«D:{»history.txt«D:};»             «x:#no || read not highlighted without space here;»
+«b:#history» «D:{»«t:read»«D:}» history.txt«D:;»            «x:#no || read option with semicolon and braces;»
+«b:#history» «D:{»«t:read»«D:}»history.txt«D:;»             «x:#no || read option with semicolon and braces;»
+«b:#history» «D:{»«t:read»«D:}{»history.txt«D:};»           «x:#no || read option with semicolon and braces;»
+«b:#history» «D:{»«t:read»«D:}» «D:{»history.txt«D:};»          «x:#no || read option with semicolon and braces;»
+
+«b:#history» write                          «x:#no || write not highlighted without argument;»
+«b:#history» write«D:;»                         «x:#no || write not highlighted without argument;»
+«b:#history» «t:write »history.txt              «x:#no || write option without semicolon;»
+«b:#history» «t:write »history.txt«D:;»             «x:#no || write option with semicolon;»
+«b:#history» «t:write »«D:{»history.txt«D:};»           «x:#no || write option with semicolon;»
+«b:#history» write«D:{»history.txt«D:};»            «x:#no || write not highlighted without space here;»
+«b:#history» «D:{»«t:write»«D:}» history.txt«D:;»           «x:#no || write option with semicolon and braces;»
+«b:#history» «D:{»«t:write»«D:}»history.txt«D:;»            «x:#no || write option with semicolon and braces;»
+«b:#history» «D:{»«t:write»«D:}{»history.txt«D:};»          «x:#no || write option with semicolon and braces;»
+«b:#history» «D:{»«t:write»«D:}» «D:{»history.txt«D:};»         «x:#no || write option with semicolon and braces;»

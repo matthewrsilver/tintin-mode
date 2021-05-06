@@ -266,7 +266,7 @@
      "switch" 0     "case" 0       "default" 3))
 (defvar mud-command-list
   '(  "action" 3     "alias" 0      "echo" 0       "showme" 4
-      "highlight" 4  "substitute" 3 "ticker" 4
+      "highlight" 2  "substitute" 3 "ticker" 4
       "delay" 3      "cr" 0         "gag" 0
       "tab" 0        "event" 0      "send" 0))
 (defvar unmud-command-list
@@ -276,7 +276,7 @@
 (defvar builtin-command-list
   '( "all" 0        "commands" 2   "detatch" 0
      "draw" 0       "edit" 0       "end" 0
-     "grep" 0       "gts" 0        "help" 0       "history" 4
+     "grep" 0       "gts" 0        "help" 1
      "ignore" 3     "info" 3       "kill" 0       "log" 0
      "macro" 3      "map" 0        "mesage" 4     "port" 0
      "path" 0       "pathdir" 5    "prompt" 4     "regexp" 3
@@ -389,6 +389,12 @@
 (defvar daemon-command-list '("daemon" 1))
 (defvar daemon-option
   (tintin-option :vals '("attach" 1 "detach" 1 "input" 1 "kill" 1 "list" 1) :final t))
+
+;; Special handling for the #history command and its subcommands
+(defvar history-command-list '("history" 3))
+(defvar history-arg-option (tintin-option :vals '("insert" 1 "read" 1 "write" 1)))
+(defvar history-no-arg-option (tintin-option :vals '("delete" 1 "list" 1) :final t))
+
 
 (setq tintin-font-lock-keywords (append
 
@@ -552,6 +558,11 @@
     (fontify-tintin-cmd debug-command
                         '(debug-option debug-toggle-value)
                         '(debug-option)))
+
+  (let ((history-command (tintin-command :cmds 'history-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd history-command
+                        '(history-arg-option final-arg)
+                        '(history-no-arg-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

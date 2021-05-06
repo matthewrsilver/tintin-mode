@@ -14,7 +14,6 @@
  * Tests for individual functions in tintin-commands.el
 
 ### Commands that need work
- * The #history command has options
  * The #ignore command has a toggle
  * The #info command has a toggle plus "list" and "save"
  * The #log command has subcommands

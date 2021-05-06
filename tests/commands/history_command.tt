@@ -1,0 +1,57 @@
+#no Tests for the #history command;
+
+#history;                               #no || bare history with semicolon;
+#history                                #no || bare history without semicolon;
+#histor                                 #no || six character #history;
+#histo                                  #no || five character #history;
+#hist                                   #no || four character #history;
+#his                                    #no || three character #history;
+#hi                                     #no || two characters is #highlight;
+#h                                      #no || one character is #help;
+#historys                               #no || too many characters don't match;
+#history nonsense;                      #no || unknown modes not highlighted;
+
+#no Tests for different options;
+#history delete                         #no || delete option without semicolon;
+#history {delete}                       #no || delete option with braces but no semicolon;
+#history delete;                        #no || delete option with semicolon;
+#history {delete};                      #no || delete option with braces and semicolon;
+
+#history list                           #no || list option without semicolon;
+#history {list}                         #no || list option with braces but no semicolon;
+#history list;                          #no || list option with semicolon;
+#history {list};                        #no || list option with braces and semicolon;
+
+#history insert                         #no || insert not highlighted without argument;
+#history insert;                        #no || insert not highlighted without argument;
+#history insert command                 #no || insert option without semicolon;
+#history insert command;                #no || insert option with semicolon;
+#history insert {command};              #no || insert option with semicolon;
+#history insert {#var x {the val}};     #no || insert option with full command to insert;
+#history insert{command};               #no || insert not highlighted without space here;
+#history {insert} command;              #no || insert option with semicolon and braces;
+#history {insert}command;               #no || insert option with semicolon and braces;
+#history {insert}{command};             #no || insert option with semicolon and braces;
+#history {insert} {command};            #no || insert option with semicolon and braces;
+
+#history read                           #no || read not highlighted without argument;
+#history read;                          #no || read not highlighted without argument;
+#history read history.txt               #no || read option without semicolon;
+#history read history.txt;              #no || read option with semicolon;
+#history read {history.txt};            #no || read option with semicolon;
+#history read{history.txt};             #no || read not highlighted without space here;
+#history {read} history.txt;            #no || read option with semicolon and braces;
+#history {read}history.txt;             #no || read option with semicolon and braces;
+#history {read}{history.txt};           #no || read option with semicolon and braces;
+#history {read} {history.txt};          #no || read option with semicolon and braces;
+
+#history write                          #no || write not highlighted without argument;
+#history write;                         #no || write not highlighted without argument;
+#history write history.txt              #no || write option without semicolon;
+#history write history.txt;             #no || write option with semicolon;
+#history write {history.txt};           #no || write option with semicolon;
+#history write{history.txt};            #no || write not highlighted without space here;
+#history {write} history.txt;           #no || write option with semicolon and braces;
+#history {write}history.txt;            #no || write option with semicolon and braces;
+#history {write}{history.txt};          #no || write option with semicolon and braces;
+#history {write} {history.txt};         #no || write option with semicolon and braces;

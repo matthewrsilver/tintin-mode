@@ -37,6 +37,9 @@
 (ert-deftest tintin-font-lock-history-command-test ()
   (should (tintin-font-lock-test-file "commands/history_command.tt")))
 
+(ert-deftest tintin-font-lock-ignore-command-test ()
+  (should (tintin-font-lock-test-file "commands/ignore_command.tt")))
+
 (ert-deftest tintin-font-lock-line-command-test ()
   (should (tintin-font-lock-test-file "commands/line_command.tt")))
 

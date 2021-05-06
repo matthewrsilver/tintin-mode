@@ -292,10 +292,6 @@
                          "highlights" 1 "macros" 1 "pathdirs" 1 "prompts" 1
                          "substitutes" 1 "tabs" 1 "tickers" 1 "variables" 1) :final t))
 
-;; Special handling for the #debug command
-(defvar debug-command-list '("debug" 2))
-(defvar debug-toggle-value (tintin-constant :vals '("off" 2 "on" 1 "log" 1)))
-
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
 (defvar bell-ring-option (tintin-option :vals '("ring" 1) :final t))
@@ -331,7 +327,7 @@
 (defvar line-capture-option (tintin-option :vals '("capture" 2)))
 (defvar line-standard-option
   (tintin-option :vals '("strip" 2 "substitute" 2 "background" 1 "convert" 2 "debug" 1
-                         "ignore" 1 "local" 3 "log" 3 "logmode" 4 "msdp" 2 "multishot" 2
+                         "local" 3 "log" 3 "logmode" 4 "msdp" 2 "multishot" 2
                          "oneshot" 1 "quiet" 1 "verbatim" 5 "verbose" 5 "logverbatim" 4)))
 
 ;; Special handling for the #list command and its subcommands
@@ -391,10 +387,17 @@
 (defvar daemon-option
   (tintin-option :vals '("attach" 1 "detach" 1 "input" 1 "kill" 1 "list" 1) :final t))
 
+;; Special handling for the #debug command
+(defvar debug-command-list '("debug" 2))
+(defvar debug-toggle-value (tintin-constant :vals '("off" 2 "on" 1 "log" 1)))
+
 ;; Special handling for the #history command and its subcommands
 (defvar history-command-list '("history" 3))
 (defvar history-arg-option (tintin-option :vals '("insert" 1 "read" 1 "write" 1)))
 (defvar history-no-arg-option (tintin-option :vals '("delete" 1 "list" 1) :final t))
+
+;; Special handling for the #ignore command
+(defvar ignore-command-list '("ignore" 1))
 
 
 (setq tintin-font-lock-keywords (append
@@ -560,10 +563,17 @@
                         '(command-list-option debug-toggle-value)
                         '(command-list-option)))
 
+  ;; Highlight #history command
   (let ((history-command (tintin-command :cmds 'history-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd history-command
                         '(history-arg-option final-arg)
                         '(history-no-arg-option)))
+
+  ;; Highlight #ignore command
+  (let ((ignore-command (tintin-command :cmds 'ignore-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd ignore-command
+                        '(command-list-option toggle-value)
+                        '(command-list-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

@@ -1,0 +1,141 @@
+#no Tests for the #ignore command;
+
+#ignore;                                 #no || bare ignore with semicolon;
+#ignore                                  #no || bare ignore without semicolon;
+#ignor                                   #no || five character #ignore;
+#igno                                    #no || four character #ignore;
+#ign                                     #no || three character #ignore;
+#ig                                      #no || two character #ignore;
+#i                                       #no || one character #ignore;;
+#ignores                                 #no || too many characters don't match;
+#ignore nonsense;                        #no || unknown modes not highlighted;
+
+#no Tests for different options/lists;
+#ignore actions                          #no || actions option without semicolon;
+#ignore actions;                         #no || actions option with semicolon;
+#ignore actions on;                      #no || actions option with toggle argument;
+#ignore actions log;                     #no || actions option is highlighted even with bad argument;
+#ignore a                                #no || actions option with single character, no semicolon;
+#ignore a;                               #no || actions option with single character and semicolon;
+#ignore a O;                             #no || actions option with single character and toggle;
+
+#ignore aliases                          #no || aliases option without semicolon;
+#ignore aliases;                         #no || aliases option with semicolon;
+#ignore aliases on;                      #no || aliases option with toggle argument;
+#ignore aliases log;                     #no || aliases option is highlighted even with bad argument;
+
+#ignore buttons                          #no || buttons option without semicolon;
+#ignore buttons;                         #no || buttons option with semicolon;
+#ignore buttons on;                      #no || buttons option with toggle argument;
+#ignore buttons log;                     #no || buttons option is highlighted even with bad argument;
+#ignore b                                #no || buttons option with single character, no semicolon;
+#ignore b;                               #no || buttons option with single character and semicolon;
+#ignore b O;                             #no || buttons option with single character and toggle;
+
+#ignore classes                          #no || classes option without semicolon;
+#ignore classes;                         #no || classes option with semicolon;
+#ignore classes on;                      #no || classes option with toggle argument;
+#ignore classes log;                     #no || classes option is highlighted even with bad argument;
+#ignore c                                #no || classes option with single character, no semicolon;
+#ignore c;                               #no || classes option with single character and semicolon;
+#ignore c O;                             #no || classes option with single character and toggle;
+
+#ignore commands                         #no || commands option without semicolon;
+#ignore commands;                        #no || commands option with semicolon;
+#ignore commands on;                     #no || commands option with toggle argument;
+#ignore commands log;                    #no || commands option is highlighted even with bad arg;
+
+#ignore configs                          #no || configs option without semicolon;
+#ignore configs;                         #no || configs option with semicolon;
+#ignore configs on;                      #no || configs option with toggle argument;
+#ignore configs log;                     #no || configs option is highlighted even with bad arg;
+
+#ignore delays                           #no || delays option without semicolon;
+#ignore delays;                          #no || delays option with semicolon;
+#ignore delays on;                       #no || delays option with toggle argument;
+#ignore delays log;                      #no || delays option is highlighted even with bad argument;
+#ignore d                                #no || delays option with single character, no semicolon;
+#ignore d;                               #no || delays option with single character and semicolon;
+#ignore d O;                             #no || delays option with single character and toggle;
+
+#ignore events                           #no || events option without semicolon;
+#ignore events;                          #no || events option with semicolon;
+#ignore events on;                       #no || events option with toggle argument;
+#ignore events log;                      #no || events option is highlighted even with bad argument;
+#ignore e                                #no || events option with single character, no semicolon;
+#ignore e;                               #no || events option with single character and semicolon;
+#ignore e O;                             #no || events option with single character and toggle;
+
+#ignore functions                        #no || functions option without semicolon;
+#ignore functions;                       #no || functions option with semicolon;
+#ignore functions on;                    #no || functions option with toggle argument;
+#ignore functions log;                   #no || functions option is highlighted even with bad arg;
+#ignore f                                #no || functions option with single character, no semicolon;
+#ignore f;                               #no || functions option with single character and semicolon;
+#ignore f O;                             #no || functions option with single character and toggle;
+
+#ignore gags                             #no || gags option without semicolon;
+#ignore gags;                            #no || gags option with semicolon;
+#ignore gags on;                         #no || gags option with toggle argument;
+#ignore gags log;                        #no || gags option is highlighted even with bad arg;
+#ignore g                                #no || gags option with single character, no semicolon;
+#ignore g;                               #no || gags option with single character and semicolon;
+#ignore g O;                             #no || gags option with single character and toggle;
+
+#ignore highlights                       #no || highlights option without semicolon;
+#ignore highlights;                      #no || highlights option with semicolon;
+#ignore highlights on;                   #no || highlights option with toggle argument;
+#ignore highlights log;                  #no || highlights option is highlighted even with bad arg;
+#ignore h                                #no || highlights option with single char, no semicolon;
+#ignore h;                               #no || highlights option with single char and semicolon;
+#ignore h O;                             #no || highlights option with single character and toggle;
+
+#ignore macros                           #no || macros option without semicolon;
+#ignore macros;                          #no || macros option with semicolon;
+#ignore macros on;                       #no || macros option with toggle argument;
+#ignore macros log;                      #no || macros option is highlighted even with bad arg;
+#ignore m                                #no || macros option with single character, no semicolon;
+#ignore m;                               #no || macros option with single character and semicolon;
+#ignore m O;                             #no || macros option with single character and toggle;
+
+#ignore pathdirs                         #no || pathdirs option without semicolon;
+#ignore pathdirs;                        #no || pathdirs option with semicolon;
+#ignore pathdirs on;                     #no || pathdirs option with toggle argument;
+#ignore pathdirs log;                    #no || pathdirs option is highlighted even with bad arg;
+#ignore p                                #no || pathdirs option with single character, no semicolon;
+#ignore p;                               #no || pathdirs option with single character and semicolon;
+#ignore p O;                             #no || pathdirs option with single character and toggle;
+
+#ignore prompts                          #no || prompts option without semicolon;
+#ignore prompts;                         #no || prompts option with semicolon;
+#ignore prompts on;                      #no || prompts option with toggle argument;
+#ignore prompts log;                     #no || prompts option is highlighted even with bad arg;
+
+#ignore substitutes                      #no || substitutes option without semicolon;
+#ignore substitutes;                     #no || substitutes option with semicolon;
+#ignore substitutes on;                  #no || substitutes option with toggle argument;
+#ignore substitutes log;                 #no || substitutes option is highlighted even with bad arg;
+#ignore s                                #no || substitutes option with single char, no semicolon;
+#ignore s;                               #no || substitutes option with single char and semicolon;
+#ignore s O;                             #no || substitutes option with single character and toggle;
+
+#ignore tabs                             #no || tabs option without semicolon;
+#ignore tabs;                            #no || tabs option with semicolon;
+#ignore tabs on;                         #no || tabs option with toggle argument;
+#ignore tabs log;                        #no || tabs option is highlighted even with bad arg;
+#ignore t                                #no || tabs option with single character, no semicolon;
+#ignore t;                               #no || tabs option with single character and semicolon;
+#ignore t O;                             #no || tabs option with single character and toggle;
+
+#ignore tickers                          #no || tickers option without semicolon;
+#ignore tickers;                         #no || tickers option with semicolon;
+#ignore tickers on;                      #no || tickers option with toggle argument;
+#ignore tickers log;                     #no || tickers option is highlighted even with bad arg;
+
+#ignore variables                        #no || variables option without semicolon;
+#ignore variables;                       #no || variables option with semicolon;
+#ignore variables on;                    #no || variables option with toggle argument;
+#ignore variables log;                   #no || variables option is highlighted even with bad arg;
+#ignore v                                #no || variables option with single character, no semicolon;
+#ignore v;                               #no || variables option with single character and semicolon;
+#ignore v O;                             #no || variables option with single character and toggle;

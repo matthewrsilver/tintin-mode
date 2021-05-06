@@ -1,0 +1,141 @@
+«x:#no Tests for the #ignore command;»
+
+«b:#ignore»«D:;»                                 «x:#no || bare ignore with semicolon;»
+«b:#ignore»                                  «x:#no || bare ignore without semicolon;»
+«b:#ignor»                                   «x:#no || five character #ignore;»
+«b:#igno»                                    «x:#no || four character #ignore;»
+«b:#ign»                                     «x:#no || three character #ignore;»
+«b:#ig»                                      «x:#no || two character #ignore;»
+«b:#i»                                       «x:#no || one character #ignore;»«w:;»
+#ignores                                 «x:#no || too many characters don't match;»
+«b:#ignore» nonsense«D:;»                        «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for different options/lists;»
+«b:#ignore» «t:actions »                         «x:#no || actions option without semicolon;»
+«b:#ignore» «t:actions»«D:;»                         «x:#no || actions option with semicolon;»
+«b:#ignore» «t:actions »«c:on»«D:;»                      «x:#no || actions option with toggle argument;»
+«b:#ignore» «t:actions »log«D:;»                     «x:#no || actions option is highlighted even with bad argument;»
+«b:#ignore» «t:a »                               «x:#no || actions option with single character, no semicolon;»
+«b:#ignore» «t:a»«D:;»                               «x:#no || actions option with single character and semicolon;»
+«b:#ignore» «t:a »«c:O»«D:;»                             «x:#no || actions option with single character and toggle;»
+
+«b:#ignore» «t:aliases »                         «x:#no || aliases option without semicolon;»
+«b:#ignore» «t:aliases»«D:;»                         «x:#no || aliases option with semicolon;»
+«b:#ignore» «t:aliases »«c:on»«D:;»                      «x:#no || aliases option with toggle argument;»
+«b:#ignore» «t:aliases »log«D:;»                     «x:#no || aliases option is highlighted even with bad argument;»
+
+«b:#ignore» «t:buttons »                         «x:#no || buttons option without semicolon;»
+«b:#ignore» «t:buttons»«D:;»                         «x:#no || buttons option with semicolon;»
+«b:#ignore» «t:buttons »«c:on»«D:;»                      «x:#no || buttons option with toggle argument;»
+«b:#ignore» «t:buttons »log«D:;»                     «x:#no || buttons option is highlighted even with bad argument;»
+«b:#ignore» «t:b »                               «x:#no || buttons option with single character, no semicolon;»
+«b:#ignore» «t:b»«D:;»                               «x:#no || buttons option with single character and semicolon;»
+«b:#ignore» «t:b »«c:O»«D:;»                             «x:#no || buttons option with single character and toggle;»
+
+«b:#ignore» «t:classes »                         «x:#no || classes option without semicolon;»
+«b:#ignore» «t:classes»«D:;»                         «x:#no || classes option with semicolon;»
+«b:#ignore» «t:classes »«c:on»«D:;»                      «x:#no || classes option with toggle argument;»
+«b:#ignore» «t:classes »log«D:;»                     «x:#no || classes option is highlighted even with bad argument;»
+«b:#ignore» «t:c »                               «x:#no || classes option with single character, no semicolon;»
+«b:#ignore» «t:c»«D:;»                               «x:#no || classes option with single character and semicolon;»
+«b:#ignore» «t:c »«c:O»«D:;»                             «x:#no || classes option with single character and toggle;»
+
+«b:#ignore» «t:commands »                        «x:#no || commands option without semicolon;»
+«b:#ignore» «t:commands»«D:;»                        «x:#no || commands option with semicolon;»
+«b:#ignore» «t:commands »«c:on»«D:;»                     «x:#no || commands option with toggle argument;»
+«b:#ignore» «t:commands »log«D:;»                    «x:#no || commands option is highlighted even with bad arg;»
+
+«b:#ignore» «t:configs »                         «x:#no || configs option without semicolon;»
+«b:#ignore» «t:configs»«D:;»                         «x:#no || configs option with semicolon;»
+«b:#ignore» «t:configs »«c:on»«D:;»                      «x:#no || configs option with toggle argument;»
+«b:#ignore» «t:configs »log«D:;»                     «x:#no || configs option is highlighted even with bad arg;»
+
+«b:#ignore» «t:delays »                          «x:#no || delays option without semicolon;»
+«b:#ignore» «t:delays»«D:;»                          «x:#no || delays option with semicolon;»
+«b:#ignore» «t:delays »«c:on»«D:;»                       «x:#no || delays option with toggle argument;»
+«b:#ignore» «t:delays »log«D:;»                      «x:#no || delays option is highlighted even with bad argument;»
+«b:#ignore» «t:d »                               «x:#no || delays option with single character, no semicolon;»
+«b:#ignore» «t:d»«D:;»                               «x:#no || delays option with single character and semicolon;»
+«b:#ignore» «t:d »«c:O»«D:;»                             «x:#no || delays option with single character and toggle;»
+
+«b:#ignore» «t:events »                          «x:#no || events option without semicolon;»
+«b:#ignore» «t:events»«D:;»                          «x:#no || events option with semicolon;»
+«b:#ignore» «t:events »«c:on»«D:;»                       «x:#no || events option with toggle argument;»
+«b:#ignore» «t:events »log«D:;»                      «x:#no || events option is highlighted even with bad argument;»
+«b:#ignore» «t:e »                               «x:#no || events option with single character, no semicolon;»
+«b:#ignore» «t:e»«D:;»                               «x:#no || events option with single character and semicolon;»
+«b:#ignore» «t:e »«c:O»«D:;»                             «x:#no || events option with single character and toggle;»
+
+«b:#ignore» «t:functions »                       «x:#no || functions option without semicolon;»
+«b:#ignore» «t:functions»«D:;»                       «x:#no || functions option with semicolon;»
+«b:#ignore» «t:functions »«c:on»«D:;»                    «x:#no || functions option with toggle argument;»
+«b:#ignore» «t:functions »log«D:;»                   «x:#no || functions option is highlighted even with bad arg;»
+«b:#ignore» «t:f »                               «x:#no || functions option with single character, no semicolon;»
+«b:#ignore» «t:f»«D:;»                               «x:#no || functions option with single character and semicolon;»
+«b:#ignore» «t:f »«c:O»«D:;»                             «x:#no || functions option with single character and toggle;»
+
+«b:#ignore» «t:gags »                            «x:#no || gags option without semicolon;»
+«b:#ignore» «t:gags»«D:;»                            «x:#no || gags option with semicolon;»
+«b:#ignore» «t:gags »«c:on»«D:;»                         «x:#no || gags option with toggle argument;»
+«b:#ignore» «t:gags »log«D:;»                        «x:#no || gags option is highlighted even with bad arg;»
+«b:#ignore» «t:g »                               «x:#no || gags option with single character, no semicolon;»
+«b:#ignore» «t:g»«D:;»                               «x:#no || gags option with single character and semicolon;»
+«b:#ignore» «t:g »«c:O»«D:;»                             «x:#no || gags option with single character and toggle;»
+
+«b:#ignore» «t:highlights »                      «x:#no || highlights option without semicolon;»
+«b:#ignore» «t:highlights»«D:;»                      «x:#no || highlights option with semicolon;»
+«b:#ignore» «t:highlights »«c:on»«D:;»                   «x:#no || highlights option with toggle argument;»
+«b:#ignore» «t:highlights »log«D:;»                  «x:#no || highlights option is highlighted even with bad arg;»
+«b:#ignore» «t:h »                               «x:#no || highlights option with single char, no semicolon;»
+«b:#ignore» «t:h»«D:;»                               «x:#no || highlights option with single char and semicolon;»
+«b:#ignore» «t:h »«c:O»«D:;»                             «x:#no || highlights option with single character and toggle;»
+
+«b:#ignore» «t:macros »                          «x:#no || macros option without semicolon;»
+«b:#ignore» «t:macros»«D:;»                          «x:#no || macros option with semicolon;»
+«b:#ignore» «t:macros »«c:on»«D:;»                       «x:#no || macros option with toggle argument;»
+«b:#ignore» «t:macros »log«D:;»                      «x:#no || macros option is highlighted even with bad arg;»
+«b:#ignore» «t:m »                               «x:#no || macros option with single character, no semicolon;»
+«b:#ignore» «t:m»«D:;»                               «x:#no || macros option with single character and semicolon;»
+«b:#ignore» «t:m »«c:O»«D:;»                             «x:#no || macros option with single character and toggle;»
+
+«b:#ignore» «t:pathdirs »                        «x:#no || pathdirs option without semicolon;»
+«b:#ignore» «t:pathdirs»«D:;»                        «x:#no || pathdirs option with semicolon;»
+«b:#ignore» «t:pathdirs »«c:on»«D:;»                     «x:#no || pathdirs option with toggle argument;»
+«b:#ignore» «t:pathdirs »log«D:;»                    «x:#no || pathdirs option is highlighted even with bad arg;»
+«b:#ignore» «t:p »                               «x:#no || pathdirs option with single character, no semicolon;»
+«b:#ignore» «t:p»«D:;»                               «x:#no || pathdirs option with single character and semicolon;»
+«b:#ignore» «t:p »«c:O»«D:;»                             «x:#no || pathdirs option with single character and toggle;»
+
+«b:#ignore» «t:prompts »                         «x:#no || prompts option without semicolon;»
+«b:#ignore» «t:prompts»«D:;»                         «x:#no || prompts option with semicolon;»
+«b:#ignore» «t:prompts »«c:on»«D:;»                      «x:#no || prompts option with toggle argument;»
+«b:#ignore» «t:prompts »log«D:;»                     «x:#no || prompts option is highlighted even with bad arg;»
+
+«b:#ignore» «t:substitutes »                     «x:#no || substitutes option without semicolon;»
+«b:#ignore» «t:substitutes»«D:;»                     «x:#no || substitutes option with semicolon;»
+«b:#ignore» «t:substitutes »«c:on»«D:;»                  «x:#no || substitutes option with toggle argument;»
+«b:#ignore» «t:substitutes »log«D:;»                 «x:#no || substitutes option is highlighted even with bad arg;»
+«b:#ignore» «t:s »                               «x:#no || substitutes option with single char, no semicolon;»
+«b:#ignore» «t:s»«D:;»                               «x:#no || substitutes option with single char and semicolon;»
+«b:#ignore» «t:s »«c:O»«D:;»                             «x:#no || substitutes option with single character and toggle;»
+
+«b:#ignore» «t:tabs »                            «x:#no || tabs option without semicolon;»
+«b:#ignore» «t:tabs»«D:;»                            «x:#no || tabs option with semicolon;»
+«b:#ignore» «t:tabs »«c:on»«D:;»                         «x:#no || tabs option with toggle argument;»
+«b:#ignore» «t:tabs »log«D:;»                        «x:#no || tabs option is highlighted even with bad arg;»
+«b:#ignore» «t:t »                               «x:#no || tabs option with single character, no semicolon;»
+«b:#ignore» «t:t»«D:;»                               «x:#no || tabs option with single character and semicolon;»
+«b:#ignore» «t:t »«c:O»«D:;»                             «x:#no || tabs option with single character and toggle;»
+
+«b:#ignore» «t:tickers »                         «x:#no || tickers option without semicolon;»
+«b:#ignore» «t:tickers»«D:;»                         «x:#no || tickers option with semicolon;»
+«b:#ignore» «t:tickers »«c:on»«D:;»                      «x:#no || tickers option with toggle argument;»
+«b:#ignore» «t:tickers »log«D:;»                     «x:#no || tickers option is highlighted even with bad arg;»
+
+«b:#ignore» «t:variables »                       «x:#no || variables option without semicolon;»
+«b:#ignore» «t:variables»«D:;»                       «x:#no || variables option with semicolon;»
+«b:#ignore» «t:variables »«c:on»«D:;»                    «x:#no || variables option with toggle argument;»
+«b:#ignore» «t:variables »log«D:;»                   «x:#no || variables option is highlighted even with bad arg;»
+«b:#ignore» «t:v »                               «x:#no || variables option with single character, no semicolon;»
+«b:#ignore» «t:v»«D:;»                               «x:#no || variables option with single character and semicolon;»
+«b:#ignore» «t:v »«c:O»«D:;»                             «x:#no || variables option with single character and toggle;»

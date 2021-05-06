@@ -284,15 +284,17 @@
      "session" 3    "snoop" 0      "split" 3      "ssl" 0
      "textin" 4     "write" 0      "zap" 0        "ats" 0))
 
-;; Special handling for the #debug command
-(defvar debug-command-list '("debug" 2))
-(defvar debug-toggle-value
-  (tintin-option :vals '("off" 2 "on" 1 "log" 1) :face 'font-lock-constant-face :final t))
-(defvar debug-option
+
+;; Several commands accept this list of commands as options
+(defvar command-list-option
   (tintin-option :vals '("actions" 1 "aliases" 1 "buttons" 1 "classes" 1 "commands" 1
                          "configs" 1 "delays" 1 "events" 1 "functions" 1 "gags" 1
                          "highlights" 1 "macros" 1 "pathdirs" 1 "prompts" 1
                          "substitutes" 1 "tabs" 1 "tickers" 1 "variables" 1) :final t))
+
+;; Special handling for the #debug command
+(defvar debug-command-list '("debug" 2))
+(defvar debug-toggle-value (tintin-constant :vals '("off" 2 "on" 1 "log" 1)))
 
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
@@ -312,8 +314,7 @@
 
 ;; Special handling for the #chat command and its subcommands
 (defvar chat-command-list '("chat" 2))
-(defvar chat-all-constant
-  (tintin-option :vals '("all" 0)  :face 'font-lock-constant-face))
+(defvar chat-all-constant (tintin-constant :vals '("all" 0)))
 (defvar chat-send-option
   (tintin-option :vals '("message" 1 "emote" 1 "paste" 2 "private" 2 "public" 2 "send" 3)))
 (defvar chat-standard-option
@@ -556,8 +557,8 @@
   ;; Highlight #debug command
   (let ((debug-command (tintin-command :cmds 'debug-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd debug-command
-                        '(debug-option debug-toggle-value)
-                        '(debug-option)))
+                        '(command-list-option debug-toggle-value)
+                        '(command-list-option)))
 
   (let ((history-command (tintin-command :cmds 'history-command-list :face 'font-lock-builtin-face)))
     (fontify-tintin-cmd history-command

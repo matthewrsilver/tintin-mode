@@ -299,10 +299,15 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
     (if value-list (oset obj regexp values-regexp))))
 
 (defclass tintin-option (tintin-argument)
-  ((face :initform 'font-lock-type-face)
+  ((face :initarg :face :initform 'font-lock-type-face)
    (override :initarg :override :initform 'keep))
   "Command option argument class, that represents an option specifying a subcommand type.")
 
+(defclass tintin-constant (tintin-argument)
+  ((face :initarg :face :initform 'font-lock-constant-face)
+   (final :initarg :final :initform 't)
+   (override :initarg :override :initform 'keep))
+  "Command argument that stores a list of values to be highlighted as constants.")
 
 (setq arg (tintin-argument))
 (setq final-arg (clone arg :regexp tintin-final-arg))
@@ -316,10 +321,7 @@ can be incorporated into `font-lock-keywords' to highlight TinTin++ scripts."
 (setq function-name (clone arg :face 'font-lock-function-name-face :override 'keep))
 (setq command-type (clone arg :face 'font-lock-type-face :override 'keep))
 
-(defvar toggle-constant-values '("off" 2 "on" 1))
-(defvar toggle-value
-  (tintin-option :vals toggle-constant-values :face 'font-lock-constant-face :final t))
-
+(defvar toggle-value (tintin-constant :vals '("off" 2 "on" 1)))
 (defvar settable-character-regexp
   (rx (group (optionally-braced sequence (not (any "{};"))))))
 (defvar settable-character

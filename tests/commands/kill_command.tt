@@ -1,0 +1,92 @@
+#no Tests for the #kill command;
+
+#kill;                                 #no || bare kill with semicolon;
+#kill                                  #no || bare kill without semicolon;
+#kil                                   #no || three character #kill;
+#ki                                    #no || two character #kill;
+#k                                     #no || one character #kill;
+#kills                                 #no || too many characters don't match;
+#kill nonsense;                        #no || unknown modes not highlighted;
+
+#no Tests for different options/lists;
+#kill actions                          #no || actions option without semicolon;
+#kill actions;                         #no || actions option with semicolon;
+#kill actions on                       #no || toggle doesn't get highlighted after;
+#kill a                                #no || actions option with single character, no semicolon;
+#kill a;                               #no || actions option with single character and semicolon;
+
+#kill aliases                          #no || aliases option without semicolon;
+#kill aliases;                         #no || aliases option with semicolon;
+
+#kill buttons                          #no || buttons option without semicolon;
+#kill buttons;                         #no || buttons option with semicolon;
+#kill b                                #no || buttons option with single character, no semicolon;
+#kill b;                               #no || buttons option with single character and semicolon;
+
+#kill classes                          #no || classes option without semicolon;
+#kill classes;                         #no || classes option with semicolon;
+#kill c                                #no || classes option with single character, no semicolon;
+#kill c;                               #no || classes option with single character and semicolon;
+
+#kill commands                         #no || commands option without semicolon;
+#kill commands;                        #no || commands option with semicolon;
+
+#kill configs                          #no || configs option without semicolon;
+#kill configs;                         #no || configs option with semicolon;
+
+#kill delays                           #no || delays option without semicolon;
+#kill delays;                          #no || delays option with semicolon;
+#kill d                                #no || delays option with single character, no semicolon;
+#kill d;                               #no || delays option with single character and semicolon;
+
+#kill events                           #no || events option without semicolon;
+#kill events;                          #no || events option with semicolon;
+#kill e                                #no || events option with single character, no semicolon;
+#kill e;                               #no || events option with single character and semicolon;
+
+#kill functions                        #no || functions option without semicolon;
+#kill functions;                       #no || functions option with semicolon;
+#kill f                                #no || functions option with single character, no semicolon;
+#kill f;                               #no || functions option with single character and semicolon;
+
+
+#kill gags                             #no || gags option without semicolon;
+#kill gags;                            #no || gags option with semicolon;
+#kill g                                #no || gags option with single character, no semicolon;
+#kill g;                               #no || gags option with single character and semicolon;
+
+#kill highlights                       #no || highlights option without semicolon;
+#kill highlights;                      #no || highlights option with semicolon;
+#kill h                                #no || highlights option with single char, no semicolon;
+#kill h;                               #no || highlights option with single char and semicolon;
+
+#kill macros                           #no || macros option without semicolon;
+#kill macros;                          #no || macros option with semicolon;
+#kill m                                #no || macros option with single character, no semicolon;
+#kill m;                               #no || macros option with single character and semicolon;
+
+#kill pathdirs                         #no || pathdirs option without semicolon;
+#kill pathdirs;                        #no || pathdirs option with semicolon;
+#kill p                                #no || pathdirs option with single character, no semicolon;
+#kill p;                               #no || pathdirs option with single character and semicolon;
+
+#kill prompts                          #no || prompts option without semicolon;
+#kill prompts;                         #no || prompts option with semicolon;
+
+#kill substitutes                      #no || substitutes option without semicolon;
+#kill substitutes;                     #no || substitutes option with semicolon;
+#kill s                                #no || substitutes option with single char, no semicolon;
+#kill s;                               #no || substitutes option with single char and semicolon;
+
+#kill tabs                             #no || tabs option without semicolon;
+#kill tabs;                            #no || tabs option with semicolon;
+#kill t                                #no || tabs option with single character, no semicolon;
+#kill t;                               #no || tabs option with single character and semicolon;
+
+#kill tickers                          #no || tickers option without semicolon;
+#kill tickers;                         #no || tickers option with semicolon;
+
+#kill variables                        #no || variables option without semicolon;
+#kill variables;                       #no || variables option with semicolon;
+#kill v                                #no || variables option with single character, no semicolon;
+#kill v;                               #no || variables option with single character and semicolon;

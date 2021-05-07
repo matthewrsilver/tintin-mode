@@ -274,10 +274,9 @@
      "ungag" 0      "untab" 0      "unevent" 0))
 (defvar script-command-list '("script" 3))
 (defvar builtin-command-list
-  '( "all" 0        "commands" 2   "detatch" 0
-     "draw" 0       "edit" 0       "end" 0
-     "grep" 0       "gts" 0        "help" 1
-     "ignore" 3     "kill" 0       "log" 0
+  '( "all" 0        "commands" 2   "detatch" 0    "draw" 0
+     "edit" 0       "end" 0        "grep" 0       "gts" 0
+     "help" 1       "ignore" 3     "log" 0
      "macro" 3      "map" 0        "mesage" 4     "port" 0
      "path" 0       "pathdir" 5    "prompt" 4     "regexp" 3
      "read" 0       "run" 0        "scan" 1       "screen" 3
@@ -407,6 +406,10 @@
     "session" 2 "sessions" 0 "system" 2 "unicode" 1))
 (defvar info-no-arg-options
   (tintin-option :final t :vals (append command-list-commands info-no-arg-option-args)))
+
+;; Special handling for the #kill command
+(defvar kill-command-list '("kill" 1))
+
 
 (setq tintin-font-lock-keywords (append
 
@@ -588,6 +591,11 @@
     (fontify-tintin-cmd info-command
                         '(command-list-option info-toggle-value)
                         '(info-no-arg-options)))
+
+  ;; Highlight #kill command
+  (let ((kill-command (tintin-command :cmds 'kill-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd kill-command
+                        '(command-list-option)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

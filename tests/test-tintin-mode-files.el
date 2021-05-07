@@ -43,6 +43,9 @@
 (ert-deftest tintin-font-lock-info-command-test ()
   (should (tintin-font-lock-test-file "commands/info_command.tt")))
 
+(ert-deftest tintin-font-lock-kill-command-test ()
+  (should (tintin-font-lock-test-file "commands/kill_command.tt")))
+
 (ert-deftest tintin-font-lock-line-command-test ()
   (should (tintin-font-lock-test-file "commands/line_command.tt")))
 

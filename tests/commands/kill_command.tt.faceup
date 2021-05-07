@@ -1,0 +1,92 @@
+«x:#no Tests for the #kill command;»
+
+«b:#kill»«D:;»                                 «x:#no || bare kill with semicolon;»
+«b:#kill»                                  «x:#no || bare kill without semicolon;»
+«b:#kil»                                   «x:#no || three character #kill;»
+«b:#ki»                                    «x:#no || two character #kill;»
+«b:#k»                                     «x:#no || one character #kill;»
+#kills                                 «x:#no || too many characters don't match;»
+«b:#kill» nonsense«D:;»                        «x:#no || unknown modes not highlighted;»
+
+«x:#no Tests for different options/lists;»
+«b:#kill» «t:actions »                         «x:#no || actions option without semicolon;»
+«b:#kill» «t:actions»«D:;»                         «x:#no || actions option with semicolon;»
+«b:#kill» «t:actions »on                       «x:#no || toggle doesn't get highlighted after;»
+«b:#kill» «t:a »                               «x:#no || actions option with single character, no semicolon;»
+«b:#kill» «t:a»«D:;»                               «x:#no || actions option with single character and semicolon;»
+
+«b:#kill» «t:aliases »                         «x:#no || aliases option without semicolon;»
+«b:#kill» «t:aliases»«D:;»                         «x:#no || aliases option with semicolon;»
+
+«b:#kill» «t:buttons »                         «x:#no || buttons option without semicolon;»
+«b:#kill» «t:buttons»«D:;»                         «x:#no || buttons option with semicolon;»
+«b:#kill» «t:b »                               «x:#no || buttons option with single character, no semicolon;»
+«b:#kill» «t:b»«D:;»                               «x:#no || buttons option with single character and semicolon;»
+
+«b:#kill» «t:classes »                         «x:#no || classes option without semicolon;»
+«b:#kill» «t:classes»«D:;»                         «x:#no || classes option with semicolon;»
+«b:#kill» «t:c »                               «x:#no || classes option with single character, no semicolon;»
+«b:#kill» «t:c»«D:;»                               «x:#no || classes option with single character and semicolon;»
+
+«b:#kill» «t:commands »                        «x:#no || commands option without semicolon;»
+«b:#kill» «t:commands»«D:;»                        «x:#no || commands option with semicolon;»
+
+«b:#kill» «t:configs »                         «x:#no || configs option without semicolon;»
+«b:#kill» «t:configs»«D:;»                         «x:#no || configs option with semicolon;»
+
+«b:#kill» «t:delays »                          «x:#no || delays option without semicolon;»
+«b:#kill» «t:delays»«D:;»                          «x:#no || delays option with semicolon;»
+«b:#kill» «t:d »                               «x:#no || delays option with single character, no semicolon;»
+«b:#kill» «t:d»«D:;»                               «x:#no || delays option with single character and semicolon;»
+
+«b:#kill» «t:events »                          «x:#no || events option without semicolon;»
+«b:#kill» «t:events»«D:;»                          «x:#no || events option with semicolon;»
+«b:#kill» «t:e »                               «x:#no || events option with single character, no semicolon;»
+«b:#kill» «t:e»«D:;»                               «x:#no || events option with single character and semicolon;»
+
+«b:#kill» «t:functions »                       «x:#no || functions option without semicolon;»
+«b:#kill» «t:functions»«D:;»                       «x:#no || functions option with semicolon;»
+«b:#kill» «t:f »                               «x:#no || functions option with single character, no semicolon;»
+«b:#kill» «t:f»«D:;»                               «x:#no || functions option with single character and semicolon;»
+
+
+«b:#kill» «t:gags »                            «x:#no || gags option without semicolon;»
+«b:#kill» «t:gags»«D:;»                            «x:#no || gags option with semicolon;»
+«b:#kill» «t:g »                               «x:#no || gags option with single character, no semicolon;»
+«b:#kill» «t:g»«D:;»                               «x:#no || gags option with single character and semicolon;»
+
+«b:#kill» «t:highlights »                      «x:#no || highlights option without semicolon;»
+«b:#kill» «t:highlights»«D:;»                      «x:#no || highlights option with semicolon;»
+«b:#kill» «t:h »                               «x:#no || highlights option with single char, no semicolon;»
+«b:#kill» «t:h»«D:;»                               «x:#no || highlights option with single char and semicolon;»
+
+«b:#kill» «t:macros »                          «x:#no || macros option without semicolon;»
+«b:#kill» «t:macros»«D:;»                          «x:#no || macros option with semicolon;»
+«b:#kill» «t:m »                               «x:#no || macros option with single character, no semicolon;»
+«b:#kill» «t:m»«D:;»                               «x:#no || macros option with single character and semicolon;»
+
+«b:#kill» «t:pathdirs »                        «x:#no || pathdirs option without semicolon;»
+«b:#kill» «t:pathdirs»«D:;»                        «x:#no || pathdirs option with semicolon;»
+«b:#kill» «t:p »                               «x:#no || pathdirs option with single character, no semicolon;»
+«b:#kill» «t:p»«D:;»                               «x:#no || pathdirs option with single character and semicolon;»
+
+«b:#kill» «t:prompts »                         «x:#no || prompts option without semicolon;»
+«b:#kill» «t:prompts»«D:;»                         «x:#no || prompts option with semicolon;»
+
+«b:#kill» «t:substitutes »                     «x:#no || substitutes option without semicolon;»
+«b:#kill» «t:substitutes»«D:;»                     «x:#no || substitutes option with semicolon;»
+«b:#kill» «t:s »                               «x:#no || substitutes option with single char, no semicolon;»
+«b:#kill» «t:s»«D:;»                               «x:#no || substitutes option with single char and semicolon;»
+
+«b:#kill» «t:tabs »                            «x:#no || tabs option without semicolon;»
+«b:#kill» «t:tabs»«D:;»                            «x:#no || tabs option with semicolon;»
+«b:#kill» «t:t »                               «x:#no || tabs option with single character, no semicolon;»
+«b:#kill» «t:t»«D:;»                               «x:#no || tabs option with single character and semicolon;»
+
+«b:#kill» «t:tickers »                         «x:#no || tickers option without semicolon;»
+«b:#kill» «t:tickers»«D:;»                         «x:#no || tickers option with semicolon;»
+
+«b:#kill» «t:variables »                       «x:#no || variables option without semicolon;»
+«b:#kill» «t:variables»«D:;»                       «x:#no || variables option with semicolon;»
+«b:#kill» «t:v »                               «x:#no || variables option with single character, no semicolon;»
+«b:#kill» «t:v»«D:;»                               «x:#no || variables option with single character and semicolon;»

@@ -277,7 +277,7 @@
   '( "all" 0        "commands" 2   "detatch" 0
      "draw" 0       "edit" 0       "end" 0
      "grep" 0       "gts" 0        "help" 1
-     "ignore" 3     "info" 3       "kill" 0       "log" 0
+     "ignore" 3     "kill" 0       "log" 0
      "macro" 3      "map" 0        "mesage" 4     "port" 0
      "path" 0       "pathdir" 5    "prompt" 4     "regexp" 3
      "read" 0       "run" 0        "scan" 1       "screen" 3
@@ -286,11 +286,11 @@
 
 
 ;; Several commands accept this list of commands as options
-(defvar command-list-option
-  (tintin-option :vals '("actions" 1 "aliases" 1 "buttons" 1 "classes" 1 "commands" 1
-                         "configs" 1 "delays" 1 "events" 1 "functions" 1 "gags" 1
-                         "highlights" 1 "macros" 1 "pathdirs" 1 "prompts" 1
-                         "substitutes" 1 "tabs" 1 "tickers" 1 "variables" 1) :final t))
+(defvar command-list-commands
+  '("actions" 1 "aliases" 1 "buttons" 1 "classes" 1 "commands" 1 "configs" 1 "delays" 1
+    "events" 1 "functions" 1 "gags" 1 "highlights" 1 "macros" 1 "pathdirs" 1 "prompts" 1
+    "substitutes" 1 "tabs" 1 "tickers" 1 "variables" 1))
+(defvar command-list-option (tintin-option :vals command-list-commands :final t))
 
 ;; Special handling for the #bell command and its subcommands
 (defvar bell-command-list '("bell" 0))
@@ -399,6 +399,14 @@
 ;; Special handling for the #ignore command
 (defvar ignore-command-list '("ignore" 1))
 
+;; Special handling for the #info command
+(defvar info-command-list '("info" 2))
+(defvar info-toggle-value (tintin-constant :vals '("off" 2 "on" 1 "list" 1 "save" 1)))
+(defvar info-no-arg-option-args
+  '("cpu" 2 "environ" 2 "input" 1 "mccp" 2 "memory" 2 "stack" 2
+    "session" 2 "sessions" 0 "system" 2 "unicode" 1))
+(defvar info-no-arg-options
+  (tintin-option :final t :vals (append command-list-commands info-no-arg-option-args)))
 
 (setq tintin-font-lock-keywords (append
 
@@ -574,6 +582,12 @@
     (fontify-tintin-cmd ignore-command
                         '(command-list-option toggle-value)
                         '(command-list-option)))
+
+  ;; Highight #info command
+  (let ((info-command (tintin-command :cmds 'info-command-list :face 'font-lock-builtin-face)))
+    (fontify-tintin-cmd info-command
+                        '(command-list-option info-toggle-value)
+                        '(info-no-arg-options)))
 
   ;; Finish with the comment face that overrides everything
   `((,comment-regexp 0 'font-lock-comment-face t))))

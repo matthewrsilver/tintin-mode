@@ -14,7 +14,6 @@
  * Tests for individual functions in tintin-commands.el
 
 ### Commands that need work
- * The #info command has a toggle plus "list" and "save"
  * The #log command has subcommands
  * The #map command has a ton going on
  * The #message command has a toggle

@@ -1,0 +1,192 @@
+#no Tests for the #info command;
+
+#info;                                  #no || bare info with semicolon;
+#info                                   #no || bare info without semicolon;
+#inf                                    #no || three character #info;
+#in                                     #no || two character #info;
+#i                                      #no || one character is actually #ignore;
+#infos                                  #no || too many characters don't match;
+#info nonsense;                         #no || unknown modes not highlighted;
+
+#no Tests for different options/lists;
+#info actions                           #no || actions option without semicolon;
+#info {actions}                         #no || actions option without semicolon;
+#info actions;                          #no || actions option with semicolon;
+#info {actions};                        #no || actions option with semicolon;
+#info actions off;                      #no || actions option with toggle argument;
+#info actions {off};                    #no || actions option with toggle argument;
+#info actions{off};                     #no || actions option with toggle argument;
+#info {actions}{off};                   #no || actions option with toggle argument;
+#info {actions} {off};                  #no || actions option with toggle argument;
+#info {actions} off;                    #no || actions option with toggle argument;
+#info {actions}off;                     #no || actions option with toggle argument;
+#info actions on;                       #no || actions option with toggle argument;
+#info actions list;                     #no || actions option with toggle argument;
+#info actions save;                     #no || actions option with toggle argument;
+#info actions nothing;                  #no || actions option is highlighted even with bad argument;
+#info a                                 #no || actions option with single character, no semicolon;
+#info a;                                #no || actions option with single character and semicolon;
+#info a O;                              #no || actions option with single character and toggle;
+#info a L;                              #no || actions option with single character, abbrev log;
+
+#info aliases                           #no || aliases option without semicolon;
+#info aliases;                          #no || aliases option with semicolon;
+#info aliases on;                       #no || aliases option with toggle argument;
+#info aliases log;                      #no || aliases option with special log toggle argument;
+#info aliases nothing;                  #no || aliases option is highlighted even with bad argument;
+
+#info buttons                           #no || buttons option without semicolon;
+#info buttons;                          #no || buttons option with semicolon;
+#info buttons on;                       #no || buttons option with toggle argument;
+#info buttons log;                      #no || buttons option with special log toggle argument;
+#info buttons nothing;                  #no || buttons option is highlighted even with bad argument;
+#info b                                 #no || buttons option with single character, no semicolon;
+#info b;                                #no || buttons option with single character and semicolon;
+#info b O;                              #no || buttons option with single character and toggle;
+#info b L;                              #no || buttons option with single character, abbrev log;
+
+#info classes                           #no || classes option without semicolon;
+#info classes;                          #no || classes option with semicolon;
+#info classes on;                       #no || classes option with toggle argument;
+#info classes log;                      #no || classes option with special log toggle argument;
+#info classes nothing;                  #no || classes option is highlighted even with bad argument;
+#info c                                 #no || classes option with single character, no semicolon;
+#info c;                                #no || classes option with single character and semicolon;
+#info c O;                              #no || classes option with single character and toggle;
+#info c L;                              #no || classes option with single character, abbrev log;
+
+#info commands                          #no || commands option without semicolon;
+#info commands;                         #no || commands option with semicolon;
+#info commands on;                      #no || commands option with toggle argument;
+#info commands log;                     #no || commands option with special log toggle argument;
+#info commands nothing;                 #no || commands option is highlighted even with bad arg;
+
+#info configs                           #no || configs option without semicolon;
+#info configs;                          #no || configs option with semicolon;
+#info configs on;                       #no || configs option with toggle argument;
+#info configs log;                      #no || configs option with special log toggle argument;
+#info configs nothing;                  #no || configs option is highlighted even with bad arg;
+
+#info delays                            #no || delays option without semicolon;
+#info delays;                           #no || delays option with semicolon;
+#info delays on;                        #no || delays option with toggle argument;
+#info delays log;                       #no || delays option with special log toggle argument;
+#info delays nothing;                   #no || delays option is highlighted even with bad argument;
+#info d                                 #no || delays option with single character, no semicolon;
+#info d;                                #no || delays option with single character and semicolon;
+#info d O;                              #no || delays option with single character and toggle;
+#info d L;                              #no || delays option with single character, abbrev log;
+
+#info events                            #no || events option without semicolon;
+#info events;                           #no || events option with semicolon;
+#info events on;                        #no || events option with toggle argument;
+#info events log;                       #no || events option with special log toggle argument;
+#info events nothing;                   #no || events option is highlighted even with bad argument;
+#info e                                 #no || events option with single character, no semicolon;
+#info e;                                #no || events option with single character and semicolon;
+#info e O;                              #no || events option with single character and toggle;
+#info e L;                              #no || events option with single character, abbrev log;
+
+#info functions                         #no || functions option without semicolon;
+#info functions;                        #no || functions option with semicolon;
+#info functions on;                     #no || functions option with toggle argument;
+#info functions log;                    #no || functions option with special log toggle argument;
+#info functions nothing;                #no || functions option is highlighted even with bad arg;
+#info f                                 #no || functions option with single character, no semicolon;
+#info f;                                #no || functions option with single character and semicolon;
+#info f O;                              #no || functions option with single character and toggle;
+#info f L;                              #no || functions option with single character, abbrev log;
+
+#info gags                              #no || gags option without semicolon;
+#info gags;                             #no || gags option with semicolon;
+#info gags on;                          #no || gags option with toggle argument;
+#info gags log;                         #no || gags option with special log toggle argument;
+#info gags nothing;                     #no || gags option is highlighted even with bad arg;
+#info g                                 #no || gags option with single character, no semicolon;
+#info g;                                #no || gags option with single character and semicolon;
+#info g O;                              #no || gags option with single character and toggle;
+#info g L;                              #no || gags option with single character, abbrev log;
+
+#info highlights                        #no || highlights option without semicolon;
+#info highlights;                       #no || highlights option with semicolon;
+#info highlights on;                    #no || highlights option with toggle argument;
+#info highlights log;                   #no || highlights option with special log toggle argument;
+#info highlights nothing;               #no || highlights option is highlighted even with bad arg;
+#info h                                 #no || highlights option with single char, no semicolon;
+#info h;                                #no || highlights option with single char and semicolon;
+#info h O;                              #no || highlights option with single character and toggle;
+#info h L;                              #no || highlights option with single character, abbrev log;
+
+#info macros                            #no || macros option without semicolon;
+#info macros;                           #no || macros option with semicolon;
+#info macros on;                        #no || macros option with toggle argument;
+#info macros log;                       #no || macros option with special log toggle argument;
+#info macros nothing;                   #no || macros option is highlighted even with bad arg;
+#info m                                 #no || macros option with single character, no semicolon;
+#info m;                                #no || macros option with single character and semicolon;
+#info m O;                              #no || macros option with single character and toggle;
+#info m L;                              #no || macros option with single character, abbrev log;
+
+#info pathdirs                          #no || pathdirs option without semicolon;
+#info pathdirs;                         #no || pathdirs option with semicolon;
+#info pathdirs on;                      #no || pathdirs option with toggle argument;
+#info pathdirs log;                     #no || pathdirs option with special log toggle argument;
+#info pathdirs nothing;                 #no || pathdirs option is highlighted even with bad arg;
+#info p                                 #no || pathdirs option with single character, no semicolon;
+#info p;                                #no || pathdirs option with single character and semicolon;
+#info p O;                              #no || pathdirs option with single character and toggle;
+#info p L;                              #no || pathdirs option with single character, abbrev log;
+
+#info prompts                           #no || prompts option without semicolon;
+#info prompts;                          #no || prompts option with semicolon;
+#info prompts on;                       #no || prompts option with toggle argument;
+#info prompts log;                      #no || prompts option with special log toggle argument;
+#info prompts nothing;                  #no || prompts option is highlighted even with bad arg;
+
+#info substitutes                       #no || substitutes option without semicolon;
+#info substitutes;                      #no || substitutes option with semicolon;
+#info substitutes on;                   #no || substitutes option with toggle argument;
+#info substitutes log;                  #no || substitutes option with special log toggle argument;
+#info substitutes nothing;              #no || substitutes option is highlighted even with bad arg;
+#info s                                 #no || substitutes option with single char, no semicolon;
+#info s;                                #no || substitutes option with single char and semicolon;
+#info s O;                              #no || substitutes option with single character and toggle;
+#info s L;                              #no || substitutes option with single character, abbrev log;
+
+#info tabs                              #no || tabs option without semicolon;
+#info tabs;                             #no || tabs option with semicolon;
+#info tabs on;                          #no || tabs option with toggle argument;
+#info tabs log;                         #no || tabs option with special log toggle argument;
+#info tabs nothing;                     #no || tabs option is highlighted even with bad arg;
+#info t                                 #no || tabs option with single character, no semicolon;
+#info t;                                #no || tabs option with single character and semicolon;
+#info t O;                              #no || tabs option with single character and toggle;
+#info t L;                              #no || tabs option with single character, abbrev log;
+
+#info tickers                           #no || tickers option without semicolon;
+#info tickers;                          #no || tickers option with semicolon;
+#info tickers on;                       #no || tickers option with toggle argument;
+#info tickers log;                      #no || tickers option with special log toggle argument;
+#info tickers nothing;                  #no || tickers option is highlighted even with bad arg;
+
+#info variables                         #no || variables option without semicolon;
+#info variables;                        #no || variables option with semicolon;
+#info variables on;                     #no || variables option with toggle argument;
+#info variables log;                    #no || variables option with special log toggle argument;
+#info variables nothing;                #no || variables option is highlighted even with bad arg;
+#info v                                 #no || variables option with single character, no semicolon;
+#info v;                                #no || variables option with single character and semicolon;
+#info v O;                              #no || variables option with single character and toggle;
+#info v L;                              #no || variables option with single character, abbrev log;
+
+#no Performance measurements;
+#info cpu;                              #no || show information about tintin's cpu usage;
+#info environ;                          #no || show the environment variables;
+#info input;                            #no || show information about the input line;
+#info mccp;                             #no || show information about data compression;
+#info memory;                           #no || show information about the memory stack;
+#info stack;                            #no || show the low level debugging stack;
+#info session;                          #no || show information on the session;
+#info sessions;                         #no || show information on all sessions;
+#info system;                           #no || show some system information;
+#info unicode;                          #no || show information on the provided character;
